@@ -1,0 +1,29 @@
+﻿@model CandidateAdminQuestionSubjectUpdateVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Update"];
+}
+
+<div class="modal fade" id="updateCandidateQuestionSubjectModal" tabindex="-1" aria-labelledby="updateCandidateQuestionSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-controller="CandidateQuestionSubject" asp-action="Update" method="post" id="updateCandidateQuestionSubjectForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateSubjectModalLabel">@SharedLocalizer["Subject_Update"]</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label asp-for="Name" class="form-label">@SharedLocalizer["Subject_Name"]</label>
+                        <input asp-for="Name" type="text" class="form-control" required>
+                    </div>
+                    <input asp-for="Id" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary align-self-center ms-2" asp-controller="CandidateQuestionSubject" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+                    <button type="submit" class="btn btn-success">@SharedLocalizer["Save"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

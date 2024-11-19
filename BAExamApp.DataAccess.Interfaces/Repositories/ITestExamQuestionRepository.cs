@@ -1,0 +1,4 @@
+﻿namespace BAExamApp.DataAccess.Interfaces.Repositories;
+public interface ITestExamQuestionRepository : IAsyncRepository, IAsyncInsertableRepository<TestExamQuestion>, IAsyncQueryableRepository<TestExamQuestion>, IAsyncDeleteableRepository<TestExamQuestion>,IAsyncFindableRepository<TestExamQuestion>,IAsyncUpdateableRepository<TestExamQuestion>
+{
+}

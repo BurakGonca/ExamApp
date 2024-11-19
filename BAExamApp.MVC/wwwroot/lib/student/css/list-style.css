@@ -1,0 +1,297 @@
+﻿/*--------------------------------------------------------------
+# Main
+--------------------------------------------------------------*/
+
+#main {
+    margin-top: 10px;
+    padding: 20px 30px;
+    transition: all 0.3s;
+}
+
+
+/*--------------------------------------------------------------
+# Page Title
+--------------------------------------------------------------*/
+
+
+.pagetitle {
+    margin-bottom: 10px;
+}
+
+    .pagetitle h1 {
+        font-size: 24px;
+        margin-bottom: 0;
+        font-weight: 600;
+        color: #012970;
+    }
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+
+
+:root {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background: #f6f9ff;
+    color: #444444;
+}
+
+a {
+    color: #4154f1;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #717ff5;
+        text-decoration: none;
+    }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Nunito", sans-serif;
+}
+
+/* Card */
+.card {
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
+.card-title {
+    padding: 20px 0 15px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #012970;
+    font-family: "Poppins", sans-serif;
+}
+
+    .card-title span {
+        color: #899bbd;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+.card-body {
+    padding: 0 20px 20px 20px;
+}
+
+
+
+/*--------------------------------------------------------------
+# Dashboard
+--------------------------------------------------------------*/
+/* Filter dropdown */
+.dashboard .filter {
+    position: absolute;
+    right: 0px;
+    top: 15px;
+}
+
+    .dashboard .filter .icon {
+        color: #aab7cf;
+        padding-right: 20px;
+        padding-bottom: 5px;
+        transition: 0.3s;
+        font-size: 16px;
+    }
+
+        .dashboard .filter .icon:hover,
+        .dashboard .filter .icon:focus {
+            color: #4154f1;
+        }
+
+    .dashboard .filter .dropdown-header {
+        padding: 8px 15px;
+    }
+
+        .dashboard .filter .dropdown-header h6 {
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #aab7cf;
+            margin-bottom: 0;
+            padding: 0;
+        }
+
+    .dashboard .filter .dropdown-item {
+        padding: 8px 15px;
+    }
+
+
+/* Classroom list table */
+.dashboard .classroomlist-table {
+    font-size: 14px;
+}
+
+    .dashboard .classroomlist-table .table thead {
+        background: #f6f6fe;
+    }
+
+        .dashboard .classroomlist-table .table thead th {
+            border: 0;
+        }
+
+    .dashboard .classroomlist-table .dataTable-top {
+        padding: 0 0 10px 0;
+    }
+
+    .dashboard .classroomlist-table .dataTable-bottom {
+        padding: 10px 0 0 0;
+    }
+
+
+/*--------------------------------------------------------------
+# Sidebar
+--------------------------------------------------------------*/
+
+@media (max-width: 1199px) {
+    .sidebar {
+        left: -300px;
+    }
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (max-width: 1199px) {
+    .toggle-sidebar .sidebar {
+        left: 0;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .toggle-sidebar #main,
+    .toggle-sidebar #footer {
+        margin-left: 0;
+    }
+
+    .toggle-sidebar .sidebar {
+        left: -300px;
+    }
+}
+
+
+/*--------------------------------------------------------------
+# Back to top button
+--------------------------------------------------------------*/
+.back-to-top {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    right: 15px;
+    bottom: 15px;
+    z-index: 99999;
+    background: #4154f1;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    transition: all 0.4s;
+}
+
+    .back-to-top i {
+        font-size: 24px;
+        color: #fff;
+        line-height: 0;
+    }
+
+    .back-to-top:hover {
+        background: #6776f4;
+        color: #fff;
+    }
+
+    .back-to-top.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+/*Custom Management*/
+
+.dropdown-menu a {
+    display: flex;
+    justify-content: center;
+    color: red;
+}
+
+#transaction-column {
+    text-align: center;
+    background-color: #423F3E;
+    width: 28%;
+    margin-right: 2%;
+}
+
+#th-container-column {
+    background-color: #423F3E;
+    width: 18%;
+}
+
+#th-text-container-edu {
+    color: #F7F7F7;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+    #th-text-container-edu::before {
+        content: " ";
+        margin-right: 1%;
+    }
+
+th:nth-child(5),
+td:nth-child(5) {
+    text-align: center;
+}
+
+    td:nth-child(5) #classroom-options-button {
+        display: block;
+        margin: 0 auto;
+    }
+
+#th-text-container {
+    color: #F7F7F7;
+    font-weight: bold;
+}
+
+#branches-section{
+    text-align: left;
+}
+#transaction-column-btn {
+    margin-right: 10%;
+}
+
+#details-collapse {
+    display: block !important;
+    align-items: center;
+    justify-content: center;
+}
+
+#collapseWidthExample {
+    align-items: center;
+    justify-content: center;
+}
+
+.row g-0 {
+    font-family: Arial, sans-serif;
+}
+#classroom-details-table{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#kt_contacts_main {
+    background-color: #F7F7F7;
+}
+#details-back-to-list-btn{
+    margin-bottom: 1%;
+    margin-right: 1%;
+}

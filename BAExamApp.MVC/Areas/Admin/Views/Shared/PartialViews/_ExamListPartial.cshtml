@@ -1,0 +1,114 @@
+﻿@using BAExamApp.MVC.Areas.Admin.Models.ExamVMs;
+@model IEnumerable<AdminExamListVM>
+
+<link rel="stylesheet" href="~/css/adminExamListStudentTooltip.css" />
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+                <table class="table table-row-bordered datatable">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="text-center fw-bold text-white" style="background-color:rgb(134,138,155)">@Html.DisplayNameFor(model => model.Name)</th>
+                            <th class="text-center fw-bold text-white" style="background-color:rgb(134,138,155)">@Html.DisplayNameFor(model => model.ClassroomNames)</th>
+                            <th class="text-center fw-bold text-white" style="background-color:rgb(134,138,155)">@Html.DisplayNameFor(model => model.ExamRuleName)</th>
+                            <th class="text-center fw-bold text-white " style="background-color: rgb(134,138,155)">@Html.DisplayNameFor(model => model.ExamDateTime)</th>
+                            <th class="text-center fw-bold text-white " style="background-color: rgb(134,138,155)">@Html.DisplayNameFor(model => model.ExamDuration)</th>
+                            <th class="text-center fw-bold text-white" style="background-color: rgb(134,138,155)">@SharedLocalizer["Exam_Operations"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td class="categories text-left">
+                                    <a>
+                                        <span class="post_category">@item.Name</span>
+                                    </a>
+                                </td>
+                                <td class="categories text-left">
+                                    <div class="custom-tooltip">
+                                        <span class="post_category">
+                                            @foreach (var classroomName in item.ClassroomNames)
+                                            {
+                                                <span>@classroomName</span>
+                                            }
+                                        </span>
+                                        <div class="tooltiptext2">
+                                            @if (item.tooltipStudentList != null && item.tooltipStudentList.Any())
+                                            {
+                                                DateTime now = DateTime.Now;
+                                                <div class="tooltip-row">
+                                                    <div class="tooltip-title">Öğrenci Adı</div>
+                                                    <div class="tooltip-data">
+                                                        @foreach (var (name, score, classroom) in item.tooltipStudentList)
+                                                        {
+                                                            var cellClass = (item.ExamDateTime + item.ExamDuration > now && score.HasValue) ? "tooltip-cell-passed" : "tooltip-cell-failed";
+                                                            <div class="tooltip-cell @cellClass">@name</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="tooltip-row">
+                                                    <div class="tooltip-title">Sınav Puanı</div>
+                                                    <div class="tooltip-data">
+                                                        @foreach (var (_, score, _) in item.tooltipStudentList)
+                                                        {
+                                                            var cellClass = (item.ExamDateTime + item.ExamDuration > now && score.HasValue) ? "tooltip-cell-passed" : "tooltip-cell-failed";
+                                                            <div class="tooltip-cell @cellClass">@(score?.ToString() ?? "Sınava Girmedi")</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="tooltip-row">
+                                                    <div class="tooltip-title"></div>
+                                                    <div class="tooltip-data">
+                                                        @foreach (var (_, _, classroom) in item.tooltipStudentList)
+                                                        {
+                                                            <div class="tooltip-cell">@classroom</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td class="categories text-left">
+                                    <a>
+                                        <span class="post_category">@item.ExamRuleName</span>
+                                    </a>
+                                </td>
+                                <td class="categories text-center">
+                                    <a>
+                                        <span class="post_category">@item.ExamDateTime</span>
+                                    </a>
+                                </td>
+                                <td class="categories text-center">
+                                    <a>
+                                        <span class="post_category">@item.ExamDuration</span>
+                                    </a>
+                                </td>
+                                <td class="employment text-center">
+                                    <div class="dropdown">
+                                        <button id="optionsButton1">@SharedLocalizer["Options"] <i class="fa-solid fa-chevron-down"></i></button>
+                                        <div class="dropdown-content">
+                                            <a asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a>
+                                            @if (item.ExamType == ExamType.Standard)
+                                            {
+                                                <a asp-action="AddEvaluators" asp-route-id="@item.Id">@SharedLocalizer["Add_Evaluators"]</a>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/dataTable/assets/js/main.js"></script>
+<script src="~/dataTable/~/js/main.js"></script>

@@ -1,0 +1,364 @@
+﻿@model X.PagedList.IPagedList<AdminStudentListVM>
+@using BAExamApp.MVC.Areas.Admin.Models.ApiUserVMs
+@using Microsoft.Extensions.Localization
+@using X.PagedList
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@inject IStringLocalizer<SharedModelResource> localizer
+
+@{
+    ViewData["Title"] = ViewLocalizer["Students"];
+    var currentPageSize = ViewBag.PageSize ?? 10;
+}
+<head>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<style>
+    .tooltip-inner {
+        max-width: 350px !important;
+    }
+
+    #kt_datatable_example_1 tbody td {
+        padding: 4px !important;
+        vertical-align: middle;
+    }
+
+</style>
+<section class="section dashboard">
+
+    <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+        <div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 text-gray-700">
+            <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+                <!--begin::Card Body-->
+                <!--begin::Section-->
+                <div class="d-flex justify-content-between">
+
+                    <h5 style="display: flex; align-items: center;">
+                        @SharedLocalizer["List", SharedLocalizer["Student"]]
+
+                        <span class="material-symbols-outlined" style="margin-left: 5px; font-size: 130%; "
+                              data-bs-toggle="tooltip" data-bs-placement="right"
+                              title="@SharedLocalizer["Student_Filter_Warning"]">
+
+                            info
+
+                        </span>
+                    </h5>
+
+                    @* Add student butonu *@
+                    <div class="d-flex justify-content-end">
+                        <button id="addStudentBtn" type="button" class="btn btn-primary mb-4">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                </svg>
+                            </span>
+                            @SharedLocalizer["Create", SharedLocalizer["Student"]]
+                        </button>
+                    </div>
+                </div>
+
+                <!--end::Search-->
+                <!--begin::Toolbar-->
+                <div class="flex" data-kt-docs-table-toolbar="base">
+                    <form class="form-student" asp-controller="Student" asp-action="GetStudents" method="post" onsubmit="return onSubmitForm()">
+                        <div class="classroomfilter flex-row">
+                            <div class="row g-5 align-items-center">
+
+                                <div class="form-floating col-md-2 mb-3">
+                                    <input class="form-control form-control-solid mb-3 mb-lg-0" id="FirstName" name="FirstName"  placeholder="@SharedLocalizer["Student_Name"]" />
+                                    <label>@SharedLocalizer["Student_Name"]</label>
+                                </div>
+
+                                <div class="form-floating col-md-2 mb-3">
+                                    <input class="form-control form-control-solid" type="text" id="LastName" name="LastName" placeholder="@SharedLocalizer["Student_Surname"]" />
+                                    <label>@SharedLocalizer["Student_Surname"]</label>
+                                </div>
+
+                                <div class="form-floating col-md-2 mb-3">
+                                    <input class="form-control form-control-solid" type="text" id="Email" name="Email" placeholder="@SharedLocalizer["Student_Mail_Adress"]" />
+                                    <label>@SharedLocalizer["Student_Mail_Adress"]</label>
+                                </div>
+
+                                <div class="col-md-4" style="margin-bottom: 8px;">
+                                    <button type="submit" id="searchButton" class="btn btn-primary btn-lg col-md-4 hover-elevate-up" data-kt-user-table-filter="form">@SharedLocalizer["Show"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+               
+
+                <!--end::Add customer-->
+            </div>
+            <!--end::Toolbar-->
+            <!--begin::Group actions-->
+            <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
+                <div class="fw-bolder me-5">
+                    <span class="me-2" data-kt-docs-table-select="selected_count"></span>Selected
+                </div>
+                <button type="button" class="btn btn-danger" data-kt-docs-table-select="delete_selected">Selection Action</button>
+            </div>
+            <!--end::Group actions-->
+        </div>
+        <!--end::Wrapper-->
+        <!--begin::Datatable-->
+        <div id="kt_datatable_example_1_wrapper" class="dataTables_wrapper dt-bootstrap-4 no-footer">
+            <div class="table-responsive">
+                @if (ViewBag.ShowAllActiveStudents == false)
+                {
+
+                }
+                else
+                {
+
+                    <div class="card-body py-4">
+                        <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
+                            <thead>
+                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="min-w-200px">@SharedLocalizer["Profile_Image"]</th>
+                                    <th class="min-w-200px">@SharedLocalizer["Student_Name"]</th>
+                                    <th class="min-w-200px">@SharedLocalizer["Student_Surname"]</th>
+                                    <th class="min-w-200px">@SharedLocalizer["Student_Mail_Adress"]</th>
+                                    <th class="text-end min-w-100px">@ViewLocalizer["Student_Operations"]</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-bold">
+                                @foreach (var student in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (student.NewImage != null && student.NewImage.Length > 0)
+                                            {
+                                                string imageBase64 = Convert.ToBase64String(student.NewImage);
+                                                string imageSrc = $"data:image/png;base64,{imageBase64}";
+                                                <div class="symbol symbol-circle symbol-40px overflow-hidden me-3">
+                                                    <div class="symbol-label">
+                                                        <img src="@imageSrc" name="Image" alt="Student Image" class="w-100" />
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="symbol symbol-circle symbol-40px overflow-hidden me-3 text-center">
+                                                    <div class="symbol-label">
+                                                        <img src="~/images/blank-profile-picture.png" alt="Profil Fotoğrafı Bulunamadı!" class="w-100" />
+                                                    </div>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td>@student.FirstName</td>
+                                        <td>@student.LastName</td>
+                                        <td>@student.Email</td>
+                                        <td class="text-end">
+                                            <div class="dropdown">
+
+                                                <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-extended="false">
+                                                    @SharedLocalizer["Options"]
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                                    <li class="menu-item px-3">
+                                                        <a asp-action="Details" asp-route-id="@student.Id" asp-route-page="@ViewBag.PageNumber" asp-route-pageSize="@ViewBag.PageSize" class="menu-link px-3">@SharedLocalizer["Details"]</a>
+                                                    </li>
+                                                    <li class="menu-item px-3">
+                                                        <a id="kt-update-student" onclick="loadStudentData('@student.Id')" data-student-id="@student.Id" data-bs-toggle="modal" data-bs-target="#kt_modal_update_student" class="menu-link px-3" data-kt-users-table-filter="edit_row">@SharedLocalizer["Update"]</a>
+                                                    </li>                                                
+                                                    <li class="menu-item px-3">
+                                                        <a asp-action="StudentSentMails" asp-route-email="@student.Email" class="menu-link px-3" data-kt-users-table-filter="delete_row">@SharedLocalizer["Email_Content"]</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                                <div class="dataTables_length" id="kt_table_users_length">
+                                    <label>
+                                        <select id="pageSizeDropdown" name="kt_table_users_length" aria-controls="kt_table_users" class="form-select form-select-sm form-select-solid">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </label>
+                                </div>
+
+                                <div class="col-5" style="margin-left:10px">
+                                    <span class="text" style="white-space: nowrap;">
+                                        @SharedLocalizer["Total"] @Model.TotalItemCount @SharedLocalizer["From"] @(Model.PageNumber * Model.PageSize - (Model.PageSize - 1))
+                                        @SharedLocalizer["To"] @(Model.PageNumber * Model.PageSize > Model.TotalItemCount ? Model.TotalItemCount : Model.PageNumber * Model.PageSize)
+                                        @SharedLocalizer["Records_Are_Being_Displayed"]
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-3">
+                                @Html.PagedListPager(Model, page =>
+                                         Url.Action("Index", new { page, pageSize = ViewBag.PageSize, showAllActiveStudents = true }),
+                                         new PagedListRenderOptions
+                            {
+                                Display = PagedListDisplayMode.Always,
+                                UlElementClasses = new[] { "pagination", "justify-content-center" },
+                                LiElementClasses = new[] { "page-item" },
+                                PageClasses = new[] { "page-link" },
+                                LinkToFirstPageFormat = @localizer["First"],
+                                LinkToLastPageFormat = @localizer["Last"],
+                                ContainerDivClasses = new[] { "d-flex", "justify-content-center" }
+                            }
+                                         )
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+
+</section>
+
+<partial name="~/Areas/Admin/Views/Student/Create.cshtml" model="new AdminStudentCreateVM()"></partial>
+<partial name="~/Areas/Admin/Views/Student/Update.cshtml" model="new AdminStudentUpdateVM()"></partial>
+
+@section Scripts {
+
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/add-admin.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/view/update-student.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addStudentBtn').on('click', function () {
+                startLoader(); // Yüklenme animasyonunu başlat
+                $.ajax({
+                    url: '@Url.Action("Create", "Student")',  // GET isteği
+                    type: 'GET',
+                    success: function (data) {
+                        stopLoader(); // Yüklenme animasyonunu durdur
+                        // Veriyi modal içeriğine yerleştiriyoruz
+                        $('#modalContent').html(data);
+                        // Modalı açıyoruz
+                        $('#kt_modal_add_user').modal('show');
+                    },
+                    error: function () {
+                        stopLoader(); // Eğer hata olursa animasyonu durdur
+                        alert('Bir hata oluştu!');
+                    }
+                });
+            });
+        });
+        // $(document).ready(function () {
+        //     $('#addStudentBtn').on('click', function () {
+        //         $.ajax({
+        //             url: '@Url.Action("Create", "Student")',  // Student Controller'daki Create metoduna GET isteği gönderiyoruz
+        //             type: 'GET',
+        //             success: function (data) {
+        //                 // Veriyi modal içeriğine yerleştiriyoruz
+        //                 $('#modalContent').html(data);
+        //                 // Modalı açıyoruz
+        //                 $('#kt_modal_add_user').modal('show');
+        //             },
+        //             error: function () {
+        //                 alert('Bir hata oluştu!');
+        //             }
+        //         });
+        //     });
+        // });
+
+
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+
+        // Scroll hareket ettirildiğinde option menüsünü kapatır.
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentPageSize = @currentPageSize;
+            document.getElementById('pageSize').value = currentPageSize;
+        });
+
+
+        function changePageSize() {
+            var pageSize = document.getElementById('pageSize').value;
+            var url = new URL(window.location.href);
+            url.searchParams.set('pageSize', pageSize);
+            url.searchParams.set('page', 1);
+            window.location.href = url.toString();
+        }
+
+
+        function onSubmitForm() {
+            var searchButton = document.getElementById("searchButton");
+            var FirstName = document.getElementById("FirstName");
+            var LastName = document.getElementById("LastName");
+            var EmailInput = document.getElementById("Email");
+
+            if (!FirstName.value && !LastName.value && !EmailInput.value) {
+
+                window.location.href = "@Url.Action("Index", new { showAllActiveStudents = true })";
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        
+
+
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+           
+            var currentPageSize = '@ViewBag.PageSize' || '10';
+            $('#pageSizeDropdown').val(currentPageSize);
+
+            $('#pageSizeDropdown').change(function () {
+                var selectedPageSize = $(this).val();
+                var currentPage = '@ViewBag.CurrentPage' || '1'; 
+
+                window.location.href = '@Url.Action("Index", "Student")' +
+                    `?page=${currentPage}&pageSize=${selectedPageSize}&showAllActiveStudents=true`;
+            });
+        });
+    </script>
+
+
+}

@@ -1,0 +1,23 @@
+﻿@model AdminTrainerUpdateVM
+
+<div class="fv-row mb-7 fv-plugins-icon-container">
+    <div class="d-flex align-items-center">
+        <label asp-for="ProductIds" class="form-label mt-3" style="font-size: 20px; font-weight: bold;"></label>
+        <span class="required text-danger"></span>
+    </div>
+    <div class="multipleSelection">
+        <div id="checkBoxes">
+            @if (Model.ProductList != null)
+            {
+                @foreach (var product in Model.ProductList)
+                {
+                    <label for="@product.Value">
+                        <input type="checkbox" id="@product.Value" name="ProductIds" value="@product.Value" checked="@product.Selected" />
+                        @product.Text
+                    </label>
+                }
+            }
+        </div>
+    </div>
+    <div class="fv-plugins-message-container invalid-feedback"><span asp-validation-for="ProductIds"></span></div>
+</div>

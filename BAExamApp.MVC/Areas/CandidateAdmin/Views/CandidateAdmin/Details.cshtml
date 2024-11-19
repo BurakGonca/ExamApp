@@ -1,0 +1,104 @@
+﻿@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateAdminVMs
+@model CandidateAdminDetailsVM
+@{
+    ViewData["Title"] = SharedLocalizer["Candidate_Admin_Details"];
+}
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <div class="card-header cursor-pointer d-flex justify-content-between align-content-center">
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">@SharedLocalizer["Candidate_Admin_Details"]</h3>
+        </div>
+        <div class="gap-5">
+            <a asp-controller="CandidateAdmin" asp-action="Index" class="btn btn-secondary align-self-center">@SharedLocalizer["Back_List"]</a>
+            @* <a id="kt-update-candidateAdmin" onclick="loadAdminData('@Model.Id')" class="btn btn-primary align-self-center" data-kt-docs-table-filter="edit_row" data-admin-id="@Model.Id" data-bs-toggle="modal" data-bs-target="#kt_modal_update_user">
+                @SharedLocalizer["Update"]
+            </a> *@
+            <a onclick="loadCandidateAdminData('@Model.Id')" id="update-admin-button"
+               class="btn btn-primary align-self-center"
+               data-bs-toggle="modal" data-bs-target="#kt_modal_update_user"
+               data-kt-users-table-filter="delete_row">
+                @SharedLocalizer["Update"]
+            </a>
+            <a class="btn btn-danger align-self-center deleteAction">@SharedLocalizer["Delete"] </a>
+            <form asp-controller="CandidateAdmin" asp-action="Delete" asp-route-id=@Model.Id id="deleteForm"></form>
+        </div>
+    </div>
+    <div class="card-body row mb-7">
+        <div class="col-lg-2">
+            <div id="cover-image-container">
+                @if (Model.Image != null && Model.Image != "0" && Model.Image != "1")
+                {
+                    <div id="item-header-cover-image" style="width:150px; height:150px;">
+                        <img src="data:image/jpeg;base64,@Model.Image"
+                             class="avatar user-1-avatar avatar-150 photo"
+                             style="object-fit:fill; width:150px; height:150px;"
+                             alt='$"{Model.First} {Model.LastName}"' />
+                    </div>
+                }
+                else
+                {
+                    <div id="item-header-cover-image" width="150px" height="150px">
+                        <img src="~/media/avatars/blank.png"
+                             class="avatar user-1-avatar avatar-150 photo"
+                             style="object-fit:fill; width:150px; height:150px;" alt="" />
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Full_Name"]</label>
+                <div class="col-lg-10">
+                    <span id="fullName" class="fw-bolder fs-6 text-gray-800">@Model.FullName</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Email"]</label>
+                <div class="col-lg-10">
+                    <span class="fw-bolder fs-6 text-gray-800">@Model.Email</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<partial name="~/Areas/CandidateAdmin/Views/CandidateAdmin/Update.cshtml" model="new CandidateAdminUpdateVM()"></partial>  
+
+    @section Scripts
+    {
+        @* <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script> *@
+        <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/update-candidateAdmin.js"></script>
+        
+        <script>
+            var localizedTexts = {
+                unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+                unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+                confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+                deleteConfirmButtonText: '@SharedLocalizer["Confirm_Button_Text"]',
+                cancelButtonText: '@SharedLocalizer["No_Stay"]',
+                deleteCancelButtonText: '@SharedLocalizer["Cancel_Button_Text"]',
+                formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+                okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+                confirmText: '@SharedLocalizer["Confirm_Delete_Text"]',
+                confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]'
+            };
+            $(".deleteAction").click(function () {
+                Swal.fire({
+                    title: `${localizedTexts.confirmTitle}`,
+                    text: localizedTexts.confirmText,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: localizedTexts.deleteConfirmButtonText,
+                    cancelButtonText: localizedTexts.deleteCancelButtonText
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.getElementById("deleteForm");
+                        form.submit();
+                    }
+                });
+            });
+        </script>
+    }
+</div>

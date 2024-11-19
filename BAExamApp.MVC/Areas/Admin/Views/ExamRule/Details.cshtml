@@ -1,0 +1,201 @@
+﻿@model AdminExamRuleDetailsVM
+@{
+    ViewData["Title"] = ViewLocalizer["Exam_Rule_Details"];
+}
+
+<div class="card mb-5 mb-xl-10" id="kt_content">
+    <div class="card-header cursor-pointer" id="kt_contacts_main">
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0"> @ViewLocalizer["Exam_Rule_Details"]</h3>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-secondary align-self-center ms-2" asp-controller="ExamRule" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+            <a class="btn btn-primary align-self-center ms-2" asp-controller="ExamRule" asp-action="Update" asp-route-id="@Model.Id">@SharedLocalizer["Update"]</a>
+            @if (Model.Status == Status.Active)
+            {
+                <a class="btn btn-danger align-self-center ms-2 deleteAction" data-id="@Model.Id">@SharedLocalizer["Delete"]</a>
+            }
+            else if (Model.Status == Status.Passive)
+            {
+                <a class="btn btn-success align-self-center ms-2 activateAction" data-id="@Model.Id">@SharedLocalizer["Activate"]</a>
+            }
+        </div>
+    </div>
+    @* Titles *@
+    <div class="card-body p-9">
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted">@ViewLocalizer["Exam_Rule_Name"]:</label>
+            <div>
+                <span class="fw-bold fs-6 text-gray-800">@Model.Name</span>
+            </div>
+        </div>
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted">@ViewLocalizer["Exam_Rule_Description"]:</label>
+            <div>
+                <span class="fw-bold fs-6 text-gray-800" style="white-space: pre-line;">@Model.Description</span>
+            </div>
+        </div>
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted">@ViewLocalizer["Product"]:</label>
+            <div>
+                <span class="fw-bold fs-6 text-gray-800">@Model.ProductName</span>
+            </div>
+        </div>
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted">Total @SharedLocalizer["Question_Counts"]:</label>
+            <div>
+                @if (Model.ExamRuleSubtopics != null && Model.ExamRuleSubtopics.Any())
+                {
+                    var totalQuestionCount = Model.ExamRuleSubtopics.Sum(x => x.QuestionCount);
+                    <span class="fw-bold fs-6 text-gray-800">@totalQuestionCount</span>
+                }
+                else
+                {
+                    <span class="fw-bold fs-6 text-gray-800">0</span>
+                }
+            </div>
+        </div>
+    </div>
+    @* Question Table *@
+    <div class="card-body p-9">
+        <div class="row mb-7 justify-content-center">
+            <div class="col-lg-12">
+                <div class="accordion" id="accordionQuestions">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingQuestions">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuestions" aria-expanded="true" aria-controls="collapseQuestions" style="color:black">
+                                @ViewLocalizer["Questions"]
+                            </button>
+                        </h2>
+                        <div id="collapseQuestions" class="accordion-collapse collapse show" aria-labelledby="headingQuestions" data-bs-parent="#accordionQuestions">
+                            <div class="accordion-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-sm-2" style="font-weight:bold">@ViewLocalizer["Question_SubjectName"]</th>
+                                            <th class="col-sm-2" style="font-weight:bold">@ViewLocalizer["Question_SubtopicName"]</th>
+                                            <th class="col-sm-2" style="font-weight:bold">@ViewLocalizer["Exam_Type"]</th>
+                                            <th class="col-sm-2" style="font-weight:bold">@ViewLocalizer["Question_Type"]</th>
+                                            <th class="col-sm-2" style="font-weight:bold">@ViewLocalizer["Question_Difficulty"]</th>
+                                            <th class="col-sm-2" style="font-weight:bold">@ViewLocalizer["Question_Count"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.ExamRuleSubtopics != null && Model.ExamRuleSubtopics.Any())
+                                        {
+                                            foreach (var item in Model.ExamRuleSubtopics)
+                                            {
+                                                <tr>
+                                                    <td class="fw-bold fs-6 text-gray-800">@item.SubjectName</td>
+                                                    <td class="fw-bold fs-6 text-gray-800">@item.SubtopicName</td>
+                                                    <td class="fw-bold fs-6 text-gray-800">@Html.DisplayFor(x => item.ExamType)</td>
+                                                    <td class="fw-bold fs-6 text-gray-800">@Html.DisplayFor(x => item.QuestionType)</td>
+                                                    <td class="fw-bold fs-6 text-gray-800">@Html.DisplayFor(x => item.QuestionDifficultyName)</td>
+                                                    <td class="fw-bold fs-6 text-gray-800">@item.QuestionCount</td>
+                                                </tr>
+                                            }
+                                           
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td class="categories" colspan="6">
+                                                    @SharedLocalizer["No_Data"]
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script>
+        var localizedTexts = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]', // "fullName adlı admini silmek istediğinize emin misiniz?"
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]', // "Bu işlem geri alınamaz!"
+            confirmButtonText: '@SharedLocalizer["Confirm_Button_Text"]', // "Evet, sil!"
+            confirmPassiveButtonText: '@SharedLocalizer["Confirm_Passive_Button_Text"]', // "Evet, pasife al!"
+            confirmActiveButtonText: '@SharedLocalizer["Confirm_Active_Button_Text"]', // "Evet, aktif yap!"
+            cancelDeleteBtnText: '@SharedLocalizer["Cancel_Button_Text"]', // "Silme!"
+            cancelButtonText: '@SharedLocalizer["Cancel"]', // "İptal"
+            passiveTitle: '@SharedLocalizer["In_Use_Rule_Title"]', // "Bu kural en az bir sınavda kullanılıyor!"
+            passiveText: '@SharedLocalizer["In_Use_Rule_Text"]', // "Bu kuralı silemezsiniz, pasife almak istiyor musunuz?"
+            activeTitle: '@SharedLocalizer["Confirm_Active_Title"]', // "Statüyü değiştirmek istediğinize emin misiniz?"
+            activeText: '@SharedLocalizer["Confirm_Active_Text"]' // "Statüsü 'Aktif' olarak değiştirilecektir."
+        };
+
+        var isRuleUsed = @Html.Raw(Json.Serialize(Model.IsRuleUsed != null ? Model.IsRuleUsed : false));
+
+
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+            const title = isRuleUsed ? localizedTexts.passiveTitle : localizedTexts.confirmTitle;
+            const text = isRuleUsed ? localizedTexts.passiveText : localizedTexts.confirmText;
+            const confirmBtnText = isRuleUsed ? localizedTexts.confirmPassiveButtonText : localizedTexts.confirmButtonText;
+            const cancelBtnText = isRuleUsed ? localizedTexts.cancelButtonText : localizedTexts.cancelDeleteBtnText;
+            const url = isRuleUsed ? "@Url.Action("ChangeStatus")" : "@Url.Action("Delete")";
+
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: isRuleUsed ? '#28a745' : '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: confirmBtnText,
+                cancelButtonText: cancelBtnText
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: url + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "@Url.Action("index")", 1000)
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $(".activateAction").click(function () {
+            const id = $(this).attr("data-id");
+            const title = localizedTexts.activeTitle;
+            const text = localizedTexts.activeText;
+
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: localizedTexts.confirmActiveButtonText,
+                cancelButtonText: localizedTexts.cancelButtonText
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("ChangeStatus")" + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "@Url.Action("index")", 1000)
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

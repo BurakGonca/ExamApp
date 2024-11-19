@@ -1,0 +1,45 @@
+﻿@using BAExamApp.MVC.Areas.Admin.Models.DashboardVMs
+@model DashboardVM
+@{
+    ViewData["Title"] = SharedLocalizer["Index"];
+}
+
+<!--Overview Bölümü -->
+<div class="row mt-5">
+    <partial name="~/Areas/Admin/Views/Home/_PanelOverviewPartial.cshtml"></partial>
+</div>
+
+<div class="row mt-5 d-flex align-items-stretch">
+    <!-- En Başarılı Öğrenciler Bölümü -->
+    <div class="col-md-7 d-flex flex-column" style="height: 100%;">
+        <partial name="~/Areas/Admin/Views/Home/_PanelStudentsPartial.cshtml" />
+    </div>
+    <!-- Takvim Bölümü -->
+    <div id="calendar" class="col-md-5 d-flex flex-column" style="height: 100%;">
+        <partial name="~/Areas/Admin/Views/Home/_PanelCalendarPartial.cshtml" />
+    </div>
+</div>
+
+
+<!--Sorular Bölümü -->
+<div class="row mt-5">
+    <partial name="~/Areas/Admin/Views/Home/_PanelExamRequestsPartial.cshtml"></partial>
+</div>
+
+<style>
+    .fc-toolbar-title {
+        font-size: 16px !important;
+        font-weight: bold !important;
+    }
+
+    .row.align-items-stretch > .col-md-7,
+    .row.align-items-stretch > .col-md-5 {
+        height: 100%;
+        min-height: 500px; /* Minimum yükseklik ayarı, isteğe göre ayarlanabilir */
+    }
+
+    .partial {
+        flex-grow: 1; /* İçeriklerin eşit büyümesini sağlar */
+    }
+
+</style>

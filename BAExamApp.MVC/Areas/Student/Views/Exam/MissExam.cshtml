@@ -1,0 +1,81 @@
+﻿@model StudentStudentExamStartVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Exam"];
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>@ViewData["Title"]</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+
+    <style>
+        textarea {
+            width: 100%;
+            margin-top:50px;
+            margin-bottom: 5px; 
+            border: 2px solid #414b59;
+        }
+
+    </style>
+
+</head>
+<body>
+    <main>
+        <form asp-area="Student" asp-controller="Exam" asp-action="MissExam" itemid="missExamDescription" method="post">
+
+            <div class="container position-absolute top-50 start-50 translate-middle">
+                <div class="row">
+                    <div class="col-12 text-center" style="display:flex; flex-direction:column; align-items:center; font-weight: bold; font-size:18px; color: #414b59;">
+                        <table style="text-align:left;">
+                            <tr>
+                                <th >Sınav Adı</th>
+                                <td >: @Model.ExamName</td>
+                            </tr>
+                            <tr>
+                                <th >Sınav Tarihi</th>
+                                <td >: @Model.ExamDateTime</td>
+                            </tr>
+                            <tr>
+                                <th>Sınav Süresi</th>
+                                <td>:  @($"{Model.ExamDuration.Hours:D2}:{Model.ExamDuration.Minutes:D2}")</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-12 text-center" style="font-weight: bold; font-size:36px; color: #414b59;">
+                        <span>@Model.StudentFullName, sınava giriş için ayrılan süre dolmuştur 😢 </span>
+                    </div>
+
+                    <div class="col-12">
+                        <div>
+                            <input asp-for="@Model.StudentExamId" hidden />
+                            <textarea asp-for="@Model.ExcuseDescription" rows="4" cols="50" placeholder="Lütfen mazeretinizi belirtiniz..." ></textarea>
+
+                            <label class="warning" style="font-weight:bold; font-size: 26px; color:red;"> UYARI❗</label>
+
+                            <label class="warning-desc" style="font-size: 26px; color:red; margin-bottom:40px; "> Mazeret belirtmediğiniz takdirde sınav notunuz 0 olarak değerlendirilecektir!  </label>
+
+                        </div>
+
+                        <div>
+                            <button type="submit" style="background-color: #007bff; font-size:24px; color:white; "> Mazereti Gönder </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </main>
+</body>
+</html>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+

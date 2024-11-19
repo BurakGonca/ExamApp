@@ -1,0 +1,170 @@
+﻿@model TrainerQuestionPreviewVM
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Preview"];
+    Layout = "";
+    var answerOrder = 1;
+}
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview</title>
+    
+    <link href="~/css/reset.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/custom-props.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/animation.css" />
+    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+
+    
+
+    
+    
+</head>
+<body>
+    <div id="root">
+        <header>
+            <div class="container-quiz-title">
+                <h1>@SharedLocalizer["Preview"]</h1>
+            </div>
+
+        </header>
+
+        <div class="row timer-container">
+            <div class="col col-md-6 col-sm-3">
+                <div class="col col-md-6 col-sm-3">
+                    <div id="questionCounterMain" class="col-3 p-2" style="font-weight: bold; margin:10px; color: #414b59; font-size: 1.2em;">
+                        <span id="questionCounterText"></span>
+                        <span id="questionCounter"></span>
+
+                    </div>
+
+                    <div id="transitionCounter" style="font-weight: bold; margin:10px; color: #414b59; font-size: 0.8em;">
+                        <span id="transitionCounterText"></span>
+                        <span id="transitionCounterNumber"></span>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class=" col col-md-4 col-sm-3">
+                <div id="transitionCounter" style="font-weight: bold; margin:10px; color: #414b59; font-size: 0.8em;">
+                    <span id="transitionCounterText"></span>
+                    <span id="transitionCounterNumber"></span>
+                </div>
+            </div>
+
+            <div class="col col-md-4 col-sm-3">
+                <div id="questionCounterMain" class="col-3 p-2" style="font-weight: bold; margin:10px; color: #414b59; font-size: 1.2em;">
+                    <span id="remainingTimeValueText">@SharedLocalizer["Remaining_Time"]:</span>
+                    <span id="remainingTimeValue">@Model.TimeGiven</span>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <section class="quiz">
+                <div class="frm-quiz">
+                    <div class="container position-absolute top-0 start-50">
+                        <div class="row">
+                            <div class="col-3 p-2">
+                                <span class="text-success">@SharedLocalizer["Question"] 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container position-absolute top-50 start-50 translate-middle">
+                        <div class="row">
+                            <div class="question-media scrollable-indicator">
+                                @if (Model.Image != null)
+                                {
+                                    <figure>
+                                        <img class="question-image" id="questionImage" style="max-width:300px; max-height:200px;" src="@Model.Image" />
+                                    </figure>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 p-2">
+                                @if (Model.QuestionType == QuestionType.MultipleAnswer)
+                                {
+                                    <span class="text-primary"><b>[@SharedLocalizer["There_May_Be_More_Than_One_Answer_To_this_Question"]]</b></span>
+                                }
+                                else if (Model.QuestionType == QuestionType.Test)
+                                {
+                                    <span class="text-primary"><b>[@SharedLocalizer["This_Question_Is_An_Ongoing_Selected_Question"]]</b></span>
+                                }
+                                <br />
+                                <br />
+                                <div class="question">
+                                    <p>@Model.Content</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check form-check-inline mt-5  frm-quiz-answers">
+                            @foreach (var answer in Model.QuestionAnswers)
+                            {
+                                <label class="form-check-label frm-quiz-label" for="answer-@answerOrder">
+                                    @if (Model.QuestionType == QuestionType.MultipleAnswer)
+                                    {
+                                        <input class="form-check-input choices" type="checkbox" name="quiz-answer" id="answer-@answerOrder" value="@answer.Id">
+                                    }
+                                    else if (Model.QuestionType == QuestionType.Test)
+                                    {
+                                        <input class="form-check-input choices" type="radio" name="quiz-answer" id="answer-@answerOrder" value="@answer.Id">
+                                    }
+                                    else if (Model.QuestionType == QuestionType.TrueFalse)
+                                    {
+                                        <input class="form-check-input choices" type="radio" name="quiz-answer" id="answer-@answerOrder" value="@answer.Id">
+                                    }
+                                  
+                                    @if (answer.IsAnswerImage)
+                                    {
+                                        <div class="col-lg-12">
+                                            <img id="defaultImage"
+                                                 class="col-lg-12 img-fluid"
+                                                 src="@answer.Answer"
+                                                 style="max-height:150px;max-width:300px;"
+                                                 alt="Profile" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @answer.Answer
+                                    }
+                                    @if (answer.IsRightAnswer)
+                                    {
+                                        <span style="color: green;">(@SharedLocalizer["Correct_Answer"])</span>
+                                    }
+                                </label>
+                                answerOrder++;
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+        </main>
+
+        <footer>
+            <a href="#" class="logo-ba">
+                <img src="~/images/BATeknoloji_Logo_RGB.png"
+                     alt="Bilgeadam Teknoloji" />
+            </a>
+        </footer>
+    </div>
+</body>
+</html>

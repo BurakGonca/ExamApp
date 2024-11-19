@@ -1,0 +1,292 @@
+﻿@model TrainerExamCreateVM
+
+@{
+    ViewData["Title"] = @ViewLocalizer["Create_Exam"];
+}
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+
+</head>
+
+@{
+    Html.RenderPartial("~/Areas/Admin/Views/Animation/_LoaderAnimationPartialView.cshtml");
+}
+<div class="card py-16">
+    <!--begin::Card header-->
+    <div class="ps-9 pt-6">
+        <h1 class="text-dark fw-bolder fs-1">@ViewLocalizer["Create_Exam"]</h1>
+    </div>
+    <!--end::Card header-->
+    <div class="card-body">
+
+        <form asp-action="Create" asp-controller="Exam" asp-area="Trainer" class="form" enctype="multipart/form-data" method="post">
+            <div class="row mb-3">
+                <div class="col-sm-6 ">
+                    <div class="fv-row form-floating mb-7">
+                        <select class="form-select form-select-sm form-select-solid" asp-for="ExamType" onchange="onExamTypeChange()">
+                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                            @foreach (SelectListItem examType in ViewBag.ExamTypes)
+                            {
+                                <option value="@examType.Value">@SharedLocalizer[$"{examType.Text}"]</option>
+                            }
+                        </select>
+                        <label class="fw-bold fs-6 mb-2" asp-for="ExamType">@SharedLocalizer["Exam_Type"]</label>
+                        <span asp-validation-for="ExamType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <select class="form-select form-select-sm form-select-solid" asp-for="ExamRuleId" id="ExamRuleId">
+                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                        </select>
+                        <label class="fw-bold fs-6 mb-2" asp-for="ExamRuleId"></label>
+                        <span asp-validation-for="ExamRuleId" class="text-danger"> </span>  
+                    </div>
+                </div>
+
+            <div class="col-sm-6 ">
+                <div class="fv-row form-floating mb-7">
+                        <input asp-for="ExamDateTime" type="datetime" asp-format="{0:dd/MM/yyyy HH:mm}" class="form-control form-control-solid" id="ExamDateTime" />
+                    <label asp-for="ExamDateTime">@ViewLocalizer["Exam_Date_and_Time"]</label>
+                    <span asp-validation-for="ExamDateTime" class="text-danger"></span>
+                </div>
+            </div>
+
+                <div class="col-sm-6 ">
+                    <div class="fv-row form-floating mb-7">                   
+                        <input class="form-control form-control-solid" id="ExamDuration" asp-for="ExamDuration" readonly />
+                        <label asp-for="ExamDuration">@ViewLocalizer["Exam_Duration"]</label>
+                        <span asp-validation-for="ExamDuration" class="text-danger"></span>
+                    </div>
+                </div>
+            <div class="col-sm-6 ">
+                <div class="fv-row form-floating mb-7">
+                    <input type="number" class="form-control form-control-solid" asp-for="MaxScore">
+                        <label asp-for="MaxScore">@SharedLocalizer["Max_Score"]</label>
+                    <span asp-validation-for="MaxScore" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6 ">
+                <div class="fv-row form-floating mb-7">
+                    <input type="number" class="form-control form-control-solid" asp-for="BonusScore">
+                        <label asp-for="BonusScore">@SharedLocalizer["Bonus_Score"]</label>
+                    <span asp-validation-for="BonusScore" class="text-danger"></span>
+                </div>
+            </div>
+                
+                <div class="col-sm-6 ">
+                    <div class="fv-row form-floating mb-7">
+                        <select class="form-select form-select-sm form-select-solid" asp-for="ExamCreationType">
+                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                            @foreach (SelectListItem examCreationTypes in ViewBag.ExamCreationTypes)
+                            {
+                                <option value="@examCreationTypes.Value">@SharedLocalizer[$"{examCreationTypes.Text}"]</option>
+                            }
+                        </select>
+                        <label class="fw-bold fs-6 mb-2" asp-for="ExamCreationType"></label>
+                        <span asp-validation-for="ExamCreationType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6 ">
+                    <div class="fv-row mb-7">
+                        <label class="form-check form-switch form-check-custom form-check-solid">
+                            <div>
+                                <label class="form-check-label fw-bold text-muted" for="ogrenci" id="ogrenciLabel">@ViewLocalizer["Create_Exam_Student"]</label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" asp-for="forClassroom" type="checkbox" id="ogrenci" onchange="onSwitchChange()">
+                            </div>
+                            <div>
+                                <label class="form-check-label fw-bold text-muted" for="sinif" id="sinifLabel">@ViewLocalizer["Create_Exam_Class"]</label>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="card" id="studentclassroomcard">
+                    <div class="col-sm-6">
+                        <div class="fv-row form-floating mb-7">
+                            <select asp-for="ExamClassroomsIds" asp-items="@ViewBag.ClassroomList" class="form-select form-select-lg form-select-solid p-3" data-control="select2" data-close-on-select="false" data-allow-clear="false" multiple="multiple" data-search="false">
+                            </select>
+                            <label class="fw-bold fs-6 mt-n2" asp-for="ExamClassroomsIds">@SharedLocalizer["Exam_Classroom"]</label>
+                            <span asp-validation-for="ExamClassroomsIds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <br />
+             <div id="studentArea">
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                                <select asp-for="StudentIds" class="form-select form-select-lg form-select-solid p-3" data-control="select2" data-close-on-select="false" data-allow-clear="false" multiple="multiple" data-search="false" id="studentSelect" >
+                            </select>
+                            <label class="fw-bold fs-6 mb-2" asp-for="StudentIds">Öğrenciler</label>
+                            <span asp-validation-for="StudentIds" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                            <textarea class="form-control form-control-solid" asp-for="Description" class="form-control"></textarea>
+                            <label class="fw-bold fs-6 " asp-for="Description">Açıklama</label>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+              </div>
+                <div class="form-actions">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger" type="reset" data-kt-contacts-type="cancel">@SharedLocalizer["Cancel"]</a>
+                        <button type="submit" data-kt-contacts-type="submit" class="btn btn-success">@SharedLocalizer["Save"]</button>
+                        
+                </div>
+            </div>
+            </div>
+            </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/newLayouts/dist/assets/plugins/global/plugins.bundle.js"></script>
+     <script src="~/js/select2.js"></script>
+     <script src="~/lib/trainer/js/createexamforstudent.js"></script>
+    <script>
+        $("#ExamDateTime").flatpickr({
+            enableTime: true, // Saat seçeneğini etkinleştir
+            minDate: "today", // Bugünden önceki tarihleri devre dışı bırak
+            dateFormat: "d/m/Y H:i", // Düzeltilmiş format
+            locale: "tr", // Türkçe dil desteği
+            time_24hr: true // 24 saat formatını kullan
+        });
+    </script>
+    <script>
+
+        $("#ExamDuration").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            allowInput: false,
+            onOpen: function (selectedDates, dateStr, instance) {
+                const examDurationValue = $('#ExamDuration').val();
+                // Eğer bir değer varsa, mevcut değeri Flatpickr'a ayarla
+                if (examDurationValue) {
+                    instance.setDate(examDurationValue);
+                }
+
+                // Eğer alan readonly ise Flatpickr'ı açmayı engelle
+                if ($('#ExamDuration').prop('readonly')) {
+                    instance.close();
+                }
+               
+            }
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+    var classroomStudents = {};
+    var selectedStudents = [];
+
+    $('#ExamClassroomsIds').on('change', function () {
+        var selectedClassrooms = $(this).val();
+
+        selectedStudents = $('#studentSelect').val() || [];
+
+        var allStudents = [];
+        selectedClassrooms.forEach(function (classroomId) {
+            if (classroomStudents[classroomId]) {
+                allStudents = allStudents.concat(classroomStudents[classroomId]);
+            } else {
+                $.ajax({
+                    url: '/Trainer/Exam/GetStudentsByClassroom',
+                    type: 'GET',
+                    data: { classroomId: classroomId },
+                    success: function (students) {
+                        classroomStudents[classroomId] = students;
+                        allStudents = allStudents.concat(students);
+                        updateStudentSelect(allStudents);
+                    }
+                });
+            }
+        });
+
+        updateStudentSelect(allStudents);
+    });
+
+    function updateStudentSelect(students) {
+        var studentSelect = $('#studentSelect');
+        studentSelect.empty();
+
+        students.forEach(function (student) {
+            var isSelected = selectedStudents.indexOf(student.value) > -1;
+            var newOption = new Option(student.text, student.value, isSelected, isSelected);
+            studentSelect.append(newOption);
+        });
+
+        studentSelect.trigger('change');
+    }
+
+    var switchElement = $("#ogrenci");
+    var studentArea = $("#studentArea");
+    var ogrenciLabel = $("#ogrenciLabel");
+    var sinifLabel = $("#sinifLabel");
+
+    switchElement.on('change', function () {
+        if ($(this).is(':checked')) {
+            studentArea.hide();
+            sinifLabel.css('font-weight', 'bold');
+            ogrenciLabel.css('font-weight', 'normal');
+        } else {
+            studentArea.show();
+            ogrenciLabel.css('font-weight', 'bold');
+            sinifLabel.css('font-weight', 'normal');
+        }
+    });
+
+    if (switchElement.is(':checked')) {
+        studentArea.hide();
+        sinifLabel.css('font-weight', 'bold');
+        ogrenciLabel.css('font-weight', 'normal');
+    } else {
+        studentArea.show();
+        ogrenciLabel.css('font-weight', 'bold');
+        sinifLabel.css('font-weight', 'normal');
+    }
+});
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#ExamRuleId').change(async function () {
+                const selectedRuleId = $(this).val();
+
+                if (selectedRuleId) {
+                    
+                    $('#loader-notification').show();
+
+                    try {
+                        const response = await $.ajax({
+                            url: '@Url.Action("GetTotalTimeByRule", "Exam")',
+                            type: 'GET',
+                            data: { examRuleId: selectedRuleId }
+                        });
+                        $('#ExamDuration').val(response.totalTime);
+                    } catch (error) {
+                        alert('@ViewLocalizer["ErrorCalculatingTotalTime"]');
+                    } finally {
+                        $('#loader-notification').hide();
+                    }
+                }
+            });
+        });
+
+        function parseTime(timeString) {
+            const parts = timeString.split(':');
+            const hours = parseInt(parts[0], 10) || 0;
+            const minutes = parseInt(parts[1], 10) || 0;
+            const seconds = parseInt(parts[2], 10) || 0;
+            if (seconds > 0) {
+                return (hours * 60) + minutes + 1;
+            }
+
+            return (hours * 60) + minutes;
+        }
+    </script>
+}
+

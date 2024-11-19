@@ -1,0 +1,32 @@
+﻿@model AdminBranchUpdateVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Update"];
+}
+
+<div class="modal fade" id="updateBranchModal" tabindex="-1" aria-labelledby="updateBranchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-controller="Branch" asp-action="Update" method="post" id="updateBranchForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateBranchModalLabel">@SharedLocalizer["Branch_Update"]</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3 form-floating">
+                        <input asp-for="Name" type="text" class="form-control" required>
+                        <label asp-for="Name" class="form-label mb-2">@SharedLocalizer["Branch_Name"]</label>
+                    </div>
+                    <input asp-for="Id" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary align-self-center ms-2" asp-controller="Branch" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+                    <button type="submit" class="btn btn-primary">@SharedLocalizer["Save"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

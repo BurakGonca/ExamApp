@@ -1,0 +1,358 @@
+﻿@model TrainerCombinedExamDetailsVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Exam_Detail"];
+    var examId = "";
+    var studentId = "";
+}
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<div class="exam-details-section">
+    <div class="card" id="kt_profile_details_view">
+        <!-- Card Header -->
+        <div class="card-header cursor-pointer">
+            <div class="card-title m-0">
+                <h3 class="fw-bolder m-0">@ViewLocalizer["Exam_Detail"]</h3>
+            </div>
+            <div style="margin-block:auto">
+                <a class="btn btn-primary text-center fs-5" type="button" asp-controller="Exam" asp-action="GetExamsByStatus">@SharedLocalizer["Back_List"]</a>
+            </div>
+        </div>
+
+        <!-- Card Body for Exam Details -->
+        <div class="card-body p-9">
+            <div class="row mb-7">
+                <label class="col-lg-4 fw-bold text-muted">
+                    <label asp-for="ExamDetail.Name"></label>
+                </label>
+                <div class="col-lg-8">
+                    <span class="fw-bolder fs-6 text-gray-800">@Model.ExamDetail.Name</span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="col-lg-4 fw-bold text-muted">
+                    <label asp-for="ExamDetail.ExamType"></label>
+                </label>
+                <div class="col-lg-8 fv-row">
+                    <span class="fw-bold text-gray-800 fs-6">@Model.ExamDetail.ExamType</span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="col-lg-4 fw-bold text-muted">
+                    <label asp-for="ExamDetail.ExamDuration"></label>
+                </label>
+                <div class="col-lg-8 fv-row">
+                    <span class="fw-bold text-gray-800 fs-6">@($"{Model.ExamDetail.ExamDuration.Hours:D2}:{Model.ExamDetail.ExamDuration.Minutes:D2}")</span>                    
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="col-lg-4 fw-bold text-muted">
+                    <label asp-for="ExamDetail.ExamDateTime"></label>
+                </label>
+                <div class="col-lg-8 fv-row">
+                    <span class="fw-bold text-gray-800 fs-6">@Model.ExamDetail.ExamDateTime</span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="col-lg-4 fw-bold text-muted">
+                    <label asp-for="ExamDetail.BonusScore"></label>
+                </label>
+                <div class="col-lg-8 fv-row">
+                    <span class="fw-bold text-gray-800 fs-6">@Model.ExamDetail.BonusScore</span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="col-lg-4 fw-bold text-muted">
+                    <label asp-for="ExamDetail.ExamRuleName"></label>
+                </label>
+                <div class="col-lg-8 fv-row">
+                    <span class="fw-bold text-gray-800 fs-6">@Model.ExamDetail.ExamRuleName</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<!-- Table Listing Section -->
+<div class="table-listing-section">
+    <div class="card" id="kt_profile_details_view">
+        <!-- Card Body for Table Listing -->
+        <div class="card-body p-9">
+            <h1 class="anchor fw-bold mb-5" id="server-side">
+                <h5 class="card-title">@SharedLocalizer["Student_Exam_List"]</h5>
+            </h1>
+            <div class="d-flex flex-stack flex-wrap mb-5">
+                <!--begin::Search-->
+                <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <input type="text" id="searchInput" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="@SharedLocalizer["Search"]" />
+                </div>
+                <!--end::Search-->
+                <!--begin::Toolbar-->
+                <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+                    <!--begin::Filter-->
+                    <!--end::Menu 1-->
+                    <!--end::Filter-->
+                    <!--begin::Add customer-->
+
+                </div>
+            </div>
+            <table id="kt_datatable_example_1" class="table table-row-dashed fs-6 gy-5">
+                <!-- Table Headers -->
+                <thead>
+                    <tr class="categories text-left">
+                        <td class="text-left fw-bold text-black">@SharedLocalizer["Full_Name"]</td>
+                        <td class="text-left fw-bold text-black">@SharedLocalizer["Classroom"]</td>
+                        <td class="text-left fw-bold text-black">@SharedLocalizer["Student_Score"] / @SharedLocalizer["Max_Score"]</td>
+                        <td class="text-left fw-bold text-black">@ViewLocalizer["Quiz_Report"]</td>
+                        <td class="text-left fw-bold text-black">@ViewLocalizer["Rate_Student"]</td>
+                        <td class="text-left fw-bold text-black">@ViewLocalizer["Quiz_Detail"]</td>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-bold">
+                    @foreach (var item in Model.StudentExamDetails)
+                    {
+                        <tr>
+                            <!-- Student Name -->
+                            <td class="text-left">@item.StudentName</td>
+
+                            <!-- Classroom Name -->
+                            <td class="text-left">
+                                @{
+                                    var classNames = new List<string>();
+                                    foreach (var classroomName in item.ClassroomNames)
+                                    {
+                                        if (item.ExamName.Contains(classroomName))
+                                        {
+                                            classNames.Add(classroomName);
+                                        }
+                                    }
+
+                                    @string.Join(" ,  ", classNames)
+                                }
+                            </td>
+
+                            <!-- Student Score -->
+                            <td class="text-left">
+                                @if (item.Score == null)
+                                {
+                                    <span class="text-danger">
+                                        @if (item.ExcuseDescription == null)
+                                        {
+                                            <b>@ViewLocalizer["No_Excuse"]</b>
+                                        }
+                                        else if (item.RetakeExam)
+                                        {
+                                            <b class="text-warning">@ViewLocalizer["Excused_Approved"]</b>
+                                        }
+                                        else
+                                        {
+                                            <b class="text-warning">@ViewLocalizer["Made_Excuse"]</b>
+                                        }
+                                    </span>
+                                }
+                                else
+                                {
+                                    @Html.Raw($"{item.Score} / {item.MaxScore}")
+                                }
+                            </td>
+
+                            <!-- Exam Result Button -->
+                            <td class="text-left">
+                                @if (item.Score != null)
+                                {
+                                    <a class="btn btn-primary fs-5" target="_blank" asp-controller="Exam" asp-action="GetExamResult" asp-route-studentExamId="@item.Id">@ViewLocalizer["Exam_Result"]</a>
+                                }
+                                else if (item.ExcuseDescription != null)
+                                {
+                                    <button id="btnExcuse"
+                                            type="button"
+                                            class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#kt_modal_excuse_detail"
+                                            data-excuse-description="@item.ExcuseDescription"
+                                            data-exam-id="@item.Id"
+                                            data-student-id="@item.StudentId"
+                                            data-isConfirmedExcuse="@item.RetakeExam">
+                                        @ViewLocalizer["Excuse_Detail"]
+                                    </button>
+                                }
+                                else
+                                {
+
+                                }
+                            </td>
+
+                            
+                            <!-- Assessment Button -->
+                            <td class="text-left">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_assessment_student" data-studentid="@item.StudentId" data-studentname="@item.StudentName">@ViewLocalizer["Assess_Student"]</button>
+                            </td>
+                            <td class="text-left">
+                                @if (item.Score != null)
+                                {
+                                    <a class="btn btn-primary fs-5" target="_blank" asp-controller="Exam" asp-action="GetExamDetails" asp-route-studentExamId="@item.Id">@ViewLocalizer["Exam_Detail"]</a>
+                                }
+                                else
+                                {
+                                    <span class="text-danger"><b>@ViewLocalizer["Not_Available_Report"]</b></span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Partial Views for Student Assessment and Excuse Details -->
+<partial name="~/Areas/Trainer/Views/Exam/_AssessmentStudentPartial.cshtml" model="new StudentExamAssessmentVM{ExamId = Model.ExamDetail.Id}" />
+<partial name="~/Areas/Trainer/Views/Exam/_ExcuseDetailPartialView.cshtml" />
+
+<!-- Scripts -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/newlayouts/src/js/components/util.js"></script>
+<script src="~/newlayouts/src/js/custom/apps/user-management/users/view/assessment-student.js"></script>
+@section Scripts {
+   <script charset="UTF-8">
+
+        $(document).ready(function () {
+            var dt = $("#kt_datatable_example_1").DataTable({
+                lengthMenu: [10, 25, 50, 100],
+                dom:
+                    '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: '@SharedLocalizer["No_Data"]',
+                    infoEmpty: "Gösterilecek hiçbir kayıt yok",
+                    infoFiltered: "(toplam _MAX_ kayıt içerisinden filtrelenmiştir)",
+                    zeroRecords: "Eşleşen kayıt bulunamadı"
+                }
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_1_length"]', function () {
+                dt.page.len($(this).val()).draw();
+                $(this).css({
+                    'border': '0 solid transparent',
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+                });
+            });
+
+            $('body').on('keyup', 'input[data-kt-docs-table-filter="search"]', function () {
+                dt.search($(this).val()).draw();
+            });
+
+            dt.on('draw.dt', function () {
+                updateInfoText(dt.page.info());
+            });
+
+            $(document).ready(function () {
+                $('[data-bs-toggle="tooltip"]').tooltip({
+                    title: function () {
+                        return $(this).attr('data-bs-original-title');
+                    }
+                });
+            });
+
+            function updateInfoText(pageInfo) {
+                var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+                $('#kt_datatable_example_1_info').html(infoText).css({
+                    'margin-top': '6px',
+                    'font-size': '14px',
+                    'font-family': 'Poppins, Helvetica, sans- serif',
+
+                });
+            }
+            updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+                var prevButton = $('#kt_datatable_example_1_previous a');
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_example_1_next a');
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_example_1_paginate .page-item');
+
+                var activePage = $('#kt_datatable_example_1_paginate .page-item.active a');
+                activePage.css({
+                    'color': '#ffffff'
+                });
+
+                pageButtons.not('.active').hover(
+                    function () {
+                        $(this).find('a').css({
+                            'color': '#your_desired_color'
+                        });
+                    },
+                    function () {
+                        $(this).find('a').css({
+                            'color': ''
+                        });
+                    }
+                );
+            }
+            updatePaginationArrows();
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+        });
+    </script>
+    <script src="~/newlayouts/src/js/custom/documentation/search.js"></script>
+    <script src="~/newlayouts/dist/assets/js/custom/documentation/documentation.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+       
+
+
+        
+
+        // Modal açılırken excuse description ve ID'leri al
+        $('.btn-primary[data-bs-toggle="modal"]').on('click', function () {
+            
+            var excusedescription = $(this).data('excuse-description');
+            examId = $(this).data('exam-id');   // Exam ID'yi burada alıyoruz
+            studentId = $(this).data('student-id'); // StudentExam ID'yi burada alıyoruz
+
+           
+
+            // Excuse description'u modal içinde göster
+            $('#excuse-detail').text(excusedescription);
+
+        });
+
+        // Değerlendir butonuna tıklanınca sessionStorage'ı temizle ve yeni verileri ekle
+        $('#btnExcuse').on('click', function () {
+            // Session storage'ı tamamen temizle
+            sessionStorage.clear();
+
+            // Yeni ID'leri sessionStorage'a ekle
+            sessionStorage.setItem('examId', examId);
+            sessionStorage.setItem('studentId', studentId);
+
+            // Kaydedildiğini doğrulamak için
+            console.log("Exam ID: " + sessionStorage.getItem('examId'));
+            console.log("Student ID: " + sessionStorage.getItem('studentId'));
+
+            // Burada başka işlemler de yapabilirsin, örneğin form submit veya AJAX request gibi
+        });
+    </script>
+
+}
+

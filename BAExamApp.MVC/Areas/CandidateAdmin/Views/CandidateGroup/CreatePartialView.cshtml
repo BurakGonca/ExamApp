@@ -1,0 +1,61 @@
+﻿@model CandidateGroupAddVM
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Create", SharedLocalizer["Group"]];
+}
+
+<div class="modal fade" id="createCandidateGroupModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered mw-1000px">
+		<div class="modal-content">
+			<div class="modal-header" id="kt_modal_create_subtopic_header">
+				<h2 class="fw-bolder">@SharedLocalizer["Create", SharedLocalizer["Group"]]</h2>
+				<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+					<span class="svg-icon svg-icon-1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+							<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+						</svg>
+					</span>
+				</div>
+			</div>
+			<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+				<form asp-action="Create" id="kt_modal_create_candidate_group_form" class="form" enctype="multipart/form-data">
+					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_create_subtopic_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+						<div class="row">
+
+							<div class="fv-row form-floating mb-7">
+								<div class="fv-row form-floating mb-7">
+									<input asp-for="Name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="@SharedLocalizer["Create_New"]" />
+									<label asp-for="Name" class="required fw-bold fs-6 mb-2">@SharedLocalizer["Name"]</label>
+									<span asp-validation-for="Name" class="text-danger"></span>
+								</div>
+								<div class="fv-row form-floating mb-7">
+									<select id="mySelectTechnicalUnits" asp-for="CandidateBranchId" asp-items="@ViewBag.BranchList" class="form-select form-select-sm form-select-solid">
+										<option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+									</select>
+									<!--end::Select-->
+									<!--begin::Label-->
+									<label asp-for="CandidateBranchId" class="required fw-bold fs-6 mb-2">@ViewLocalizer["Branch_Choose"]</label>
+									<!--end::Label-->
+									<!--begin::Select-->
+									<span asp-validation-for="CandidateBranchId" class="text-danger"></span>
+								</div>
+
+							</div>
+						</div>
+						<div class="text-center pt-15">
+							<button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">@SharedLocalizer["Back_List"]</button>
+							<button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+								<span class="indicator-label">@SharedLocalizer["Save"]</span>
+								<span class="indicator-progress">
+									@SharedLocalizer["Please_Wait"]
+									<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+								</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

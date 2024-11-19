@@ -1,0 +1,15 @@
+﻿.product-card {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+    .product-card .checkbox-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+        .product-card .checkbox-row:nth-child(odd) {
+            background-color: #04b0f4;
+        }

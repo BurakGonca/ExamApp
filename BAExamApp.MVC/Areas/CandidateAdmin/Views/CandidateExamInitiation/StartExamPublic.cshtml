@@ -1,0 +1,123 @@
+﻿@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateCandidateVMs
+@{
+    ViewData["Title"] = SharedLocalizer["Exam"];
+    Layout = "";
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>@ViewData["Title"]</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+    <div id="root">
+
+        <main>
+
+
+            @if (@ViewData["examId"] != default || @ViewData["examRuleId"] != default)
+            {
+
+                <div class="container position-absolute top-50 start-50 translate-middle">
+                    <div class="row bg-light p-lg-5 py-5 w-100 text-center">
+                        <div class="col col-lg-6 " style="align-content:center">
+                            <h3 class="text-center">Sınava girebilmek için bilgilerinizi girmeniz gerekiyor.</h3>
+                        </div>
+
+                        <div class="col col-lg-6">
+                            @using (Html.BeginForm("StartExamPublic", "CandidateExamInitiation", FormMethod.Post, new { id = "examForm" }))
+                            {
+                             
+                                <input placeholder="E-Mail" name="mail" class="form-control form-control-lg row mb-3" type="email" required">
+                                <input placeholder="İsim" name="name" class="form-control form-control-lg row mb-3"  required">
+                                <input placeholder="Soyisim" name="surname" class="form-control form-control-lg row mb-3"  required">
+                                <input type="hidden" name="examId" value="@ViewData["examId"]" />
+                                <input type="hidden" name="examRuleId" value="@ViewData["examRuleId"]" />
+                                <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">@SharedLocalizer["Login"]</button>
+                            }
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+          
+
+            }
+            else
+            {
+                <div class="container position-absolute top-50 start-50 translate-middle">
+                    <div class="row bg-light p-lg-5 py-5 w-100 text-center">
+                        <h3 class="text-center">Geçersiz link!</h3>
+                    </div>
+                </div>
+            }
+
+
+        </main>
+
+        <footer>
+            <div class="logo-ba">
+                <img src="~/images/BATeknoloji_Logo_RGB.png"
+                     alt="Bilgeadam Teknoloji" />
+            </div>
+        </footer>
+    </div>
+    <partial name="~/Areas/CandidateAdmin/Views/CandidateExamInitiation/Create.cshtml" model="new CandidateCandidateCreateVM()"></partial>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    @if (TempData["ShowPopUp"] != null && (bool)TempData["ShowPopUp"])
+    {
+
+        <div class="modal" id="noCandidateModal" tabindex="-1" aria-labelledby="noCandidateModalLabel" aria-hidden="true" style="display: block; background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="noCandidateModalLabel">Aday Bulunamadı</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Sistemde böyle bir mail ile kayıtlı bir aday yok. Yeni bir aday oluşturmak ister misiniz?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Geri Dön</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="showRegisterModal()">Kayıt Ol</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <script>
+            var noCandidateModal = new bootstrap.Modal(document.getElementById('noCandidateModal'));
+            noCandidateModal.show();
+
+
+            function showRegisterModal() {
+                var registerModal = new bootstrap.Modal(document.getElementById('kt_modal_add_user'));
+                registerModal.show();
+            }
+
+
+        </script>
+    }
+</body>
+
+
+</html>

@@ -1,0 +1,301 @@
+﻿@using BAExamApp.MVC.Areas.Trainer.Models.ExamEvaluatorVMs;
+@model IEnumerable<TrainerExamEvaluatorListVM>
+
+@{
+    ViewData["Title"] = SharedLocalizer["Exam_Evaluator_List"];
+}
+
+<head>
+    <link href="~/css/classroom-filter.css" rel="stylesheet" />
+    <link href="~/newlayouts/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/newlayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<section class="m-0 section dashboard">
+    <div class="p-0 mb-2 card card-docs flex-row-fluid" id="kt_docs_content_card">
+        <div class="px-10 text-gray-700 card-body fs-6 py-15 py-lg-15 px-lg-15">
+            <div class="d-flex justify-content-between">
+
+                <h5 style="display: flex; align-items: center;">
+                    @SharedLocalizer["Exam_Evaluator_List"]
+
+                    <span class="material-symbols-outlined" style="margin-left: 5px; font-size: 130%; " data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@SharedLocalizer["Exam_Filter_Warning"]">
+
+                        info
+
+                    </span>
+
+                </h5>
+            </div>
+            <div>
+                <div data-kt-docs-table-toolbar="base">
+                    <form class="formClassroom" asp-area="Trainer" asp-controller="Exam" asp-action="TrainerEvaluatorExamListFilter" method="post" onsubmit="return onSubmitForm()">
+                        <div class="flex-row classroomfilter">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="mb-2 form-floating">
+                                        <select class="form-select form-select-solid" data-control="select2" id="className" name="className" asp-items="ViewBag.className">
+                                            <option value="" disabled selected> @SharedLocalizer["Choose"]</option>
+                                        </select>
+                                        <label>@SharedLocalizer["Classroom_Name"]</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="mb-5 form-floating">
+                                        <select class="form-select form-select-solid" data-control="select2" id="ruleName" name="ruleName" asp-items="ViewBag.ruleName">
+                                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                        </select>
+                                        <label>@SharedLocalizer["Exam_Rule"]</label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 col-md-2">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control form-control-solid" name="startDate" placeholder="@SharedLocalizer["Start_Time"]" id="openingDate" />
+                                        <label>@SharedLocalizer["Start_Time"]</label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 col-md-2">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control form-control-solid" name="endDate" placeholder="@SharedLocalizer["End_Time"]" id="closedDate" />
+                                        <label>@SharedLocalizer["End_Time"]</label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 col-md-2">
+                                    <button type="submit" id="searchButton" class="btn btn-primary hover-elevate-up">@ViewLocalizer["Getir"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="kt_datatable_example_1_wrapper" class="dataTables_wrapper dt-bootstrap-4 no-footer">
+                <div class="table-responsive">
+                    @if (ViewBag.ShowAllData == false)
+                    {
+                    }
+                    else
+                    {
+                        <table id="kt_datatable_example_1" class="table align-middle table-row-dashed min-h-400px fs-6 gy-5">
+
+                            <thead>
+
+                                <tr class="text-gray-400 text-start fw-bolder fs-7 text-uppercase gs-0">
+
+                                    <th>@Html.DisplayNameFor(model => model.ClassroomNames)</th>
+                                    <th>@Html.DisplayNameFor(model => model.ExamName)</th>
+                                    <th>@Html.DisplayNameFor(model => model.ExamDateTime)</th>
+                                    <th>@Html.DisplayNameFor(model => model.ExamDuration)</th>
+                                    <th>@SharedLocalizer["Transactions"]</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-bold ">
+
+                                @foreach (var exam in Model)
+                                {
+                                    if (!string.IsNullOrEmpty(exam.ExamName))
+                                    {
+                                        <tr>
+                                            <td class="text-left categories">
+
+                                                <a>
+                                                    @foreach (var clasRoom in @exam.ClassroomNames)
+                                                    {
+                                                        <span class="post_category">@clasRoom</span>
+                                                    }
+                                                </a>
+
+
+                                            </td>
+                                            <td class="text-left categories">
+                                                <a>
+                                                    <span class="post_category">@exam.ExamName</span>
+                                                </a>
+                                            </td>
+
+                                            <td class="text-center categories">
+                                                <a>
+                                                    <span class="post_category">@exam.ExamDateTime.ToShortDateString()</span>
+                                                </a>
+                                            </td>
+
+                                            <td class="text-center categories">
+                                                <a>
+                                                    <span class="post_category">@($"{exam.ExamDuration.Hours:D2}:{exam.ExamDuration.Minutes:D2}")</span>
+                                                </a>
+                                            </td>
+
+
+
+
+                                            <td class="text-center">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        @SharedLocalizer["Options"]
+                                                        <span class="m-0 svg-icon fs-5">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                                    <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="currentColor" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                                        @* Bu kısım halihazırda yorumda olduğu için yorumda bırakıyorum. *@
+@*                                                         @if (exam.ExamDateTime > DateTime.Now)
+                                                        {
+                                                            <li><a class="dropdown-item" href="#" onclick="startLoaderAndStartExam('@exam.Id')">@SharedLocalizer["Start_Exam"]</a></li>
+                                                        }
+                                                        @if (exam.ExamDateTime > DateTime.Now)
+                                                        {
+                                                            <li><a class="dropdown-item" href="#" onclick="loadExamData('@exam.Id')" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">@ViewLocalizer["Update_Exam"]</a></li>
+                                                        }
+                                                        <li><a class="dropdown-item" asp-action="Details" asp-route-id="@exam.Id">@SharedLocalizer["Details"]</a></li>
+                                                        <li><a class="dropdown-item" href="#" onclick="deleteExam('@exam.Id')">@SharedLocalizer["Delete"]</a></li> *@
+                                                    </ul>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+            </div>
+            <!--end::Datatable-->
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            // Sayfa kaydırıldığında çalışacak scroll olayını dinle
+            $(window).on('scroll', function () {
+                // Bootstrap'in dropdown metodu ile açık olan tüm dropdown menülerini kapat
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            var dt = $("#kt_datatable_example_1").DataTable({
+                ordering: false,
+                pageLength: 25, // Set default page length to 25
+                lengthMenu: [10, 25, 50, 100], // Include 25 in length menu options
+                dom:
+                    '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: "Tabloda herhangi bir veri bulunmamaktadır",
+                    infoEmpty: "Gösterilecek hiçbir kayıt yok",
+                    infoFiltered: "(toplam _MAX_ kayıt içerisinden filtrelenmiştir)",
+                    zeroRecords: "Eşleşen kayıt bulunamadı",
+                },
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_1_length"]', function () {
+                dt.page.len($(this).val()).draw();
+                $(this).css({
+                    'border': '0 solid transparent',
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+
+                });
+
+            });
+
+            dt.on('draw.dt', function () {
+                updateInfoText(dt.page.info());
+            });
+
+            function updateInfoText(pageInfo) {
+                var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+                $('#kt_datatable_example_1_info').html(infoText).css({
+                    'margin-top': '6px',
+                    'font-size': '14px',
+                    'font-family': 'Poppins, Helvetica, sans- serif',
+                });
+            }
+
+            updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+                var prevButton = $('#kt_datatable_example_1_previous a');
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_example_1_next a');
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_example_1_paginate .page-item');
+
+                var activePage = $('#kt_datatable_example_1_paginate .page-item.active a');
+                activePage.css({
+                    'color': '#ffffff'
+                });
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+
+        });
+        $(document).ready(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip({
+                title: function () {
+                    return $(this).attr('data-bs-original-title');
+                }
+            });
+        });
+        function onSubmitForm() {
+            var searchButton = document.getElementById("searchButton");
+
+            var nameSelect = document.getElementById("name");
+            var branchSelect = document.getElementById("branchName");
+            var groupTypeSelect = document.getElementById("groupType");
+            var openingDateInput = document.getElementById("openingDate");
+            var closedDateInput = document.getElementById("closedDate");
+            if (!nameSelect.value && !branchSelect.value && !groupTypeSelect.value && !openingDateInput.value && !closedDateInput.value) {
+                window.location.href = "@Url.Action("Index", new { showAllData = true })";
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var divElements = document.querySelectorAll('div');
+
+            divElements.forEach(function (divElement) {
+                var selectElement = divElement.querySelector('select');
+
+            });
+
+            function sortSelectOptionsAlphabetically(selectElement) {
+
+                var options = Array.from(selectElement.options);
+
+                options.sort(function (a, b) {
+                    return a.text.localeCompare(b.text);
+                });
+
+                options.forEach(function (option) {
+                    selectElement.add(option);
+                });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,39 @@
+﻿@model AdminQuestionDifficultyUpdateVM
+@{
+    ViewData["Title"] = ViewLocalizer["QuestionDifficulty_Update"];
+}
+
+<form asp-action="Update">
+    <input asp-for="Id" hidden />
+    <div class="fv-row mb-7 fv-plugins-icon-container">
+        <label asp-for="Name" class="col-lg-5 fw-bolder "></label>
+        <div class="row mb-7">
+            <input type="text" asp-for="Name" class="form-control form-control-lg form-control-solid" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-7">
+        <label asp-for="TimeGiven" class="col-lg-5 fw-bolder "></label>
+        <div class="col-lg-10">
+            <input type="time" asp-for="TimeGiven" class="form-control form-control-lg form-control-solid" step="1" value="@Model.TimeGiven" />
+            <span asp-validation-for="TimeGiven" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-7">
+        <label asp-for="ScoreCoefficient" class="col-lg-5 fw-bolder "></label>
+        <div class="col-lg-10">
+            <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" asp-for="ScoreCoefficient" class="form-control form-control-lg form-control-solid" step="1" value="@Model.ScoreCoefficient" />
+            <span asp-validation-for="ScoreCoefficient" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+            @SharedLocalizer["Update"]
+        </button>
+    </div>
+</form>
+<script src="~/js/jquery.min.js"></script>
+
+
+
+

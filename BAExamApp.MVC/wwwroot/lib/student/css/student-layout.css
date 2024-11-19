@@ -1,0 +1,103 @@
+﻿/*Accordion management*/
+
+#accordion-item-icon {
+    font-size: 2.25rem;
+}
+
+#accordion-item-text {
+    font-size: 14px;
+}
+
+    #accordion-item-text::before {
+        content: " ";
+        margin-right: 10px;
+    }
+
+#accordion-subitem-icon {
+    font-size: 1.50rem;
+}
+
+#accordion-subitem-text {
+    font-size: 14px;
+    color: #0F0E0E
+}
+
+    #accordion-subitem-text::before {
+        content: " ";
+        margin-right: 5px;
+    }
+
+#accordionBar {
+    overflow-y: auto;
+    flex-direction: column;
+    display: flex;
+}
+
+#accordion-body-subitem {
+    text-align: center;
+    background-color: #ECECEC;
+    color: black;
+    font-size: 15px;
+}
+
+    #accordion-body-subitem:hover {
+        background-color: #423F3E;
+    }
+
+        #accordion-body-subitem:hover #accordion-subitem-text {
+            color: #F0F0F0;
+        }
+
+
+/* Accordion collapses*/
+#collapseOne {
+    background-color: #423F3E;
+}
+
+#collapseTwo {
+    background-color: #423F3E;
+}
+
+#collapseThree {
+    background-color: #423F3E;
+}
+
+/*Accordion subitem centering*/
+
+#student-accordion-column {
+    padding: 10px;
+    text-align: center;
+}
+
+/*Page Management*/
+
+#student-menu-main.menu_main_wrap {
+    background-color: #D1D1D1;
+}
+
+#student-copyright-wrap-footer {
+    padding: 10px;
+    background-color: #c8c7c5;
+    align-content: flex-end;
+}
+
+#student-layout-page-wrap {
+    background-color: #F0F0F0;
+}
+/*Header and logo background management*/
+#student-menu-user-wrap {
+    background-color: #423F3E;
+}
+
+#student-menu-logo {
+    background-color: #423F3E;
+}
+
+#student-menu-logo-image {
+    background-color: #423F3E;
+}
+
+/*Footer Design*/
+#student-footer-main-text {
+    color: #0F0E0E
+}

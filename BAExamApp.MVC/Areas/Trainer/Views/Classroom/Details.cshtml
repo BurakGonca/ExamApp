@@ -1,0 +1,518 @@
+﻿@model TrainerClassroomDetailsVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Classroom"];
+}
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+<style>
+    .exam-name {
+        position: relative;
+        cursor: pointer;
+    }
+
+        .exam-name:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+            white-space: nowrap;
+            z-index: 1000;
+            display: block;
+            pointer-events: none; 
+            box-shadow: none;
+            text-decoration: none; 
+        }
+
+        .exam-name::after {
+            display: none;
+        }
+</style>
+
+<div class="card justify-content-center">
+    <div class="card-header card-header-stretch">
+        <h3 class="card-title">@Model.Name @ViewLocalizer["Classroom_Details"]</h3>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">@SharedLocalizer["Classroom_Details"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9">@SharedLocalizer["Students"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_10">@SharedLocalizer["Products"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_11">@SharedLocalizer["Exams"]</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="card-body p-9">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_7" role="tabpanel">
+
+                <div class=" row mb-7">
+                    <label class="col-lg-4 fw-bold text-muted">
+                        <span class="post_category">@SharedLocalizer["Opening_Date"]:</span>
+                    </label>
+                    <div class="col-lg-3">
+                        <span class="fw-bolder fs-6 text-gray-800">@Model.OpeningDate.ToShortDateString()</span>
+                    </div>
+                </div>
+
+                <div class=" row mb-7">
+                    <label class="col-lg-4 fw-bold text-muted">
+                        <span class="post_category">@SharedLocalizer["Closed_Date"]:</span>
+                    </label>
+                    <div class="col-lg-8">
+                        <span class="fw-bolder fs-6 text-gray-800">@Model.ClosedDate.ToShortDateString()</span>
+                    </div>
+                </div>
+
+                <div class=" row mb-7">
+                    <label class="col-lg-4 fw-bold text-muted">
+                        <span class="post_category">@SharedLocalizer["Group_Type"]:</span>
+                    </label>
+                    <div class="col-lg-8">
+                        <span class="fw-bolder fs-6 text-gray-800">@Model.GroupTypeName</span>
+                    </div>
+                </div>
+
+                <div class=" row mb-7">
+                    <label class="col-lg-4 fw-bold text-muted">
+                        <span class="post_category">@SharedLocalizer["Student_Count"]:</span>
+                    </label>
+                    <div class="col-lg-8">
+                        <span class="fw-bolder fs-6 text-gray-800">@Model.StudentClassroomList.Count</span>
+                    </div>
+                </div>            
+            </div>
+
+            <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
+                <table id="kt_datatable_students" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0">
+                            <td class="categories text-start">@SharedLocalizer["Student_Name"]</td>                       
+                        </tr>
+                    </thead>
+
+                    <tbody class="fw-bold">
+                        @foreach (var student in Model.StudentClassroomList)
+                        {
+
+                            <tr class="text-start fw-bolder text-uppercase">
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@student.StudentFullName</span>
+                                </td>                                                            
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="kt_tab_pane_10" role="tabpanel">
+                <table id="kt_datatable_products" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0">
+                            <td class="categories text-start">@SharedLocalizer["Product_Name"]</td>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-bold">
+                        @foreach (var productName in Model.ProductNames)
+                        {
+                            <tr class="text-start fw-bolder text-uppercase">
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@productName</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="kt_tab_pane_11" role="tabpanel">
+                <table id="kt_datatable_exams" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0">
+                            <td class="categories text-start">@SharedLocalizer["Exam_Name"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Rule"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Type"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Date_Time"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Duration"]</td>
+                            <td class="categories text-start"></td>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-bold">
+                        @foreach (var exam in Model.ExamClassroomList)
+                        {
+                            <tr class="text-start fw-bolder text-uppercase">
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category exam-name">@exam.ExamName</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@exam.ExamRule</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@exam.ExamType</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@exam.ExamDateTime.ToString("g")</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@exam.ExamDuration.ToString("hh\\:mm")</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <a class="exams-button" target="_blank" asp-controller="Classroom" asp-action="ExamAnalysis" asp-route-examId="@exam.ExamId">@SharedLocalizer["Show_Classroom_Success"]</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary hover-elevate-up ms-2" style="margin:6.5px">
+            <a class="text-white" asp-controller="Classroom" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+        </button>      
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Diğer tablolar için de aynı şekilde devam edin -->
+@section Scripts
+{
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script>
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+            Swal.fire({
+                title: 'Emin misiniz?',
+                text: "Bu işlem geri alınamaz!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Evet, sil!',
+                cancelButtonText: 'Vazgeç'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("Delete")" + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "@Url.Action("index")", 2000)
+                            }
+                        }
+                    });
+                }
+            })
+        });
+        $(document).ready(function () {
+
+            var dt = $("#kt_datatable_example_2").DataTable({
+
+                lengthMenu: [10, 25, 50, 100],
+
+                dom:
+
+                    '<"row"<"col-sm-12"t>>' +
+
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+
+                language: {
+
+                    emptyTable: "Tabloda herhangi bir veri bulunmamaktadır",
+
+                    infoEmpty: "Gösterilecek hiçbir kayıt yok",
+
+                    infoFiltered: "(toplam _MAX_ kayıt içerisinden filtrelenmiştir)",
+
+                    zeroRecords: "Eşleşen kayıt bulunamadı",
+
+                },
+
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_2_length"]', function () {
+
+                dt.page.len($(this).val()).draw();
+
+                $(this).css({
+
+                    'border': '0 solid transparent',
+
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+
+                });
+
+            });
+
+            dt.on('draw.dt', function () {
+
+                updateInfoText(dt.page.info());
+
+            });
+
+            function updateInfoText(pageInfo) {
+
+                var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+
+                $('#kt_datatable_example_2_info').html(infoText).css({
+
+                    'margin-top': '6px',
+
+                    'font-size': '14px',
+
+                    'font-family': 'Poppins, Helvetica, sans- serif',
+
+                });
+
+            }
+
+            updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+
+                var prevButton = $('#kt_datatable_example_2_previous a');
+
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_example_2_next a');
+
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_example_2_paginate .page-item');
+
+                var activePage = $('#kt_datatable_example_1_paginate .page-item.active a');
+
+                activePage.css({
+
+                    'color': '#ffffff'
+
+                });
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw.dt', function () {
+
+                updatePaginationArrows();
+
+            });
+
+        });
+
+        
+    </script>
+
+    
+
+    <script>
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+        $(document).ready(function () {
+
+            var dt = $("#kt_datatable_students").DataTable({
+                ordering: false,
+                pageLength: 25, // Set default page length to 25
+                lengthMenu: [10, 25, 50, 100], // Include 25 in length menu options
+                dom:
+                    '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords,
+                },
+            });
+
+            var dt = $("#kt_datatable_products").DataTable({
+                ordering: false,
+                pageLength: 25, // Set default page length to 25
+                lengthMenu: [10, 25, 50, 100], // Include 25 in length menu options
+                dom:
+                    '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords,
+                },
+            });
+
+            var dt = $("#kt_datatable_exams").DataTable({
+                ordering: false,
+                pageLength: 25, // Set default page length to 25
+                lengthMenu: [10, 25, 50, 100], // Include 25 in length menu options
+                dom:
+                    '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords,
+                },
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_exams_length"]', function () {
+                dt.page.len($(this).val()).draw();
+                $(this).css({
+                    'border': '0 solid transparent',
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+
+                });
+
+            });
+
+            // dt.on('draw.dt', function () {
+            //     updateInfoText(dt.page.info());
+            // });
+
+            // function updateInfoText(pageInfo) {
+            //     var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+            //     $('#kt_datatable_example_1_info').html(infoText).css({
+            //         'margin-top': '6px',
+            //         'font-size': '14px',
+            //         'font-family': 'Poppins, Helvetica, sans- serif',
+            //     });
+            // }
+
+            // updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+                var prevButton = $('#kt_datatable_exams_previous a');
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_exams_next a');
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_exams_paginate .page-item');
+
+                var activePage = $('#kt_datatable_exams_paginate .page-item.active a');
+                activePage.css({
+                    'color': '#ffffff'
+                });
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+
+        });
+        $(document).ready(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip({
+                title: function () {
+                    return $(this).attr('data-bs-original-title');
+                }
+            });
+        });
+        function onSubmitForm() {
+            var searchButton = document.getElementById("searchButton");
+
+            var nameSelect = document.getElementById("name");
+            var branchSelect = document.getElementById("branchName");
+            var groupTypeSelect = document.getElementById("groupType");
+            var openingDateInput = document.getElementById("openingDate");
+            var closedDateInput = document.getElementById("closedDate");
+            if (!nameSelect.value && !branchSelect.value && !groupTypeSelect.value && !openingDateInput.value && !closedDateInput.value) {
+                window.location.href = "@Url.Action("Index", new { showAllData = true })";
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var divElements = document.querySelectorAll('div');
+
+            divElements.forEach(function (divElement) {
+                var selectElement = divElement.querySelector('select');
+
+            });
+
+            function sortSelectOptionsAlphabetically(selectElement) {
+
+                var options = Array.from(selectElement.options);
+
+                options.sort(function (a, b) {
+                    return a.text.localeCompare(b.text);
+                });
+
+                options.forEach(function (option) {
+                    selectElement.add(option);
+                });
+            }
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            var examNames = document.querySelectorAll(".exam-name");
+            examNames.forEach(function (nameElement) {
+                var fullName = nameElement.textContent;
+                if (fullName.length > 35) {
+                    nameElement.textContent = fullName.substring(0, 35) + "...";
+                }
+                nameElement.setAttribute("data-title", fullName);
+            });
+
+            
+            var divElements = document.querySelectorAll('div');
+            divElements.forEach(function (divElement) {
+                var selectElement = divElement.querySelector('select');
+                if (selectElement) {
+                    sortSelectOptionsAlphabetically(selectElement);
+                }
+            });
+
+            function sortSelectOptionsAlphabetically(selectElement) {
+                var options = Array.from(selectElement.options);
+
+                options.sort(function (a, b) {
+                    return a.text.localeCompare(b.text);
+                });
+
+                
+                selectElement.innerHTML = "";
+                options.forEach(function (option) {
+                    selectElement.add(option);
+                });
+            }
+        });
+
+
+       
+    </script>
+
+    
+
+}
+
+
+
+

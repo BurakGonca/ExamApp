@@ -1,0 +1,104 @@
+﻿@model CandidateQuestionDetailsVM
+
+<head>
+    <link rel="stylesheet" href="~/css/candidateQuestion/candidateQuestionDetails.css" />
+</head>
+
+<div class="modal fade" id="kt_modal_details_question" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
+        <div class="modal-content">
+            <div class="modal-header" id="kt_modal_details_question_header">
+                <h3>@SharedLocalizer["Question_Detail"]</h3>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-question-details-modal-action="close">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <form asp-area="CandidateAdmin" asp-controller="CandidateQuestion" asp-action="Details" id="kt_modal_details_question_form" class="form" enctype="multipart/form-data">
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_details_question_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_details_question_header" data-kt-scroll-wrappers="#kt_modal_details_question_scroll" data-kt-scroll-offset="300px">
+                        <div class="row mb-3 fv-row">
+                            <input asp-for="Id" name="id" class="form-control" id="id" hidden />
+
+                            <div id="questionTypeContainer"></div>
+
+                            @* Oluşturulma Tarihi *@
+                            <div class="col-sm-12">
+                                <div class="fv-row form-floating mb-7">
+                                    <p class="form-control form-control-sm form-control-solid" id="CreatedDateDisplay"></p>
+                                  
+                                    <label class="fw-bold fs-6 mb-2">@SharedLocalizer["Created_Date"]  </label>
+                             
+                                </div>
+                            </div>
+
+
+
+                            @* Soru Tipi *@
+                            <div class="col-sm-12">
+                                <div class="fv-row form-floating mb-7">
+                                    <p class="form-control form-control-sm form-control-solid" id="CandidateQuestionTypeDisplay"></p>
+                                    <label class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Type"]</label>
+                                </div>
+                            </div>
+
+                            @* Soru Konusu *@
+                            <div class="col-sm-12">
+                                <div class="fv-row form-floating mb-7">
+                                    <p class="form-control form-control-sm form-control-solid" id="CandidateSubjectDisplay"></p>
+
+                                    <label class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Subject"]  </label>
+
+                                </div>
+                            </div>
+
+
+                            @* Soru İçeriği *@
+                            <div class="col-sm-12">
+                                <div class="fv-row form-floating mb-7">
+                                    <p class="form-control form-control-sm form-control-solid" id="ContentDisplay"></p>
+                                    <label class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Content"]</label>
+                                </div>
+                            </div>
+
+
+                            @* Soru Resmi ve Yanıtlar *@
+                            <div class="col-sm-6 flex-container" id="questionAndAnswersContainer">
+                                <div class="image-container-details" id="arrangeReason">
+                                    <label class="col-sm-6 col-form-label col-form-label-md" id="questionImageLabel">@SharedLocalizer["Question_Image"]</label>
+                                    <div class="fv-row form-floating mb-7">
+                                        <div class="image-input image-input-outline fv-row" data-kt-image-input="true" style="position: relative;">
+                                            <div style="display: flex; justify-content: flex-start">
+                                                <img id="defaultImage" style="display: none;" alt="Profile" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* Soru Yanıtları *@
+                                <div id="questionAnswersDiv">
+                                    <label id="questionAnswersLabel" class="col-sm-6 col-form-label col-form-label-lg" style="display: none;">
+                                        @SharedLocalizer["Question_Answers"]
+                                    </label>
+                                    <label id="questionAnswerLabel" class="col-sm-6 col-form-label col-form-label-lg" style="display: none;">
+                                        @SharedLocalizer["Question_Answer"]
+                                    </label>
+                                    <div id="questionAnswersDisplay"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-kt-question-details-modal-action="cancel">@SharedLocalizer["Back_List"]</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

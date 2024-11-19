@@ -1,0 +1,1015 @@
+﻿@using BAExamApp.MVC.Extensions
+@using System.Globalization
+@inject IServiceProvider ServiceProvider
+<!DOCTYPE html>
+<!--
+Author: Keenthemes
+Product Name: Metronic - Bootstrap 5 HTML, VueJS, React, Angular & Laravel Admin Dashboard Theme
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
+<!--begin::Head-->
+<head>
+
+    <base href="../../">
+    <title>BAExamApp</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
+    <meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme" />
+    <meta property="og:url" content="https://keenthemes.com/metronic" />
+    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="shortcut icon" href="~/media/logos/BALogoAkademi.ico" />
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Page Vendor Stylesheets(used by this page)-->
+    <link href="~/newLayouts/dist/assets/plugins/custom/datatables/datatables.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/newLayouts/dist/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/animation.css" />
+    <link rel="stylesheet" href="~/css/start-exam.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard/adminDashboard.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard/style.bundle.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard/style.bundle.rtl.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard/style.dark.bundle.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard/style.dark.bundle.rtl.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard/fullcalendar.bundle.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard/datatables.bundle.css" />
+
+
+
+    <!--end::Page Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    @* <link href="~/newLayouts/dist/assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" /> *@
+    <link href="~/newLayouts/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    @* <link href="~/newLayouts/dist/assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" /> *@
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    @* =================================================== *@
+    @* ASAGIDAKI DOSYALARIN HEPSI ESKI CSS DOSYALARI *@
+    @* =================================================== *@
+    @*<link href="~/lib/admin/css/style-min.css" rel="stylesheet" type='text/css' media='all' />
+    <link href="~/lib/admin/css/admin-layout.css" rel="stylesheet" type='text/css' media='all' />
+    <link rel="icon" type="image/x-icon" href="~/media/logos/BALogoAkademi.ico" />
+    <link href="~/css/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link rel='stylesheet' href='~/css/public.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/font-awesome.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/lib/fontello/css/fontello.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/style.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/shortcodes.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/core.animation.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/skin.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/responsive.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/custom.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='~/css/scheme-2.css' type='text/css' media='all' />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel='stylesheet' href='~/lib/font-awesome/css/all.css' type='text/css' />
+    <link rel='stylesheet' href='~/css/multiple-select-dropdownlist.css' type='text/css' />
+    <link href="~/css/dropdown-button.css" rel="stylesheet" />
+    <link href="~/css/branch-details-elements.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/w3.css" rel="stylesheet" />
+    <link href="~/css/productList.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/dataTable/assets/css/style.css" rel="stylesheet">
+    <link href="~/dataTable/assets/vendor/simple-datatables/style.css" rel="stylesheet">*@
+
+    <!--end::Global Stylesheets Bundle-->
+    @RenderSection("Styles", required: false)
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:5px;--kt-toolbar-height-tablet-and-mobile:5px">
+    <!--begin::Main-->
+    <!--begin::Root-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--loader-->
+            <partial name="~/Areas/Admin/Views/Animation/_LoaderAnimationPartialView.cshtml" />
+            <partial name="~/Areas/Admin/Views/Animation/_StartExamLoaderAnimationPartialView.cshtml" />
+
+            <!--begin::Aside-->
+            <div id="kt_aside" class="aside aside-light aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                <!--begin::Brand-->
+                <div class="aside-logo flex-column-auto" id="kt_aside_logo">
+                    <!--begin::Logo-->
+                    <a href="/Admin">
+                        <img alt="Logo" src="~/images/BilgeAdam_Teknoloji_YatayLogo.png" class="h-md-65px logo" />
+                    </a>
+                    <!--begin::Aside toggler-->
+                    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
+                        <span class="svg-icon svg-icon-1 rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.5" d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z" fill="currentColor" />
+                                <path d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Aside toggler-->
+                </div>
+                <!--end::Brand-->
+                <!--begin::Aside menu-->
+                <div class="aside-menu flex-column-fluid">
+                    <!--begin::Aside Menu-->
+                    <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+                        <!--begin::Menu-->
+                        <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
+
+
+                            <div data-kt-menu-trigger="click" id="userRolesAccordionMenu" class="menu-item menu-accordion" onclick="handleAccordionMenuClick('userRolesAccordionMenu')">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="1.0" d="M11 6C11 7.65685 9.65685 9 8 9C6.34315 9 5 7.65685 5 6C5 4.34315 6.34315 3 8 3C9.65685 3 11 4.34315 11 6Z" fill="currentColor" />
+                                                <path opacity="1.0" fill-rule="evenodd" clip-rule="evenodd" d="M0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8ZM8 1C4.13401 1 1 4.13401 1 8C1 9.65343 1.57326 11.173 2.53186 12.3707C3.24293 11.2252 4.80464 10 8.00001 10C11.1954 10 12.7571 11.2252 13.4681 12.3707C14.4267 11.173 15 9.65343 15 8C15 4.13401 11.866 1 8 1Z" fill="currentColor" />
+                                            </svg>
+
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">@SharedLocalizer["User_Roles"]</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <div class="menu-item" id="menuItemAdmin" onclick="handleMenuItemClick('menuItemAdmin')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Admin" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M4 16C4 16 3 16 3 15C3 14 4 11 8 11C12 11 13 14 13 15C13 16 12 16 12 16H4Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M8 10.05C9.38071 10.05 10.5 8.93072 10.5 7.55001C10.5 6.1693 9.38071 5.05001 8 5.05001C6.61929 5.05001 5.5 6.1693 5.5 7.55001C5.5 8.93072 6.61929 10.05 8 10.05Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M2 1C0.895431 1 0 1.89543 0 3V12.5C0 13.3284 0.671573 14 1.5 14H2.15288C2.32816 13.3735 2.66508 12.6544 3.21878 12H1V3C1 2.44772 1.44772 2 2 2H14C14.5523 2 15 2.44772 15 3V12H12.7812C13.3349 12.6544 13.6718 13.3735 13.8471 14H14.5C15.3284 14 16 13.3284 16 12.5V3C16 1.89543 15.1046 1 14 1H2Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Admins"]</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item" id="menuItemTrainers" onclick="handleMenuItemClick('menuItemTrainers')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Trainer" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M5 8C6.10457 8 7 7.10457 7 6C7 4.89543 6.10457 4 5 4C3.89543 4 3 4.89543 3 6C3 7.10457 3.89543 8 5 8Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M9 5.5C9 5.22386 9.22386 5 9.5 5H13.5C13.7761 5 14 5.22386 14 5.5C14 5.77614 13.7761 6 13.5 6H9.5C9.22386 6 9 5.77614 9 5.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M9 8C9 7.72386 9.22386 7.5 9.5 7.5H13.5C13.7761 7.5 14 7.72386 14 8C14 8.27614 13.7761 8.5 13.5 8.5H9.5C9.22386 8.5 9 8.27614 9 8Z" fill="currentColor" />
+                                                        <path opacity="0.8" d="M10 10.5C10 10.2239 10.2239 10 10.5 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H10.5C10.2239 11 10 10.7761 10 10.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M2 2C0.895431 2 0 2.89543 0 4V12C0 13.1046 0.895431 14 2 14H14C15.1046 14 16 13.1046 16 12V4C16 2.89543 15.1046 2 14 2H2ZM1 4C1 3.44772 1.44772 3 2 3H14C14.5523 3 15 3.44772 15 4V12C15 12.5523 14.5523 13 14 13H8.95949C8.98619 12.8367 9 12.6698 9 12.5C9 10.567 7.20914 9 5 9C2.91369 9 1.20043 10.3976 1.01637 12.1812C1.00562 12.1224 1 12.0619 1 12V4Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Trainers"]</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item" id="menuItemStudents" onclick="handleMenuItemClick('menuItemStudents')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Student" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M8.21144 2.04691C8.07742 1.98436 7.92258 1.98436 7.78856 2.04691L0.288558 5.54691C0.107914 5.63121 -0.00539504 5.81476 0.000197994 6.01403C0.005791 6.2133 0.129217 6.3902 0.314306 6.46424L7.81431 9.46424C7.93351 9.51192 8.06649 9.51192 8.1857 9.46424L14 7.13852V13C13.4477 13 13 13.4477 13 14V16H16V14C16 13.4477 15.5523 13 15 13V6.73852L15.6857 6.46424C15.8708 6.3902 15.9942 6.2133 15.9998 6.01403C16.0054 5.81476 15.8921 5.63121 15.7114 5.54691L8.21144 2.04691ZM8 8.46148L1.75802 5.96469L8 3.05176L14.242 5.96469L8 8.46148Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M4.17556 9.03184C4.04549 8.98306 3.90098 8.99059 3.77669 9.05264C3.6524 9.11468 3.55952 9.22564 3.52032 9.35892L3.02032 11.0589C2.94756 11.3063 3.07488 11.5685 3.31431 11.6642L7.81431 13.4642C7.93351 13.5119 8.06649 13.5119 8.1857 13.4642L12.6857 11.6642C12.9251 11.5685 13.0524 11.3063 12.9797 11.0589L12.4797 9.35892C12.4405 9.22564 12.3476 9.11468 12.2233 9.05264C12.099 8.99059 11.9545 8.98306 11.8244 9.03184L8 10.466L4.17556 9.03184ZM4.10803 10.9047L4.32795 10.157L7.82444 11.4682C7.93763 11.5106 8.06237 11.5106 8.17556 11.4682L11.6721 10.157L11.892 10.9047L8 12.4615L4.10803 10.9047Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Students"]</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item" id="menuItemApiUsers" onclick="handleMenuItemClick('menuItemApiUsers')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="ApiUser" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M11 5C11 6.65685 9.65685 8 8 8C6.34315 8 5 6.65685 5 5C5 3.34315 6.34315 2 8 2C9.65685 2 11 3.34315 11 5ZM8 7C9.10457 7 10 6.10457 10 5C10 3.89543 9.10457 3 8 3C6.89543 3 6 3.89543 6 5C6 6.10457 6.89543 7 8 7Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M8.25606 14C8.14314 13.6805 8.06527 13.3445 8.02708 12.9965H3C3.00142 12.7497 3.15375 12.0104 3.8321 11.3321C4.48435 10.6798 5.71088 10 7.99999 10C8.26049 10 8.50723 10.0088 8.74092 10.0254C8.96608 9.68403 9.23648 9.37517 9.54358 9.10733C9.07708 9.03817 8.56399 9 8 9C3 9 2 12 2 13C2 14 3 14 3 14H8.25606Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M11.8855 9.45954C12.0661 8.84682 12.9339 8.84682 13.1145 9.45954L13.1583 9.60814C13.2737 9.99964 13.7209 10.1849 14.0793 9.98963L14.2154 9.91553C14.7763 9.60997 15.39 10.2237 15.0845 10.7846L15.0104 10.9207C14.8151 11.2791 15.0004 11.7263 15.3919 11.8417L15.5405 11.8855C16.1532 12.0661 16.1532 12.9339 15.5405 13.1145L15.3919 13.1583C15.0004 13.2737 14.8151 13.7209 15.0104 14.0793L15.0845 14.2154C15.39 14.7763 14.7763 15.39 14.2154 15.0845L14.0793 15.0104C13.7209 14.8151 13.2737 15.0004 13.1583 15.3919L13.1145 15.5405C12.9339 16.1532 12.0661 16.1532 11.8855 15.5405L11.8417 15.3919C11.7263 15.0004 11.2791 14.8151 10.9207 15.0104L10.7846 15.0845C10.2237 15.39 9.60997 14.7763 9.91553 14.2154L9.98963 14.0793C10.1849 13.7209 9.99964 13.2737 9.60814 13.1583L9.45954 13.1145C8.84682 12.9339 8.84682 12.0661 9.45954 11.8855L9.60814 11.8417C9.99964 11.7263 10.1849 11.2791 9.98963 10.9207L9.91553 10.7846C9.60997 10.2237 10.2237 9.60997 10.7846 9.91553L10.9207 9.98963C11.2791 10.1849 11.7263 9.99964 11.8417 9.60814L11.8855 9.45954ZM14 12.5C14 11.6716 13.3284 11 12.5 11C11.6716 11 11 11.6716 11 12.5C11 13.3284 11.6716 14 12.5 14C13.3284 14 14 13.3284 14 12.5Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["ApiUsers"]</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div data-kt-menu-trigger="click" id="trainingOperationAccordionMenu" class="menu-item menu-accordion" onclick="handleAccordionMenuClick('trainingOperationAccordionMenu')">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="1.0" d="M8.00001 0C8.21333 0 8.40316 0.135338 8.4727 0.337005L9.04615 2H14C14.5523 2 15 2.44772 15 3V10C15 10.5523 14.5523 11 14 11H12.1496L13.4727 14.837C13.5627 15.0981 13.4241 15.3827 13.163 15.4727C12.902 15.5627 12.6173 15.4241 12.5273 15.163L11.0918 11H8.50001V14C8.50001 14.2761 8.27616 14.5 8.00001 14.5C7.72387 14.5 7.50001 14.2761 7.50001 14V11H4.90822L3.4727 15.163C3.38268 15.4241 3.09808 15.5627 2.83702 15.4727C2.57596 15.3827 2.43731 15.0981 2.52733 14.837L3.85043 11H2C1.44772 11 1 10.5523 1 10V3C1 2.44772 1.44772 2 2 2H6.95388L7.52733 0.337005C7.59687 0.135338 7.78669 0 8.00001 0ZM2 3V10H14V3H2Z" fill="currentColor" />
+                                            </svg>
+
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">@SharedLocalizer["Training_Operation"]</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <div class="menu-item" id="menuItemGroupType" onclick="handleMenuItemClick('menuItemGroupType')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="GroupType" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M1 2.82754C1.88498 2.45777 3.1539 2.05941 4.38768 1.93497C5.71799 1.80079 6.8464 1.99806 7.5 2.68668V12.4325C6.56511 11.9025 5.38065 11.8297 4.28732 11.94C3.10693 12.0591 1.91771 12.4011 1 12.751V2.82754ZM8.5 2.68668C9.1536 1.99806 10.282 1.80079 11.6123 1.93497C12.8461 2.05941 14.115 2.45777 15 2.82754V12.751C14.0823 12.4011 12.8931 12.0591 11.7127 11.94C10.6194 11.8297 9.43489 11.9025 8.5 12.4325V2.68668ZM8 1.78303C7.01509 0.936435 5.58683 0.808944 4.28732 0.940018C2.77322 1.09274 1.24459 1.61232 0.293099 2.04481C0.114601 2.12595 0 2.30392 0 2.49999V13.5C0 13.67 0.0863761 13.8284 0.229307 13.9204C0.372238 14.0124 0.55214 14.0255 0.706901 13.9552C1.58875 13.5543 3.01012 13.0739 4.38768 12.935C5.79565 12.793 6.97747 13.0222 7.60957 13.8123C7.70445 13.9309 7.84811 14 8 14C8.15189 14 8.29555 13.9309 8.39043 13.8123C9.02253 13.0222 10.2043 12.793 11.6123 12.935C12.9899 13.0739 14.4113 13.5543 15.2931 13.9552C15.4479 14.0255 15.6278 14.0124 15.7707 13.9204C15.9136 13.8284 16 13.67 16 13.5V2.49999C16 2.30392 15.8854 2.12595 15.7069 2.04481C14.7554 1.61232 13.2268 1.09274 11.7127 0.940018C10.4132 0.808944 8.98491 0.936435 8 1.78303Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Group_Type"]</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item" id="menuItemClassrooms" onclick="handleMenuItemClick('menuItemClassrooms')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Classroom" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M8.35355 1.14645C8.15829 0.951184 7.84171 0.951184 7.64645 1.14645L1.64645 7.14645C1.55268 7.24021 1.5 7.36739 1.5 7.5V14.5C1.5 14.7761 1.72386 15 2 15H6.5C6.77614 15 7 14.7761 7 14.5V10.5H9V14.5C9 14.7761 9.22386 15 9.5 15H14C14.2761 15 14.5 14.7761 14.5 14.5V7.5C14.5 7.36739 14.4473 7.24021 14.3536 7.14645L13 5.79289V2.5C13 2.22386 12.7761 2 12.5 2H11.5C11.2239 2 11 2.22386 11 2.5V3.79289L8.35355 1.14645ZM2.5 14V7.70711L8 2.20711L13.5 7.70711V14H10V10C10 9.72386 9.77614 9.5 9.5 9.5H6.5C6.22386 9.5 6 9.72386 6 10V14H2.5Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Classrooms"]</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item" id="menuItemBranches" onclick="handleMenuItemClick('menuItemBranches')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Branch" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M5.79289 1.00005C6.18342 0.609523 6.81658 0.609522 7.20711 1.00005L7.85355 1.64649C8.04882 1.84176 8.04882 2.15834 7.85355 2.3536C7.65829 2.54886 7.34171 2.54886 7.14645 2.3536L6.5 1.70715L2 6.20715V12.5C2 12.7762 2.22386 13 2.5 13C2.77614 13 3 13.2239 3 13.5C3 13.7762 2.77614 14 2.5 14C1.67157 14 1 13.3285 1 12.5V7.20715L0.853553 7.3536C0.658291 7.54886 0.341709 7.54886 0.146447 7.3536C-0.0488156 7.15834 -0.0488156 6.84176 0.146447 6.64649L5.79289 1.00005ZM8.79289 2.00005C9.18342 1.60952 9.81658 1.60952 10.2071 2.00005L12 3.79294V2.50005C12 2.2239 12.2239 2.00005 12.5 2.00005H13.5C13.7761 2.00005 14 2.2239 14 2.50005V5.79294L15.8536 7.64649C16.0488 7.84176 16.0488 8.15834 15.8536 8.3536C15.6583 8.54886 15.3417 8.54886 15.1464 8.3536L15 8.20715V13.5C15 14.3285 14.3284 15 13.5 15H5.5C4.67157 15 4 14.3285 4 13.5V8.20715L3.85355 8.3536C3.65829 8.54886 3.34171 8.54886 3.14645 8.3536C2.95118 8.15834 2.95118 7.84176 3.14645 7.64649L8.79289 2.00005ZM9.5 2.70715L5 7.20715V13.5C5 13.7762 5.22386 14 5.5 14H13.5C13.7761 14 14 13.7762 14 13.5V7.20715L9.5 2.70715Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Branches"]</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="menu-item" id="menuItemProducts" onclick="handleMenuItemClick('menuItemProducts')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Product" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M8.1857 1.1128C8.06649 1.06511 7.93351 1.06511 7.8143 1.1128L1.84629 3.5L8 5.96148L14.1537 3.5L8.1857 1.1128ZM15 4.23852L8.5 6.83852V14.7615L15 12.1615V4.23852ZM7.5 14.7615V6.83852L1 4.23852V12.1615L7.5 14.7615ZM7.44291 0.184319C7.80053 0.0412724 8.19947 0.0412723 8.55709 0.184319L15.6857 3.03576C15.8755 3.11169 16 3.29555 16 3.5V12.1615C16 12.5704 15.751 12.9381 15.3714 13.09L8.1857 15.9642C8.06649 16.0119 7.93351 16.0119 7.8143 15.9642L0.628609 13.09C0.248951 12.9381 0 12.5704 0 12.1615V3.5C0 3.29555 0.124475 3.11169 0.314305 3.03576L7.44291 0.184319Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Products"]</span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div data-kt-menu-trigger="click" id="contentManagementAccordionMenu" class="menu-item menu-accordion" onclick="handleAccordionMenuClick('contentManagementAccordionMenu')">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="1.0" d="M14.5 3C14.7761 3 15 3.22386 15 3.5V12.5C15 12.7761 14.7761 13 14.5 13H1.5C1.22386 13 1 12.7761 1 12.5V3.5C1 3.22386 1.22386 3 1.5 3H14.5ZM1.5 2C0.671573 2 0 2.67157 0 3.5V12.5C0 13.3284 0.671573 14 1.5 14H14.5C15.3284 14 16 13.3284 16 12.5V3.5C16 2.67157 15.3284 2 14.5 2H1.5Z" fill="currentColor" />
+                                                <path opacity="1.0" d="M7 5.5C7 5.22386 7.22386 5 7.5 5H12.5C12.7761 5 13 5.22386 13 5.5C13 5.77614 12.7761 6 12.5 6H7.5C7.22386 6 7 5.77614 7 5.5Z" fill="currentColor" />
+                                                <path opacity="1.0" d="M5.50355 4.64645C5.69882 4.84171 5.69882 5.15829 5.50355 5.35355L4.00355 6.85355C3.80829 7.04882 3.49171 7.04882 3.29645 6.85355L2.79645 6.35355C2.60119 6.15829 2.60119 5.84171 2.79645 5.64645C2.99171 5.45118 3.30829 5.45118 3.50356 5.64645L3.65 5.79289L4.79645 4.64645C4.99171 4.45118 5.30829 4.45118 5.50355 4.64645Z" fill="currentColor" />
+                                                <path opacity="1.0" d="M7 9.5C7 9.22386 7.22386 9 7.5 9H12.5C12.7761 9 13 9.22386 13 9.5C13 9.77614 12.7761 10 12.5 10H7.5C7.22386 10 7 9.77614 7 9.5Z" fill="currentColor" />
+                                                <path opacity="1.0" d="M5.50355 8.64645C5.69882 8.84171 5.69882 9.15829 5.50355 9.35355L4.00355 10.8536C3.80829 11.0488 3.49171 11.0488 3.29645 10.8536L2.79645 10.3536C2.60119 10.1583 2.60119 9.84171 2.79645 9.64645C2.99171 9.45118 3.30829 9.45118 3.50356 9.64645L3.65 9.79289L4.79645 8.64645C4.99171 8.45118 5.30829 8.45118 5.50355 8.64645Z" fill="currentColor" />
+                                            </svg>
+
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">@SharedLocalizer["Content_Management"]</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+
+                                <div class="menu-sub menu-sub-accordion">
+                                    <div class="menu-item" id="menuItemSubject" onclick="handleMenuItemClick('menuItemSubject')">
+                                        <a class="menu-link" asp-controller="Subject" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M14.5 3C14.7761 3 15 3.22386 15 3.5V12.5C15 12.7761 14.7761 13 14.5 13H1.5C1.22386 13 1 12.7761 1 12.5V3.5C1 3.22386 1.22386 3 1.5 3H14.5ZM1.5 2C0.671573 2 0 2.67157 0 3.5V12.5C0 13.3284 0.671573 14 1.5 14H14.5C15.3284 14 16 13.3284 16 12.5V3.5C16 2.67157 15.3284 2 14.5 2H1.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M3 8.5C3 8.22386 3.22386 8 3.5 8H12.5C12.7761 8 13 8.22386 13 8.5C13 8.77614 12.7761 9 12.5 9H3.5C3.22386 9 3 8.77614 3 8.5ZM3 10.5C3 10.2239 3.22386 10 3.5 10H9.5C9.77614 10 10 10.2239 10 10.5C10 10.7761 9.77614 11 9.5 11H3.5C3.22386 11 3 10.7761 3 10.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M3 5.5C3 5.22386 3.22386 5 3.5 5H12.5C12.7761 5 13 5.22386 13 5.5V6.5C13 6.77614 12.7761 7 12.5 7H3.5C3.22386 7 3 6.77614 3 6.5V5.5Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Subjects"]</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="menu-item" id="menuItemSubtopics" onclick="handleMenuItemClick('menuItemSubtopics')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Subtopic" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2"> 
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M14.5 3C14.7761 3 15 3.22386 15 3.5V12.5C15 12.7761 14.7761 13 14.5 13H1.5C1.22386 13 1 12.7761 1 12.5V3.5C1 3.22386 1.22386 3 1.5 3H14.5ZM1.5 2C0.671573 2 0 2.67157 0 3.5V12.5C0 13.3284 0.671573 14 1.5 14H14.5C15.3284 14 16 13.3284 16 12.5V3.5C16 2.67157 15.3284 2 14.5 2H1.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M5 8C5 7.72386 5.22386 7.5 5.5 7.5H12.5C12.7761 7.5 13 7.72386 13 8C13 8.27614 12.7761 8.5 12.5 8.5H5.5C5.22386 8.5 5 8.27614 5 8Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M5 5.5C5 5.22386 5.22386 5 5.5 5H12.5C12.7761 5 13 5.22386 13 5.5C13 5.77614 12.7761 6 12.5 6H5.5C5.22386 6 5 5.77614 5 5.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M5 10.5C5 10.2239 5.22386 10 5.5 10H12.5C12.7761 10 13 10.2239 13 10.5C13 10.7761 12.7761 11 12.5 11H5.5C5.22386 11 5 10.7761 5 10.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M4 5.5C4 5.77614 3.77614 6 3.5 6C3.22386 6 3 5.77614 3 5.5C3 5.22386 3.22386 5 3.5 5C3.77614 5 4 5.22386 4 5.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M4 8C4 8.27614 3.77614 8.5 3.5 8.5C3.22386 8.5 3 8.27614 3 8C3 7.72386 3.22386 7.5 3.5 7.5C3.77614 7.5 4 7.72386 4 8Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M4 10.5C4 10.7761 3.77614 11 3.5 11C3.22386 11 3 10.7761 3 10.5C3 10.2239 3.22386 10 3.5 10C3.77614 10 4 10.2239 4 10.5Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Subtopics"]</span>
+                                        </a>
+                                    </div>
+
+                                    <div data-kt-menu-trigger="click" id="questionAccordionMenu" class="menu-item menu-accordion" onclick="handleAccordionMenuClick('questionAccordionMenu')">
+                                        <span class="menu-link">
+                                            @* <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                            </span> *@
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M14 1C14.5523 1 15 1.44772 15 2V14C15 14.5523 14.5523 15 14 15H2C1.44772 15 1 14.5523 1 14V2C1 1.44772 1.44772 1 2 1H14ZM2 0C0.895431 0 0 0.895431 0 2V14C0 15.1046 0.895431 16 2 16H14C15.1046 16 16 15.1046 16 14V2C16 0.895431 15.1046 0 14 0H2Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M5.25511 5.78615C5.24752 5.92237 5.3599 6.03271 5.49634 6.03271H6.32082C6.45889 6.03271 6.56868 5.92013 6.58723 5.78331C6.67618 5.12718 7.1265 4.64893 7.92922 4.64893C8.61477 4.64893 9.24318 4.9917 9.24318 5.81689C9.24318 6.45166 8.86867 6.74365 8.27834 7.18799C7.60549 7.67676 7.07229 8.24805 7.11037 9.1748L7.11334 9.39161C7.11521 9.52833 7.22658 9.63818 7.36332 9.63818H8.17434C8.31241 9.63818 8.42434 9.52625 8.42434 9.38818V9.28271C8.42434 8.56543 8.69729 8.35596 9.43361 7.79736C10.043 7.33398 10.6778 6.81982 10.6778 5.74072C10.6778 4.22998 9.40188 3.5 8.00539 3.5C6.73831 3.5 5.34964 4.09061 5.25511 5.78615ZM6.81203 11.5488C6.81203 12.082 7.23732 12.4756 7.82131 12.4756C8.43068 12.4756 8.84963 12.082 8.84963 11.5488C8.84963 10.9966 8.43068 10.6094 7.82131 10.6094C7.23732 10.6094 6.81203 10.9966 6.81203 11.5488Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Question"]</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <div class="menu-item" id="menuItemCreateQuestion" onclick="handleMenuItemClick('menuItemCreateQuestion')">
+                                                <a class="menu-link" asp-area="Admin" asp-controller="Question" asp-action="QuestionCreate">
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-2">
+
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="1.0" d="M9.5 0C9.77614 0 10 0.223858 10 0.5C10 0.776142 10.2239 1 10.5 1C10.7761 1 11 1.22386 11 1.5V2C11 2.27614 10.7761 2.5 10.5 2.5H5.5C5.22386 2.5 5 2.27614 5 2V1.5C5 1.22386 5.22386 1 5.5 1C5.77614 1 6 0.776142 6 0.5C6 0.223858 6.22386 0 6.5 0H9.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M3 2.5C3 2.22386 3.22386 2 3.5 2H4C4.27614 2 4.5 1.77614 4.5 1.5C4.5 1.22386 4.27614 1 4 1H3.5C2.67157 1 2 1.67157 2 2.5V14.5C2 15.3284 2.67157 16 3.5 16H12.5C13.3284 16 14 15.3284 14 14.5V2.5C14 1.67157 13.3284 1 12.5 1H12C11.7239 1 11.5 1.22386 11.5 1.5C11.5 1.77614 11.7239 2 12 2H12.5C12.7761 2 13 2.22386 13 2.5V14.5C13 14.7761 12.7761 15 12.5 15H3.5C3.22386 15 3 14.7761 3 14.5V2.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M8.5 6.5C8.5 6.22386 8.27614 6 8 6C7.72386 6 7.5 6.22386 7.5 6.5V8H6C5.72386 8 5.5 8.22386 5.5 8.5C5.5 8.77614 5.72386 9 6 9H7.5V10.5C7.5 10.7761 7.72386 11 8 11C8.27614 11 8.5 10.7761 8.5 10.5V9H10C10.2761 9 10.5 8.77614 10.5 8.5C10.5 8.22386 10.2761 8 10 8H8.5V6.5Z" fill="currentColor" />
+                                                            </svg>
+
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+
+                                                    <span class="menu-title">@SharedLocalizer["Create_Question", SharedLocalizer["Question"]]</span>
+                                                </a>
+                                            </div>
+
+
+                                            <div class="menu-item" id="menuItemAwaited" onclick="handleMenuItemClick('menuItemAwaited')">
+                                                <a class="menu-link" asp-area="Admin" asp-controller="Question" asp-action="QuestionList" asp-route-state="@State.Awaited">
+                                                    @* <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                    </span> *@
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-2">
+
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="1.0" d="M9.5 0C9.77614 0 10 0.223858 10 0.5C10 0.776142 10.2239 1 10.5 1C10.7761 1 11 1.22386 11 1.5V2C11 2.27614 10.7761 2.5 10.5 2.5H5.5C5.22386 2.5 5 2.27614 5 2V1.5C5 1.22386 5.22386 1 5.5 1C5.77614 1 6 0.776142 6 0.5C6 0.223858 6.22386 0 6.5 0H9.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M3 2.5C3 2.22386 3.22386 2 3.5 2H4C4.27614 2 4.5 1.77614 4.5 1.5C4.5 1.22386 4.27614 1 4 1H3.5C2.67157 1 2 1.67157 2 2.5V14.5C2 15.3284 2.67157 16 3.5 16H12.5C13.3284 16 14 15.3284 14 14.5V2.5C14 1.67157 13.3284 1 12.5 1H12C11.7239 1 11.5 1.22386 11.5 1.5C11.5 1.77614 11.7239 2 12 2H12.5C12.7761 2 13 2.22386 13 2.5V14.5C13 14.7761 12.7761 15 12.5 15H3.5C3.22386 15 3 14.7761 3 14.5V2.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M9.97891 5.35633C9.91332 5.13769 9.70799 4.99123 9.47991 5.0004C9.25184 5.00957 9.05893 5.17204 9.0111 5.39524L7.91922 10.4907L6.97891 7.35633C6.92001 7.15998 6.74723 7.01948 6.54299 7.00185C6.33876 6.98423 6.14446 7.09304 6.05279 7.27639L4.69098 10H4.5C4.22386 10 4 10.2239 4 10.5C4 10.7761 4.22386 11 4.5 11H5C5.18939 11 5.36252 10.893 5.44721 10.7236L6.38337 8.85129L7.52109 12.6437C7.58668 12.8623 7.79201 13.0088 8.02009 12.9996C8.24816 12.9904 8.44107 12.828 8.4889 12.6048L9.58078 7.50932L10.5211 10.6437C10.5845 10.8552 10.7792 11 11 11H11.5C11.7761 11 12 10.7761 12 10.5C12 10.2239 11.7761 10 11.5 10H11.372L9.97891 5.35633Z" fill="currentColor" />
+                                                            </svg>
+
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                    <span class="menu-title">@SharedLocalizer["Awaited_List", SharedLocalizer["Question"]]</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item" id="menuItemApproved" onclick="handleMenuItemClick('menuItemApproved')">
+                                                <a class="menu-link" asp-area="Admin" asp-controller="Question" asp-action="QuestionList" asp-route-state="@State.Approved">
+                                                    @* <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                    </span> *@
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-2">
+
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="1.0" d="M9.5 0C9.77614 0 10 0.223858 10 0.5C10 0.776142 10.2239 1 10.5 1C10.7761 1 11 1.22386 11 1.5V2C11 2.27614 10.7761 2.5 10.5 2.5H5.5C5.22386 2.5 5 2.27614 5 2V1.5C5 1.22386 5.22386 1 5.5 1C5.77614 1 6 0.776142 6 0.5C6 0.223858 6.22386 0 6.5 0H9.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M3 2.5C3 2.22386 3.22386 2 3.5 2H4C4.27614 2 4.5 1.77614 4.5 1.5C4.5 1.22386 4.27614 1 4 1H3.5C2.67157 1 2 1.67157 2 2.5V14.5C2 15.3284 2.67157 16 3.5 16H12.5C13.3284 16 14 15.3284 14 14.5V2.5C14 1.67157 13.3284 1 12.5 1H12C11.7239 1 11.5 1.22386 11.5 1.5C11.5 1.77614 11.7239 2 12 2H12.5C12.7761 2 13 2.22386 13 2.5V14.5C13 14.7761 12.7761 15 12.5 15H3.5C3.22386 15 3 14.7761 3 14.5V2.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M10.8536 7.85355C11.0488 7.65829 11.0488 7.34171 10.8536 7.14645C10.6583 6.95118 10.3417 6.95118 10.1464 7.14645L7.5 9.79289L6.35355 8.64645C6.15829 8.45118 5.84171 8.45118 5.64645 8.64645C5.45118 8.84171 5.45118 9.15829 5.64645 9.35355L7.14645 10.8536C7.24021 10.9473 7.36739 11 7.5 11C7.63261 11 7.75979 10.9473 7.85355 10.8536L10.8536 7.85355Z" fill="currentColor" />
+                                                            </svg>
+
+
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                    <span class="menu-title">@SharedLocalizer["Approved_List", SharedLocalizer["Question"]]</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="menu-item" id="menuItemRejected" onclick="handleMenuItemClick('menuItemRejected')">
+                                                <a class="menu-link" asp-area="Admin" asp-controller="Question" asp-action="QuestionList" asp-route-state="@State.Rejected">
+                                                    @* <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                    </span> *@
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-2">
+
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="1.0" d="M9.5 0C9.77614 0 10 0.223858 10 0.5C10 0.776142 10.2239 1 10.5 1C10.7761 1 11 1.22386 11 1.5V2C11 2.27614 10.7761 2.5 10.5 2.5H5.5C5.22386 2.5 5 2.27614 5 2V1.5C5 1.22386 5.22386 1 5.5 1C5.77614 1 6 0.776142 6 0.5C6 0.223858 6.22386 0 6.5 0H9.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M3 2.5C3 2.22386 3.22386 2 3.5 2H4C4.27614 2 4.5 1.77614 4.5 1.5C4.5 1.22386 4.27614 1 4 1H3.5C2.67157 1 2 1.67157 2 2.5V14.5C2 15.3284 2.67157 16 3.5 16H12.5C13.3284 16 14 15.3284 14 14.5V2.5C14 1.67157 13.3284 1 12.5 1H12C11.7239 1 11.5 1.22386 11.5 1.5C11.5 1.77614 11.7239 2 12 2H12.5C12.7761 2 13 2.22386 13 2.5V14.5C13 14.7761 12.7761 15 12.5 15H3.5C3.22386 15 3 14.7761 3 14.5V2.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M8 8.29289L6.85355 7.14645C6.65829 6.95118 6.34171 6.95118 6.14645 7.14645C5.95118 7.34171 5.95118 7.65829 6.14645 7.85355L7.29289 9L6.14645 10.1464C5.95118 10.3417 5.95118 10.6583 6.14645 10.8536C6.34171 11.0488 6.65829 11.0488 6.85355 10.8536L8 9.70711L9.14645 10.8536C9.34171 11.0488 9.65829 11.0488 9.85355 10.8536C10.0488 10.6583 10.0488 10.3417 9.85355 10.1464L8.70711 9L9.85355 7.85355C10.0488 7.65829 10.0488 7.34171 9.85355 7.14645C9.65829 6.95118 9.34171 6.95118 9.14645 7.14645L8 8.29289Z" fill="currentColor" />
+                                                            </svg>
+
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+
+                                                    <span class="menu-title">@SharedLocalizer["Rejected_List", SharedLocalizer["Question"]]</span>
+                                                </a>
+                                            </div>
+
+                                            @*======================================================
+                                            Asagidaki kod ileri bir tarihe kadar kapali kalacak
+                                            ======================================================*@
+                                            @*<div class="menu-item">
+                                            <a class="menu-link" asp-area="Admin" asp-controller="Question" asp-action="QuestionList" asp-route-state="@State.Test">
+                                            <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Test_List", SharedLocalizer["Question"]]</span>
+                                            </a>
+                                            </div>*@
+                                            <div class="menu-item" id="menuItemReviewed" onclick="handleMenuItemClick('menuItemReviewed')">
+                                                <a class="menu-link" asp-area="Admin" asp-controller="Question" asp-action="QuestionList" asp-route-state="@State.Reviewed">
+                                                    @* <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                    </span> *@
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-2">
+
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="1.0" d="M9.5 0C9.77614 0 10 0.223858 10 0.5C10 0.776142 10.2239 1 10.5 1C10.7761 1 11 1.22386 11 1.5V2C11 2.27614 10.7761 2.5 10.5 2.5H5.5C5.22386 2.5 5 2.27614 5 2V1.5C5 1.22386 5.22386 1 5.5 1C5.77614 1 6 0.776142 6 0.5C6 0.223858 6.22386 0 6.5 0H9.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M3 2.5C3 2.22386 3.22386 2 3.5 2H4C4.27614 2 4.5 1.77614 4.5 1.5C4.5 1.22386 4.27614 1 4 1H3.5C2.67157 1 2 1.67157 2 2.5V14.5C2 15.3284 2.67157 16 3.5 16H12.5C13.3284 16 14 15.3284 14 14.5V2.5C14 1.67157 13.3284 1 12.5 1H12C11.7239 1 11.5 1.22386 11.5 1.5C11.5 1.77614 11.7239 2 12 2H12.5C12.7761 2 13 2.22386 13 2.5V14.5C13 14.7761 12.7761 15 12.5 15H3.5C3.22386 15 3 14.7761 3 14.5V2.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M6 8C5.72386 8 5.5 8.22386 5.5 8.5C5.5 8.77614 5.72386 9 6 9H10C10.2761 9 10.5 8.77614 10.5 8.5C10.5 8.22386 10.2761 8 10 8H6Z" fill="currentColor" />
+                                                            </svg>
+
+
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+
+                                                    <span class="menu-title">@SharedLocalizer["Reviewed_List", SharedLocalizer["Question"]]</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="menu-item" id="menuItemDeactivated" onclick="handleMenuItemClick('menuItemDeactivated')">
+                                                <a class="menu-link" asp-area="Admin" asp-controller="Question" asp-action="QuestionList" asp-route-state="@State.Deactivated">
+                                                    @* <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                    </span> *@
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-2">
+
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="1.0" d="M9.5 0C9.77614 0 10 0.223858 10 0.5C10 0.776142 10.2239 1 10.5 1C10.7761 1 11 1.22386 11 1.5V2C11 2.27614 10.7761 2.5 10.5 2.5H5.5C5.22386 2.5 5 2.27614 5 2V1.5C5 1.22386 5.22386 1 5.5 1C5.77614 1 6 0.776142 6 0.5C6 0.223858 6.22386 0 6.5 0H9.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M3 2.5C3 2.22386 3.22386 2 3.5 2H4C4.27614 2 4.5 1.77614 4.5 1.5C4.5 1.22386 4.27614 1 4 1H3.5C2.67157 1 2 1.67157 2 2.5V14.5C2 15.3284 2.67157 16 3.5 16H12.5C13.3284 16 14 15.3284 14 14.5V2.5C14 1.67157 13.3284 1 12.5 1H12C11.7239 1 11.5 1.22386 11.5 1.5C11.5 1.77614 11.7239 2 12 2H12.5C12.7761 2 13 2.22386 13 2.5V14.5C13 14.7761 12.7761 15 12.5 15H3.5C3.22386 15 3 14.7761 3 14.5V2.5Z" fill="currentColor" />
+                                                                <path opacity="1.0" d="M6 8C5.72386 8 5.5 8.22386 5.5 8.5C5.5 8.77614 5.72386 9 6 9H10C10.2761 9 10.5 8.77614 10.5 8.5C10.5 8.22386 10.2761 8 10 8H6Z" fill="currentColor" />
+                                                            </svg>
+
+
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+
+                                                    <span class="menu-title">@SharedLocalizer["Deactived_List", SharedLocalizer["Question"]]</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item" id="menuItemQuestionDiff" onclick="handleMenuItemClick('menuItemQuestionDiff')">
+                                                <a class="menu-link" asp-controller="QuestionsDifficulty" asp-action="Index">
+                                                    @* <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                    </span> *@
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-2">
+
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path opacity="1.0" d="M5.52032 0.358917C5.58291 0.146125 5.7782 0 6 0H10C10.1607 0 10.3116 0.0772606 10.4056 0.207645C10.4996 0.338029 10.5252 0.50564 10.4743 0.658114L8.69372 6H12.5C12.691 6 12.8653 6.10878 12.9492 6.28032C13.0331 6.45187 13.0119 6.65623 12.8947 6.80697L5.89468 15.807C5.74649 15.9975 5.48334 16.055 5.26922 15.9436C5.05509 15.8321 4.95113 15.5837 5.02211 15.353L6.82302 9.5H3.5C3.34243 9.5 3.19407 9.42572 3.09967 9.29955C3.00526 9.17338 2.97586 9.01009 3.02032 8.85892L5.52032 0.358917ZM6.37412 1L4.16824 8.5H7.5C7.65868 8.5 7.80793 8.57531 7.9022 8.70295C7.99647 8.83058 8.02456 8.99539 7.97789 9.14704L6.78016 13.0397L11.4777 7H8C7.83928 7 7.68836 6.92274 7.59438 6.79236C7.50041 6.66197 7.47484 6.49436 7.52566 6.34189L9.30629 1H6.37412Z" fill="currentColor" />
+                                                            </svg>
+
+
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                    <span class="menu-title">@SharedLocalizer["QuesitionDifficulty_Name"]</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="menu-item" id="menuItemRules" onclick="handleMenuItemClick('menuItemRules')">
+                                        <a class="menu-link" asp-controller="ExamRule" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M7 6.99997V1.41418C7 1.14897 7.10536 0.894614 7.29289 0.707078C7.68342 0.316554 8.31658 0.316554 8.70711 0.707078C8.89464 0.894614 9 1.14897 9 1.41418V1.99997H14C14.3148 1.99997 14.6111 2.14817 14.8 2.39997L15.775 3.69997C15.9083 3.87775 15.9083 4.12219 15.775 4.29997L14.8 5.59997C14.6111 5.85178 14.3148 5.99997 14 5.99997H9V16H7V11H2C1.68524 11 1.38885 10.8518 1.2 10.6L0.225001 9.29997C0.0916665 9.12219 0.0916665 8.87775 0.225001 8.69997L1.2 7.39997C1.38885 7.14817 1.68524 6.99997 2 6.99997H7ZM8 9.99997V7.99997H2L1.25 8.99997L2 9.99997H8ZM8 4.99997H14L14.75 3.99997L14 2.99997H8V4.99997Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Rules"]</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item" id="menuItemExam" onclick="handleMenuItemClick('menuItemExam')">
+                                        <a class="menu-link" asp-controller="Exam" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M5.5 5C5.22386 5 5 5.22386 5 5.5C5 5.77614 5.22386 6 5.5 6H10.5C10.7761 6 11 5.77614 11 5.5C11 5.22386 10.7761 5 10.5 5H5.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M5.5 7C5.22386 7 5 7.22386 5 7.5C5 7.77614 5.22386 8 5.5 8H8.5C8.77614 8 9 7.77614 9 7.5C9 7.22386 8.77614 7 8.5 7H5.5Z" fill="currentColor" />
+                                                        <path opacity="1.0" d="M8 2C9.10457 2 10 1.10457 10 0H12.5C13.3284 0 14 0.671573 14 1.5V14.5C14 15.3284 13.3284 16 12.5 16H3.5C2.67157 16 2 15.3284 2 14.5V1.5C2 0.671573 2.67157 0 3.5 0H6C6 1.10457 6.89543 2 8 2ZM8 3C6.69378 3 5.58254 2.16519 5.17071 1H3.5C3.22386 1 3 1.22386 3 1.5V14.5C3 14.7761 3.22386 15 3.5 15H12.5C12.7761 15 13 14.7761 13 14.5V1.5C13 1.22386 12.7761 1 12.5 1H10.8293C10.4175 2.16519 9.30622 3 8 3Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["List", SharedLocalizer["Exam"]]</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div data-kt-menu-trigger="click" id="generalInformationAccordionMenu" class="menu-item menu-accordion" onclick="handleAccordionMenuClick('generalInformationAccordionMenu')">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="1.0" fill-rule="evenodd" clip-rule="evenodd" d="M15.817 0.113333C15.9328 0.208303 16 0.350208 16 0.500004V14.5C16 14.7383 15.8318 14.9436 15.5981 14.9903L10.5981 15.9903C10.5333 16.0032 10.4667 16.0032 10.4019 15.9903L5.5 15.0099L0.598058 15.9903C0.45117 16.0197 0.29885 15.9816 0.183006 15.8867C0.0671615 15.7917 0 15.6498 0 15.5V1.5C0 1.26166 0.16823 1.05646 0.401942 1.00971L5.40194 0.00971396C5.46667 -0.00323223 5.53333 -0.00323223 5.59806 0.00971396L10.5 0.990102L15.4019 0.00971396C15.5488 -0.0196636 15.7012 0.0183639 15.817 0.113333ZM10 1.90991L6 1.10991V14.0901L10 14.8901V1.90991ZM11 14.8901L15 14.0901V1.10991L11 1.90991V14.8901ZM5 14.0901V1.10991L1 1.90991V14.8901L5 14.0901Z" fill="currentColor" />
+                                            </svg>
+
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">@SharedLocalizer["General_Information"]</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion">
+                                    <div class="menu-item" id="menuItemTechnical" onclick="handleMenuItemClick('menuItemTechnical')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="TechnicalUnit" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M7.06842 0.727147C7.31109 -0.242384 8.68891 -0.242382 8.93158 0.72715L9.00309 1.01288C9.18603 1.74378 10.101 1.98894 10.6249 1.44743L10.8297 1.23574C11.5246 0.51743 12.7178 1.20634 12.4432 2.16732L12.3623 2.45053C12.1552 3.17497 12.825 3.84476 13.5495 3.63774L13.8327 3.55681C14.7937 3.28219 15.4826 4.47543 14.7643 5.17035L14.5526 5.37515C14.0111 5.89902 14.2562 6.81397 14.9871 6.99691L15.2729 7.06842C16.2424 7.31109 16.2424 8.68891 15.2729 8.93158L14.9871 9.00309C14.2562 9.18603 14.0111 10.101 14.5526 10.6249L14.7643 10.8297C15.4826 11.5246 14.7937 12.7178 13.8327 12.4432L13.5495 12.3623C12.825 12.1552 12.1552 12.825 12.3623 13.5495L12.4432 13.8327C12.7178 14.7937 11.5246 15.4826 10.8297 14.7643L10.6249 14.5526C10.101 14.0111 9.18603 14.2562 9.00309 14.9871L8.93158 15.2729C8.68891 16.2424 7.31109 16.2424 7.06842 15.2729L6.99691 14.9871C6.81397 14.2562 5.89902 14.0111 5.37514 14.5526L5.17034 14.7643C4.47542 15.4826 3.28219 14.7937 3.55681 13.8327L3.63774 13.5495C3.84476 12.825 3.17497 12.1552 2.45052 12.3623L2.16731 12.4432C1.20634 12.7178 0.517432 11.5246 1.23574 10.8297L1.44743 10.6249C1.98894 10.101 1.74378 9.18603 1.01288 9.00309L0.727147 8.93158C-0.242384 8.68891 -0.242382 7.31109 0.72715 7.06842L1.01288 6.99691C1.74378 6.81397 1.98894 5.89902 1.44743 5.37514L1.23574 5.17034C0.51743 4.47542 1.20634 3.28219 2.16732 3.55681L2.45053 3.63774C3.17497 3.84476 3.84476 3.17497 3.63774 2.45052L3.55681 2.16731C3.28219 1.20634 4.47543 0.517432 5.17035 1.23574L5.37515 1.44743C5.89902 1.98894 6.81397 1.74378 6.99691 1.01288L7.06842 0.727147ZM12.973 8.49979H8.24988L5.41581 12.2786C6.16985 12.735 7.05425 12.9977 8 12.9977C10.5915 12.9977 12.7222 11.0253 12.973 8.49979ZM12.973 7.50026C12.7222 4.97479 10.5915 3.00237 8 3.00237C7.05425 3.00237 6.16985 3.26508 5.41581 3.72149L8.24988 7.50026H12.973ZM5.04794 3.967C5.01872 3.98843 4.98975 4.01016 4.96102 4.0322L5.04794 3.967ZM4.61661 4.32178C3.62419 5.23512 3.00235 6.54496 3.00235 8.00002C3.00235 9.45509 3.62419 10.7649 4.61661 11.6783L7.37529 8.00002L4.61661 4.32178ZM4.96101 11.9678C4.98975 11.9899 5.01873 12.0116 5.04796 12.0331L4.96101 11.9678Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["TechnicalUnits"]</span>
+                                        </a>
+                                    </div>
+                                   @*  <div class="menu-item" id="menuItemTalents" onclick="handleMenuItemClick('menuItemTalents')">
+                                        <a class="menu-link" asp-area="Admin" asp-controller="Talent" asp-action="Index">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="1.0" d="M3.1 0.7C3.19443 0.574097 3.34262 0.5 3.5 0.5H12.5C12.6575 0.5 12.8058 0.574201 12.9002 0.700251L15.8763 4.6736C16.0249 4.85863 16.032 5.12397 15.8867 5.31768L8.4 15.3C8.30557 15.4259 8.15738 15.5 8 15.5C7.84262 15.5 7.69443 15.4259 7.6 15.3L0.1 5.3C-0.0333333 5.12222 -0.0333333 4.87778 0.1 4.7L3.1 0.7ZM14.4859 4.48542L12.6799 2.07422L11.904 4.48811L14.4859 4.48542ZM10.8533 4.4892L11.8141 1.5H4.18591L5.14864 4.49515L10.8533 4.4892ZM5.46996 5.49482L8 13.3661L10.5317 5.48954L5.46996 5.49482ZM4.0986 4.49625L3.31986 2.07351L1.50078 4.49896L4.0986 4.49625ZM1.49922 5.49896L6.61216 12.3162L4.41992 5.49591L1.49922 5.49896ZM9.38784 12.3162L14.511 5.48539L11.5825 5.48844L9.38784 12.3162Z" fill="currentColor" />
+                                                    </svg>
+
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">@SharedLocalizer["Talents"]</span>
+                                        </a>
+                                    </div> *@
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--end::Menu-->
+                    </div>
+                    <!--end::Aside Menu-->
+                </div>
+                <!--end::Aside menu-->
+                <!--begin::Footer-->
+                <!--end::Footer-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" style="padding-right:0px;" id="kt_wrapper">
+                <!--begin::Header-->
+                <div id="kt_header" style="min-width: 100%;" class="header align-items-stretch">
+                    <!--begin::Container-->
+                    <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                        <!--begin::Aside mobile toggle-->
+                        <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
+                            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_toggle">
+                                <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor" />
+                                        <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                        </div>
+                        <!--end::Aside mobile toggle-->
+                        <!--begin::Mobile logo-->
+                        <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                            <a href="/Admin" class="d-lg-none">
+                                <img alt="Logo" src="~/images/BilgeAdam_Teknoloji_Mobil_Logo.png" class="h-30px" />
+                            </a>
+                        </div>
+                        <!--end::Mobile logo-->
+                        <!--begin::Wrapper-->
+                        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+                            <!--begin::Navbar-->
+                            <div class="d-flex align-items-stretch" id="kt_header_nav">
+                                <!--begin::Menu wrapper-->
+                                <!--end::Menu wrapper-->
+                            </div>
+                            <!--end::Navbar-->
+                            <!--begin::Toolbar wrapper-->
+                            <div class="d-flex align-items-md-end flex-shrink-1">
+                                <!--begin::User menu-->
+                                <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle" style=" position: fixed; right:0%;">
+                                    <!--begin::Menu wrapper-->
+                                    <!--begin::Username-->
+
+                                    <div class="d-flex flex-column">
+
+                                        <div class="fw-bolder d-flex align-items-center fs-5">
+                                            @{
+                                                var name = await User.GetUserName(ServiceProvider);
+                                                var parts = name.Split(' ');
+                                                var formattedName = string.Join(" ", parts.Select(p => char.ToUpper(p[0]) + p.Substring(1).ToLower()));
+                                            }
+                                            @formattedName
+
+                                        </div>
+                                        <div>
+                                            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Admin</span>
+                                        </div>
+                                    </div>
+                                    <div class="separator my-2"></div>
+                                    <div style="height: 20px; width: 20px"></div>
+                                    <div class="cursor-pointer h-md-55px symbol" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                        @*<img src="assets/media/avatars/300-1.jpg" alt="user" />*@
+                                        <img src="~/images/blank-profile-picture.png" />
+                                    </div>
+                                    <!--end::Username-->
+                                    <!--begin::User account menu-->
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
+
+                                        <div class="menu-item px-5">
+                                            <div class="dropdown-item">
+                                                <div class="cursor-pointer h-md-55px symbol" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                                    @*<img src="assets/media/avatars/300-1.jpg" alt="user" />*@
+                                                    <img src="~/images/blank-profile-picture.png" />
+                                                </div>
+                                                <!--begin::Username-->
+                                                <div class="d-flex flex-column">
+                                                    <div class="fw-bolder d-flex align-items-center fs-5">
+                                                        @name
+
+                                                    </div>
+                                                    <div>
+                                                        <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Admin</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="separator my-2"></div>
+
+                                        <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
+                                            <a href="#" class="menu-link px-5">
+                                                <span class="menu-title position-relative">
+                                                    @SharedLocalizer["Language"]
+                                                </span>
+                                            </a>
+                                            <!--begin::Menu sub-->
+                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="/Culture/SetCulture?culture=tr&returnUrl=@Url.ActionContext.HttpContext.Request.Path">
+
+                                                        <span class="symbol symbol-20px me-4">
+                                                            <img class="rounded-1" src="~/media/avatars/turkey.svg" alt="" />
+                                                        </span>@SharedLocalizer["Turkish"]
+                                                    </a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <div class="separator my-2"></div>
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="/Culture/SetCulture?culture=en&returnUrl=@Url.ActionContext.HttpContext.Request.Path">
+
+
+                                                        <span class="symbol symbol-20px me-4">
+                                                            <img class="rounded-1" src="~/media/avatars/united-states.svg" alt="" />
+                                                        </span>@SharedLocalizer["English"]
+                                                    </a>
+                                                </div>
+
+                                                <!--end::Menu item-->
+                                            </div>
+                                            <!--end::Menu sub-->
+                                        </div>
+                                        <div class="separator my-2"></div>
+                                        <div class="menu-item px-5">
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">@SharedLocalizer["Change_Role"]</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <div class="separator my-2"></div>
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-5">
+                                            <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout" onclick="handleLogout()">
+                                                @SharedLocalizer["SignOut"]
+                                            </a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                    </div>
+                                    <!--end::User account menu-->
+                                    <!--end::Menu wrapper-->
+                                </div>
+                                <!--end::User menu-->
+                                <!--begin::Header menu toggle-->
+                                <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
+                                    <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_header_menu_mobile_toggle">
+                                        <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
+                                        <span class="svg-icon svg-icon-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="currentColor" />
+                                                <path opacity="0.3" d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </div>
+                                </div>
+                                <!--end::Header menu toggle-->
+                            </div>
+                            <!--end::Toolbar wrapper-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Toolbar-->
+                    <!--end::Toolbar-->
+                    <!--begin::Post-->
+                    <div class="post d-flex flex-column-fluid" id="kt_post">
+                        <!--begin::Container-->
+                        <div id="kt_content_container" class="container-fluid">
+                            @RenderBody()
+
+
+
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Post-->
+                </div>
+                <!--end::Content-->
+
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--begin::Javascript-->
+
+    <script>var hostUrl = "assets/";</script>
+    <script>
+        var selectedLanguage = '@CultureInfo.CurrentCulture.TwoLetterISOLanguageName';
+        console.log("Razor Language:", selectedLanguage);
+    </script>
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="~/newLayouts/dist/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/newLayouts/dist/assets/js/scripts.bundle.js"></script>
+    <script src="~/js/animation-start.js"></script>
+
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Vendors Javascript(used by this page)-->
+    <script src="~/newLayouts/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="~/newlayouts/src/js/layout/double-submit-control.js"></script>
+    <script src="~/newLayouts/dist/assets/js/widgets.bundle.js"></script>
+    <script src="~/newLayouts/dist/assets/js/custom/widgets.js"></script>
+    <script src="~/newLayouts/dist/assets/js/custom/apps/chat/chat.js"></script>
+    <script src="~/newLayouts/dist/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="~/newLayouts/dist/assets/js/custom/utilities/modals/create-app.js"></script>
+    <script src="~/newLayouts/dist/assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="~/js/AdminDashboard/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="~/js/AdminDashboard/fullcalendar/locales-all.global.min.js"></script>
+
+    <script src="~/js/AdminDashboard/custom/apps/calendar/calendar.js"></script>
+    <script src="~/js/AdminDashboard/widgets.bundle.js"></script>
+    <script src="~/js/AdminDashboard/widgets.js"></script>
+    <script src="~/js/AdminDashboard/custom/apps/chat/chat.js"></script>
+    <script src="~/js/AdminDashboard/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="~/js/AdminDashboard/custom/utilities/modals/create-app.js"></script>
+    <script src="~/js/AdminDashboard/custom/utilities/modals/users-search.js"></script>
+
+
+
+    <!--end::Page Custom Javascript-->
+    <!--end::Javascript-->
+    @RenderSection("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
+    @* =================================================== *@
+    @* ASAGIDAKI JS DOSYALARININ HEPSI ESKI JS DOSYALARI *@
+    @* =================================================== *@
+    @* <script type='text/javascript' src="~/lib/admin/js/releases.js"></script>
+    <script type='text/javascript' src="~/lib/admin/js/bundle-min.js"></script> *@
+    @*         <script src="~/dataTable/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    *@       @*  <script src="~/dataTable/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/dataTable/assets/js/main.js"></script> *@
+    @* <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/adminLayout.js"></script>
+    <script src="~/js/pictureUpload.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> *@
+
+</body>
+<!--end::Body-->
+</html>
+<script>
+    function handleLogout() {
+        localStorage.removeItem('selectedAccordionMenu');
+        localStorage.removeItem('selectedMenuItem');
+        sessionStorage.removeItem('sessionActive');
+
+    }
+    //student butonu animasyon kontrolü
+    window.addEventListener('beforeunload', function () {
+        startLoader();
+    });
+
+
+    window.addEventListener("load", function () {
+        stopLoader();
+    });
+
+    function handleAccordionMenuClick(menuName) {
+        localStorage.setItem('selectedAccordionMenu', menuName);
+        sessionStorage.setItem('sessionActive', 'true');
+
+        var clickedMenu = document.getElementById(menuName + 'AccordionMenu');
+
+        if (clickedMenu) {
+            document.querySelectorAll('.menu-item.menu-accordion').forEach(function (menu) {
+                menu.classList.remove('active', 'show', 'hover');
+            });
+
+            clickedMenu.classList.add('active', 'show', 'hover');
+        }
+    }
+
+    function handleMenuItemClick(menuItemName) {
+        localStorage.setItem('selectedMenuItem', menuItemName);
+        sessionStorage.setItem('sessionActive', 'true');
+
+        var clickedMenuItem = document.getElementById(menuItemName);
+
+        if (clickedMenuItem) {
+            document.querySelectorAll('.menu-item').forEach(function (item) {
+                item.classList.remove('active', 'show', 'hover');
+            });
+
+            clickedMenuItem.classList.add('show', 'active', 'hover');
+
+            var accordionMenu = clickedMenuItem.closest('.menu-item.menu-accordion');
+            if (accordionMenu) {
+                accordionMenu.classList.add('show', 'hover', 'active');
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var logoElement = document.querySelector('a[href="/Admin"]');
+        if (logoElement) {
+            logoElement.addEventListener('click', function () {
+                document.querySelectorAll('.menu-item, .menu-item.menu-accordion').forEach(function (item) {
+                    item.classList.remove('show', 'active', 'hover');
+                });
+
+                localStorage.removeItem('selectedAccordionMenu');
+                localStorage.removeItem('selectedMenuItem');
+                sessionStorage.removeItem('sessionActive');
+            });
+        }
+
+        if (!sessionStorage.getItem('sessionActive')) {
+            localStorage.removeItem('selectedAccordionMenu');
+            localStorage.removeItem('selectedMenuItem');
+        } else {
+            var selectedMenuItem = localStorage.getItem('selectedMenuItem');
+            if (selectedMenuItem) {
+                var menuItem = document.getElementById(selectedMenuItem);
+                if (menuItem) {
+                    menuItem.classList.add('show', 'active', 'hover');
+                    var accordionMenu = menuItem.closest('.menu-item.menu-accordion');
+                    if (accordionMenu) {
+                        accordionMenu.classList.add('show', 'hover', 'active');
+                    }
+                }
+            }
+
+            var selectedAccordionMenu = localStorage.getItem('selectedAccordionMenu');
+            if (selectedAccordionMenu) {
+                var accordionMenu = document.getElementById(selectedAccordionMenu);
+                if (accordionMenu) {
+                    accordionMenu.classList.add('show', 'hover', 'active');
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<StudentExamListVM>
+
+@{
+    ViewData["Title"] = @SharedLocalizer["List", SharedLocalizer["Future_Exams"]];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>DataTable</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link rel="stylesheet" href="~/lib/student/css/simple-datatables-style.css" />
+    <link rel="stylesheet" href="~/lib/student/css/list-style.css" />
+</head>
+<body>
+    <main id="main" class="main">
+        <section class="section dashboard" id="section-dashboard">
+            <div class="card classroomlist-table overflow-auto">
+
+                <div class="card-body" id="product-card-body">
+                    <h5 class="card-title">@SharedLocalizer["List", SharedLocalizer["Future_Exams"]] </h5>
+
+                    @{
+
+                        int rowCount = Model.Count();
+                    }
+                    @if (rowCount == 0)
+                    {
+                        <div class="alert alert-warning">@SharedLocalizer[@ViewBag.Message]</div>
+                    }
+                    else
+                    {
+                        <table class="table table-borderless datatable" id="myTable">
+                            <thead>
+                                <tr class="table-heading-row">
+                                    <th scope="col" id="th-container-column"><span id="th-text-container-edu">@SharedLocalizer["Name_Of_The_Exam"]</span></th>
+                                    <th scope="col" id="th-container-column"><span id="th-text-container-edu">@SharedLocalizer["Exam_Date"]</span></th>
+                                    <th scope="col" id="th-container-column"><span id="th-text-container-edu">@SharedLocalizer["Exam_Duration"]</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var exam in Model)
+                                {
+                                    <tr>
+                                        <td class="exam-name">
+                                            @exam.ExamName
+                                        </td>
+                                        <td class="exam-date">
+                                            @exam.ExamDateTime
+                                        </td>
+                                        <td class="time">
+                                            @exam.ExamDuration
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="~/lib/student/js/simple-datatables.js"></script>
+    <script src="~/lib/student/js/tinymce.js"></script>
+    <script type='text/javascript' src='~/lib/student/js/list-main.js'></script>
+    <script>
+        var examCount = Model.FutureExams.Count();
+        window.onload = function () {
+            paginationSetupDropdown(examCount);
+        }
+    </script>
+</body>
+</html>
+
+

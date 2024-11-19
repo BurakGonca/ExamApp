@@ -1,0 +1,63 @@
+﻿@model StudentStudentDetailVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Student_Details"];
+}
+	
+<div class="card border shadow p-3 mb-5 bg-body-tertiary rounded">
+	<div class="row">
+		<div class="col-md-auto">
+			<div class="container" id="photo-student">
+				@if (Model.Image != null)
+				{
+					<div class="profile-pic" id="photo-student-pic">
+						<img src="data:image/jpeg;base64,@Model.Image"
+							 class="rounded-5" alt="" />
+					</div>
+				}
+				else
+				{
+					<div class="profile-pic" id="photo-student-pic">
+						<img src="~/media/avatars/blank.png"
+		   class="rounded-5" alt="" />
+					</div>
+				}
+			</div>
+		</div>
+		<div class="col align-self-center" id="bh-bg">
+			<h4 class="fw-light">@char.ToUpper(Model.FirstName[0])@Model.FirstName.Substring(1) @char.ToUpper(Model.LastName[0])@Model.LastName.Substring(1)</h4>
+			<div class="text-success">
+				<hr>
+			</div>
+			
+			@* <div class="row g-0 text-start">
+				<div class="col col-lg-2" id="detail">@Html.DisplayNameFor(model => model.DateOfBirth) :</div>
+				<div class="col-md-auto" id="detail-2"> @Model.DateOfBirth.ToShortDateString()</div>
+			</div> *@
+			<div class="row g-0 text-start">
+				<div class="col col-lg-2" id="detail">@Html.DisplayNameFor(model => model.Gender) :</div>
+				<div class="col-md-auto" id="detail-2">@(Model.Gender == true ? SharedLocalizer["Man"] : SharedLocalizer["Woman"])</div>
+			</div>
+			<div class="row g-0 text-start">
+				<div class="col col-lg-2" id="detail">@Html.DisplayNameFor(model => model.Email) :</div>
+				<div class="col-md-auto" id="detail-2">@Model.Email</div>
+			</div>
+			
+		</div>
+
+	</div>
+	<br />
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+		<a class="btn btn-success  me-md-2 " id="buttonbtn" asp-area="Student" asp-controller="Home" asp-action="Index">
+			<i class="fas fa-arrow-alt-circle-left" style="font-size: 14px; vertical-align: middle;"></i>
+			<span style="font-size: 14px; vertical-align: middle;">@SharedLocalizer["Go Back"]</span>
+		</a>
+		<a class="btn btn-success " id="buttonbtn" asp-area="Student" asp-controller="Student" asp-action="Update">
+			<i class="fa fa-refresh" style="font-size: 14px; vertical-align: middle;"></i>
+			<span style="font-size: 14px; vertical-align: middle;">@SharedLocalizer["Update", SharedLocalizer["Student"]]</span>
+		</a>
+	</div>
+	<br />
+</div>
+
+<link rel='stylesheet' href='~/lib/student/css/profile.css' type='text/css' media='all' />

@@ -1,0 +1,542 @@
+﻿@model AdminClassroomDetailsVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Classroom_Details"];
+}
+<div class="card mb-5 mb-xl-10">
+    <div class="card-header card-header-stretch">
+        <h3 class="card-title">@Model.Name @ViewLocalizer["Classroom_Details"]</h3>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">@SharedLocalizer["Classroom_Details"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">@SharedLocalizer["Trainers"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9">@SharedLocalizer["Students"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_10">@SharedLocalizer["Products"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_11">@SharedLocalizer["Exams"]</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_7" role="tabpanel">
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <tbody class="fw-bold">
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                            <td class="categories text-start col-lg-2">
+                                <span class="post_category">@SharedLocalizer["Opening_Date"]:</span>
+                            </td>
+                            <td class="categories text-start text-gray-600 col-lg-10">
+                                <span class="post_category">@Model.OpeningDate.ToShortDateString()</span>
+                            </td>
+                        </tr>
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                            <td class="categories text-start col-lg-2">
+                                <span class="post_category">@SharedLocalizer["Closed_Date"]:</span>
+                            </td>
+                            <td class="categories text-start text-gray-600 col-lg-10">
+                                <span class="post_category"> @Model.ClosedDate.ToShortDateString()</span>
+                            </td>
+                        </tr>
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                            <td class="categories text-start col-lg-2">
+                                <span class="post_category">@SharedLocalizer["Group_Type"]:</span>
+                            </td>
+                            <td class="categories text-start text-gray-600 col-lg-10">
+                                <span class="post_category"> @Model.GroupTypeName </span>
+                            </td>
+                        </tr>
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                            <td class="categories text-start col-lg-2">
+                                <span class="post_category">@SharedLocalizer["Branch_Name"]: </span>
+                            </td>
+                            <td class="categories text-start text-gray-600 col-lg-10">
+                                <span class="post_category">@Model.BranchName </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-secondary align-self-center ms-2" asp-controller="Classroom" asp-action="GetFilteredList">@SharedLocalizer["Back_List"]</a>
+                    <a class="btn btn-primary align-self-center ms-2" id="kt-update-classroom" onclick="loadClassroomData('@Model.Id')" data-classroom-id="@Model.Id" data-bs-toggle="modal" data-bs-target="#kt_modal_update_classroom" data-kt-users-table-filter="edit_row">@SharedLocalizer["Update"]</a>
+                    <a class="btn btn-danger align-self-center ms-2 deleteAction" data-id="@Model.Id"> @SharedLocalizer["Delete"] </a>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0">
+                            <td class="categories text-start">@SharedLocalizer["First_Name"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Last_Name"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Assigned_Date"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Resigned_Date"]</td>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-bold">
+
+                        @foreach (var trainer in Model.TrainerClassrooms)
+                        {
+                            <tr class="text-start fw-bolder text-uppercase ">
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@trainer.FirstName</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@trainer.LastName</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@trainer.AssignedDate.ToShortDateString()</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">
+                                        @if (trainer.ResignedDate.HasValue)
+                                        {
+                                            @trainer.ResignedDate.Value.ToShortDateString()
+                                        }
+                                        else
+                                        {
+                                            @SharedLocalizer["Still_Active"]
+                                        }
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-secondary">
+                        <a class="text-black" asp-controller="Classroom" asp-action="GetFilteredList">@SharedLocalizer["Back_List"]</a>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0">
+                            <td class="categories text-start">@SharedLocalizer["First_Name"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Last_Name"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Email"]</td>
+                            <td class="categories text-start">Yapılan Sınav/Atanan Sınav</td>
+                            <td class="categories text-start">@SharedLocalizer["Student_Exam_Average"]</td>
+                            <th> @SharedLocalizer["Options"]</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="fw-bold">
+                        @foreach (var student in Model.StudentClassrooms)
+                        {
+                            <tr class="text-start fw-bolder text-uppercase">
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@student.FirstName</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@student.LastName</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@student.Email</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@student.StudentAppointedExamCount/@student.StudentExamCount</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@student.StudentExamAvg</span>
+                                </td>
+
+
+                                <td class="text-start">
+                                    <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                                        @SharedLocalizer["Options"]
+                                        <span class="svg-icon fs-5 m-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+
+                                                    <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="currentColor" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+
+
+                                        <div class="menu-item px-3">
+                                            <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-area="Admin" asp-controller="Student" asp-action="StudentExams" asp-route-id="@student.Id" target="_blank">@SharedLocalizer["Exams"]</a>
+
+                                        </div>
+
+                                        @*  <div class="menu-item px-3">
+
+                                    <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-area="Admin" asp-controller="Classroom" asp-action="DeleteStudentByClassroom" asp-route-id="@student.Id" target="_blank">@SharedLocalizer["Delete_Student"]</a>
+                                    </div> *@
+
+                                        <div class="menu-item px-3">
+                                            <a class="menu-link px-3" data-kt-docs-table-filter="edit_row"
+                                               onclick="confirmDelete('@student.Id')"
+                                               target="_blank">@SharedLocalizer["Delete_Student"]</a>
+                                        </div>
+
+
+                                    </div>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-secondary">
+                        <a class="text-black" asp-controller="Classroom" asp-action="GetFilteredList">@SharedLocalizer["Back_List"]</a>
+                    </button>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_10" role="tabpanel">
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0">
+                            <td class="categories text-start">@SharedLocalizer["Product_Name"]</td>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-bold">
+                        @foreach (var productName in Model.ProductNames)
+                        {
+                            <tr class="text-start fw-bolder text-uppercase">
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@productName</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-secondary">
+                        <a class="text-black" asp-controller="Classroom" asp-action="GetFilteredList">@SharedLocalizer["Back_List"]</a>
+                    </button>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_11" role="tabpanel">
+                <table id="kt_datatable_example_2" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0">
+                            <td class="categories text-start">@SharedLocalizer["Exam_Name"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Type"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Date"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Attendance_Status"]</td>
+                            <td class="categories text-start">@Html.DisplayNameFor(model => model.ClassGradeAverage)</td>
+                            <td class="categories text-start">@SharedLocalizer["Min_Max_Grade"]</td>
+                            <td class="categories text-start">@SharedLocalizer["The_Status"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Exam_Details"]</td>
+                            <td class="categories text-start">@SharedLocalizer["Class_Achievement"]</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.ClassroomExams.Count == 0)
+                        {
+                            <tr class="text-start fw-bolder text-uppercase">
+                                <td class="categories text-start text-gray-600">
+                                    <span>@SharedLocalizer["Exam_Not_Found"]</span>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var item in ViewBag.ClassroomExams)
+                        {
+                            <tr class="text-start fw-bolder text-uppercase">
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@item.Name</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@item.ExamType</span>
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <span class="post_category">@item.ExamDateTime</span>
+                                </td>
+                                <td class="categories text-center text-gray-600">
+                                    <span class="post_category">@item.StudentExamScoreCount / @item.StudentCount</span>
+                                </td>
+                                <td class="categories text-center text-gray-600">
+                                    @if (item.ClassGradeAverage != null)
+                                    {
+                                        <span class="post_category">@item.ClassGradeAverage</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="post_category">@SharedLocalizer["Exam_Result_Info_ Not_Available"]</span>
+                                    }
+                                </td>
+                                <td class="categories text-center text-gray-600">
+                                    @if (item.StudentMaxScore != null && item.StudentMinScore != null)
+                                    {
+                                        <span class="post_category">@item.StudentMinScore / @item.StudentMaxScore</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="post_category">@SharedLocalizer["Exam_Result_Info_ Not_Available"]</span>
+                                    }
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    @if (item.IsCanceled == true)
+                                    {
+                                        <span class="post-category text-danger">@SharedLocalizer["Cancelled"]</span>
+                                    }
+                                    else if (item.IsTest == true)
+                                    {
+                                        <span class="post-category text-warning">@SharedLocalizer["Practice_Exam"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="post-category text-success">@SharedLocalizer["Not_Cancelled"]</span>
+
+                                    }
+                                </td>
+                                <td class="categories text-start text-gray-600">
+                                    <a class="exams-button" asp-controller="Exam" asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Exam_Details"]</a>
+                                <td class="categories text-start text-gray-600">
+                                    <a class="exams-button" target="_blank" asp-controller="Classroom" asp-action="ClassRoomExamAnalysis" asp-route-examId="@item.Id" asp-route-classroomId="@Model.Id">@SharedLocalizer["Show_Classroom_Success"]</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <!-- Geri Dön Butonu -->
+                    <button class="btn btn-secondary mr-2">
+                        <!-- mr-2 ile sağa doğru boşluk ekledik -->
+                        <a class="text-black" asp-controller="Classroom" asp-action="GetFilteredList">@SharedLocalizer["Back_List"]</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Tablonun genel stil ayarları */
+    #kt_datatable_example_2 {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        #kt_datatable_example_2 thead td {
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* Tablodaki hücrelerin stil ayarları */
+        #kt_datatable_example_2 tbody tr td {
+            padding: 5px 10px; /* Satır aralığını %35 azaltmak için padding değerini küçültüyoruz */
+            text-align: left;
+            line-height: 1.2; /* Satır yüksekliğini küçültmek için line-height değerini düzenliyoruz */
+            vertical-align: middle; /* İçeriğin dikeyde ortalanması */
+        }
+</style>
+<partial name="~/Areas/Admin/Views/Classroom/Update.cshtml" model="new AdminClassroomUpdateVM()"></partial>
+
+
+
+
+<!-- Diğer tablolar için de aynı şekilde devam edin -->
+@section Scripts
+{
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/view/update-class.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        var localizedTexts = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]', // "fullName adlı admini silmek istediğinize emin misiniz?"
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]', // "Bu işlem geri alınamaz!"
+            confirmButtonText2: '@SharedLocalizer["Confirm_Button_Text"]', // "Evet, sil!"
+            cancelButtonText2: '@SharedLocalizer["Cancel_Button_Text"]', // "Hayır, iptal et"
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+            confirmTitleForRelation: '@SharedLocalizer["Confirm_Passive_Text"]',
+            confirmPassiveButtonText: '@SharedLocalizer["Confirm_Passive_Button"]',
+            confirmCancelButton: '@SharedLocalizer["Cancel"]'
+
+        };
+
+        function confirmDelete(studentId) {
+            Swal.fire({
+                title: 'Silmek istediğinize emin misiniz?',
+                text: 'Bu işlem geri alınamaz!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Evet, Sil!',
+                cancelButtonText: 'İptal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Admin/Classroom/DeleteStudentByClassroom/' + studentId;
+                }
+            });
+        }
+
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("CheckRelation")" + "?id=" + id,
+                success: function (result) {
+                    if (result.hasRelation) {
+
+                        Swal.fire({
+                            title: `${localizedTexts.confirmTitleForRelation}`,
+                            text: localizedTexts.confirmText,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#FFA500',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: localizedTexts.confirmPassiveButtonText,
+                            cancelButtonText: localizedTexts.confirmCancelButton
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                                deleteRecord(id);
+                            }
+                        });
+                    } else {
+                        // İlişkili bir kayıt yoksa, standart onay mesajını göster
+                        Swal.fire({
+                            title: `${localizedTexts.confirmTitle}`,
+                            text: localizedTexts.confirmText,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: localizedTexts.confirmButtonText2,
+                            cancelButtonText: localizedTexts.cancelButtonText2
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                                deleteRecord(id);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        function deleteRecord(id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Delete")" + "?id=" + id,
+                success: function (result) {
+                    if (result.isSuccess) {
+                        setTimeout(() => location.href = "@Url.Action("index")", 2000)
+                    }
+                }
+            });
+        }
+        $(document).ready(function () {
+
+            var dt = $("#kt_datatable_example_2").DataTable({
+
+                lengthMenu: [10, 25, 50, 100],
+
+                dom:
+
+                    '<"row"<"col-sm-12"t>>' +
+
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+
+                language: {
+
+                    emptyTable: "Tabloda herhangi bir veri bulunmamaktadır",
+
+                    infoEmpty: "Gösterilecek hiçbir kayıt yok",
+
+                    infoFiltered: "(toplam _MAX_ kayıt içerisinden filtrelenmiştir)",
+
+                    zeroRecords: "Eşleşen kayıt bulunamadı",
+
+                },
+
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_2_length"]', function () {
+
+                dt.page.len($(this).val()).draw();
+
+                $(this).css({
+
+                    'border': '0 solid transparent',
+
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+
+                });
+
+            });
+
+            dt.on('draw.dt', function () {
+
+                updateInfoText(dt.page.info());
+
+            });
+
+            function updateInfoText(pageInfo) {
+
+                var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+
+                $('#kt_datatable_example_2_info').html(infoText).css({
+
+                    'margin-top': '6px',
+
+                    'font-size': '14px',
+
+                    'font-family': 'Poppins, Helvetica, sans- serif',
+
+                });
+
+            }
+
+            updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+
+                var prevButton = $('#kt_datatable_example_2_previous a');
+
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_example_2_next a');
+
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_example_2_paginate .page-item');
+
+                var activePage = $('#kt_datatable_example_1_paginate .page-item.active a');
+
+                activePage.css({
+
+                    'color': '#ffffff'
+
+                });
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw.dt', function () {
+
+                updatePaginationArrows();
+
+            });
+
+        });
+    </script>
+
+}

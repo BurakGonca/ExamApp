@@ -1,0 +1,87 @@
+﻿@model ClassroomStudentPerformanceVM
+
+@{
+    ViewData["Title"] = "Sınıf Sınav Performans Analizi";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link href="~/css/getexamresult.css" rel="stylesheet" />
+    <style>
+        #chart-container {
+            width: 100%;
+            height: 720px;
+            margin: 50px;
+            overflow-x: auto;
+        }
+    </style>
+    <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <script src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+</head>
+
+<body>
+    @if (!Model.SubtopicPerformances.Any())
+    {
+        <div class="text-center" style="margin-top: 20vh;">
+            <h2>Yeterli veri yoktur.</h2>
+            <p class="mt-4">
+                <a class="btn btn-primary" asp-controller="Classroom" asp-action="Details" asp-route-id="@Model.ClassroomId">Sınıf Detaylarına Dön</a>
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div id="chart-container"></div>
+        </div>
+
+        <script>
+var subtopicPerformances = @Html.Raw(Json.Serialize(Model.SubtopicPerformances)) || {};
+
+// Veri varsa harita oluştur, yoksa boş bir dizi dön.
+var dataPoints = Object.keys(subtopicPerformances).length > 0
+    ? Object.keys(subtopicPerformances).map(function(key) {
+        return {
+            "label": key,
+            "value": subtopicPerformances[key]
+        };
+      })
+    : [{"label": "No Data", "value": 0}]; // Grafikte gösterilecek varsayılan veri noktası
+
+var fusionChartData = {
+    "chart": {
+                    "caption": "@ViewBag.ClassroomName Sınıf Geneli @ViewBag.ExamName Sınavı Konu Başlıklarına Göre Performans",
+        "xAxisName": "Konu Başlıkları",
+        "yAxisName": "Ortalama Performans",
+        "theme": "fusion",
+        "rotateValues": "1",
+        "slantLabels": "1",
+        "showValues": "1" // Değerleri her zaman göster
+    },
+    "data": dataPoints
+};
+
+FusionCharts.ready(function() {
+    var fusionChart = new FusionCharts({
+        type: 'column2d',
+        renderAt: 'chart-container',
+        width: '100%',
+        height: '720',
+        dataFormat: 'json',
+        dataSource: fusionChartData
+    });
+    fusionChart.render();
+});
+        </script>
+    }
+
+
+    <!-- Diğer Scriptler -->
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/getexamresult.js"></script>
+</body>
+</html>

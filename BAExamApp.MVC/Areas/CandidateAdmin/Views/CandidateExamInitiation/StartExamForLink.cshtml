@@ -1,0 +1,161 @@
+﻿@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateExamInitiationVMs
+@model CandidateExamStartVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Exam"];
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>@ViewData["Title"]</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+    <div id="root">
+
+        <main>
+            <div class="container position-absolute top-50 start-50 translate-middle">
+
+
+                @if (ViewBag.ErrorMessage == null)
+                {
+                    <div class="row">
+                        <div class="container mx-auto font-weight-bold text-center text-primary">
+                            <h3>Hoşgeldin @Model.FullName, sınavı başlatmak için lütfen butona tıklayınız !</h3>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-3 p-2" style="font-weight: bold; color: #414b59;">
+                            <label asp-for="ExamName"></label>
+                        </div>
+                        <div class="col-9 p-2">
+                            <input class="col-12" asp-for="ExamName" disabled />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3 p-2" style="font-weight: bold; color: #414b59;">
+                            <label asp-for="ExamDuration">@SharedLocalizer["Exam_Duration"]</label>
+                        </div>
+                        <div class="col-9 p-2">
+                            <input class="col-12" asp-for="ExamDuration" type="time" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 p-2" style="font-weight: bold; color: #414b59;">
+                            <label asp-for="QuestionCount"></label>
+                        </div>
+                        <div class="col-9 p-2">
+                            <input class="col-12" asp-for="QuestionCount" type="number" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form class="col p-2  float-end" method="post">
+                            <input asp-for="ExamId" hidden />
+                            <input asp-for="CandidateId" hidden />
+                            <input asp-for="ExamDuration" hidden />
+                            <input asp-for="ExamName" hidden />
+                            <input asp-for="ExcuseDescription" hidden />
+                            <input asp-for="FullName" hidden />
+                            <input asp-for="QuestionCount" hidden />
+                            <button type="submit" class="btn btn-primary float-end">@SharedLocalizer["Start_Exam"]</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-12 text-center" style="font-weight: bold; color: #414b59;">
+                            <span>@SharedLocalizer[ViewBag.ErrorMessage]</span>
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+                    <br />
+
+                    <div class="row">
+                        <div class="col-12 text-center" style="font-weight: bold; color: #414b59;">
+                            <span>@SharedLocalizer["Exam_Date_Time"] : @Model.ExamDateTime</span>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="col-12 text-center" style="font-weight: bold; color: #414b59;" id="remainingTime"></div>
+                    </div>
+                }
+            </div>
+        </main>
+
+        <footer>
+            <div class="logo-ba">
+                <img src="~/images/BATeknoloji_Logo_RGB.png"
+                     alt="Bilgeadam Teknoloji" />
+            </div>
+        </footer>
+    </div>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        var examDateTime = new Date('@Model.ExamDateTime.ToString("yyyy/MM/dd HH:mm")');
+        var hasRedirected = false;  // Flag to track if redirection has occurred
+
+        function updateRemainingTime() {
+            var currentTime = new Date();
+            var timeDifference = examDateTime - currentTime;
+
+            var transitionTimeMessage = "";
+
+            if (timeDifference <= 0 && !hasRedirected) {  // Check if time difference is less than or equal to 0 and redirection has not occurred
+                document.getElementById("remainingTime").innerHTML = transitionTimeMessage;
+
+                var candidateId = encodeURIComponent('@Model.CandidateId');
+                var examId = encodeURIComponent('@Model.ExamId');
+                var url = '@Url.Action("StartExam", "CandidateExamInitiation")?candidateId=' + candidateId + '&examId=' + examId;
+
+                hasRedirected = true;  // Set the flag to true
+                window.location.href = url;
+                return;
+            }
+
+            var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            var remainingTimeMessage = '<span class="bold-black">' +
+                '@SharedLocalizer["Remaining_Time_For_The_Exam_To_Start"]' +
+                '</span> : ';
+
+            var remainingTime = "";
+            var daysText = ' gün, ';
+            var hoursText = ' saat, ';
+            var minutesText = ' dakika, ';
+            var secondsText = ' saniye';
+
+            if (days > 0) {
+                remainingTime += days + daysText;
+            }
+            if (hours > 0) {
+                remainingTime += hours + hoursText;
+            }
+            remainingTime += minutes + minutesText + seconds + secondsText;
+            remainingTimeMessage += '<span style="font-weight: bold; color: #e6353b;">' + remainingTime + '</span>'
+            document.getElementById("remainingTime").innerHTML = remainingTimeMessage;
+        }
+
+        setInterval(updateRemainingTime, 1000);
+
+        updateRemainingTime();
+
+    </script>
+</body>
+</html>

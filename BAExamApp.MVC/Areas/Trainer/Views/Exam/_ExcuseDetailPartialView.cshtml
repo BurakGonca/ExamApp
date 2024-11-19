@@ -1,0 +1,211 @@
+﻿
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_excuse_detail" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_excuse_detail_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bolder">@SharedLocalizer["Excuse_Detail"]</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-1 mx-xl-1 my-7">
+                <!--begin::Form-->
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <label id="excuse-detail"></label>
+                    </div>
+                    <!-- Mazereti Onayla Butonu -->
+                    <div class="col-sm-12 text-end mt-3">
+                        <button type="button" id="approve-excuse" class="btn btn-success">@SharedLocalizer["Confirm_Excuse"]</button>
+                    </div>
+                </div>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+
+    $('.btn-primary[data-bs-toggle="modal"]').on('click', function () {
+        var excusedescription = $(this).data('excuse-description');
+        console.log(excusedescription)
+        $('#excuse-detail').text(excusedescription);
+    
+        var excusedescription = $(this).data('excuse-description');
+
+
+        // Mazeret Detayı butonu ile gönderdiğimiz data-isConfirmedExcuse özniteliğine göre (retake exam bool değeri) butonun gösteriliğ gösterilmeyeceğine karar veriyoruz.
+        var isConfirmedExcuse = $(this).data('isconfirmedexcuse'); 
+
+        $('#excuse-detail').text(excusedescription);
+
+
+        if (isConfirmedExcuse === "False") {
+            $('#approve-excuse').show();
+
+        } else if (isConfirmedExcuse === "True") {
+            $('#approve-excuse').hide();
+
+        } else {
+            console.log("buton için işlem yapılamıyor. Değer:", isConfirmedExcuse);
+        }
+    });
+</script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+
+
+    // Mazereti onayla butonuna tıklama olayı
+    $('#approve-excuse').on('click', function () {
+        var examId = sessionStorage.getItem('examId');
+        var studentId = sessionStorage.getItem('studentId');
+
+        Swal.fire({
+            title: 'Mazereti onaylamak istiyor musunuz?',
+            text: "Bu işlem geri alınamaz!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet, onayla',
+            cancelButtonText: 'Hayır'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Trainer/Exam/ConfirmExcuse',
+                    type: 'POST',
+                    data: {
+                        examId: examId,
+                        studentId: studentId
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: '@SharedLocalizer["Assessment_Confirm_Success"]',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+                            }).then(function () {
+                                $('#kt_modal_excuse_detail').modal('hide');
+                                window.location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Hata!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'Bir hata oluştu!',
+                            text: 'İşlem sırasında bir hata meydana geldi.',
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <script>
+
+    $('#approve-excuse').on('click', function () {
+        var examId = sessionStorage.getItem('examId');
+        var studentId = sessionStorage.getItem('studentId');
+
+        // SweetAlert2 ile onay uyarısı
+        Swal.fire({
+            title: 'Mazereti onaylamak istiyor musunuz?',
+            text: "Bu işlem geri alınamaz!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet, onayla',
+            cancelButtonText: 'Hayır'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Kullanıcı onay verdiyse Ajax çağrısı yapılır
+                $.ajax({
+                    url: '/Trainer/Exam/ConfirmExcuse',
+                    type: 'POST',
+                    data: {
+                        examId: examId,
+                        studentId: studentId
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Başarı mesajı
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: response.message, 
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+                            }).then(function () {
+                                // Modal'ı kapat ve sayfayı yenile
+                                $('#kt_modal_excuse_detail').modal('hide');
+                                window.location.reload();
+                            });
+                        } else {
+                            // Sunucudan gelen hata mesajı
+                            Swal.fire({
+                                title: 'Hata!',
+                                text: response.message, 
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    },
+                    error: function () {
+                        // Ajax hata mesajı
+                        Swal.fire({
+                            title: 'Bir hata oluştu!',
+                            text: 'İşlem sırasında bir hata meydana geldi.',
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+
+</script>
+ *@

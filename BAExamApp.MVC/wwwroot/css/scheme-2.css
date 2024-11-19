@@ -1,0 +1,426 @@
+body,
+button,
+input,
+select,
+textarea {
+	font-family: 'Open Sans', sans-serif
+}
+
+body {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #7f828f
+}
+
+h1,
+.h1 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 45px;
+	font-weight: 600;
+	line-height: 54px;
+	color: #201b16
+}
+
+	h1 a,
+	.h1 a {
+		color: #201b16
+	}
+
+@media (max-width:600px) {
+
+	h1,
+	.h1 {
+		font-size: 34.65px !important;
+		line-height: 41.58px !important
+	}
+}
+
+h2,
+.h2 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 36px;
+	font-weight: 600;
+	line-height: 43px;
+	color: #201b16
+}
+
+	h2 a,
+	.h2 a {
+		color: #201b16
+	}
+
+@media (max-width:600px) {
+
+	h2,
+	.h2 {
+		font-size: 29.52px !important;
+		line-height: 35.26px !important
+	}
+}
+
+h3,
+.h3 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 28px;
+	color: #201b16
+}
+
+	h3 a,
+	.h3 a {
+		color: #201b16
+	}
+
+h4,
+.h4 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 22px;
+	font-weight: 700;
+	line-height: 26px;
+	color: #201b16
+}
+
+	h4 a,
+	.h4 a {
+		color: #201b16
+	}
+
+h5,
+.h5 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 24px;
+	color: #201b16
+}
+
+	h5 a,
+	.h5 a {
+		color: #201b16
+	}
+
+h6,
+.h6 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 20px;
+	color: #201b16
+}
+
+	h6 a,
+	.h6 a {
+		color: #201b16
+	}
+
+.sc_accordion.sc_accordion_style_1 .sc_accordion_item .sc_accordion_title:hover,
+.sc_tabs.sc_tabs_style_1 .sc_tabs_titles li a:hover,
+.sc_tooltip_parent,
+.page_top_wrap.page_top_title .breadcrumbs,
+.widget_area ul li:before,
+.widget_area ul li .count,
+.widget_area ul li.recentcomments span.comment-author-link a,
+.widget_area .widget_product_tag_cloud a:hover,
+.widget_area .widget_tag_cloud a:hover,
+.post_info.post_info_bottom .post_info_item,
+.widget_area ul li.recentcomments .comment-author-link,
+blockquote.sc_quote.sc_quote_style_2 .sc_quote_title,
+.sc_blogger.template_masonry .post_content.isotope_item_content .post_title a:hover,
+.sc_blogger.template_masonry .post_content.isotope_item_content .post_date,
+.sc_blogger.template_masonry .post_format_link .post_featured .content a:hover,
+.sc_blogger.template_classic .post_content.isotope_item_content .post_title a:hover,
+.sc_blogger.template_classic .post_content.isotope_item_content .post_date,
+.sc_blogger.template_classic .post_format_link .post_featured .content a:hover,
+.isotope_filters a.active,
+.isotope_filters a:hover,
+.menu_main_wrap .menu_main_nav li > a:hover,
+.menu_main_wrap .menu_main_nav li > a:hover:after,
+.sc_blogger.layout_news .post_date,
+.widget_area ul li a:hover,
+.widget_area .post_title a:hover,
+.sc_table.recent_jobs td a:hover,
+.sc_list.sc_list_style_ul li:before,
+li.bbp-topic-title a:hover,
+.widget_area .widget_display_replies ul li a,
+.widget_area .widget_display_replies a.bbp-reply-topic-title:hover,
+.search_wrap.search_style_regular .search_icon,
+.menu_user_wrap .menu_user_nav li li > a:hover,
+.popup_wrap .popup_close:hover,
+.pagination_wrap .pager_next,
+.pagination_wrap .pager_prev,
+.pagination_wrap .pager_last,
+.pagination_wrap .pager_first,
+.pagination_single > .pager_numbers,
+.pagination_slider .pager_cur:hover,
+.pagination_slider .pager_cur:focus,
+.pagination_pages > .active,
+.pagination_pages > a.pager_dot,
+.pagination_wrap .pager_next:hover,
+.pagination_wrap .pager_prev:hover,
+.pagination_wrap .pager_last:hover,
+.pagination_wrap .pager_first:hover,
+.menu_main_wrap .menu_main_nav > li.open > a,
+.menu_main_wrap .menu_main_nav > li.open > a:after,
+#buddypress div.item-list-tabs ul li a:hover,
+#booking_month_nav_prev .booking_month_nav_button:hover:before,
+#booking_month_nav_next .booking_month_nav_button:hover:before,
+#booking_slot_form div.booking_float_left.booking_height_20.booking_line_20 a:hover,
+#booking_slot_form div.booking_font_custom.booking_float_right.text_right:hover,
+.close_booking:hover,
+.widget_area .widget_text a,
+.widget_area .post_info a,
+a:hover,
+.copyright_wrap a,
+.widget_area .widget_calendar td a.day_wrap,
+.page_top_wrap .breadcrumbs a.breadcrumbs_item,
+a,
+.comments_list_wrap .comment_info > .comment_date > .comment_date_value,
+.comments_list_wrap .comment_info > .comment_time,
+.isotope_item_courses .post_featured .post_title a:hover {
+	color: #B73E3E
+}
+
+.menu_user_wrap .menu_user_nav li li > a:hover {
+	color: #B73E3E !important
+}
+
+.sc_accordion .sc_accordion_item .sc_accordion_title.ui-state-active,
+.sc_table table thead tr,
+.sc_audio_player.sc_audio_image .mejs-button.mejs-playpause-button.mejs-play button:hover,
+.sc_audio_player.sc_audio_info .mejs-button.mejs-playpause-button.mejs-play button,
+.sc_video_frame.hover_icon:before,
+.sc_slider_controls_wrap a,
+input[type="submit"],
+input[type="button"],
+button,
+.sc_button,
+.sc_dropcaps.sc_dropcaps_style_1 .sc_dropcaps_item,
+blockquote:after,
+blockquote.sc_quote,
+.sc_infobox.sc_infobox_style_info,
+.widget_area .widget_product_tag_cloud a,
+.widget_area .widget_tag_cloud a,
+.widget_area .widget_product_search .search_button,
+.widget_area .widget_search .search_button,
+.post_item.post_item_excerpt.post_format_link,
+.sc_tabs.sc_tabs_style_2 .sc_tabs_titles li.ui-state-active a,
+.reviews_stars.reviews_style_heart,
+.reviews_block .reviews_max_level_100 .reviews_stars_hover,
+.reviews_block .reviews_item.reviews_slider,
+.sc_team_style_2 .sc_team_item_email_button:before,
+.sc_blogger.template_masonry .post_format_quote .content,
+.sc_blogger.template_classic .post_format_quote .content,
+.sc_blogger.template_portfolio .isotope_item_courses .post_category,
+.isotope_filters a,
+.sc_skills_counter .sc_skills_item.sc_skills_style_2 .sc_skills_count,
+.weblator-poll-container .btn-default,
+.pagination_single a,
+.pagination_slider .pager_cur,
+.pagination_pages > a,
+.pagination_pages > span,
+.scroll_to_top,
+.reviews_block .reviews_summary .reviews_item:before,
+.sticky .sticky_label,
+.menu_main_wrap .menu_main_nav > li > ul,
+.sc_tabs.sc_tabs_style_1 .sc_tabs_titles li.ui-state-active a,
+#bbpress-forums div.bbp-topic-content a,
+#buddypress button,
+#buddypress a.button,
+#buddypress input[type="submit"],
+#buddypress input[type="button"],
+#buddypress input[type="reset"],
+#buddypress ul.button-nav li a,
+#buddypress div.generic-button a,
+#buddypress .comment-reply-link,
+a.bp-title-button,
+#buddypress div.item-list-tabs ul li.selected a,
+#buddypress div.item-list-tabs ul li.current a,
+#buddypress div.item-list-tabs ul li.selected a {
+	background-color: rgb(60, 66, 88);
+}
+
+.menu_main_wrap .menu_main_nav_area ul::-webkit-scrollbar-thumb {
+	background-color: #B73E3E
+}
+
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-pause.mejs-button button:hover,
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-unmute button:hover,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-time-rail .mejs-time-current,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-pause button,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-mute button,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-unmute button,
+.sc_blogger.template_masonry .post_format_audio .sc_audio .mejs-controls .mejs-time-rail .mejs-time-current,
+.sc_blogger.template_classic .post_format_audio .sc_audio .mejs-controls .mejs-time-rail .mejs-time-current,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-mute button,
+.sc_tooltip_parent .sc_tooltip,
+.sc_tooltip_parent .sc_tooltip:before,
+.menu_main_wrap .menu_main_nav > li > ul > li > ul {
+	background: #B73E3E !important
+}
+
+.sc_tooltip_parent,
+.widget_area .widget_product_tag_cloud a,
+.widget_area .widget_tag_cloud a,
+.isotope_filters a,
+.widget_area .sc_tabs.sc_tabs_style_2 .sc_tabs_content {
+	border-color: #B73E3E
+}
+
+.sc_accordion .sc_accordion_item .sc_accordion_title.ui-state-active:after {
+	border-color: #B73E3E transparent transparent transparent
+}
+
+.sc_tabs.sc_tabs_style_1 .sc_tabs_titles li.ui-state-active a:before {
+	border-color: transparent transparent transparent #B73E3E
+}
+
+button,
+div.bbp-submit-wrapper button,
+input[type="submit"],
+#buddypress a.disabled,
+#buddypress button.disabled,
+#buddypress button.pending,
+#buddypress div.pending a,
+#buddypress input[type=submit].disabled,
+#buddypress input[type=submit].pending,
+#buddypress input[type=submit][disabled=disabled],
+#buddypress input[type=button].disabled,
+#buddypress input[type=button].pending,
+#buddypress input[type=reset].disabled,
+#buddypress input[type=reset].pending {
+	box-shadow: 0 3px
+}
+
+.main_font_1 {
+	color: #B73E3E
+}
+
+.main_background_1 {
+	background-color: #B73E3E
+}
+
+.sc_slider_swiper .sc_slider_info .sc_slider_reviews .reviews_stars.reviews_style_heart:before,
+del,
+.sc_highlight_style_3,
+.page_top_wrap .page_title,
+.page_top_wrap .breadcrumbs a.breadcrumbs_item:hover,
+.comments_list_wrap .comment_reply a {
+	color: #B73E3E
+}
+
+	.sc_audio_player.sc_audio_image .mejs-button.mejs-playpause-button.mejs-play button,
+	.sc_audio_player.sc_audio_info .mejs-button.mejs-playpause-button.mejs-play button:hover,
+	.sc_slider_controls_wrap a:hover,
+	.sc_highlight_style_2,
+	.sc_dropcaps.sc_dropcaps_style_2 .sc_dropcaps_item,
+	.sc_infobox.sc_infobox_style_error,
+	.page_top_wrap .page_title .page_icon {
+		background-color: #B73E3E
+	}
+
+.main_color_2 {
+	background: #B73E3E
+}
+
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-time-rail .mejs-time-current,
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-pause button,
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-mute button,
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-unmute button,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-pause.mejs-button button:hover,
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-mute button,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-unmute button:hover {
+	background: #B73E3E !important
+}
+
+.main_color_2 {
+	border-color: #B73E3E
+}
+
+.flip-clock-divider.hours + ul.flip .inn,
+.flip-clock-divider.hours + ul.flip + ul.flip .inn,
+.flip-clock-divider.minutes + ul.flip .inn,
+.flip-clock-divider.minutes + ul.flip + ul.flip .inn,
+.flip-clock-divider.seconds + ul.flip .inn,
+.flip-clock-divider.seconds + ul.flip + ul.flip .inn {
+	color: #B73E3E !important
+}
+
+.main_font_2 {
+	color: #B73E3E
+}
+
+.main_background_2 {
+	background-color: #B73E3E
+}
+
+.sc_audio_player.sc_audio_image .mejs-button.mejs-playpause-button.mejs-play button:hover,
+.sc_audio_player .mejs-button.mejs-playpause-button.mejs-play button:hover,
+.sc_audio_player.sc_audio_info .mejs-controls .mejs-mute button:hover,
+.sc_audio_player.sc_audio_image .mejs-controls .mejs-mute button:hover,
+.weblator-poll-container .btn:hover,
+.weblator-poll-container .panel-footer .weblator-view-results a:hover {
+	box-shadow: none !important;
+	background-color: #686f77 !important
+}
+
+.sc_blogger.layout_date.sc_blogger_horizontal .post_content:hover,
+.sc_blogger.template_classic .post_content.isotope_item_content .post_category:hover,
+.sc_blogger.template_classic .post_format_video .hover_icon.sc_video_play_button:hover:before,
+.sc_blogger.template_portfolio .isotope_item_courses .post_category:hover,
+.menu_user_nav > li > a:hover,
+.search_wrap .search_icon:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button:hover,
+.sc_button:hover,
+.menu_user_wrap .menu_user_right .menu_button:hover,
+span.fc-button.fc-button-prev.ui-state-default.ui-corner-left.ui-corner-right:hover,
+span.fc-button.fc-button-next.ui-state-default.ui-corner-left.ui-corner-right:hover,
+.flatButton .item .read_more:hover,
+.wpProQuiz_button:hover,
+.weblator-poll-container .btn:hover,
+.weblator-poll-container .panel-footer .weblator-view-results a:hover {
+	background-color: #686f77 !important
+}
+
+.menu_user_nav > li > a:hover,
+.search_wrap .search_icon:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button:hover,
+.sc_button:hover,
+.menu_user_wrap .menu_user_right .menu_button:hover,
+span.fc-button.fc-button-prev.ui-state-default.ui-corner-left.ui-corner-right:hover,
+span.fc-button.fc-button-next.ui-state-default.ui-corner-left.ui-corner-right:hover,
+.flatButton .item .read_more:hover,
+.wpProQuiz_button:hover {
+	box-shadow: 0 3px #494d53 !important;
+	color: #fff !important
+}
+
+.top_panel_over .top_panel_wrap,
+.menu_main_wrap,
+.current_day {
+	background-color: #2a2f43
+}
+
+@-moz-document url-prefix() {
+	.menu_main_wrap .menu_main_nav_area ul:after {
+		background-color: #2a2f43
+	}
+}
+
+.copyright_wrap,
+body {
+	background-color: #2a2f43
+}
+
+.menu_main_wrap {
+	border-color: #2a2f43
+}
+
+	.menu_main_wrap .menu_main_nav > li ul::-webkit-scrollbar-thumb {
+		background-color: #2a2f43
+	}

@@ -1,0 +1,115 @@
+﻿@model AdminProductCreateVM
+
+@{
+	ViewData["Title"] = @SharedLocalizer["Create", SharedLocalizer["Product"]];
+}
+
+<div class="modal fade" id="createProductModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered mw-1000px">
+		<div class="modal-content">
+			<div class="modal-header" id="kt_modal_create_subtopic_header">
+				<h2 class="fw-bolder">@SharedLocalizer["Create", SharedLocalizer["Product"]]</h2>
+				<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+					<span class="svg-icon svg-icon-1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+							<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+						</svg>
+					</span>
+				</div>
+			</div>
+			<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+				<form asp-action="Create" id="kt_modal_create_product_form" class="form" enctype="multipart/form-data">
+					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_create_subtopic_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+						<div class="row">
+
+							<div class="fv-row form-floating mb-7">
+								<div class="fv-row form-floating mb-7">
+									<input asp-for="Name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="@ViewLocalizer["Create_New"]" />
+									<label asp-for="Name" class="required fw-bold fs-6 mb-2"></label>
+									<span asp-validation-for="Name" class="text-danger"></span>
+								</div>
+						
+
+
+								<div class="fv-row form-floating mb-7">
+									<select id="mySelectTechnicalUnits" asp-for="TechnicalUnitId" asp-items="@ViewBag.TechnicalUnits" class="form-select form-select-sm form-select-solid">
+										<option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+									</select>
+									<!--end::Select-->
+									<!--begin::Label-->
+									<label asp-for="TechnicalUnitId" class="required fw-bold fs-6 mb-2"></label>
+									<!--end::Label-->
+									<!--begin::Select-->
+									<span asp-validation-for="TechnicalUnitId" class="text-danger"></span>
+								</div>
+							
+								<div class="col-md-6">
+									<!--begin::Input group-->
+									<div class="row mb-7">
+										<div class="fv-row mb-7">
+											<!--begin::Label-->
+											<label asp-for="IsActive" class="required fw-bold fs-6 mb-5"></label>
+											<!--end::Label-->
+										</div>
+										<div class="row mb-7">
+											<div class="col">
+												<!--begin::Genders-->
+												<!--begin::Input row-->
+												<div class="d-flex fv-row">
+													<!--begin::Radio-->
+													<div class="form-check form-check-custom form-check-solid">
+														<!--begin::Input-->
+														<input asp-for="IsActive" class="form-check-input me-3" type="radio" value="true" id="kt_modal_update_role_option_0" checked='checked' />
+														<!--end::Input-->
+														<!--begin::Label-->
+														<label class="form-check-label" for="kt_modal_update_role_option_0">
+															<div class="fw-bolder text-gray-800">@ViewLocalizer["Yes"]</div>
+														</label>
+														<!--end::Label-->
+													</div>
+													<!--end::Radio-->
+												</div>
+												<!--end::Input row-->
+											</div>
+											<div class="col">
+												<!--begin::Input row-->
+												<div class="d-flex fv-row">
+													<!--begin::Radio-->
+													<div class="form-check form-check-custom form-check-solid">
+														<!--begin::Input-->
+														<input asp-for="IsActive" class="form-check-input me-3" type="radio" value="false" id="kt_modal_update_role_option_1" />
+														<!--end::Input-->
+														<!--begin::Label-->
+														<label class="form-check-label" for="kt_modal_update_role_option_1">
+															<div class="fw-bolder text-gray-800">@ViewLocalizer["No"]</div>
+														</label>
+														<!--end::Label-->
+													</div>
+													<!--end::Radio-->
+												</div>
+												<!--end::Input row-->
+												<!--end::Genders-->
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="text-center pt-15">
+							<button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">@SharedLocalizer["Back_List"]</button>
+							<button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+								<span class="indicator-label">@SharedLocalizer["Save"]</span>
+								<span class="indicator-progress">
+									@SharedLocalizer["Please_Wait"]
+									<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+								</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

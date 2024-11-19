@@ -1,0 +1,208 @@
+﻿@model StudentStudentExamReportVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Exam"];
+    Layout = "";
+}
+@{
+    var pdfUrl = "pdf.png";
+}
+@{
+    var subtopicRightAnswers = Model.SubtopicRightAnswers ?? new Dictionary<string, int>();
+    var subtopicWrongAnswers = Model.SubtopicWrongAnswers ?? new Dictionary<string, int>();
+    var subtopicEmptyAnswers = Model.SubtopicEmptyAnswers ?? new Dictionary<string, int>();
+
+    int totalRightAnswers = 0;
+    int totalWrongAnswers = 0;
+    int totalEmptyAnswers = 0;
+
+    foreach (var subtopic in subtopicRightAnswers.Keys)
+    {
+        totalRightAnswers += Model.SubtopicRightAnswers.ContainsKey(subtopic) ? Model.SubtopicRightAnswers[subtopic] : 0;
+        totalWrongAnswers += Model.SubtopicWrongAnswers.ContainsKey(subtopic) ? Model.SubtopicWrongAnswers[subtopic] : 0;
+        totalEmptyAnswers += Model.SubtopicEmptyAnswers.ContainsKey(subtopic) ? Model.SubtopicEmptyAnswers[subtopic] : 0;
+    }
+}
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>@ViewData["Title"]</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link href="~/css/getexamresult.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div id="pdf-container">
+                <div class="container custom-container text-center mx-auto mt-4">
+                    <div class="col-md-9 col-lg-6 col-xl-5 mb-3">
+                        <img src="~/images/akademilogo.png" class="img-fluid" alt="Bilge Adam Logo">
+                    </div>
+                    <div class="redLine"></div>
+                    <div class="greyLine"></div>
+                    <input asp-for="StudentExamId" hidden />
+                    <!-- Öğrenci ve Sınav Bilgileri -->
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="StudentFullname"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="StudentFullname" disabled />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="ExamName"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="ExamName" disabled />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="ExamDateTime"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="ExamDateTime" type="datetime-local" disabled />
+                        </div>
+                    </div>
+                   @*  <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="ExamDuration"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="ExamDuration" type="time" disabled />
+                        </div>
+                    </div> *@
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="FormattedTotalTimeSpend"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="FormattedTotalTimeSpend" type="text" disabled />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="MaxScore"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="MaxScore" type="number" disabled />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="Score"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="Score" type="number" disabled />
+                        </div>
+                    </div>
+                    <!--Toplam Soru Sayisi, Doğru, Yanlış ve Boş Cevap Sayıları -->
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="QuestionCount"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" asp-for="QuestionCount" type="number" disabled />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 p-2">
+                            <label asp-for="SubtopicRightAnswers"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" type="text" value="@totalRightAnswers" disabled />
+                        </div>
+                        <div class="col-4 p-2">
+                            <label asp-for="SubtopicWrongAnswers"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" type="text" value="@totalWrongAnswers" disabled />
+                        </div>
+                        <div class="col-4 p-2">
+                            <label asp-for="SubtopicEmptyAnswers"></label>
+                        </div>
+                        <div class="col-8 p-2">
+                            <input class="col-12" type="text" value="@totalEmptyAnswers" disabled />
+                        </div>
+                    </div>
+                    <!-- PDF İndirme Butonu -->
+                    <div class="d-flex justify-content-end my-3">
+                        <a onclick="downloadPDF()" class="btn btn-outline-primary">@ViewLocalizer["Download_PDF"]</a>
+                    </div>
+                    <div style="flex-grow: 1; margin: 10px; padding: 10px;">
+
+                        <div>
+                            <div class="col-lg-12 text-center mb-4">
+                                <h5>@ViewLocalizer["Konulara Göre Başarı Oranınız"]</h5>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div id="chart-container">Çubuk Grafik</div>
+                                    <div id="legend" style="display: flex; position: relative; align-items: center; margin-left: 10px;"></div>
+                                </div>
+                                <div id="legend" style="margin-top: -41px;left:15px;  position: relative; display: flex; align-items: center;">
+                                    <div style="width: 143px; height: 17px; background: linear-gradient(to right, #FF0000, #FFA500, #008000);"></div>
+                                </div>
+                                <div style="position: relative;">
+                                    <span style="margin-left: 5px; display: block; margin-top:-10px; font-size: 12px;">Başarısız &nbsp&nbsp&nbsp Orta &nbsp&nbsp&nbsp Başarılı</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+            <script src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+        </div>
+        <script>
+            var subtopicPerformances = @Html.Raw(Json.Serialize(Model.SubtopicPerformances));
+            var subtopicNames = Object.keys(subtopicPerformances);
+            var successValues = subtopicNames.map(function (subtopic) {
+                var roundedValue = parseFloat(subtopicPerformances[subtopic]).toFixed(2); // Virgülden sonra 2 hane ile yuvarla
+                return {
+                    label: subtopic,
+                    value: roundedValue + "%",
+                    color: subtopicPerformances[subtopic] < 50 ? '#FF0000' : (subtopicPerformances[subtopic] >= 50 && subtopicPerformances[subtopic] < 75 ? '#FFA500' : '#008000')
+                };
+            });
+            var fusionChartData = {
+                "chart": {
+                    "theme": "fusion",
+                    "showValues": "1",
+                    "paletteColors": successValues.map(function (data) { return data.color; }).join(',')
+                },
+                "data": successValues.map(function (data) {
+                    return {
+                        "label": data.label,
+                        "value": parseFloat(data.value.replace('%', '')).toFixed(2), // Virgülden sonra 2 hane ile gösterir
+                        "toolText": "<div style='color: rgba(0, 0, 0, 1); padding: 5px;'> Başarı Oranınız: " + data.value + "</div>"
+                    };
+                })
+            };
+            FusionCharts.ready(function () {
+                var fusionChart = new FusionCharts({
+                    type: 'column3d',
+                    width: '800',
+                    height: '400',
+                    dataFormat: 'json',
+                    dataSource: fusionChartData
+                });
+                fusionChart.render('chart-container');
+            });
+        </script>
+    </div>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/getexamresult.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.js" integrity="sha512-Bw9Zj8x4giJb3OmlMiMaGbNrFr0ERD2f9jL3en5FmcTXLhkI+fKyXVeyGyxKMIl1RfgcCBDprJJt4JvlglEb3A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+</body>

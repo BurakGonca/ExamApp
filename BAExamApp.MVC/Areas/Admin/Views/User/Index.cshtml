@@ -1,0 +1,167 @@
+﻿@model IEnumerable<AdminTrainerListVM>
+
+@{
+    ViewData["Title"] = ViewLocalizer["User"];
+}
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+                <h5 class="card-title">Eğitmen Listesi</h5>
+
+                <!-- Arama butonu -->
+                <div class="d-flex align-items-center" style="margin-bottom: 10px;">
+                    <div class="input-group" style="max-width: 300px;">
+                        <span class="input-group-text search-icon" id="searchIcon"><i class="bi bi-search"></i></span>
+                        <input type="text" id="searchInput" class="form-control search-input" placeholder="Eğitmen ara" aria-describedby="searchIcon">
+                    </div>
+                </div>
+
+                <table id="veriTablosu" class="table table-row-bordered datatable" style="margin-left: 15px; width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr class="text-left">
+                            <th style="width: 25%; text-align: left; font-weight: bold; text-transform: uppercase;">@SharedLocalizer["Name"]</th>
+                            <th style="width: 25%; text-align: left; font-weight: bold; text-transform: uppercase;">@SharedLocalizer["Last_Name"]</th>
+                            <th style="width: 35%; text-align: left; font-weight: bold; text-transform: uppercase;">@SharedLocalizer["Email"]</th>
+                            <th style="width: 15%; text-align: left; font-weight: bold; text-transform: uppercase;">@SharedLocalizer["Transactions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabloGovdesi">
+                        @foreach (var trainer in Model)
+                        {
+                            var firstNameParts = trainer.FirstName.Split(' ');
+                            var formattedFirstName = string.Join(" ", firstNameParts.Select((part, index) => index > 0 ? char.ToUpper(part[0]) + part.Substring(1) : part));
+
+                            <tr style="border-collapse: collapse; width: auto;">
+                                <td class="categories text-left">
+                                    <a>
+                                        <span class="post_category">@formattedFirstName</span>
+                                    </a>
+                                </td>
+                                <td class="categories text-left">
+                                    <a>
+                                        <span class="post_category">@trainer.LastName</span>
+                                    </a>
+                                </td>
+                                <td class="categories text-left" style="overflow:hidden; white-space: nowrap; text-overflow: ellipsis; max-width:100px; word-break: break-word;">
+                                    <a>
+                                        <span class="post_category">@trainer.Email</span>
+                                    </a>
+                                </td>
+                                <td class="categories text-left">
+                                    <a class="role-degistir" asp-area="Admin" asp-action="LoginAsTrainer" asp-controller="User" asp-route-trainerId="@trainer.Id">
+                                        @SharedLocalizer["Change_Role"]
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/changeRole.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<style>
+    .search-icon {
+        background-color: #f8f9fa;
+        border-radius: 5px 0 0 5px;
+        border: none;
+    }
+
+    .search-input {
+        border-radius: 0 5px 5px 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    .input-group-text {
+        border: none;
+    }
+
+    .input-group {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+
+    div.dataTables_wrapper div.dataTables_length,
+    div.dataTables_wrapper div.dataTables_info {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+
+    div.dataTables_wrapper div.dataTables_length {
+        float: left;
+        margin-right: 10px;
+    }
+
+    div.dataTables_wrapper div.dataTables_info {
+        float: left;
+        margin-top: 5px;
+    }
+
+    div.dataTables_wrapper div.dataTables_paginate {
+        float: right;
+        margin-top: 5px;
+    }
+</style>
+
+<script>
+    var localizedTexts = {
+        zeroRecords: '@SharedLocalizer["Zero_Records"]',
+        info: '@SharedLocalizer["Info"]',
+        infoEmpty: '@SharedLocalizer["Info_Empty"]',
+        infoFiltered: '@SharedLocalizer["Info_Filtered"]'
+    };
+
+    $(document).ready(function () {
+        var table = $("#veriTablosu").DataTable({
+            language: {
+                zeroRecords: localizedTexts.zeroRecords,
+                info: localizedTexts.info,
+                infoEmpty: localizedTexts.infoEmpty,
+                infoFiltered: localizedTexts.infoFiltered,
+            },
+            pageLength: 25, // Default olarak 25 satır göster
+            order: [[0, "asc"]],
+            aoColumnDefs: [
+                {
+                    targets: 0,
+                    orderable: true,
+                },
+                {
+                    targets: 3,
+                    orderable: false,
+                }
+            ],
+            dom: 'rt<"bottom"lpi><"clear">',
+        });
+
+        // Search input ile tabloyu filtreleme
+        $('#searchInput').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+
+        // Sayfa başına gösterilen satır sayısını güncelleme
+        $('#rowsPerPage').on('change', function () {
+            var length = $(this).val();
+            table.page.len(length).draw();
+        });
+
+        function updatePaginationArrows() {
+            $("#veriTablosu_previous a").html('<i class="fa fa-chevron-left"></i>');
+            $("#veriTablosu_next a").html('<i class="fa fa-chevron-right"></i>');
+        }
+
+        updatePaginationArrows();
+        table.on("draw", function () {
+            updatePaginationArrows();
+        });
+    });
+</script>

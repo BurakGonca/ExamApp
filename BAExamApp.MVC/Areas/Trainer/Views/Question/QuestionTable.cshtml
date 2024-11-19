@@ -1,0 +1,70 @@
+﻿@using System.ComponentModel.DataAnnotations;
+@model List<TrainerQuestionsCreateVM>;
+
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<form method="post" id="excelTable" enctype="multipart/form-data" asp-controller="Question" asp-action="SaveExcelList">
+    <table class="table datatable" id="questionsTable" multiple>
+        <thead id="tableHeader">
+            <tr>
+                <th>
+                    <div class="form-check">
+                        <input id="AllCheck" onclick="checkAll();" class="form-check-input" type="checkbox" value="">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Tümü
+                        </label>
+                    </div>
+                </th>
+                <th>@SharedLocalizer["Question_Type"]</th>
+                <th>@SharedLocalizer["Question_Content"]</th>
+                <th>@SharedLocalizer["Target"]</th>
+                <th>@SharedLocalizer["Gains"]</th>
+                <th>@SharedLocalizer["Subtopic"]</th>
+                <th>@SharedLocalizer["Product"]</th>
+                <th>@SharedLocalizer["Subject"]</th>
+                <th>@SharedLocalizer["Question_Difficulty"]</th>
+                <th>@SharedLocalizer["Time_Given"]</th>
+                <th>@SharedLocalizer["Question_IsRightAnswer"]</th>
+                <th>@SharedLocalizer["Question_Answer"]</th>
+                <th>@SharedLocalizer["Question_IsRightAnswer"]</th>
+                <th>@SharedLocalizer["Question_Answer"]</th>
+                <th>@SharedLocalizer["Question_IsRightAnswer"]</th>
+                <th>@SharedLocalizer["Question_Answer"]</th>
+                <th>@SharedLocalizer["Question_IsRightAnswer"]</th>
+                <th>@SharedLocalizer["Question_Answer"]</th>
+                <th>@SharedLocalizer["Question_IsRightAnswer"]</th>
+                <th>@SharedLocalizer["Question_Answer"]</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input class="form-check-input" type="checkbox" />
+                        </td>
+                        <td>@item.QuestionType.ToString()</td>
+                        <td>@item.Content</td>
+                        <td>@item.Target</td>
+                        <td>@item.Gains</td>
+                        <td>@item.SubtopicId</td>
+                        <td>@item.ProductId</td>
+                        <td>@item.SubjectId</td>
+                        <td>@item.QuestionDifficultyId</td>
+                        <td>@item.TimeGiven</td>
+                        @foreach (var answer in item.QuestionAnswers)
+                        {
+                            <td>@answer.IsRightAnswer.ToString()</td>
+                            <td>@answer.Answer</td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-primary" onclick="ExcelDataPost()">@SharedLocalizer["Save"]</button>
+</form>

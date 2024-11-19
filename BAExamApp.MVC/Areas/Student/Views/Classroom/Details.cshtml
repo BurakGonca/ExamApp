@@ -1,0 +1,139 @@
+﻿@model StudentClassroomDetailsVM
+
+@{
+	ViewData["Title"] = ViewLocalizer["Classroom_Details"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>DataTable</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+
+	<link rel="stylesheet" href="~/lib/student/css/simple-datatables-style.css" />
+	<link rel="stylesheet" href="~/lib/student/css/list-style.css" />
+	<link rel="stylesheet" href="~/lib/student/css/details.section.css" />
+
+
+</head>
+<body>
+	<div class="content container my-5 d-flex flex-column flex-column-fluid" id="kt_content">
+		<div class="card card-flush h-lg-100" id="kt_contacts_main">
+			<div class="card-header pt-7" id="kt_chat_contacts_header">
+				<div class="card-title">
+					<h3>@SharedLocalizer["Classroom_Details"]</h3>
+				</div>
+			</div>
+
+			<div id="item-body">
+
+				<div class="col align-self-center">
+					<div class="text-start" id="classroom-details-table">
+						<div>
+							<hr>
+						</div>
+						<span id="details-info-column"><b>@Html.DisplayNameFor(model => model.Name)</b></span><span><b>:</b> @Model.Name</span><br />
+						<span id="details-info-column"><b>@Html.DisplayNameFor(model => model.BranchName)</b></span><span><b>:</b> @Model.BranchName</span><br />
+						<span id="details-info-column"><b>@Html.DisplayNameFor(model => model.GroupTypeName)</b></span><span><b>:</b> @Model.GroupTypeName</span><br />
+						<span id="details-info-column"><b>@Html.DisplayNameFor(model => model.OpeningDate)</b></span><span><b>:</b> @Model.OpeningDate.ToShortDateString()</span><br />
+						<span id="details-info-column"><b>@Html.DisplayNameFor(model => model.ClosedDate)</b></span><span><b>:</b> @Model.ClosedDate.ToShortDateString()</span>
+						<div>
+							<hr>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="separator mb-6"></div>
+				<div class="tables-grid-container">
+
+
+					<section class="section dashboard" id="section-dashboard">
+						<div class="card classroomlist-table overflow-auto">
+
+							<div class="card-body" id="product-card-body">
+								<h5 class="card-title text-center">@Html.DisplayNameFor(model => model.TrainerNames) </h5>
+
+								@{
+									int trainerCount = Model.TrainerNames.Count();
+								}
+
+								<table class="table table-borderless ">
+									<thead>
+										<tr>
+											<th scope="col" id="th-container-column"><span id="th-text-container-edu">@SharedLocalizer["Trainer_Name"]</span></th>
+										</tr>
+									</thead>
+									<tbody>
+										@for (int i = 0; i < trainerCount; i++)
+										{
+											<tr @(i % 2 != 0 ? "class=table-light" : "")>
+												<td><a href="#" class="text-dark">@Model.TrainerNames[i]</a></td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</section>
+					<section class="section dashboard" id="section-dashboard">
+						<div class="card classroomlist-table overflow-auto">
+
+							<div class="card-body" id="product-card-body">
+								<h5 class="card-title text-center">@Html.DisplayNameFor(model => model.ProductNames)</h5>
+
+								@{
+									int subjectCount = Model.ProductNames.Count();
+								}
+
+								<table class="table table-borderless">
+									<thead>
+										<tr>
+											<th scope="col" id="th-container-column">
+												<span id="th-text-container-edu">@SharedLocalizer["Product"]</span>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										@for (int i = 0; i < subjectCount; i++)
+										{
+											<tr @(i % 2 != 0 ? "class=table-light" : "")>
+												<td><a href="#" class="text-dark">@Model.ProductNames[i]</a></td>
+											</tr>
+										}
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</section>
+
+				</div>
+				<div class="separator mb-6"></div>
+				<div class="d-flex justify-content-end">
+					<a type="button" class="btn btn-outline-dark" id="details-back-to-list-btn" asp-controller="Classroom" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script src="~/lib/student/js/simple-datatables.js"></script>
+	<script src="~/lib/student/js/tinymce.js"></script>
+	<script type='text/javascript' src='~/lib/student/js/list-main.js'></script>
+	<script>
+		var trainersCount = @Model.TrainerNames.Count();
+		window.onload = function () {
+			paginationSetupDropdown(trainersCount);
+		}
+		var subjectsCount = @Model.ProductNames.Count();
+		window.onload = function () {
+			paginationSetupDropdown(subjectsCount);
+		}
+	</script>
+</body>
+</html>

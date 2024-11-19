@@ -1,0 +1,262 @@
+﻿@model TrainerQuestionDetailsVM
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<div class="card py-16 ">
+    <div class="d-flex justify-content-between ps-9 pt-6">
+        <!--begin::Card title-->
+        <div>
+            <h3 class="fw-bolder m-0">@SharedLocalizer["Question_Detail"]</h3>
+        </div>
+        <!--end::Card title-->
+        <!--begin::Action-->
+        <div class="d-flex align-items-center">
+            <a asp-controller="Question" asp-action="CopyQuestion" asp-route-id="@Model.Id" class="btn px-2 mx-2 btn-success">@SharedLocalizer["Copy_Question"]</a>
+        </div>
+        <!--end::Action-->
+    </div>
+    <div class="card-body row fs-6 py-15 px-10 py-lg-15 px-lg-15">
+        <div class="col-lg-6 mb-3">
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">@Html.DisplayNameFor(model => model.CreatedDate) :</label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">@Model.CreatedDate.ToShortDateString()</span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">@Html.DisplayNameFor(model => model.SubjectName) :</label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @foreach (var subject in Model.CommonSubjectAndSubtopics.Keys)
+                        {
+                            <div>
+                                @subject
+                            </div>
+                        }
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">@Html.DisplayNameFor(model => model.SubtopicName) :</label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @foreach (var commonSubjectAndSubtopics in Model.CommonSubjectAndSubtopics)
+                        {
+                            <div>
+                                @foreach (var subtopic in commonSubjectAndSubtopics.Value)
+                                {
+                                    @subtopic
+                                    <br />
+                                }
+                            </div>
+                        }
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionType) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionType)
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionDifficultyName) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionDifficultyName)
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.TimeGiven) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.TimeGiven)
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.Target) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.Target)
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.Gains) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.Gains)
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.Content) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.Content)
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+        @if (Model.Image != null)
+        {
+            <div class="row col-lg-4 mb-3">
+                <label class=" fw-bold text-muted mb-3">
+                    @Html.DisplayNameFor(model => model.Image)
+                </label>
+                <div class="image-input image-input-outline fv-row"
+                     data-kt-image-input="true">
+                    <div class="col-lg-12"
+                         style="display: flex; justify-content: flex-start">     
+                            <img id="defaultImage"
+                                 class="col-lg-12 img-fluid"
+                                 src="data:image/jpeg;base64,@Model.Image"
+                                 alt="Profile" />                       
+                    </div>
+                </div>
+            </div>
+        }
+        <hr />
+        <div class="row mb-7">
+            <label class="w-150px fw-bold text-muted">
+                @Html.DisplayNameFor(model => model.QuestionAnswers) :
+            </label>
+            <div class="col-xl-10 col-12">
+                @if (Model.QuestionType == QuestionType.TrueFalse)
+                {
+                    @foreach (var item in Model.QuestionAnswers)
+                    {
+                        @if (item.IsRightAnswer)
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                                         class="col-lg-12 img-fluid"
+                                         src="@item.Answer"
+                                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                                         alt="Profile" />
+                                <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                    <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </p>
+                            }
+                        }
+                        else
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                                         class="col-lg-12 img-fluid"
+                                         src="@item.Answer"
+                                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                                         alt="Profile" />
+                                </div>
+                                
+                            }
+                            else{
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                </p>
+                            }                    
+                        }
+                    }
+                }
+                else
+                {
+                    @foreach (var item in Model.QuestionAnswers)
+                    {
+                        @if (item.IsRightAnswer)
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                                         class="col-lg-12 img-fluid"
+                                         src="@item.Answer"
+                                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                                         alt="Profile" />
+                                <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                    <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </p>
+                            }
+                        }
+                        else
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                                         class="col-lg-12 img-fluid"
+                                         src="@item.Answer"
+                                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                                         alt="Profile" />
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                </p>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+        @if (Model.State == State.Reviewed)
+        {
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-text">@SharedLocalizer["Note", SharedLocalizer["Revise"]] :</span>
+                    <textarea rows="1" asp-for="ReviewComment" class="form-control" rows="3" disabled></textarea>
+                </div>
+            </div>
+        }
+        @if (Model.State == State.Rejected)
+        {
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-text">@SharedLocalizer["Rejection_Note"] :</span>
+                    <textarea rows="1" asp-for="RejectComment" class="form-control" rows="3" disabled></textarea>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+

@@ -1,0 +1,41 @@
+﻿.productSelection {
+    background-color: #E3DEDD;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.listBox {
+    position: relative;
+}
+
+    .listBox select {
+        width: 100%;
+        padding: 4px;
+        border-radius: 5px;
+        border: 0.5px solid rgba(0,0,0,0.5);
+        font-weight: bold;
+    }
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+
+#products {
+    display: none;
+    padding: 5px 10px 10px;
+}
+
+    #products label {
+        font-size: 14px;
+        display: block;
+        padding: 2px;
+    }
+
+        #products label:hover {
+            background-color: #D5AEA6;
+        }

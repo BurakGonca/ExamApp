@@ -1,0 +1,331 @@
+﻿@model AdminQuestionUpdateVM
+@{
+
+    // ViewBag'den gelen veriyi JSON formatında bir JavaScript değişkenine atıyoruz
+
+    var productListJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ProductList);
+
+}
+
+<style>
+    .arrange-history-table-container {
+        margin: 0 auto; /* Sayfanın ortasında yer almasını sağlar */
+        width: 100%; /* Tablonun genişliği, istediğiniz ölçüde ayarlayabilirsiniz */
+        height: 100%; /* Tablonun genişliği, istediğiniz ölçüde ayarlayabilirsiniz */
+        position: fixed; /* Diğer elementlerin önünde olması için */
+        z-index: 1056; /* Diğer elementlerin önünde olması için */
+        display:none;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        top:0;
+        left:0;
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+    .arrange-table{
+        width:750px;
+        margin-left:25px;
+        margin-right:25px;
+        font-family: Poppins, Helvetica, sans-serif;
+    }
+    .arrange-table > thead{
+        text-align:left;
+        font-weight:bold;
+    }
+    .arrange-table > tbody{
+        text-align:left;
+        border-top:1px solid currentcolor !important;
+    }
+
+    .arrange-table > tbody> tr > td> div{
+                overflow-x: auto;
+                max-width: 460px;
+                max-height: 40px;
+                word-wrap: break-word;
+    }
+
+    .arrange-container-card{
+        box-shadow: 0px 0px 10px rgba(5, 5, 5, 2); /* Kutu gölgesi */
+        background-color: white;
+        border-radius:10px;
+        max-height: 250px;
+        overflow-x:auto;
+        max-width:900px;
+    }
+
+    .dynamic-size {
+        overflow: hidden; /* İçerik taşmasını gizle */
+        resize: none; /* Kullanıcının yeniden boyutlandırmasını engelle */
+    }
+
+    .form-control.form-control-solid{
+        overflow: hidden; /* İçerik taşmasını gizle */
+        resize: none; /* Kullanıcının yeniden boyutlandırmasını engelle */
+    }
+    .myCustomStyle {
+        margin-top: 10px;
+        width: 250px;
+        overflow: auto;
+    }
+</style>
+
+<div class="modal fade" id="kt_modal_update_question" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
+        <div class="modal-content">
+            <div class="modal-header" id="kt_modal_update_question_header">
+                <h3>@SharedLocalizer["Update_Question_Page"]</h3>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary"
+                     data-kt-question-modal-action="close">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <form asp-area="Admin" asp-controller="Question" asp-action="Update" method="post" id="kt_modal_update_question_form" enctype="multipart/form-data">
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_user_header" data-kt-scroll-wrappers="#kt_modal_update_user_scroll" data-kt-scroll-offset="300px">
+                        <div class="row mb-3 fv-row">
+                            @* Hidden fields *@
+                            <input asp-for="Id" name="id" class="form-control " id="questionId" hidden />
+                            <input asp-for="State" class="form-control fv-row" id="stateInput" hidden />
+                            <input class="form-control fv-row"
+                                   name="subjectIdFromReload"
+                                   id="subjectIdFromReload"
+                                   value="@ViewBag.SubjectId"
+                                   hidden />
+                            <input class="form-control fv-row"
+                                   name="subtopicIdFromReload"
+                                   id="subtopicIdFromReload"
+                                   value="@ViewBag.SubtopicId"
+                                   hidden />
+                            <input class="form-control fv-row"
+                                   name="questionAnswersListFromReload"
+                                   id="questionAnswersListFromReload"
+                                   value="@ViewBag.QuestionAnswersList"
+                                   hidden />
+
+
+                            @* Product dropdown *@
+                            <div class="col-sm-6">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="ProductId" asp-items="@ViewBag.ProductList" class="form-select form-select-sm form-select-solid" >
+                                        <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label asp-for="ProductId" class="fw-bold fs-6 mb-2">@SharedLocalizer["Product"]</label>
+                                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            @* Subject dropdown *@
+                            <div class="col-sm-6">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="SubjectId" asp-items="@ViewBag.SubjectList" class="form-select form-select-sm form-select-solid" onchange="onSubjectChange()">
+                                        <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label asp-for="SubjectId" class="fw-bold fs-6 mb-2">@SharedLocalizer["Subject"]</label>
+                                    <span asp-validation-for="SubjectId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            @* Subtopic dropdown *@
+                            <div class="col-sm-6">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="SubtopicId" asp-items="@ViewBag.SubtopicList" class="form-select form-select-lg form-select-solid p-3" multiple="multiple" data-control="select2" data-close-on-select="false" data-allow-clear="false">
+                                        <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label asp-for="SubtopicId" class="fw-bold fs-6 mt-n2">@SharedLocalizer["Subtopic"]</label>
+                                    <span asp-validation-for="SubtopicId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            @* Question type dropdown *@
+                            <div class="col-sm-6">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="QuestionType"
+                                            data-control="select2"
+                                            data-hide-search="true"
+                                            class="form-select form-select-sm form-select-solid"
+                                            onchange="onQuestionTypeChange()">
+                                        <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label asp-for="QuestionTypeList" class="fw-bold fs-6 mb-2">
+                                        @SharedLocalizer["Question_Type"]
+                                    </label>
+                                    <span asp-validation-for="QuestionTypeList" class="text-danger"></span> 
+                                </div>
+                            </div>
+
+                         @*    Question difficulty dropdown *@
+                            <div class="col-sm-6">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="QuestionDifficultyId" asp-items="@ViewBag.QuestionDifficultyList" class="form-select form-select-sm form-select-solid" onchange="onQuestionDifficultyChange()">
+                                        <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label asp-for="QuestionDifficultyId" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Difficulty"]</label>
+                                    <span asp-validation-for="QuestionDifficultyId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="fv-row form-floating mb-7">
+                                    <input asp-for="TimeGiven" type="time" class="form-control form-control-sm form-control-solid"  />
+                                    <label asp-for="TimeGiven" class="fw-bold fs-6 mb-2">@SharedLocalizer["Time_Given"]</label>
+                                    <span asp-validation-for="TimeGiven" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 ">
+                                <div class="fv-row form-floating mb-7">
+                                    <textarea asp-for="Target"
+                                              rows="4"
+                                              class="form-control form-control-sm form-control-solid"
+                                              name="Target"></textarea>
+                                    <span asp-validation-for="Target" class="text-danger"></span>
+                                    <label asp-for="Target"
+                                           class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Target"]</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 ">
+                                <div class="fv-row form-floating mb-7">
+                                    <textarea asp-for="Gains"
+                                              rows="4"
+                                              class="form-control form-control-sm form-control-solid"
+                                              name="Gains"></textarea>
+                                    <span asp-validation-for="Gains" class="text-danger"></span>
+                                    <label asp-for="Gains"
+                                           class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Gains"]</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 ">
+                                <div class="fv-row form-floating mb-7">
+                                    <textarea asp-for="Content"
+                                              rows="4"
+                                              class="form-control form-control-sm form-control-solid"
+                                              name="Content"></textarea>
+                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                    <label asp-for="Content"
+                                           class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Content"]</label>
+                                </div>
+                            </div>
+                           
+
+                            @if (Model.State == State.Reviewed)
+                            {
+                                <div class="col-sm-12 fv-row">
+                                    <label asp-for="ReviewComment"
+                                           class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Review_Comment"]</label>
+                                    <textarea asp-for="ReviewComment"
+                                              rows="4"
+                                              class="form-control form-control-lg form-control-solid"
+                                              disabled></textarea>
+                                </div>
+                                <div class="col-sm-12 fv-row">
+                                    <label asp-for="ReviseComment"
+                                           class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Revise_Comment"]</label>
+                                    <textarea asp-for="ReviseComment"
+                                              rows="4"
+                                              class="form-control form-control-lg form-control-solid"></textarea>
+                                    <span asp-validation-for="ReviseComment"
+                                          class="text-danger"></span>
+                                </div>
+                            }
+                            <div class="col-sm-6 " id="arrangeReason">
+                                <div class="fv-row form-floating mb-7">
+                                    <input asp-for="NewImage"
+                                           id="fileInput"
+                                           type="file"
+                                           class="form-control form-control-sm form-control-solid"
+                                           accept=".jpg,.jpeg,.png"
+                                           name="NewImage" />
+                                    <label asp-for="Image"
+                                           class="col-sm-12 col-form-label col-form-label-sm">@SharedLocalizer["Question_Image"]</label>
+                                    <br />
+                                    <div class="image-input image-input-outline fv-row"
+                                         data-kt-image-input="true"
+                                         style="position: relative;">
+                                        <div style="display: flex; justify-content: flex-start">
+                                            <img id="previewImage"
+                                                 style="display: none; max-width: 400px; max-height: 450px"
+                                                 alt="Preview" />
+
+                                            @if (Model.Image != null)
+                                            {
+                                                <img id="defaultImage"
+                                                     style="max-width: 545px; max-height: 500px"
+                                                     src="data:image/jpeg;base64,@Model.Image"
+                                                     alt="Profile" />
+                                            }
+                                        </div>
+                                        <span asp-validation-for="NewImage.Length"
+                                              class="text-danger"></span>
+                                        <span asp-validation-for="NewImage.ContentType"
+                                              class="text-danger"></span>
+                                    </div>
+                                </div>                          
+                            </div>
+                            <input class="form-control" name="questionAnswerChoices"  id="questionAnswerChoices"hidden />
+                            <div class="col-sm-6 " id="questionAnswersDiv" >
+                                <label asp-for="@Model.QuestionAnswers"
+                                       class="col-sm-6 col-form-label col-form-label-lg">@SharedLocalizer["Question_Answers"]</label>
+                                <div class="col-sm-6 col-form-label col-form-label-lg dynamic-size" id="myDIV">
+                                    <input class="form-check-input" type="radio" name="answerType" id="stringRadio"  onchange="updateAnswerType()">
+                                    <label class="form-check-label" for="stringRadio">Metin</label>
+                                    <input class="form-check-input" type="radio" name="answerType" id="imageRadio"  onchange="updateAnswerType()">
+                                    <label class="form-check-label" for="imageRadio">Resim</label>
+                                </div>
+
+                            </div>
+                        </div>                       
+                    </div>
+                    <div class="text-center pt-15">
+                        <button type="reset"
+                                class="btn btn-light me-3 "
+                                data-kt-question-modal-action="cancel">
+                            @SharedLocalizer["Back_List"]
+                        </button>
+                        <button type="submit" class="btn btn-primary "
+                                data-kt-question-modal-action="submit">
+                            <span class="indicator-label">@SharedLocalizer["Save"]</span>
+                            <span class="indicator-progress">
+                                @SharedLocalizer["Please_Wait"]
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </form>              
+            </div>
+        </div>
+    </div>
+</div>
+<div id="arrangeTableContainer" class="arrange-history-table-container">
+    <div class="arrange-container-card">
+        <div class="d-flex justify-content-end">
+            <button class="btn" type="button" id="arrangeTableClose">X</button>
+        </div>
+        <table class="table arrange-table">
+            <thead>
+                <tr>
+                    <th>Düzenleme Sebebi</th>
+                    <th>Düzenleyen</th>
+                    <th>Düzenlenme Tarihi</th>
+                </tr>
+            </thead>
+            <tbody id="arrange-table-tbody">
+                
+            </tbody>
+        </table>
+    </div>
+   
+</div>
+@*  <script src="~/lib/jquery/dist/jquery.min.js"></script> 
+<script src="~/newLayouts/src/js/custom/apps/user-management/question/reviewedQuestionSelect.js"></script>
+ <script src="~/js/questioncreateupdate.js"></script> *@
+@* <script src="~/newlayouts/src/js/custom/apps/user-management/question/questionSelect.js"></script> *@
+
+
+

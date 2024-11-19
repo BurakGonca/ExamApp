@@ -1,0 +1,327 @@
+﻿@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateExamVMs
+@model CandidateExamQuestionsByCandidateVM
+
+<div class="card" id="kt_profile_details_view">
+	<!-- Card Header -->
+	<div class="card-header cursor-pointer">
+		<div class="card-title m-0">
+			<h3 class="fw-bolder m-0">@SharedLocalizer["Exam_Details"]</h3>
+		</div>
+		<div style="margin-block:auto">
+			<a class="btn btn-primary text-center fs-5" type="button" asp-controller="CandidateExam" asp-action="Details" asp-route-id="@Model.ExamId">@SharedLocalizer["Back_List"]</a>
+		</div>
+	</div>
+
+	<!-- Card Body for Exam Details -->
+	<div class="card-body p-9">
+		<div class="row mb-6">
+			<label class="col-lg-2 fw-bold text-muted">
+				<label asp-for="ExamName">@SharedLocalizer["Exam_Name"]</label>
+			</label>
+			<div class="col-lg-10">
+				<span class="fw-bolder fs-6 text-gray-800">@Model.ExamName</span>
+			</div>
+		</div>
+		<div class="row mb-6">
+			<label class="col-lg-2 fw-bold text-muted">
+				<label asp-for="FullName">@SharedLocalizer["Candidate_Name"]</label>
+			</label>
+			<div class="col-lg-10 fv-row">
+				<span class="fw-bold text-gray-800 fs-6">@Model.FullName</span>
+			</div>
+		</div>
+		<div class="row mb-6">
+			<label class="col-lg-2 fw-bold text-muted">
+				<label asp-for="FullName">@SharedLocalizer["Score"]</label>
+			</label>
+			<div class="col-lg-10 fv-row">
+				<span class="fw-bold text-gray-800 fs-6">@Model.Questions.Sum(x => x.Score)/@Model.Questions.Sum(x => x.MaxScore)</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ------------------------------------------------------------ -->
+@{
+	List<CandidateCandidateAnswerListVM> answers = ViewBag.GivenAnswers;
+	@foreach (var item in Model.Questions)
+	{
+		<br />
+		<div class="card p-5 mb-2">
+			<div class="row  collapsible cursor-pointer rotate collapsed d-flex justify-content-between "
+				 data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible_@item.Order" aria-expanded="false">
+
+				@if (item.CandidateQuestionType == CandidateQuestionType.Algorithm && item.Score != null)
+				{
+					<h3 class=" col-4 text-warning">
+						@(item.Order).@SharedLocalizer["Question"]
+					</h3>
+					<h3 class=" col-4 text-warning">
+						@item.Score/@item.MaxScore
+					</h3>
+
+				}
+				else if (item.CandidateQuestionType == CandidateQuestionType.Algorithm)
+				{
+					<h3 class=" col-4">
+						@(item.Order).@SharedLocalizer["Question"]<span class="fs-5 text-muted fw-normal"> - @SharedLocalizer["No_Score_Given"]</span>
+					</h3>
+					<h3 class=" col-4">
+						-/@item.MaxScore
+					</h3>
+
+				}
+				else if (item.Score == null)
+				{
+					<h3 class=" col-4">
+						@(item.Order).@SharedLocalizer["Question"]
+					</h3>
+					<h3 class=" col-4">
+						-/@item.MaxScore
+					</h3>
+
+				}
+				else if (item.Score == item.MaxScore)
+				{
+					<h3 class=" col-4 text-success">
+						@(item.Order).@SharedLocalizer["Question"]
+					</h3>
+					<h3 class=" col-4 text-success">
+						@item.Score/@item.MaxScore
+					</h3>
+
+				}
+				else
+				{
+					<h3 class=" col-4 text-danger">
+						@(item.Order).@SharedLocalizer["Question"]
+					</h3>
+					<h3 class=" col-4 text-danger">
+						@item.Score/@item.MaxScore
+					</h3>
+
+				}
+				<div class="card-toolbar col-1 d-flex justify-content-center rotate-180">
+					<!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr073.svg-->
+					<span class="svg-icon svg-icon-muted svg-icon-2hx">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<path d="M12.5657 11.3657L16.75 15.55C17.1642 15.9643 17.8358 15.9643 18.25 15.55C18.6642 15.1358 18.6642 14.4643 18.25 14.05L12.7071 8.50716C12.3166 8.11663 11.6834 8.11663 11.2929 8.50715L5.75 14.05C5.33579 14.4643 5.33579 15.1358 5.75 15.55C6.16421 15.9643 6.83579 15.9643 7.25 15.55L11.4343 11.3657C11.7467 11.0533 12.2533 11.0533 12.5657 11.3657Z" fill="currentColor" />
+						</svg>
+					</span>
+					<!--end::Svg Icon-->
+				</div>
+			</div>
+			<div id="kt_docs_card_collapsible_@item.Order" class="collapse">
+				<div class="card-body">
+					@if (item.Image != null)
+					{
+						<div class="row mb-7 align-content-center  card-rounded-bottom">
+							<div id="item-header-cover-image">
+								<img height="350px" src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Image)}")" />
+							</div>
+						</div>
+					}
+					<div class="row mb-7">
+						<div class="col-lg-auto">
+							<pre style="font: inherit; font-size: 1em; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;" class="fw-bolder fs-6 text-gray-800 text-start">@item.Content
+							</pre>
+						</div>
+					</div>
+					<hr />
+					@if (item.CandidateQuestionType == CandidateQuestionType.Test)
+					{
+						<div class="container my-4">
+
+							@for (int i = 0; i < item.Answers.Count; i++)
+							{
+
+
+								@if (item.Answers[i].IsImageAnswer)
+								{
+									<div class="col-lg-12">
+										<span class="fw-bolder fs-6 text-gray-800">@(i + 1). </span>
+										<img id="defaultImage"
+											 class="item-header-cover-image"
+											 src="@item.Answers[i].Answer"
+											 style="max-height:150px;"
+											 alt="Profile" />
+										@if (item.Answers[i].IsRightAnswer)
+										{
+											<span class="badge badge-success">@SharedLocalizer["Correct_Answer"]</span>
+										}
+										@if (answers != null && answers.Any(x => x.CandidateAnswerId == item.Answers[i].Id))
+										{
+											<span class="badge badge-primary">@SharedLocalizer["Given_Answer"]</span>
+										}
+
+									</div>
+								}
+								else
+								{
+									<p class="fw-bolder fs-6 text-gray-800">
+										@(i + 1). @item.Answers[i].Answer
+										@if (item.Answers[i].IsRightAnswer)
+										{
+											<span class="badge badge-success">@SharedLocalizer["Correct_Answer"]</span>
+										}
+										@if (answers != null && answers.Any(x => x.CandidateAnswerId == item.Answers[i].Id))
+										{
+											<span class="badge badge-primary">@SharedLocalizer["Given_Answer"]</span>
+										}
+
+
+									</p>
+								}
+								<br />
+							}
+						</div>
+					}
+					else if (item.CandidateQuestionType == CandidateQuestionType.Algorithm)
+					{
+						var answer = answers == null ? null : answers.FirstOrDefault(x => x.CandidateQuestionId == item.Id);
+
+						<div class="container my-4">
+							<div class="row mb-3">
+								<div class="col-12">
+									<h4 class="text-success">@SharedLocalizer["Correct_Answer"]</h4>
+									<pre style="font: inherit; font-size: 1em; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">@item.Answers.First().Answer
+									</pre>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-12">
+									<h4 class="text-primary">@SharedLocalizer["Given_Answer"]</h4>
+									@if (answer == null)
+									{
+										<p class="fw-bold fs-5 text-muted">
+											@SharedLocalizer["No_Answer_Given"]
+										</p>
+									}
+									else
+									{
+										<pre style="font: inherit; font-size: 1em; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">@answer.Answer
+										</pre>
+										<div class="mt-3">
+											<h4 style="color:#6f42c1;">@SharedLocalizer["AI_Assessment"]</h4>
+											<form asp-controller="CandidateExamEvaluation" asp-action="UpdateAIAssessment" method="get">
+												<input name="answerId" type="hidden" value="@item.Id" />
+												<textarea id="dynamicTextarea" name="content" rows="5" class="form-control w-100 mb-1" style="height:auto;">@answer.AIAssessment</textarea>
+												<div class="text-end">
+													<button class="btn btn-primary">@SharedLocalizer["Update"]</button>
+												</div>
+											</form>
+										</div>
+										<form asp-controller="CandidateExamEvaluation" asp-action="AlgorithmQuestion" method="get" onsubmit="return validateForm(this)" class="mt-4">
+											<div class="row align-items-center">
+												<div class="col-md-3 mb-3 mb-md-0">
+													<input type="hidden" name="id" value="@item.Id" />
+													<input id="givenScore" class="form-control" type="number" name="givenScore" value="0" data-max-score="@item.MaxScore" placeholder="Puan Ver" />
+													<span id="error-message" class="text-danger d-none"></span>
+												</div>
+												<div class="col-md-2">
+													<button id="scoreButton" type="submit" class="btn btn-primary">
+														@SharedLocalizer["Give_Score"]
+													</button>
+												</div>
+											</div>
+										</form>
+									}
+								</div>
+							</div>
+						</div>
+
+					}
+					else
+					{
+						var answer = answers == null ? null : answers.FirstOrDefault(x => x.CandidateQuestionId == item.Id);
+						<div class="container my-4">
+
+							<div class="row mb-3">
+								<div class="col-12">
+									<h4 class="text-primary">
+										@SharedLocalizer["Given_Answer"]
+										@if (answer != null && answer.IsRightAnswer == true)
+										{
+											<span class="badge badge-success">@SharedLocalizer["Correct_Answer"]</span>
+										}
+										else if (answer != null && answer.IsRightAnswer == false)
+										{
+											<span class="badge badge-danger">@SharedLocalizer["Incorrent_Answer"]</span>
+										}
+									</h4>
+									@if (answer == null)
+									{
+										<p class="fw-bold fs-5 text-muted">
+											@SharedLocalizer["No_Answer_Given"]
+										</p>
+									}
+									else
+									{
+											<pre style="font: inherit; font-size: 1em; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;" class="fw-bolder fs-6 text-gray-800 text-start">
+												@answer.Answer
+											</pre>
+											@if (answer.IsRightAnswer == false)
+											{
+												<form asp-action="AddCandidateAnswers" asp-controller="CandidateExam" method="post">
+													<input type="hidden" name="itemid" value="@item.Id" />
+													<input type="hidden" name="answer" value="@answer.Answer" />
+													<input type="hidden" name="examId" value="@Model.ExamId" />
+													<input type="hidden" name="candidateId" value="@Model.CandidateId" />
+													<button type="submit" class="btn btn-warning">@SharedLocalizer["Candidate_Add_Correct_Answer"]</button>
+												</form>
+											}
+									}
+
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+			<input id="errorMaxSore" type="hidden" value="@SharedLocalizer["Error_Max_Score"]" />
+			<input id="errorBelowZero" type="hidden" value="@SharedLocalizer["Error_Below_Zero"]" />
+		</div>
+	}
+}
+
+
+<script>
+	var givenScoreInput = document.querySelector('#givenScore');
+	function validateForm(form) {
+		var givenScore = parseInt(givenScoreInput.value);
+		var maxScore = parseInt(givenScoreInput.getAttribute('data-max-score'));
+		var errorMessage = form.querySelector('#error-message');
+
+		if (givenScore > maxScore) {
+			errorMessage.textContent = document.querySelector("#errorMaxSore").value;
+			errorMessage.classList.remove("d-none");
+			errorMessage.classList.add("d-block");
+			return false;
+		}
+		if (givenScore < 0) {
+			errorMessage.textContent = document.querySelector("#errorBelowZero").value;
+			errorMessage.classList.remove("d-none");
+			errorMessage.classList.add("d-block");
+			return false;
+		}
+		return true;
+	}
+
+	givenScoreInput.addEventListener("input", () => {
+		var givenScore = parseInt(givenScoreInput.value);
+		if (isNaN(givenScore)) {
+			document.querySelector("#scoreButton").disabled = true;
+		}
+		else {
+			document.querySelector("#scoreButton").disabled = false;
+
+		}
+	});
+	const textarea = document.getElementById('dynamicTextarea');
+
+	textarea.addEventListener('input', function () {
+		this.style.height = 'auto';
+		this.style.height = (this.scrollHeight) + 'px';
+	});
+</script>

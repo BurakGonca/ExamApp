@@ -1,0 +1,41 @@
+﻿#pdf-container {
+    width: 210mm; 
+    height: 297mm; 
+    margin: 0 auto;
+
+}
+
+@media print {
+    @page {
+        size: A4 landscape; 
+        margin: 0;
+    }
+
+    body {
+        margin: 20mm;
+        text-align: justify;
+    }
+
+    #pdf-container,
+    #pdf-container-2,
+    #pdf-container-3 {
+        width: 210mm;
+        height: 297mm;
+        margin: 0 auto;
+    }
+}
+.redLine, .greyLine {
+    height: 5px;
+    width: 100%;
+}
+
+.redLine {
+    margin-top: 5px;
+    background-color: #e63338;
+}
+
+.greyLine {
+    margin-top:5px;
+    margin:5px 0 10px 0;
+    background-color: #414b59;
+}

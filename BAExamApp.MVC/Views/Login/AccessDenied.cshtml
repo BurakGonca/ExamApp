@@ -1,0 +1,71 @@
+﻿@model BAExamApp.MVC.Models.AccessDeniedVM
+@{
+    ViewData["Title"] = "Erişiminiz Engellendi";
+    Layout = null;
+}
+
+<style>
+    .access-denied-container {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .access-denied-text {
+        font-size: 36px;
+        color: #007cba;
+    }
+
+    .access-denied-message {
+        font-size: 24px;
+        color: #3d4a5a;
+        margin-top: 20px;
+    }
+
+    .contact-button {
+        margin-top: 30px;
+        padding: 10px;
+    }
+
+    .btn-bilgeadam {
+        background-color: #007cba;
+        color: white;
+        border: none;
+    }
+
+        .btn-bilgeadam:hover {
+            background-color: #005e99;
+        }
+
+    a{
+        text-decoration: none;
+        color: #005e99;
+    }
+
+    .image-container {
+        text-align:center;
+    }
+    .logo{
+        height:150px;
+        margin-top:20px;
+    }
+</style>
+
+<div class="image-container">
+    <img class="logo" src="/images/bilgeadam-logo.jpg" />
+</div>
+
+<div class="container access-denied-container">
+    <h1 class="access-denied-text">Erişiminiz Engellendi</h1>
+    <p class="access-denied-message">Yetkiniz olmayan bir sayfaya erişmeye çalışıyorsunuz!</p>
+    <p class="access-denied-message">Eğer bunun bir hata olduğunu ve ya bu sayfaya erişmeniz gerektiğini düşünüyorsanız lütfen <a href="mailto:"@Model.ToContactEmail"">@Model.ToContactEmail</a> ile iletişime geçiniz!</p>
+    <a asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" asp-area="@Model.AreaName" class="btn btn-bilgeadam contact-button">Anasayfaya Dön</a>
+    @if (Model.Message != null)
+    {
+        <h2 class="access-denied-text">Mesajınız Var</h2>
+        @Html.Raw(Model.Message) @* Eğer Geliştirici mesajı html formatlı atmak isterse diye bu şekilde kodlandı. Duruma göre değiştirilmesinde sakınca yok *@
+    }
+    @if (Model.ReturnUrl != null)
+    {
+        <a href="@Model.ReturnUrl" class ="btn btn-bilgeadam contact-button">@Model.ReturnUrlName</a>
+    }
+</div>

@@ -1,0 +1,95 @@
+﻿@model LoginVM
+
+@{
+	ViewData["Title"] = SharedLocalizer["Login"];
+	Layout = null;
+}
+
+<html>
+<head>
+	<title>@ViewData["Title"]</title>
+	<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<link href="~/css/login-style.css" rel="stylesheet" />
+	<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+</head>
+<body>
+	<section class="vh-100">
+		<div class="container-fluid h-custom">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-md-9 col-lg-6 col-xl-5">
+					<img src="~/images/bilgeadam-logo.jpg" class="img-fluid" alt="Bilge Adam Logo">
+				</div>
+				<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+					<form asp-controller="Login"  asp-action="index" id="loginForm">@* To Do: İki adımlı doğrulama etkinleştirildiği zaman asp-action="Verify" şeklinde düzeltilecek *@
+						<div class="form-outline mb-4">
+							<input asp-for="Email" placeholder="@SharedLocalizer["Email"]" class="form-control form-control-lg">
+							<span class="text-danger" asp-validation-for="Email"></span>
+						</div>
+						<div class="form-outline mb-4">
+							<div class="input-group">
+								<input asp-for="Password" id="passwordField" type="password" placeholder="@SharedLocalizer["Password"]" class="form-control form-control-lg">
+								<button class="btn btn-outline-secondary" type="button" id="showPasswordButton"><i class="fa-solid fa-eye fa-lg text-dark"></i></button>
+
+							</div>
+							<span class="text-danger" asp-validation-for="Password"></span>
+						</div>
+						<span class="text-danger" id="loginError"></span>
+						<div class="text-center text-lg-start mt-4 pt-2">
+							<button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">@SharedLocalizer["Login"]</button>
+						</div>
+					</form>
+					@* To Do: İki adımlı doğrulama etkinleştirildiği zaman açılacak
+						<form asp-controller="Login" asp-action="Index" id="verificationForm">
+
+						<p class="mt-4">@SharedLocalizer["Lütfen e-postanıza gönderilen 6 haneli kodu giriniz."]</p>
+						<div class="form-outline mb-4">
+							<input id="verificationCodeInput" name="VerificationCode" placeholder="@SharedLocalizer["Doğrulama Kodu"]" class="form-control form-control-lg">
+							<span class="text-danger" id="verificationCodeError"></span>
+						</div>
+						<div class="text-center text-lg-start mt-4 pt-2">
+							<button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">@SharedLocalizer["Gönder"]</button>
+						</div>
+					</form>*@
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="~/lib/jquery/dist/jquery.js"></script>
+	<script src="~/lib/bootstrap/js/bootstrap.js"></script>
+	@*	To Do: İki adımlı doğrulama etkinleştirildiği zaman açılacak
+	<script src="~/js/login-with-two-factor-verification.js"></script>
+	<script>
+		$(document).ready(function () {
+			$(".btn-show-hide").on('click', function (event) {
+				event.preventDefault();
+				if ($('#loginForm input[name="Password"]').attr("type") === "password") {
+					$('#loginForm input[name="Password"]').attr('type', 'text');
+					$('#loginForm .btn-show-hide i').removeClass("fa-eye");
+					$('#loginForm .btn-show-hide i').addClass("fa-eye-slash");
+				} else if ($('#loginForm input[name="Password"]').attr("type") === "text") {
+					$('#loginForm input[name="Password"]').attr('type', 'password');
+					$('#loginForm .btn-show-hide i').removeClass("fa-eye-slash");
+					$('#loginForm .btn-show-hide i').addClass("fa-eye");
+				}
+			});
+		});
+	</script>*@
+	<script>
+		$(document).ready(function () {
+			$('#showPasswordButton').click(function () {
+				var passwordField = $('#passwordField');
+				var fieldType = passwordField.attr('type');
+				if (fieldType === 'password') {
+					passwordField.attr('type', 'text');
+					$('#showPasswordButton').html('<i class="fa-solid fa-eye-slash fa-lg text-dark"></i>');
+				} else {
+					passwordField.attr('type', 'password');
+					$('#showPasswordButton').html('<i class="fa-solid fa-eye fa-lg text-dark"></i>');
+				}
+			});
+		});
+
+	</script>
+	@await Component.InvokeAsync("Notyf")
+</body>
+</html>

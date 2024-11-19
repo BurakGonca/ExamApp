@@ -1,0 +1,121 @@
+﻿@model AdminAdminDetailsVM
+@{
+    ViewData["Title"] = ViewLocalizer["Admin_Details"];
+}
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <div class="card-header cursor-pointer d-flex justify-content-between align-content-center">
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">@ViewLocalizer["Admin_Details"]</h3>
+        </div>
+        <div class="gap-5">
+            <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary align-self-center">@SharedLocalizer["Back_List"]</a>
+            <a id="kt-update-admin" onclick="loadAdminData('@Model.Id')" class="btn btn-primary align-self-center" data-kt-docs-table-filter="edit_row" data-admin-id="@Model.Id" data-bs-toggle="modal" data-bs-target="#kt_modal_update_user">
+                @SharedLocalizer["Update"]
+            </a>
+            <a class="btn btn-danger align-self-center deleteAction" data-id="@Model.Id"> @SharedLocalizer["Delete"] </a>
+        </div>
+    </div>
+    <div class="card-body row mb-7">
+        <div class="col-lg-2">
+            <div id="cover-image-container">
+                @if (Model.NewImage != null && Model.NewImage.Length > 0)
+                {
+                    <div id="item-header-cover-image" style="width:150px; height:150px;">
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.NewImage)"
+                             class="avatar user-1-avatar avatar-150 photo"
+                             style="object-fit:fill; width:150px; height:150px;"
+                             alt='$"{Model.First} {Model.LastName}"' />
+                    </div>
+                }
+                else
+                {
+                    <div id="item-header-cover-image" width="150px" height="150px">
+                        <img src="~/media/avatars/blank.png"
+                             class="avatar user-1-avatar avatar-150 photo"
+                             style="object-fit:fill; width:150px; height:150px;" alt="" />
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Full_Name"]</label>
+                <div class="col-lg-10">
+                    <span id="fullName" class="fw-bolder fs-6 text-gray-800 text-capitalize">@Model.FullName</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Gender"]</label>
+                <div class="col-lg-10">
+                    <span class="fw-bolder fs-6 text-gray-800 text-capitalize">@(Model.Gender == true ? SharedLocalizer["Man"] : SharedLocalizer["Woman"])</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Email"]</label>
+                <div class="col-lg-10">
+                    <span class="fw-bolder fs-6 text-gray-800">@Model.Email</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                @* <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Date_Of_Birth"]</label> *@
+                <div class="col-lg-10">
+                    <span class="fw-bolder fs-6 text-gray-800">@* @Model.DateOfBirth.ToShortDateString() *@</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                @* <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["City"]</label> *@
+                <div class="col-lg-10">
+                    <span class="fw-bolder fs-6 text-gray-800">@* @Model.CityName *@</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <partial name="~/Areas/Admin/Views/Admin/Update.cshtml" model="new AdminAdminUpdateVM()"></partial>
+
+    @section Scripts
+    {
+        @* <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script> *@
+        <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/update-admin.js"></script>
+
+        <script>
+            var localizedTexts = {
+                unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+                unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+                confirmTitle: '@SharedLocalizer["Delete"]',
+                confirmText: '@SharedLocalizer["Delete_Admin_Confirm"]',
+                confirmButtonText: '@SharedLocalizer["Yes_Delete"]',
+                cancelButtonText: '@SharedLocalizer["No_Cancel"]',
+                formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+                okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+            };
+            $(".deleteAction").click(function () {
+                const id = $(this).attr("data-id");
+                const fullName = document.getElementById("fullName").innerText
+                Swal.fire({
+                    title: `${localizedTexts.confirmTitle}`,
+                    text: localizedTexts.confirmText,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: localizedTexts.confirmButtonText,
+                    cancelButtonText: localizedTexts.cancelButtonText
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "GET",
+                            url: "@Url.Action("Delete")" + "?id=" + id,
+                            success: function (result) {
+                                if (result.isSuccess) {
+                                    setTimeout(() => location.href = "/Admin/Admin", 2000)
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    }
+</div>

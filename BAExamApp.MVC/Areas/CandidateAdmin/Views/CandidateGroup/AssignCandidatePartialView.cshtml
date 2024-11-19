@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = SharedLocalizer["Assign_Candidate"];
+}
+
+<div class="modal fade" id="assign_candidate_modal" tabindex="-1" aria-hidden="true">
+    <input type="hidden" id="localization_mesaage_no_candidate_available" value="@SharedLocalizer["No_Available_Candidate"]" />
+
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-800px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_add_user_header">
+                <!--begin::Modal title-->
+                <h2 id="GroupName" class="fw-bolder"></h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <!--begin::Form-->
+                <form asp-action="AssignCandidate" id="assign_candidate_modal_form" class="form" enctype="multipart/form-data">
+                    <input id="groupId" name="groupId" type="hidden" />
+                    <!--begin::Groups Combobox-->
+@*                     <div class="mb-3">
+                        <label for="candidateListSelect" class="form-label">@SharedLocalizer["Candidates"]</label>
+                        <div class="d-flex pe-2 ps-0">
+                            <select id="candidateListSelect" class="form-select me-2 ms-0"></select>
+                            <button type="button" class="btn btn-primary" id="addCandidateButton">@SharedLocalizer["Add"]</button>
+                        </div>
+                    </div> *@
+                    <div class="fv-row form-floating mb-7">
+                        <label for="candidateListSelect" class="required fw-bold fs-6 mb-2"></label>
+                        <div class="d-flex align-items-center pe-2 ps-0">
+                            <select class="form-select flex-grow-1 me-2 ms-0" id="candidateListSelect" data-control="select2" data-close-on-select="false" data-placeholder="@SharedLocalizer["Candidates"]" data-allow-clear="true" multiple="multiple">
+                            </select>
+                            <button type="button" class="btn btn-primary" id="addCandidateButton">@SharedLocalizer["Add"]</button>
+                        </div>
+                    </div>
+
+
+                    <!--end::Groups Combobox-->
+                    <!--begin::Scroll-->
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" style="height :300px" id="assign_candidate_modal_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#assign_candidate_modal_header" data-kt-scroll-wrappers="#assign_candidate_modal_scroll" data-kt-scroll-offset="300px">
+                    </div>
+                    <!--end::Scroll-->
+                    <!--begin::Actions-->
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">@SharedLocalizer["Back_List"]</button>
+                        <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                            <span class="indicator-label">@SharedLocalizer["Save"]</span>
+                            <span class="indicator-progress">
+                                @SharedLocalizer["Please_Wait"]
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+
+<script>
+    // Form gönderilmeden önce validateDateUpdate() fonksiyonunu çağırır
+    document.querySelector('form').addEventListener('submit', function (event) {
+        if (!validateDateUpdate()) {
+            event.preventDefault();
+        }
+    });
+</script>

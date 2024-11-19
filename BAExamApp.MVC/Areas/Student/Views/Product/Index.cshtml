@@ -1,0 +1,76 @@
+﻿@model IEnumerable<StudentProductListVM>
+
+@{
+	ViewData["Title"] = ViewLocalizer["Product"];
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>DataTable</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+
+	<link rel="stylesheet" href="~/lib/student/css/simple-datatables-style.css" />
+	<link rel="stylesheet" href="~/lib/student/css/list-style.css" />
+</head>
+
+<body>
+
+	<main id="main" class="main">
+		<section class="section dashboard" id="section-dashboard">
+			<div class="card classroomlist-table overflow-auto">
+
+				<div class="card-body" id="product-card-body">
+					<h5 class="card-title">@SharedLocalizer["List", SharedLocalizer["Product"]] </h5>
+
+					@{
+						var modelList = Model.OrderBy(x => x.ClassroomName).ToList();
+						int rowCount = modelList.Count;
+					}
+
+					<table class="table table-borderless datatable" id="myTable">
+						<thead>
+							<tr>
+								<th scope="col" id="th-container-column"><span id="th-text-container-edu">@Html.DisplayNameFor(model => model.ClassroomName)</span></th>
+								<th scope="col" id="th-container-column"><span id="th-text-container-edu">@Html.DisplayNameFor(model => model.ProductName)</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							@for (int i = 0; i < rowCount; i++)
+							{
+								<tr class="row-@(i) @(i % 2 != 0 ? "table-light" : "")">
+									<td><a href="#" class="text-dark">@modelList[i].ClassroomName</a></td>
+									<td><a href="#" class="text-dark">@modelList[i].ProductName</a></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+	<script src="~/lib/student/js/simple-datatables.js"></script>
+	<script src="~/lib/student/js/tinymce.js"></script>
+	<script type='text/javascript' src='~/lib/student/js/list-main.js'></script>
+	<script>
+		var classroomCount = @Model.Count();
+		window.onload = function () {
+			paginationSetupDropdown(classroomCount);
+		}
+	</script>
+
+</body>
+</html>
+
+
+

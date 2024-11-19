@@ -1,0 +1,122 @@
+﻿@{
+	ViewData["Title"] = "Sınav Kuralları";
+	Layout = "";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>@ViewData["Title"]</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+	<link href="~/css/examrules.css" rel="stylesheet" />
+</head>
+<body>
+	<main>
+		<div class="container rule-1" id="rule-1">
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-sm-6 text-center">
+					<img src="~/images/examrules/kural_1.png" class="img-fluid"/>
+				</div>
+			</div>
+		</div>
+		<div class="container rule-2" id="rule-2">
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-sm-6 text-center">
+					<img src="~/images/examrules/kural_2.png" class="img-fluid" />
+				</div>
+			</div>
+		</div>
+
+		<div class="container rule-3" id="rule-3">
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-sm-6 text-center">
+					<img src="~/images/examrules/kural_3.png" class="img-fluid"/>					
+				</div>
+			</div>
+		</div>
+		<div class="container rule-4" id="rule-4">
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-sm-6 text-center">
+					<img src="~/images/examrules/kural_4.png" class="img-fluid" />
+				</div>
+			</div>
+		</div>
+
+		<div class="container rule-5" id="rule-5">
+			<div class="row">
+				<div class="col-12 mt-5" style="margin-bottom: 60px">
+					<ol>
+						<h4 class="examRulesDescription">Diğer Kurallar</h4>
+						<li>Her sayfada bir soru ve o soruya ait cevap şıkları bulunmaktadır. </li>
+						<li>Sıradaki soruya geçtikten sonra <b class="text-danger">önceki sorulara dönülemeyecektir</b> ve verilen cevaplar değiştirilemeyecektir.</li>
+						<li>Sınav esnasında geri butonunu kullanarak <b class="text-danger">önceki soruya dönemezsiniz</b>. Sayfayı yenileme(F5) yapsanız bile kaldığınız sorudan devam edecek ve süreniz işlemeye devam edecektir.</li>
+						<li>Web tarayıcınızda kullanılan kısayol tuşlarını sınav süresince kullanmayınız.</li>
+						<li>
+							<ul>
+								Sınav güvenliği kapsamında online sınavlarda uyulması gereken yasaklar aşağıda verilmiştir. Bu yasakları ihlal ettiği belirlenen öğrencinin sınavı geçersiz sayılır ve haklarında öğrenci disiplin yönetmeliği uyarınca soruşturma açılır:
+								<li>Sınav sorularını ve/veya cevaplarını kopyalamak, dağıtmak, paylaşmak, çoğaltmak, ya da yayınlamak.</li>
+								<li>Sınava kendisi yerine bir başkasının girmesini sağlamak.</li>
+								<li>Web tarayıcısının özelliklerini sınav güvenliğini tehlikeye düşürecek şekilde değiştirmek.</li>
+								<li>Sınav verilerini değiştirmek için teşebbüste bulunmak.</li>
+							</ul>
+						</li>
+						<li>Sınav işleminin mutlaka öğrenci tarafından bitirilmesi gerekmektedir. Bu amaçla sınav sonunda mutlaka <b class="text-danger"> “Sınavı Bitir” </b> butonuna basarak sınavınızı tamamlayınız.</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="button-div">			
+				<button type="submit" data-kt-contacts-type="submit" class="btn btn-primary hover-elevate-up" id="nextRuleBtn">@SharedLocalizer["Next_Rule"]</button>
+		</div>
+	</main>
+	<script>
+		let currentRule = 1;
+
+		// Initially show the 'Next Rule' button
+		document.getElementById('nextRuleBtn').style.display = 'block';
+
+		document.getElementById('nextRuleBtn').addEventListener('click', function () {
+			currentRule++;
+
+			// Hide all rules
+			document.querySelectorAll('.container').forEach(function (rule) {
+				rule.style.display = 'none';
+			});
+
+			// Show the current rule
+			const nextRule = document.getElementById("rule-" + currentRule);
+			if (nextRule) {
+				nextRule.style.display = "flex";
+			}
+
+			document.querySelector(".container.rule-" + currentRule).style.display = "flex";
+
+			// Update button text and functionality
+			if (currentRule < 5) {
+				this.innerText = "Sıradaki Kural";
+			} else {
+				this.innerText = "Sınavı Başlat";
+				this.removeEventListener("click", arguments.callee);
+				this.addEventListener("click", function () {
+					window.location.href = '@Url.Action("StartExam", "Exam")';
+				});
+			}
+		});
+
+		window.addEventListener("scroll", function () {
+			const button = document.getElementById("nextRuleBtn");
+			if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+				button.style.display = "block";
+			} else {
+				button.style.display = "none";
+			}
+		});
+	</script>
+</body>
+</html>

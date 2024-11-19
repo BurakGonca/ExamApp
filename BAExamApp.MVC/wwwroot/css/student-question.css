@@ -1,0 +1,43 @@
+﻿.onizleme {
+    position: relative;
+    z-index: 0;
+}
+
+.onizleme:hover {
+    background-color: transparent;
+    z-index: 50;
+    margin-bottom: 100px;
+}
+
+.onizleme span {
+    position: absolute;
+    background-color: #444444;
+    padding: 2px;
+    left: 450px;
+    bottom: -170px;
+    border: 1px dashed #2F4F4F;
+    visibility: hidden;
+    color: #000000;
+    text-decoration: none;
+
+}
+
+.onizleme span img {
+    border-width: 0;
+    padding: 1px;
+    max-width:750px;
+    max-height:500px;
+    
+}
+
+.onizleme:hover span {
+    visibility: visible;
+}
+
+.question-image {
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+}

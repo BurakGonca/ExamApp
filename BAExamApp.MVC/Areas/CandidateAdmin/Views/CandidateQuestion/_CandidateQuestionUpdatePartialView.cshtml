@@ -1,0 +1,241 @@
+﻿@model CandidateQuestionUpdateVM
+<head>
+    <link rel="stylesheet" href="~/css/candidateQuestion/candidateQuestionUpdate.css" />
+</head>
+<div class="modal fade"
+     id="kt_modal_update_question"
+     tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
+        <div class="modal-content">
+            <div class="modal-header" id="kt_modal_update_question_header">
+                <h3>@SharedLocalizer["Update_Question_Page"]</h3>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary"
+                     data-kt-question-modal-action="close">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="24"
+                             height="24"
+                             viewBox="0 0 24 24"
+                             fill="none">
+                            <rect opacity="0.5"
+                                  x="6"
+                                  y="17.3137"
+                                  width="16"
+                                  height="2"
+                                  rx="1"
+                                  transform="rotate(-45 6 17.3137)"
+                                  fill="currentColor" />
+                            <rect x="7.41422"
+                                  y="6"
+                                  width="16"
+                                  height="2"
+                                  rx="1"
+                                  transform="rotate(45 7.41422 6)"
+                                  fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <form asp-area="CandidateAdmin" asp-controller="CandidateQuestion"
+                      id="kt_modal_update_question_form"
+                      asp-action="Update"
+                      class="form "
+                      enctype="multipart/form-data">
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7"
+                         id="kt_modal_update_question_scroll"
+                         data-kt-scroll="true"
+                         data-kt-scroll-activate="{default: false, lg: true}"
+                         data-kt-scroll-max-height="auto"
+                         data-kt-scroll-dependencies="#kt_modal_update_question_header"
+                         data-kt-scroll-wrappers="#kt_modal_update_question_scroll"
+                         data-kt-scroll-offset="300px">
+                        <div class="row mb-3 fv-row">
+                            <input asp-for="Id" name="id" class="form-control " id="questionId" hidden />
+                            <input class="form-control fv-row"
+                                   name="questionAnswersListFromReload"
+                                   id="questionAnswersListFromReload"
+                                   value="@ViewBag.QuestionAnswersList"
+                                   hidden />
+                            <div class="col-sm-12">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="CandidateQuestionType"
+                                            data-control="select2"
+                                            data-hide-search="true"
+                                            class="form-select form-select-sm form-select-solid"
+                                            onchange="onQuestionTypeChange()">
+                                        <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label asp-for="CandidateQuestionType" class="fw-bold fs-6 mb-2">
+                                        @SharedLocalizer["Question_Type"]
+                                    </label>
+                                    <span asp-validation-for="CandidateQuestionType" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Subject değiştirme-->
+
+
+                            <div class="col-sm-12">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="CandidateQuestionSubjectId" class="form-select form-select-sm form-select-solid" id="QuestionType">
+                                        @if (ViewBag.CandidateQuestionSubjects != null)
+                                            @foreach (var subject in ViewBag.CandidateQuestionSubjects)
+                                            {
+                                                <option value="@subject.Id">
+                                                    @subject.Name
+                                                </option>
+
+                                            }
+                                    </select>
+                                    <label asp-for="CandidateQuestionType" class="fw-bold fs-6 mb-2">@SharedLocalizer["Subject"]</label>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-12 ">
+                                <div class="fv-row form-floating mb-7">
+                                    <textarea asp-for="Content"
+                                              rows="4"
+                                              class="form-control form-control-sm form-control-solid"
+                                              oninput="auto_grow(this)"
+                                              style="resize: none; overflow: hidden; font-size: 1em;"
+                                              id="candidateQuestionUpdateContent"
+                                              name="Content"></textarea>
+                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                    <label asp-for="Content"
+                                           class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Content"]</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 " id="arrangeReason">
+                                <input asp-for="Image" hidden />
+                                <label asp-for="Image" class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Image"]</label>
+                                <input asp-for="NewImage" id="fileInput" type="file" class="form-control form-control-sm form-control-solid" accept=".jpg,.jpeg,.png" name="NewImage" hidden />
+                                <div class="fv-row form-floating mb-7 w-100 h-100">
+                                    <div class="image-input image-input-outline fv-row w-100 h-100"
+                                         data-kt-image-input="true"
+                                         style="position: relative;">
+                                        <div class="image-container w-1000 h-100">
+                                            <span type="button" id="uploadImageButton" class="btn btn-icon btn-circle btn-active-color-primary w-12px h-12px bg-body"
+                                                  data-bs-toggle="tooltip" title="@SharedLocalizer["Upload_Question_Picture"]">
+                                                <i class="bi bi-pencil-fill fs-7"></i>
+                                            </span>
+                                            <img id="previewImage"
+                                                 alt="Preview" />
+                                            <div id="imagePlaceholder">
+                                                <span>
+                                                    <i class="bi bi-image"></i>
+                                                </span>
+                                                <p>@SharedLocalizer["Image_Upload_Placeholder_Info"]</p>
+                                            </div>
+                                            <span type="button" id="removeImageButton" class="btn btn-icon btn-circle btn-active-color-primary w-24px h-24px bg-body"
+                                                  data-bs-toggle="tooltip" title="@SharedLocalizer["Remove_Question_Picture"]">
+                                                <i class="bi bi-x fs-2"></i>
+                                            </span>
+                                        </div>
+                                        <span asp-validation-for="NewImage.Length"
+                                              class="text-danger"></span>
+                                        <span asp-validation-for="NewImage.ContentType"
+                                              class="text-danger"></span>
+                                    </div>
+
+                                    <input type="hidden" id="removeImageHidden" name="removeImageHidden" value="false" />
+                                </div>
+
+                            </div>
+                            <input class="form-control"
+                                   name="questionAnswerChoices"
+                                   id="questionAnswerChoices"
+                                   hidden />
+                            <div class="col-sm-6 " id="questionAnswersDiv" hidden>
+                                <label asp-for="@Model.QuestionAnswers"
+                                       class="col-sm-6 col-form-label col-form-label-lg">@SharedLocalizer["Question_Answers"]</label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center pt-15">
+                        <button type="reset"
+                                class="btn btn-light me-3 "
+                                data-kt-question-modal-action="cancel">
+                            @SharedLocalizer["Back_List"]
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                onclick="validateAndSubmitFormUpdate()"
+                                data-kt-question-modal-action="submit">
+                            <span class="indicator-label">@SharedLocalizer["Save"]</span>
+                            <span class="indicator-progress">
+                                @SharedLocalizer["Please_Wait"]
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/newlayouts/src/js/custom/apps/user-management/question/candidateQuestionSelect.js"></script>
+<script>
+    document.getElementById("removeImageButton").addEventListener("click", function () {
+        var removeImageHidden = document.getElementById("removeImageHidden");
+        var previewImage = document.getElementById("previewImage");
+        var removeImageButton = document.getElementById("removeImageButton");
+        var imagePlaceholder = document.getElementById("imagePlaceholder");
+
+        if (removeImageHidden.value === "false") {
+            // Resmi görüntüleyen img etiketinin src'sini temizleyin
+            previewImage.src = "";
+            previewImage.style.display = "none"; // Resmi gizle
+            removeImageButton.style.display = "none"
+            imagePlaceholder.style.display = "flex"
+            // Resmi kaldırma durumu için hidden input değerini ayarlayın
+            removeImageHidden.value = "true";
+        } else {
+            removeImageHidden.value = "false";
+        }
+    });
+
+    // Resim ekleme inputunu dinleyen bir işlev
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        var imageType = /image.*/;
+
+        if (file.type.match(imageType)) {
+            var reader = new FileReader();
+
+            // Dosya okunduğunda ön izlemeyi güncelle
+            reader.onload = function (e) {
+                var previewImage = document.getElementById("previewImage");
+                var removeImageButton = document.getElementById("removeImageButton");
+                var imagePlaceholder = document.getElementById("imagePlaceholder");
+
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block"; // Resmi göster
+                removeImageButton.style.display = "block"; // Butonu göster
+                document.getElementById("removeImageHidden").value = "false";
+                imagePlaceholder.style.display = "none";
+            }
+
+            // Dosyayı oku
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById("uploadImageButton").addEventListener("click", function () {
+        document.getElementById("fileInput").click();
+
+    });
+
+    function auto_grow(element) {
+        element.style.height = "auto";
+        element.style.height = (element.scrollHeight) + "px";
+        element.style.overflow = "hidden";
+    }
+</script>

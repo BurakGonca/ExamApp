@@ -1,0 +1,356 @@
+﻿@using BAExamApp.Business.Constants
+@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateBranchVMs
+@model IEnumerable<CandidateBranchListVM>
+@{
+    ViewData["Title"] = ViewLocalizer["Branches"];
+    Layout = "_Layout";
+}
+
+<link href="~/newLayouts/dist/assets/plugins/custom/datatables/adminBranchSorting.css" rel="stylesheet" />
+
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+            <!--begin::Card Body-->
+            <div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 text-gray-700">
+                <!--begin::Section-->
+                <div class="p-0">
+                    <!--begin::Heading-->
+                    <h1 class="anchor fw-bolder mb-5" style="font-size:1.15rem;" id="server-side">
+                        @ViewLocalizer["Branch_List"]
+                    </h1>
+                    <!--end::Heading-->
+                    <!--begin::CRUD-->
+                    <div class="py-5">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-stack flex-wrap mb-5">
+                            <!--begin::Search-->
+                            <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="@SharedLocalizer["Search_Branch"]" />
+                            </div>
+                            <div>
+                                @if (ViewBag.ShowAllData == true)
+                                {
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)" checked>
+                                        <label class="form-check-label" for="showInactiveCheckbox">
+                                            @SharedLocalizer["Hide_Passive"]
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)">
+                                        <label class="form-check-label" for="showInactiveCheckbox">
+                                            @SharedLocalizer["Show_Passive"]
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <!--end::Search-->
+                            <!--begin::Toolbar-->
+                            <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+                                <!--begin::Add branch-->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCandidateBranchModal">
+                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->@SharedLocalizer["Create", SharedLocalizer["Branch"]]
+                                </button>
+                                <!--end::Add branch-->
+                            </div>
+                            <!--end::Toolbar-->
+
+                        </div>
+                        
+
+                        <!--end::Wrapper-->
+                        <!--begin::Datatable-->
+                        <table id="kt_datatable_example_1" class="table align-middle table-row-dashed min-h-400px fs-6 gy-5">
+                            <thead>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Email: activate to sort column descending" style="width: 252.25px;" aria-sort="ascending">@Html.DisplayNameFor(model => model.Name)</th>
+                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Email: activate to sort column descending" style="width: 252.25px;" aria-sort="ascending">@Html.DisplayNameFor(model => model.Status)</th>
+                                    <th class="text-end min-w-100px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100.25px;">@ViewLocalizer["Branch_Operations"]</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-bold">
+                                @foreach (var branch in Model)
+                                {
+                                    <tr>
+                                        <td>@branch.Name</td>
+                                        <td class="categories text-start">
+                                        <span class="badge @(branch.Status == Status.Active ? "badge-light-success" : "badge-light-warning")">
+                                            @if (branch.Status == Status.Active)
+                                            {
+                                                <text>@SharedLocalizer["Active"]</text>
+                                            }
+                                            else
+                                            {
+                                                    <text>@SharedLocalizer["Passive"]</text>
+                                            }
+                                        </span>
+                                    </td>
+                                        <td class=" text-end">
+                                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                                                @SharedLocalizer["Options"]
+                                                <span class="svg-icon svg-icon-5 m-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                            <!--begin::Menu-->
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a asp-action="Details" asp-route-id="@branch.Id" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+                                                        @SharedLocalizer["Details"]
+                                                    </a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#updateCandidateBranchModal" data-branch-id="@branch.Id" data-branch-name="@branch.Name">@SharedLocalizer["Edit"]</a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    @if (branch.Status == Status.Passive)
+                                                    {
+                                                        <a class="menu-link px-3 toggleStatusButton" data-id="@branch.Id" data-status="activate">@SharedLocalizer["CandidateQuestionActivate"]</a>
+                                                    }
+                                                    else if (branch.Status == Status.Active)
+                                                    {
+                                                        <a class="menu-link px-3 toggleStatusButton" data-id="@branch.Id" data-status="deactivate">@SharedLocalizer["CandidateQuestionDeactivate"]</a>
+                                                    }
+                                                </div>
+
+                                                <!--end::Menu item-->
+                                            </div>
+                                            <!--end::Menu-->
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--end::CRUD-->
+                </div>
+                <!--end::Section-->
+            </div>
+            <!--end::Card Body-->
+        </div>
+    </div>
+</section>
+
+<partial name="~/Areas/CandidateAdmin/Views/CandidateBranch/CreatePartialView.cshtml" model="new CandidateBranchCreateVM()" />
+<partial name="~/Areas/CandidateAdmin/Views/CandidateBranch/UpdatePartialView.cshtml" model="new CandidateBranchUpdateVM()" />
+
+@section Scripts
+{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/newlayouts/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/js/updateCandidateBranch.js"></script>
+    <script src="~/js/createCandidateBranch.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script>
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+        var localizedText = {
+            branchgroupText: '@SharedLocalizer["CandidateBranch_Passive"]',
+            cancelButtonText: '@SharedLocalizer["Cancel_Button_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+            returnOkText: '@SharedLocalizer["Candidate_Return_Ok"]'
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+        $(document).ready(function () {
+
+            let dt = $("#kt_datatable_example_1").DataTable({
+                lengthMenu: [10, 20],
+                dom:
+                    '<"row"<"col-sm-12"tr>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    info: localizer.info,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords
+                },
+            });
+
+            $('input[data-kt-docs-table-filter="search"]').on('keyup', function () {
+                dt.search($(this).val()).draw();
+            });
+
+            function updatePaginationArrows() {
+                $('#kt_datatable_example_1_previous a').html('<i class="fa fa-chevron-left"></i>');
+                $('#kt_datatable_example_1_next a').html('<i class="fa fa-chevron-right"></i>');
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw', function () {
+                updatePaginationArrows();
+                adjustRowStyles();
+                updateInfoText(dt.page.info());
+            });
+
+            function updateInfoText(pageInfo) {
+                let infoTextTemplate = selectedLang.infoText;
+                let infoText = infoTextTemplate
+                    .replace('_TOTAL_', pageInfo.recordsTotal)
+                    .replace('_START_', pageInfo.start + 1)
+                    .replace('_END_', pageInfo.end);
+                $('#kt_datatable_example_1_info').html(infoText).css({
+                    'margin-top': '6px',
+                    'font-size': '14px',
+                    'font-family': 'Poppins, Helvetica, sans- serif',
+                });
+            }
+
+            updateInfoText(dt.page.info());
+
+            function adjustRowStyles() {
+                let rowCount = dt.rows({ filter: 'applied' }).count();
+                $("#kt_datatable_example_1 tbody tr").each(function () {
+                    // 'odd' ve 'even' sınıflarını kaldır
+                    $(this).removeClass('odd even');
+
+                    // 'compact-row' sınıfını ekle veya kaldır
+                    if (rowCount <= 10) {
+                        $(this).addClass('compact-row');
+                    } else {
+                        $(this).removeClass('compact-row');
+                    }
+                });
+            }
+        });
+        $(document).ready(function () {
+            $
+
+            $('#updateCandidateBranchModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var branchId = button.data('branch-id');
+                var branchName = button.data('branch-name');
+
+                var modal = $(this);
+                modal.find('#branchId').val(branchId);
+                modal.find('#branchName').val(branchName);
+            });
+        });
+        
+
+
+
+    </script>
+    <script>
+        function toggleData(checked) {
+            if (checked) {
+                window.location.href = "@Url.Action("Index", new { showAllData = true })";
+            } else {
+                window.location.href = "@Url.Action("Index")";
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add event listener for toggle status buttons
+            document.querySelectorAll('.toggleStatusButton').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var id = this.getAttribute('data-id');
+                    var status = this.getAttribute('data-status');
+
+                    if (status === "deactivate") {
+                        // Check for active groups before deactivating
+                        fetch("@Url.Action("CheckActiveGroups")" + "?id=" + id, {
+                            method: "GET",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '@Html.AntiForgeryToken()'
+                            }
+                        })
+                            .then(response => response.json())
+                            .then(result => {
+                                if (result.isSuccess) {
+                                    setBranchStatus(id, status);
+                                } else {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: localizedText.branchgroupText,
+                                        text: localizedText.returnOkText,
+                                        cancelButtonColor: '#3085d6',
+                                        cancelButtonText: localizedText.okButtonText
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    text: 'An error occurred!'
+                                });
+                            });
+                    } else {
+                        // Activate directly without checking for active groups
+                        setBranchStatus(id, status);
+                    }
+                });
+            });
+
+            function setBranchStatus(id, status) {
+                var actionUrl = status === "activate" ? "@Url.Action("SetBranchAndAnswersToActive")" : "@Url.Action("SetBranchAndAnswersToInactive")";
+                fetch(actionUrl + "?id=" + id, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '@Html.AntiForgeryToken()'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(updateResult => {
+                        if (updateResult.isSuccess) {
+                            
+                                location.reload();
+                            
+                        } else {
+                            location.reload();
+                        }
+                    });
+            }
+        });
+
+
+    </script>
+    @* Active-Passive Status Function *@
+    
+}

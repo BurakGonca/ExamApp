@@ -1,0 +1,458 @@
+﻿@model IEnumerable<AdminExamListVM>
+
+@{
+    ViewData["Title"] = ViewLocalizer["All_Exam_List"];
+}
+@{
+    Html.RenderPartial("~/Areas/Admin/Views/Animation/_LoaderAnimationPartialView.cshtml");
+}
+
+<head>
+    <link href="~/css/classroom-filter.css" rel="stylesheet" />
+    <link href="~/newlayouts/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/newlayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<style>
+    .tooltip-inner {
+        max-width: 350px !important;
+    }
+</style>
+<style>
+    #kt_datatable_example_1_wrapper .dataTables_scrollBody table tbody tr {
+        display: block !important;
+        margin-top: 0px !important; /* İhtiyaca göre ayarlayabilirsiniz */
+    }
+
+    #kt_datatable_example_1_wrapper .dataTables_scrollBody table tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+</style>
+<section class="section dashboard">
+    <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+        <div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 text-gray-700">
+            <div class="d-flex justify-content-between mb-7">
+                <h5 style="display: flex; align-items: center;">
+                    @ViewLocalizer["Exam_List"]
+
+                    <span class="material-symbols-outlined" style="margin-left: 5px; font-size: 130%; " data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="@SharedLocalizer["Exam_Filter_Warning"]">
+
+                        info
+
+                    </span>
+
+                </h5>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_exam">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                    <span class="svg-icon svg-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon--> @SharedLocalizer["Create", SharedLocalizer["Exam"]]
+                </button>
+            </div>
+            <div>
+                <div data-kt-docs-table-toolbar="base">
+                    <form class="formClassroom" asp-area="Admin" asp-controller="Exam" asp-action="GetExamsByStatus" method="post" onsubmit="return onSubmitForm()">
+                        <div class="classroomfilter flex-row">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-2">
+                                        <select class="form-select form-select-solid" data-control="select2" id="className" name="className" asp-items="ViewBag.Classrooms">
+                                            <option value="" disabled selected> @SharedLocalizer["Choose"]</option>
+                                        </select>
+                                        <label>@SharedLocalizer["Classroom_Name"]</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-floating mb-5">
+                                        <select class="form-select form-select-solid" data-control="select2" id="ruleName" name="ruleName" asp-items="ViewBag.ExamRules">
+                                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                        </select>
+                                        <label>@SharedLocalizer["Exam_Rule"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control form-control-solid" name="startDate" placeholder="@SharedLocalizer["Start_Time"]" id="openingDate" />
+                                        <label>@SharedLocalizer["Start_Time"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control form-control-solid" name="endDate" placeholder="@SharedLocalizer["End_Time"]" id="closedDate" />
+                                        <label>@SharedLocalizer["End_Time"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <button type="submit" id="searchButton" class="btn btn-primary hover-elevate-up">@SharedLocalizer["Show"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="kt_datatable_example_1_wrapper" class="dataTables_wrapper dt-bootstrap-4 no-footer">
+                <div class="table-responsive">
+                    @if (ViewBag.ShowAllData == false)
+                    {
+
+                    }
+                    else
+                    {
+                        <table id="kt_datatable_example_1" class="table table-row-dashed fs-6 gy-5">
+
+                            <thead>
+
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+
+                                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                    <th>@Html.DisplayNameFor(model => model.ExamRuleName)</th>
+                                    <th>@Html.DisplayNameFor(model => model.ExamType)</th>
+                                    <th>@Html.DisplayNameFor(model => model.ExamDateTime)</th>
+                                    <th>@Html.DisplayNameFor(model => model.ExamDuration)</th>
+                                    <th>@SharedLocalizer["Exam_Attendance_Status"]</th>
+                                    <th>@Html.DisplayNameFor(model => model.ClassGradeAverage)</th>
+                                    <th>@SharedLocalizer["Exam_State"]</th>
+                                    <th>@SharedLocalizer["The_Status"]</th>
+                                    <th>@ViewLocalizer["Exam_Operations"]</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-bold ">
+
+                                @foreach (var item in Model)
+                                {
+                                    if (!string.IsNullOrEmpty(item.Name))
+
+                                    {
+
+                                        <tr>
+
+                                            <td class="categories text-left">
+                                                <a data-bs-toggle="tooltip" data-bs-placement="right" data-placement="top" title="@item.Name">
+                                                    <span class="post_category" style="white-space: nowrap;">@Html.Raw(item.Name.Length > 30 ? item.Name.Substring(0, 30) + "..." : item.Name)</span>
+                                                </a>
+                                            </td>
+
+                                            <td class="categories text-left">
+                                                <a data-bs-toggle="tooltip" data-bs-placement="right" data-placement="top" title="@item.ExamRuleName">
+                                                    <span class="post_category" style="white-space: nowrap;">@Html.Raw(item.ExamRuleName.Length > 30 ? item.ExamRuleName.Substring(0, 30) + "..." : item.ExamRuleName)</span>
+                                                </a>
+                                            </td>
+                                            <td class="categories text-left">
+                                                <a>
+                                                    <span class="post_category">@item.ExamType</span>
+                                                </a>
+                                            </td>
+                                            <td class="categories text-center">
+                                                <a>
+                                                    <span class="post_category">@item.ExamDateTime</span>
+                                                </a>
+                                            </td>
+                                            <td class="categories text-center">
+                                                <a>
+                                                    <span class="post_category">@($"{item.ExamDuration.Hours:D2}:{item.ExamDuration.Minutes:D2}")</span>
+                                                </a>
+                                            </td>
+                                            <td class="categories text-center">
+                                                <a>
+                                                    <span class="post_category">@item.StudentExamScoreCount / @item.StudentCount</span>
+                                                </a>
+                                            </td>
+                                            <td class="categories text-center">
+                                                <a>
+                                                    @if (item.ClassGradeAverage != null)
+                                                    {
+                                                        <span class="post_category">@item.ClassGradeAverage</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="post_category">@SharedLocalizer["Exam_Result_Info_Not_Available"]</span>
+                                                    }
+                                                </a>
+                                            </td>
+                                            <td class="categories text-center">
+                                                <a>
+                                                    @if (item.IsStarted)
+                                                    {
+                                                        <span class="post-category text-success">@SharedLocalizer["Started"]</span>
+                                                    }
+                                                    else if (!item.IsStarted && item.ExamDateTime < DateTime.Now)
+                                                    {
+                                                        <span class="post-category text-danger">@SharedLocalizer["Expired"]</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="post-category text-warning">@SharedLocalizer["Not_Started"]</span>
+
+                                                    }
+                                                </a>
+                                            </td>
+                                            <td class="categories text-center">
+                                                <a>
+                                                    @if (item.IsCanceled == true)
+                                                    {
+                                                        <span class="post-category text-danger">@SharedLocalizer["Cancelled"]</span>
+                                                    }
+                                                    else if (item.IsTest == true)
+                                                    {
+                                                        <span class="post-category text-warning">@SharedLocalizer["Practice_Exam"]</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="post-category text-success">@SharedLocalizer["Not_Cancelled"]</span>
+
+                                                    }
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-extended="false">
+                                                        @SharedLocalizer["Options"]
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-menu-end menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                                        <li class="menu-item px-3">
+                                                            <a asp-action="Details" asp-route-id="@item.Id" class="menu-link px-3" data-kt-docs-table-filter="edit_row">@SharedLocalizer["Details"]</a>
+                                                        </li>
+                                                        @if (item.ExamType == ExamType.Standard)
+                                                        {
+                                                            <li class="menu-item px-3">
+                                                                <a asp-action="AddEvaluators" asp-route-id="@item.Id" class="menu-link px-3" data-kt-docs-table-filter="edd_row">@SharedLocalizer["Add_Evaluators"]</a>
+                                                            </li>
+                                                        }
+                                                        @if (item.ExamDateTime > DateTime.Now && !item.IsStarted)
+                                                        {
+                                                            <li class="menu-item px-3">
+                                                                <a class="menu-link px-3" onclick="StartExam('@item.Id')" data-exam-id="@item.Id">@SharedLocalizer["Start_Exam"]</a>
+                                                            </li>
+                                                        }
+                                                        @if (!item.IsStarted && item.ExamDateTime < DateTime.Now)
+                                                        {
+                                                            <li class="menu-item px-3">
+                                                                <a asp-action="Update" asp-route-id="@item.Id" class="menu-link px-3" data-kt-docs-table- filter="edit_row">@SharedLocalizer["Reschedule_Exam"]</a>
+                                                            </li>
+                                                        }
+                                                        @if (item.ExamDateTime.Add(item.ExamDuration) < DateTime.Now && item.IsCanceled == false && item.IsTest == false)
+                                                        {
+                                                            <li class="menu-item px-3">
+                                                                <a class="menu-link px-3" id="cancel-exam" onclick="cancelExamById('@item.Id')">@SharedLocalizer["Is_Canceled"]</a>
+                                                            </li>
+                                                        }
+                                                        <li class="menu-item px-3">
+                                                            <a class="menu-link px-3" id="delete-exam" onclick="deleteExamById('@item.Id')">@SharedLocalizer["Delete"]</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    }
+
+                                }
+
+                            </tbody>
+
+                        </table>
+                    }
+                    <!--start-exam-loading-->
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--end::Datatable-->
+
+    </div>
+
+    </div>
+
+</section>
+
+<partial name="~/Areas/Admin/Views/Exam/_CreatePartialView.cshtml" model="new AdminExamCreateVM()" />
+
+@section Scripts
+{
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/start-exam.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/view/add-exam.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/delete-exam.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/isCanceled-exam.js"></script>
+    <!-- flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Türkçe locale dosyası -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+    <script>
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+            startExamConfirmation: '@SharedLocalizer["Start_Exam_Confirmation"]',
+            yesStart: '@SharedLocalizer["Yes_Start"]',
+            noCancel: '@SharedLocalizer["No_Cancel"]',
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]',
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]',
+            confirmDeleteButtonText: '@SharedLocalizer["Confirm_Button_Text"]',
+            cancelDeleteButtonText: '@SharedLocalizer["Cancel_Button_Text"]',
+            reschudleExamText: '@SharedLocalizer["Reschedule_Exam"]',
+            confirmCancelTitle: '@SharedLocalizer["Confirm_Cancel_Title"]',
+            confirmCancelText: '@SharedLocalizer["Confirm_Cancel_Text"]',
+            confirmCancelButtonText: '@SharedLocalizer["Confirm_CancelButton_Text"]',
+            cancelCancelButtonText: '@SharedLocalizer["Cancel_CancelButton_Text"]'
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+
+        // Scroll hareket ettirildiğinde option menüsünü kapatır.
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+
+
+        $(document).ready(function () {
+            var dt = $("#kt_datatable_example_1").DataTable({
+                ordering: false,
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 25, // Set default page length to 25
+                dom:
+                    '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    info: localizer.info,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords
+                },
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_1_length"]', function () {
+                dt.page.len($(this).val()).draw();
+                $(this).css({
+                    'border': '0 solid transparent',
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+                });
+            });
+
+            function updatePaginationArrows() {
+                var prevButton = $('#kt_datatable_example_1_previous a');
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+                var nextButton = $('#kt_datatable_example_1_next a');
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+                var pageButtons = $('#kt_datatable_example_1_paginate .page-item');
+                var activePage = $('#kt_datatable_example_1_paginate .page-item.active a');
+                activePage.css({
+                    'color': '#ffffff'
+                });
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+
+        });
+        $(document).ready(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip({
+                title: function () {
+                    return $(this).attr('data-bs-original-title');
+                }
+            });
+        });
+        function onSubmitForm() {
+            var searchButton = document.getElementById("searchButton");
+            var nameSelect = document.getElementById("name");
+            var branchSelect = document.getElementById("branchName");
+            var groupTypeSelect = document.getElementById("groupType");
+            var openingDateInput = document.getElementById("openingDate");
+            var closedDateInput = document.getElementById("closedDate");
+
+            if (!nameSelect.value && !branchSelect.value && !groupTypeSelect.value && !openingDateInput.value && !closedDateInput.value) {
+                window.location.href = "@Url.Action("Index", new { showAllData = true })";
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var divElements = document.querySelectorAll('div');
+            divElements.forEach(function (divElement) {
+                var selectElement = divElement.querySelector('select');
+                if (selectElement) {
+                    sortSelectOptionsAlphabetically(selectElement);
+                }
+            });
+
+            function sortSelectOptionsAlphabetically(selectElement) {
+                var options = Array.from(selectElement.options);
+                options.sort(function (a, b) {
+                    return a.text.localeCompare(b.text);
+                });
+                options.forEach(function (option) {
+                    selectElement.add(option);
+                });
+            }
+
+        });    
+
+        $(document).ready(function () {
+            $('#ExamRuleId').change(async function () {
+                const selectedRuleId = $(this).val();
+
+                if (selectedRuleId) {
+                    $('#loader-notification').show();
+
+                    try {
+                        const response = await $.ajax({
+                            url: '@Url.Action("GetTotalTimeByRule", "Exam")',
+                            type: 'GET',
+                            data: { examRuleId: selectedRuleId }
+                        });
+                        $('#ExamDuration').val(response.totalTime);
+                    } catch (error) {
+                        alert('@ViewLocalizer["ErrorCalculatingTotalTime"]');
+                    } finally {
+                        $('#loader-notification').hide();
+                    }
+                }
+            });
+        });
+
+        function parseTime(timeString) {
+            const parts = timeString.split(':');
+            const hours = parseInt(parts[0], 10) || 0;
+            const minutes = parseInt(parts[1], 10) || 0;
+            const seconds = parseInt(parts[2], 10) || 0;
+            if (seconds > 0) {
+                return (hours * 60) + minutes + 1;
+            }
+
+            return (hours * 60) + minutes;
+        }
+    </script>
+}
+
+

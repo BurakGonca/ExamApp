@@ -1,0 +1,256 @@
+﻿@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateExamInitiationVMs
+@model CandidateExamGetQuestionInOrderVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Exam"];
+    Layout = "";
+    var answerOrder = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ba quiz</title>
+    <link href="~/css/reset.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/custom-props.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/animation.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script>
+        hljs.highlightAll();
+    </script>
+
+
+</head>
+<body>
+    <partial name="~/Areas/Admin/Views/Animation/_LoaderAnimationPartialView.cshtml" />
+    <div id="root">
+        <header style="grid-template-columns: minmax(auto, auto) 1fr max-content">
+            <div>
+                <h2>@Model.Name</h2>
+            </div>
+            <div class="ms-auto">
+                <div id="questionCounterMain" class="p-2 fw-bold text-primary" style="font-size: 1.1em; width: 300px; color: #009ada">
+                    <span id="remainingTimeValueText" style="color: #000">Sınav Bitimine Kalan Süre:</span>
+                    <span id="remainingTimeValue" style="color: #000"></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="container-indicator">
+            <section class="step-indicator d-flex justify-content-center">
+                <div class="d-flex gap-1">
+                    @for (int i = 1; i <= Model.QuestionCount; i++)
+                    {
+                        if (i <= 3 || i > Model.QuestionCount - 3 || (i >= Model.QuestionInOrder - 1 && i <= Model.QuestionInOrder + 3))
+                        {
+                            <div class="step step@(i)">
+                                <div class="step-icon @(i == Model.QuestionInOrder + 1 ? "current-step" : "")">@i</div>
+                            </div>
+                        }
+                        else if (i == Model.QuestionInOrder - 2 || i == Model.QuestionInOrder + 4)
+                        {
+                            <div class="step stepdot">
+                                <div class="step-icon" style="background-color: lightgrey">...</div>
+                            </div>
+                        }
+                    }
+                </div>
+            </section>
+        </div>
+        <div class="container-sm" style="max-width: 960px">
+            <main style="display: initial">
+                <section>
+                    <form method="post" asp-action="AnswerQuestion" class="frm-quiz" id="quizForm">
+                        <input asp-for="QuestionInOrder" value="@Model.QuestionInOrder" id="questionInOrder" hidden />
+                        <input asp-for="CandidateQuestionId" value="@Model.CandidateQuestionId" hidden />
+                        <input asp-for="CandidateQuestionType" value="@Model.CandidateQuestionType" hidden />
+                        <input asp-for="ExamId" hidden />
+                        <input asp-for="CandidateId" hidden />
+
+                        <div class="container-fluid my-1 ps-2">
+                            <span class="fs-2">@SharedLocalizer["Question"] @(Model.QuestionInOrder + 1)</span>
+                        </div>
+
+                        <div>
+                            @if (Model.Image != null)
+                            {
+                                <div class="question-media scrollable-indicator mb-4">
+                                    <img id="questionImage" style="aspect-ratio:16/9; object-fit:contain; max-height: 600px" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Image))" />
+                                </div>
+                            }
+
+                            <div class="question p-2">
+                                <pre style="font: inherit; font-size: 1em; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">@(Html.Raw(Model.Content))</pre>
+
+                            </div>
+
+                            <input class="form-control" name="studentAnswers" id="studentAnswers" hidden />
+
+                            @if (Model.CandidateQuestionType == CandidateQuestionType.Test)
+                            {
+                                foreach (var answer in Model.QuestionAnswers)
+                                {
+                                    <label class="form-check-label" for="answer-@answerOrder">
+                                        <input class="form-check-input" type="radio" style="flex: initial; height:1em" name="CandidateAnswerId" id="answer-@answerOrder" value="@answer.Id" @(answer.Id == Model.CandidateAnswerId ? "checked" : "")>
+                                        @if (answer.IsImageAnswer)
+                                        {
+                                            <div>
+                                                <img id="defaultImage" class="col-lg-12 img-fluid" src="@answer.Answer" style="max-height:150px;max-width:300px;" alt="Profile" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p style="font: inherit; font-size: 1em; overflow: visible">@(Html.Raw(@answer.Answer))</p>
+                                            @* @answer.Answer *@
+                                        }
+                                    </label>
+                                    answerOrder++;
+                                }
+                            }
+                            else if (Model.CandidateQuestionType == CandidateQuestionType.Classic)
+                            {
+                                <input class="form-control w-100" name="Answer" value="@Model.Answer" placeholder="Lütfen cevabınızı yazınız." />
+                            }
+                            else
+                            {
+                                <textarea class="form-control w-100" name="Answer" rows="4" placeholder="Lütfen cevabınızı yazınız." oninput="auto_grow(this)">@Model.Answer</textarea>
+                            }
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 text-center">
+
+                                @if (Model.QuestionInOrder != 0)
+                                {
+                                    <button type="submit" id="prev-question-button" class="btn btn-primary">Önceki Soru</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" id="prev-question-button" class="btn btn-primary" disabled>Önceki Soru</button>
+                                }
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <button id="finish-exam-button" class="btn btn-secondary" style="margin-top: 24px">Sınavı Bitir</button>
+                            </div>
+                            <div class="col-md-4 text-center">
+
+                                @if (Model.QuestionCount != Model.QuestionInOrder + 1)
+                                {
+                                    <button type="submit" id="next-question-button" class="btn btn-primary">Sonraki Soru</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" id="next-question-button" class="btn btn-primary" disabled>Sonraki Soru</button>
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </main>
+        </div>
+
+        <footer class="text-center my-4">
+            <img src="~/images/BATeknoloji_Logo_RGB.png" width="300px" alt="Bilgeadam Teknoloji" />
+        </footer>
+    </div>
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/animation-start.js"></script>
+
+    <script>
+        document.getElementById('next-question-button').addEventListener('click', function () {
+            var questionInOrderInput = document.getElementById('questionInOrder');
+            questionInOrderInput.value = parseInt(questionInOrderInput.value) + 1;
+        });
+
+        document.getElementById('prev-question-button').addEventListener('click', function () {
+            var questionInOrderInput = document.getElementById('questionInOrder');
+            questionInOrderInput.value = parseInt(questionInOrderInput.value) - 1;
+        });
+
+        document.getElementById('finish-exam-button').addEventListener('click', function () {
+            var form = document.getElementById('quizForm');
+            form.action = '@Url.Action("FinishCandidateExam", "CandidateExamInitiation")';
+            form.submit();
+        });
+
+        function auto_grow(element) {
+            element.style.height = "auto";
+            element.style.height = (element.scrollHeight) + "px";
+            element.style.overflow = "hidden";
+        }
+    </script>
+
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+            startLoader();
+        });
+
+        window.addEventListener("load", function (event) {
+            stopLoader();
+        });
+    </script>
+
+    <script>
+        var examDateTime = new Date('@Model.ExamDateTime.ToString("yyyy-MM-ddTHH:mm:ss")');
+        var examDurationMilliseconds = @Model.ExamDuration.TotalMilliseconds;
+        var examDurationTime = new Date(examDateTime.getTime() + examDurationMilliseconds);
+        let examType = JSON.parse(document.getElementById("examType").value);
+
+        var questionDiv = document.querySelector('.question');
+        var questionImage = document.getElementById('questionImage');
+
+    </script>
+
+    <script>
+        var questionCount = @Model.QuestionCount;
+        var currentQuestionOrder = @Model.QuestionInOrder;
+    </script>
+
+    <script>
+        //Update exam remaining time
+        const updateRemainingTime = () => {
+            var currentTime = new Date();
+            var examEndTime = new Date('@Model.ExamDateTime.ToString("yyyy-MM-ddTHH:mm:ss")');
+            examEndTime.setSeconds(examEndTime.getSeconds() + @Model.ExamDuration.TotalSeconds);
+
+            var timeDifference = examEndTime - currentTime;
+
+            if (timeDifference <= 0) {
+                document.getElementById("remainingTimeValue").textContent = "Süre doldu";
+
+                var form = document.querySelector('.frm-quiz');
+                form.querySelectorAll('input, textarea, button').forEach(element => {
+                    element.disabled = true;
+                });
+
+                return;
+            }
+
+            var hours = Math.floor(timeDifference / (1000 * 60 * 60));
+            var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            var remainingTimeString = hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+            document.getElementById("remainingTimeValue").textContent = remainingTimeString;
+        }
+
+        setInterval(updateRemainingTime, 1000);
+        updateRemainingTime();
+    </script>
+</body>
+
+</html>

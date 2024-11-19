@@ -1,0 +1,62 @@
+﻿.custom-tooltip {
+    position: relative;
+    display: inline-block;
+
+}
+
+    .custom-tooltip .tooltiptext2 {
+        width: auto;
+        max-width: 1000px;
+        visibility: hidden;
+        background-color: #555;
+        color: #fff;
+        text-align: left;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: opacity 0.3s;
+        overflow-x: auto;
+    }
+
+    .custom-tooltip:hover .tooltiptext2 {
+        visibility: visible;
+        opacity: 1;
+    }
+
+.tooltip-row {
+    display: flex;
+    align-items: center;
+}
+
+.tooltip-title {
+    font-weight: bold;
+    min-width: 100px;
+}
+
+.tooltip-data {
+    display: flex;
+    padding-left: 10px;
+    border-bottom: 1px solid #fff;
+    padding: 2px 0;
+}
+
+.tooltip-cell {
+    min-width: 135px;
+    max-width: 135px;
+    padding: 2px 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tooltip-cell-passed {
+    color: lightgreen;
+}
+
+.tooltip-cell-failed {
+    color: lightcoral;
+}

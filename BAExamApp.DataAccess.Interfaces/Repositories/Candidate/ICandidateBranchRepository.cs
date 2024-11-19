@@ -1,0 +1,4 @@
+﻿namespace BAExamApp.DataAccess.Interfaces.Repositories.Candidate;
+public interface ICandidateBranchRepository : IAsyncRepository, IAsyncQueryableRepository<CandidateCandidateBranch>, IAsyncFindableRepository<CandidateCandidateBranch>, IAsyncInsertableRepository<CandidateCandidateBranch>, IAsyncUpdateableRepository<CandidateCandidateBranch>, IAsyncDeleteableRepository<CandidateCandidateBranch>
+{
+}

@@ -1,0 +1,111 @@
+﻿<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_sent_mail_detail" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_sent_mail_detail_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bolder">MAİL İÇERİK DETAYI</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-1 mx-xl-1 my-7">
+                <div class="modal-body scroll-y mx-1 mx-xl-1 my-7">
+                    <div class="mb-3">
+                        <h3>Öğrenci Adı:</h3>
+                        <h5 class="text-start text-gray-600 " id="detail-student-name"></h5>
+                    </div>
+                    <hr />
+                    <br />
+                    <div class="mb-3">
+                        <h3>Öğrenci Mail Adresi:</h3>
+                        <h5 class="text-start text-gray-600 " id="detail-student-email"></h5>
+                    </div>
+                    <hr />
+                    <br />
+                    <div class="mb-3">
+                        <h3>Mail Başlığı:</h3>
+                        <h5 class="text-start text-gray-600 " id="detail-mail-subject"></h5>
+                    </div>
+                    <hr />
+                    <br />
+                    <div class="mb-3">
+                        <h3>Mail İçeriği:</h3>
+                        <h5 class="text-start text-gray-600 " id="detail-mail-content"></h5>
+                    </div>
+
+
+                </div>
+                <!--begin::Form-->
+                <div class="d-flex justify-content-end mb-3">
+                    <form method="post" asp-controller="Student" asp-action="ResendStudentEmail">
+                        <input type="hidden" name="sentMailId" id="resend-email" />
+                        <button class="btn text-success p-2">@SharedLocalizer["Send_Again"]</button>
+                    </form>
+                </div>
+
+                <!--end::Actions-->
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $('.btn-primary[data-bs-toggle="modal"]').on('click', function () {
+        var studentName = $(this).data('student-name');
+        var mailSubject = $(this).data('mail-subject');
+        var mailContent = $(this).data('mail-content');
+        var sentMailId = $(this).data('sent-mail-id');
+        var studentMail = $(this).data('student-mail');
+
+
+        // Öğrenci adını ve mail başlığını direkt olarak yerleştir
+        $('#detail-student-name').text(studentName);
+        $('#detail-mail-subject').text(mailSubject);
+        $('#resend-email').val(sentMailId);
+        $('#detail-student-email').text(studentMail);
+
+        // Mail içeriğini düzenle ve ekleyin
+        var formattedMailContent = mailContent.replace(/\n/g, "<br>"); // Satır başlarını <br> ile değiştir
+        formattedMailContent = linkify(formattedMailContent); // Linkleri tıklanabilir hale getir
+        $('#detail-mail-content').html(formattedMailContent); // InnerHTML kullanarak HTML içeriğini ekleyin
+
+        // Konsola logları yazdır
+        console.log(studentName);
+        console.log(mailSubject);
+        console.log(mailContent);
+    });
+
+    // Linkleri tıklanabilir hale getiren fonksiyon
+    function linkify(inputText) {
+        var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+        // URL tanımları
+        replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&'\/%?=~_|!:,.;]*[-A-Z0-9+&#\/%=~_|])/ig;
+        replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+        // Linklerin sonunda veya ortasında nokta, virgül veya parantez varsa, bunları linkten çıkar
+        replacePattern2 = /([.,;)])(\s|\S)/g;
+        replacedText = replacedText.replace(replacePattern2, '$1$2');
+
+        // Linkin sonunda boşluk varsa, çıkar
+        replacePattern3 = /\s$/g;
+        replacedText = replacedText.replace(replacePattern3, '');
+
+        return replacedText;
+    }
+</script>
+

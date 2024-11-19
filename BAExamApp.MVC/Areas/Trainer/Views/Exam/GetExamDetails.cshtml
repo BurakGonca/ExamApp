@@ -1,0 +1,287 @@
+﻿@model TrainerExamStudentQuestionDetailsVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Student_Exam_Details"];
+}
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <div class="card-header cursor-pointer">
+        <div class="card-title m-0">
+            <h5 class="text-center" style="margin-left:20px">@SharedLocalizer["Student_Exam_Details"]</h5>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-primary align-self-center ms-2" asp-controller="Exam" asp-action="Details" asp-route-id="@Model.ExamId">@SharedLocalizer["Back_List"]</a>
+        </div>
+    </div>
+    <div class="card-body p-9" style="margin-left:20px">
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Exam_Name"]:</label>
+            <div class="col-lg-4 fv-row">
+                <span class="fw-bold text-gray-800 fs-6">@Model.ExamName</span>
+            </div>
+            <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Student_Name"]:</label>
+            <div class="col-lg-4 fv-row">
+                <span class="fw-bold text-gray-800 fs-6">@Model.StudentName</span>
+            </div>
+        </div>
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Classroom_Name"]:</label>
+            <div class="col-lg-4 fv-row">
+                @foreach (var clasroomName in Model.ClassroomNames)
+                {
+                    <span class="fw-bold text-gray-800 fs-6">@clasroomName</span>
+                }
+            </div>
+            <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Score"]/@SharedLocalizer["Max_Score"]:</label>
+            <div class="col-lg-4 fv-row">
+                <span class="fw-bold text-gray-800 fs-6">  @Model.Score/@Model.MaxScore</span>
+            </div>
+        </div>
+    </div>
+</div>
+@foreach (var item in Model.StudentQuestions)
+{
+    <div class="card p-5 mb-2">
+        <div class="row  collapsible cursor-pointer rotate collapsed" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible_@item.QuestionOrder" aria-expanded="false">
+            @{
+                int count = 0;
+                foreach (var answer in item.StudentAnswers)
+                {
+                    if (answer.IsSelected == true)
+                    {
+                        count++;
+                    }
+                }
+            }
+            @if (item.Score == null || count == 0)
+            {
+                <h3 class="text-warning col-2">@item.QuestionOrder</h3>
+                <h4 class="text-warning col-3">0/@item.MaxScore </h4>
+                <div class="col-3">
+                    @foreach (var subtp in item.Question.SubtopicName)
+                    {
+                        <h4 class="text-warning">@subtp</h4>
+                    }
+                </div>
+                <div class="col-3 text-center">
+                    <span class="badge badge-light">@SharedLocalizer["Empty"]</span>
+                </div>
+            }
+            else if (item.MaxScore != item.Score)
+            {
+                <h3 class="text-danger col-2">@item.QuestionOrder</h3>
+                <h4 class="text-danger col-3">@item.Score/@item.MaxScore </h4>
+                <div class="col-3">
+                    @foreach (var subtp in item.Question.SubtopicName)
+                    {
+                        <h4 class="text-danger">@subtp</h4>
+                    }
+                </div>
+                <div class="col-3 text-center">
+                    <span class="badge badge-danger">@SharedLocalizer["Wrong"]</span>
+                </div>
+            }
+            else
+            {
+                <h3 class="text-success col-2">@item.QuestionOrder</h3>
+                <h4 class="text-success col-3">@item.Score/@item.MaxScore </h4>
+                <div class="col-3">
+                    @foreach (var subtp in item.Question.SubtopicName)
+                    {
+                        <h4 class="text-success">@subtp</h4>
+                    }
+                </div>
+                <div class="col-3 text-center">
+                    <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                </div>
+            }
+            <div class="card-toolbar col-1 d-flex justify-content-center rotate-180">
+                <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr073.svg-->
+                <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12.5657 11.3657L16.75 15.55C17.1642 15.9643 17.8358 15.9643 18.25 15.55C18.6642 15.1358 18.6642 14.4643 18.25 14.05L12.7071 8.50716C12.3166 8.11663 11.6834 8.11663 11.2929 8.50715L5.75 14.05C5.33579 14.4643 5.33579 15.1358 5.75 15.55C6.16421 15.9643 6.83579 15.9643 7.25 15.55L11.4343 11.3657C11.7467 11.0533 12.2533 11.0533 12.5657 11.3657Z" fill="currentColor" />
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </div>
+        </div>
+        <div id="kt_docs_card_collapsible_@item.QuestionOrder" class="collapse">
+            <div class="card-body">
+                <h5>@SharedLocalizer["Question_Content"]:</h5>
+                @if (item.Question.Image != null)
+                {
+                    <div class="row mb-7 align-content-center  card-rounded-bottom">
+                        <div id="item-header-cover-image">
+                            <img src="data:image/jpeg;base64,@item.Question.Image"
+                                 class="avatar user-1-avatar avatar-150 photo mw-100 mh-300px " alt="image" style="width: auto; height: 100%" />
+                        </div>
+                    </div>
+                }
+                <div class="row mb-7">
+                    <div class="col-lg-auto">
+                        <span class="fw-bolder fs-6 text-gray-800">
+                            @item.Question.Content
+                        </span>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-8">
+                        <h5>@SharedLocalizer["Student_Answer"]:</h5>
+                        @foreach (var answer in item.StudentAnswers)
+                        {
+                            @if (answer.QuestionAnswer.IsRightAnswer && answer.IsSelected)
+                            {
+                                @if (answer.QuestionAnswer.IsAnswerImage)
+                                {
+                                    <div class="col-lg-12">
+                                        <img id="defaultImage"
+                                             class="col-lg-12 img-fluid"
+                                             src="@answer.QuestionAnswer.Answer"
+                                             style="max-height:150px;max-width:300px;"
+                                             alt="Profile" />
+                                        <span class="badge badge-success">Doğru/İşaretlenen</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="fw-bolder fs-6 text-gray-800">
+                                        @answer.QuestionAnswer.Answer
+                                        <span class="badge badge-success">Doğru/İşaretlenen</span>
+                                    </p>
+                                }
+
+                            }
+                            else if (answer.QuestionAnswer.IsRightAnswer)
+                            {
+                                @if (answer.QuestionAnswer.IsAnswerImage)
+                                {
+                                    <div class="col-lg-12">
+                                        <img id="defaultImage"
+                                             class="col-lg-12 img-fluid"
+                                             src="@answer.QuestionAnswer.Answer"
+                                             style="max-height:150px;max-width:300px;"
+                                             alt="Profile" />
+                                        <span class="badge badge-success">Doğru</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="fw-bolder fs-6 text-gray-800">
+                                        @answer.QuestionAnswer.Answer
+                                        <span class="badge badge-success">Doğru</span>
+                                    </p>
+                                }
+
+                            }
+                            else if (answer.IsSelected)
+                            {
+                                @if (answer.QuestionAnswer.IsAnswerImage)
+                                {
+                                    <div class="col-lg-12">
+                                        <img id="defaultImage"
+                                             class="col-lg-12 img-fluid"
+                                             src="@answer.QuestionAnswer.Answer"
+                                             style="max-height:150px;max-width:300px;"
+                                             alt="Profile" />
+                                        <span class="badge badge-success">İşaretlenen</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="fw-bolder fs-6 text-gray-800">
+                                        @answer.QuestionAnswer.Answer
+                                        <span class="badge badge-danger">İşaretlenen</span>
+                                    </p>
+                                }
+
+                            }
+                            else
+                            {
+                                @if (answer.QuestionAnswer.IsAnswerImage)
+                                {
+                                    <div class="col-lg-12">
+                                        <img id="defaultImage"
+                                             class="col-lg-12 img-fluid"
+                                             src="@answer.QuestionAnswer.Answer"
+                                             style="max-height:150px;max-width:300px;"
+                                             alt="Profile" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="fw-bolder fs-6 text-gray-800">
+                                        @answer.QuestionAnswer.Answer
+                                    </p>
+                                }
+
+                            }
+                        }
+                    </div>
+                    <div class="col-4">
+                        <h5>@SharedLocalizer["Time_Of_Marking_Issue"]:</h5>
+                        @if (item.TimeFinished != null && item.TimeStarted != null)
+                        {
+                            <p>@((int)(item.TimeFinished - item.TimeStarted).Value.TotalSeconds) sn</p>
+                        }
+                        else
+                        {
+                            <p>Soru cevaplanmadı! </p>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="p-5 mb-2 row">
+                    <div class="collapsible cursor-pointer rotate collapsed" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible_@item.QuestionOrder-@item.QuestionOrder" aria-expanded="false">
+                        <div class="col-10">
+                            <span>@SharedLocalizer["Achievements_And_Goals"]</span>
+                        </div>
+                        <div class="col-1 d-flex justify-content-center rotate-180">
+                            <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr073.svg-->
+                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12.5657 11.3657L16.75 15.55C17.1642 15.9643 17.8358 15.9643 18.25 15.55C18.6642 15.1358 18.6642 14.4643 18.25 14.05L12.7071 8.50716C12.3166 8.11663 11.6834 8.11663 11.2929 8.50715L5.75 14.05C5.33579 14.4643 5.33579 15.1358 5.75 15.55C6.16421 15.9643 6.83579 15.9643 7.25 15.55L11.4343 11.3657C11.7467 11.0533 12.2533 11.0533 12.5657 11.3657Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                    </div>
+                </div>
+                <div id="kt_docs_card_collapsible_@item.QuestionOrder-@item.QuestionOrder" class="collapse">
+                    <div class="card-body">
+                        <div class="row mb-7">
+                            <div class="col-4">
+                                <span>@SharedLocalizer["Question_Target"]:</span>
+                                <span class="fw-bolder fs-6 text-gray-800">
+                                    @item.Question.Target
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>@SharedLocalizer["QuesitionDifficulty_Name"]:</span>
+                                <span class="fw-bolder fs-6 text-gray-800">
+                                    @item.Question.QuestionDifficultyName
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>@SharedLocalizer["Question_Gains"]:</span>
+                                <span class="fw-bolder fs-6 text-gray-800">
+                                    @item.Question.Gains
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+

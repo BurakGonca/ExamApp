@@ -1,0 +1,286 @@
+﻿@using BAExamApp.MVC.Areas.Admin.Models.DashboardVMs
+@model DashboardVM
+
+@{
+	List<StudentExamsForAdminVM> students = Model.TopRatedStudents;
+	List<ActiveStudentsExamsForAdminVM> activeStudent = Model.ActiveTopRatedStudents;
+}
+
+
+<head>
+	<link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+<div class="container mt-sm-1 p-0">
+	<div class="col-12 col-md-8">
+		<div id="studentCard" class="card card-xl-stretch mt-1 p-3">
+			<div class="card-header border-0 pt-5">
+				<h3 class="card-title align-items-start flex-column">
+					<span class="card-label fw-bolder fs-3 mb-1">@SharedLocalizer["Best_Students"]</span>
+				</h3>
+				<div class="tab">
+					<button class="tablinks" onclick="openTab(event, 'ActiveStudent')">@SharedLocalizer["Active_Students"]</button>
+					<button class="tablinks" onclick="openTab(event, 'AllStudents')">@SharedLocalizer["All_Students"]</button>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<div id="AllStudents" class="tabcontent">
+					<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+						<thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
+							<tr class="fw-bolder text-muted">
+								<th class="min-w-200px text-start">@SharedLocalizer["Students"]</th>
+								<th class="min-w-150px text-start">@SharedLocalizer["Classroom"]</th>
+								<th class="min-w-150px text-start">@SharedLocalizer["Success_Rate"]</th>
+								<th class="min-w-120px text-center">@SharedLocalizer["Exam_Count"]</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (students != null)
+							{
+								@foreach (var student in students)
+								{
+									<tr>
+										<td class="text-start">
+											<div class="d-flex align-items-center">
+												<div class="symbol symbol-45px me-5">
+													<img src="~/images/AdminDashboard/icon-student.png" alt="" />
+												</div>
+												<div class="d-flex justify-content-start flex-column">
+													<span class="text-dark fw-bolder text-hover-primary fs-6">@student.StudentFullName</span>
+												</div>
+											</div>
+										</td>
+										<td class="text-start">
+											<span class="text-dark fw-bolder text-hover-primary d-block fs-6">
+												@student.LatestClassroom
+											</span>
+										</td>
+										<td class="text-start">
+											<div class="d-flex flex-column w-90 me-2">
+												<div class="d-flex flex-stack mb-2">
+													<span class="text-muted me-2 fs-7 fw-bold">% @student.Score</span>
+												</div>
+												@{
+													var score = student.Score ?? 0.0m;
+													var scoreString = score.ToString("F2", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+												}
+												<div class="progress h-6px w-100">
+													<div class="progress-bar bg-primary" role="progressbar" style="width: @scoreString%" aria-valuenow="@scoreString" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+										</td>
+										<td class="text-start">
+											<div>
+												<span class="text-dark fw-bolder text-hover-primary d-block fs-6 text-center">@student.StudentExamsCount</span>
+											</div>
+										</td>
+									</tr>
+								}
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<div id="ActiveStudent" class="tabcontent" style="display:none">
+					<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+						<thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
+							<tr class="fw-bolder text-muted">
+								<th class="min-w-200px text-start">@SharedLocalizer["Students"]</th>
+								<th class="min-w-150px text-start">@SharedLocalizer["Classroom"]</th>
+								<th class="min-w-150px text-start">@SharedLocalizer["Success_Rate"]</th>
+								<th class="min-w-150px text-center">@SharedLocalizer["Exam_Count"]</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (activeStudent != null)
+							{
+								@foreach (var student in activeStudent)
+								{
+									<tr>
+										<td class="text-start">
+											<div class="d-flex align-items-center">
+												<div class="symbol symbol-45px me-5">
+													<img src="~/images/AdminDashboard/icon-student.png" alt="" />
+												</div>
+												<div class="d-flex justify-content-start flex-column">
+													<span class="text-dark fw-bolder text-hover-primary fs-6">@student.StudentFullName</span>
+												</div>
+											</div>
+										</td>
+										<td class="text-start">
+											<span class="text-dark fw-bolder text-hover-primary d-block fs-6">@student.LatestClassroom</span>
+										</td>
+										<td class="text-start">
+											<div class="d-flex flex-column w-90 me-2">
+												<div class="d-flex flex-stack mb-2">
+													<span class="text-muted me-2 fs-7 fw-bold">% @student.Score</span>
+												</div>
+												@{
+													var score = student.Score ?? 0.0m;
+													var scoreString = score.ToString("F2", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+												}
+												<div class="progress h-6px w-100">
+													<div class="progress-bar bg-primary" role="progressbar" style="width: @scoreString%" aria-valuenow="@scoreString" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+										</td>
+										<td class="text-center">
+											<div>
+												<span class="text-dark fw-bolder text-hover-primary d-block fs-6 text-center">@student.StudentExamsCount</span>
+											</div>
+										</td>
+									</tr>
+								}
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	function openTab(evt, tabName) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName("tablinks");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tabName).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Sayfa yüklendiğinde ilk tab otomatik olarak açılır
+	document.addEventListener('DOMContentLoaded', function () {
+		document.querySelector('.tablinks').click();
+	});
+
+
+	function setResponsiveHeights() {
+		// Divi seç
+		const studentCard = document.getElementById('studentCard');
+		let minHeight, maxHeight;
+
+
+		if (window.innerWidth >= 1600) {
+
+			minHeight = 677.65;
+			maxHeight = 677.65;
+		} else if (window.innerWidth >= 1200) {
+
+			minHeight = 555.75;
+			maxHeight = 555.75;
+		} else {
+
+			minHeight = 513.3
+			maxHeight = 513.3;
+		}
+
+
+		if (studentCard) {
+			studentCard.style.minHeight = `${minHeight}px`;
+			studentCard.style.maxHeight = `${maxHeight}px`;
+			studentCard.style.height = '';
+		}
+
+
+		syncCardHeights();
+	}
+
+	function syncCardHeights() {
+
+		const studentCards = document.querySelectorAll('.studentCard');
+		let maxHeight = 0;
+
+
+		studentCards.forEach(card => {
+			card.style.height = '';
+			const height = card.getBoundingClientRect().height;
+			if (height > maxHeight) {
+				maxHeight = height;
+			}
+		});
+
+
+		studentCards.forEach(card => {
+			card.style.height = `${maxHeight}px`;
+		});
+	}
+
+
+	document.addEventListener('DOMContentLoaded', setResponsiveHeights);
+
+
+	window.addEventListener('resize', setResponsiveHeights);
+
+
+</script>
+
+<style>
+	.table-responsive {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.table {
+		width: 100%;
+		table-layout: auto;
+		min-width: 650px;
+	}
+
+		.table th, .table td {
+			width: 150px; /* Hücre genişliğini sabitler */
+			white-space: nowrap; /* İçeriğin satır atlamasını engeller */
+			text-align: center;
+			padding: 10px;
+		}
+
+	.container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+
+		.container > div {
+			flex: 1 1 100%;
+			margin-bottom: 15px;
+		}
+
+	.tab {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 15px;
+	}
+
+
+		.tab button {
+			flex: 1;
+			padding: 10px;
+			text-align: center;
+			white-space: nowrap;
+			margin-right: 10px;
+			background-color: transparent; /* Varsayılan button arka planını şeffaf yapıyoruz */
+			border: none; /* Button etrafındaki varsayılan kenarlıkları kaldırıyoruz */
+			cursor: pointer; /* Butonun üzerine geldiğimizde imleç değişir */
+			font-size: 14px; /* Yazı boyutunu küçültüyoruz */
+			color: black; /* Varsayılan yazı rengi */
+			border-bottom: 2px solid transparent; /* Alt çizgi ekliyoruz, ancak şeffaf */
+		}
+
+			.tab button:last-child {
+				margin-right: 0;
+			}
+
+			.tab button.active {
+				background-color: transparent; /* Arka planı değiştirmiyoruz */
+				color: blue; /* Aktif olan butonun rengi mavi olur */
+				border-bottom: 2px solid blue; /* Aktif butonun altını çiziyoruz */
+				font-weight: normal; /* Bold olmayacak, normal yazı tipi */
+			}
+
+</style>

@@ -1,0 +1,83 @@
+﻿@model TrainerTrainerUpdateVM
+@{
+    ViewData["Title"] = @SharedLocalizer["Update"];
+}
+
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<div class="card">
+    <div>
+        <h2 class="page-title" >@SharedLocalizer["Update"]</h2>
+        <div class='form-group'>
+            <div class="form-profile-wrapper">
+                <div class="card__img">
+                    @if(Model.Image != null)
+                    {
+                        <img id="profile-img" src="data:image/jpeg;base64,@Model.Image" alt="">
+                        <span asp-validation-for="ImageFile"></span>
+                    }
+                    else
+                    {
+                        <img  id="profile-img" src="~/images/blank-profile-picture.png" />
+                        <span asp-validation-for="ImageFile"></span>
+                    }
+                </div>
+                <form asp-action="Update" asp-controller="Trainer" asp-area="Trainer" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Image" />
+                    <div class="form-group-element">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" type="text">
+                        <span asp-validation-for="FirstName"></span>
+                    </div class="form-group-element">
+
+                    <div class="change-photo-icon">
+                        <label for="photo-input">
+                          <i class="fa-solid fa-camera-rotate"></i>
+                        </label>
+                         <input id="photo-input" asp-for="ImageFile" type="file" style="display:none;" accept="image/*" onchange="previewImage(event)">
+                    </div>
+
+                    <div class="form-group-element">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" type="text">
+                        <span asp-validation-for="LastName"></span>
+                    </div>
+
+                    <div class="form-group-element">
+                        <label asp-for="Gender"></label>
+                        <select asp-for="Gender">
+                            <option value="@false">@SharedLocalizer["Woman"]</option>
+                            <option value="@true">@SharedLocalizer["Man"]</option>
+                        </select>
+                        <span asp-validation-for="Gender"></span>
+                    </div>
+
+                    @* <div class="form-group-element">
+                        <label asp-for="DateOfBirth"></label>
+                        <input asp-for="DateOfBirth" type="date">
+                        <span asp-validation-for="DateOfBirth"></span>
+                    </div>
+                    <div class="form-group-element">
+                        <label asp-for="CityId"></label>
+                        <select asp-for="CityId" class="form-select form-select-solid lh-1 py-3 form-control-solid" asp-items="Model.CityList">
+                            <option value="@Guid.Empty">@SharedLocalizer["Select_City"]</option>
+                        </select>
+                        <span asp-validation-for="CityId"></span>
+                    </div> *@
+                    <div class="form-actions">
+                        <div class="button-space"></div>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-cancel" >@SharedLocalizer["Cancel"]</a>
+                        <button class="btn btn-save" type="submit" data-kt-contacts-type="submit">@SharedLocalizer["Save"]</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+
+</div>
+    
+

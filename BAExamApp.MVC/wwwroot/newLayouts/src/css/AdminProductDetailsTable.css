@@ -1,0 +1,10 @@
+﻿
+
+.table-container tr {
+    padding: 10px;
+    text-align: center;
+}
+.table-container td {
+    padding: 20px;
+    text-align: center;
+}

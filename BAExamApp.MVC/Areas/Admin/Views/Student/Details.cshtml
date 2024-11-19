@@ -1,0 +1,245 @@
+﻿@model AdminStudentDetailVM
+@{
+    ViewData["Title"] = ViewLocalizer["Student_Details"];
+    ViewData["Title"] = SharedLocalizer["Exams"];
+    var latestClassroom = Model.StudentExams.Select(x => x.LatestClassroom).FirstOrDefault();
+    var latestTrainers = Model.StudentExams.Select(x => x.LatestClassroomsTrainers).FirstOrDefault();
+
+   
+}
+
+<!--   profil detay -->
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <!--begin::Card header-->
+    <div class="card-header">
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">@SharedLocalizer["Student_Details"]</h3>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-secondary align-self-center ms-2" asp-controller="Student" asp-action="Index" asp-route-page="@ViewBag.PageNumber" asp-route-pageSize="@ViewBag.PageSize" asp-route-showAllActiveStudents="@ViewBag.ShowAllActiveStudents">@SharedLocalizer["Back_List"]</a>
+            <a class="btn btn-primary align-self-center ms-2" id="kt-update-student" onclick="loadStudentData('@Model.Id')" data-student-id="@Model.Id" data-bs-toggle="modal" data-bs-target="#kt_modal_update_student" data-kt-users-table-filter="edit_row">@SharedLocalizer["Update"]</a>
+            <a class="btn btn-danger align-self-center ms-2 deleteAction" data-id="@Model.Id">@SharedLocalizer["Delete"]</a>
+        </div>
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body row mb-7">
+        <div class="col-lg-2">
+            @if (Model.NewImage != null && Model.NewImage.Length > 0)
+            {
+                <div id="item-header-cover-image">
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.NewImage)"
+                         class="avatar user-1-avatar avatar-150 photo" width="150"
+                         height="150" alt="image" />
+                </div>
+            }
+            else
+            {
+                <div id="item-header-cover-image">
+                    <img src="~/media/avatars/blank.png"
+                         class="avatar user-1-avatar avatar-150 photo" width="150"
+                         height="150" alt="image" />
+                </div>
+            }
+        </div>
+        <div class="col-lg-10">
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Name"]:</label>
+                <div class="col-lg-10">
+                    <span class="fw-bold text-gray-800 fs-6">@Model.FirstName @Model.LastName</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@Html.DisplayNameFor(model => model.Gender):</label>
+                <div class="col-lg-10">
+                    <span class="fw-bold text-gray-800 fs-6">@(Model.Gender == true ? SharedLocalizer["Man"] : SharedLocalizer["Woman"])</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@Html.DisplayNameFor(model => model.Email):</label>
+                <div class="col-lg-10">
+                    <span class="fw-bold text-gray-800 fs-6">@Model.Email</span>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <label class="col-lg-2 fw-bold text-muted">@ViewLocalizer["Classroom_Name"]:</label>
+                <div class="col-lg-10">
+                    @if (Model.Classrooms.Any())
+                    {
+                        <span class="fw-bold text-gray-800 fs-6">@string.Join(", ", Model.Classrooms)</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Card body-->
+</div>
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+@* burdan sonra sınav detayları *@
+<div class="card-header">
+    <div class="card-title m-0">
+        <h3 class="fw-bolder m-0">@SharedLocalizer["Exams"]</h3>
+    </div>
+</div>
+
+
+<div class="card mb-5 mb-xl-10">
+    <div class="card-body p-5">
+        <!-- Card içi padding eklendi -->
+        <table class="table table-bordered table-hover" style="border-radius: 10px; overflow: hidden;">
+            <!-- Border-radius uygulandı -->
+            <thead class="thead-light" style="background-color: #f8f9fa;">
+                <tr class="text-uppercase fw-bolder text-gray-700" style="padding: 15px;">
+                    <th class="text-start p-3">@SharedLocalizer["Classroom_Name"]</th> <!-- Padding eklendi -->
+                    <th class="text-start p-3">@SharedLocalizer["Name_Of_The_Exam"]</th>
+                    <th class="text-start p-3">@SharedLocalizer["Exam_Type"]</th>
+                    <th class="text-start p-3">@SharedLocalizer["Exam_Date_Time"]</th>
+                    <th class="text-center p-3">@SharedLocalizer["Student_Score"] / @SharedLocalizer["Max_Score"]</th>
+                        <th class="text-start p-3">@SharedLocalizer["The_Status"]</th>
+                    <th class="text-start p-3">@SharedLocalizer["Exam_Details"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var studentExams in Model.StudentExams)
+                {
+                    <tr class="text-start fw-bold text-gray-800" style="padding: 15px;">
+                        <!-- Satır padding eklendi -->
+                        <td class="categories text-start text-gray-800 p-3">
+                            <!-- Hücre padding eklendi -->
+                            <a>
+                                @foreach (var item in studentExams.ClassroomNames)
+                                {
+                                    if (studentExams.StudentClassroomNames.Contains(item))
+                                    {
+                                        <span class="post_category">@item</span>
+                                    }
+                                }
+                            </a>
+                        </td>
+                        <td class="categories text-start text-gray-800 p-3">
+                            <a>
+                                <span class="post_category">@studentExams.ExamName</span>
+                            </a>
+                        </td>
+                        <td class="categories text-start text-gray-800 p-3">
+                            <a>
+                                <span class="post_category">@studentExams.ExamType</span>
+                            </a>
+                        </td>
+                        <td class="categories text-start text-gray-800 p-3">
+                            <a>
+                                <span class="post_category">@studentExams.ExamDateTime</span>
+                            </a>
+                        </td>
+                        <td class="categories text-center text-gray-800 p-3">
+                            @if (studentExams.Score == null)
+                            {
+                                <a>
+                                    @if (@studentExams.ExcuseDescription == null)
+                                    {
+                                            <b class="text-danger">@SharedLocalizer["NoExcuse"]</b>
+                                    }
+                                    else
+                                    {
+                                            <b class="text-warning">@SharedLocalizer["ExcuseProvided"]</b>
+                                    }
+                                </a>
+                            }
+                            else
+                            {
+                                <a>
+                                    <span class="post_category">@studentExams.Score / @studentExams.MaxScore</span>
+                                </a>
+                            }
+                        </td>
+                            <td class="categories text-start text-gray-600">
+                                @if (studentExams.IsCanceled == true)
+                                {
+                                    <span class="post-category text-danger">@SharedLocalizer["Cancelled"]</span>
+                                }
+                                else if (studentExams.IsTest == true)
+                                {
+                                    <span class="post-category text-warning">@SharedLocalizer["Practice_Exam"]</span>
+                                }
+                                else
+                                {
+                                    <span class="post-category text-success">@SharedLocalizer["Not_Cancelled"]</span>
+
+                                }
+                            </td>
+                        <td class="categories text-start text-gray-800 p-3">
+                            @if (studentExams.Score != null)
+                            {
+                                <a class="btn btn-primary text-center fs-6" asp-controller="Student" asp-action="GetExamResult" asp-route-studentExamId="@studentExams.Id">
+                                        @SharedLocalizer["Exam_Report_Details"]
+                                </a>
+                            }
+                            else
+                            {
+                                if (@studentExams.ExcuseDescription != null)
+                                {
+                                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_excuse_detail" data-excuse-description="@studentExams.ExcuseDescription">
+                                            @SharedLocalizer["Excuse_Details"]
+                                    </a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+
+@* sınav detayları bitis *@
+<partial name="~/Areas/Admin/Views/Student/Update.cshtml" model="new AdminStudentUpdateVM()"/>
+<partial name="~/Areas/Admin/Views/Student/_ExcuseDetailPartialView.cshtml" />
+
+@section Scripts
+{
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/view/update-student.js"></script>
+
+    <script>
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]',
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]',
+            cancelDeleteBtnText: '@SharedLocalizer["Cancel_Button_Text"]',
+            confirmDeleteBtnText: '@SharedLocalizer["Confirm_Button_Text"]',
+        };
+
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+            Swal.fire({
+                title: `${localizedTexts.confirmTitle}`,
+                text: localizedTexts.confirmText,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: localizedTexts.confirmDeleteBtnText,
+                cancelButtonText: localizedTexts.cancelDeleteBtnText
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("Delete")" + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "/Admin/Student", 2000);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

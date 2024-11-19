@@ -1,0 +1,51 @@
+﻿@using BAExamApp.MVC.Areas.Admin.Models.DashboardVMs
+@model DashboardVM
+
+<div class="container-fluid panel-overview p-5">
+    <div class="row gy-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body card-students">
+                    <h1 class="overview-total-number text-center mb-3">@Model.Overview.StudentCount</h1>
+                    <img class="overview-icon d-flex text-center w-60px opacity-50 m-auto"
+                         src="~/images/AdminDashboard/icon-student.png"
+                         alt="student-icon" />
+                    <h4 class="overview-title text-center mt-3">@SharedLocalizer["Students"]</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body card-trainers">
+                    <h1 class="overview-total-number text-center mb-3">@Model.Overview.TrainerCount</h1>
+                    <img class="overview-icon d-flex text-center w-60px opacity-50 m-auto"
+                         src="~/images/AdminDashboard/icon-trainer.png"
+                         alt="student-icon" />
+                    <h4 class="overview-title text-center mt-3">@SharedLocalizer["Trainers"]</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body card-exams">
+                    <h1 class="overview-total-number text-center mb-3">@Model.Overview.ExamCount</h1>
+                    <img class="overview-icon d-flex text-center w-60px opacity-50 m-auto"
+                         src="~/images/AdminDashboard/icon-exam.png"
+                         alt="student-icon" />
+                    <h4 class="overview-title text-center mt-3">@SharedLocalizer["Exams"]</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body card-success">
+                    <h1 class="overview-total-number text-center mb-3">% @Model.Overview.SuccessRate</h1>
+                    <img class="overview-icon d-flex text-center w-60px opacity-50 m-auto"
+                         src="~/images/AdminDashboard/icon-success.png"
+                         alt="student-icon" />
+                    <h4 class="overview-title text-center mt-3">@SharedLocalizer["Success_Rate"]</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

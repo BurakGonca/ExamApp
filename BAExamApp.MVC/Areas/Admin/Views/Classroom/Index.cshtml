@@ -1,0 +1,688 @@
+﻿@using BAExamApp.MVC
+@using Microsoft.Extensions.Localization
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList
+@inject IStringLocalizer<SharedModelResource> localizer
+@model IPagedList<AdminClassroomListVM>
+
+@{
+    ViewData["Title"] = ViewLocalizer["Classroom"];
+}
+
+<head>
+    <link href="~/css/classroom-filter.css" rel="stylesheet" />
+    <link href="~/newlayouts/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/newlayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<style>
+    .tooltip-inner {
+        max-width: 350px !important;
+    }
+</style>
+<style>
+    .form-check {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        justify-content: flex-start;
+        padding-left: 0px;
+    }
+
+        .form-check input[type="checkbox"] {
+            margin-right: 5px;
+        }
+</style>
+<style>
+    #kt_datatable_example_1_wrapper .dataTables_scrollBody table tbody tr {
+        display: block !important;
+        margin-top: 0px !important; /* İhtiyaca göre ayarlayabilirsiniz */
+    }
+
+    #kt_datatable_example_1_wrapper .dataTables_scrollBody table tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+</style>
+<section class="section dashboard">
+    <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+        <div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 text-gray-700">
+            <div class="d-flex justify-content-between">
+                <h5 style="display: flex; align-items: center;">
+                    @ViewLocalizer["Classroom_List"]
+
+                    <span class="material-symbols-outlined" style="margin-left: 5px; font-size: 130%; " data-bs-toggle="tooltip" data-bs-placement="right" title="@SharedLocalizer["Classroom_Filter_Warning"]">
+
+                        info
+
+                    </span>
+                </h5>
+
+                <div class="d-flex justify-content-end">
+
+                    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#kt_modal_add_class">
+
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+
+                        <span class="svg-icon svg-icon-2">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+
+                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+
+                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+
+                            </svg>
+
+                        </span>
+
+                        @SharedLocalizer["Create", SharedLocalizer["Classroom"]]
+
+                    </button>
+                </div>
+            </div>
+            <div class="d-flex flex-stack flex-wrap mb-5">
+
+                <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+
+                    <form class="formClassroom" asp-area="Admin" asp-controller="Classroom" asp-action="GetFilteredList" method="post" onsubmit="return onSubmitForm()">
+                        <div class="classroomfilter d-flex flex-row">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-2">
+                                        <select class="form-select form-select-solid" data-control="select2" id="name" name="name" asp-items="@(ViewBag.ClassList)">
+                                            <option value="" disabled selected> @SharedLocalizer["Choose"]</option>
+                                        </select>
+                                        <label>@SharedLocalizer["Classroom_Name"]</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-5">
+                                        <select class="form-select form-select-solid" data-control="select2" id="branchName" name="branchName" asp-items="@(ViewBag.BranchList)">
+                                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                        </select>
+                                        <label>@SharedLocalizer["Branch_Name"]</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-5">
+                                        <select class="form-select form-select-solid" data-control="select2" id="groupType" name="groupType" asp-items="@(ViewBag.GroupTypeList)">
+                                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                        </select>
+                                        <label>@SharedLocalizer["Group_Type"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-5">
+                                        <input type="date" class="form-control form-control-solid" name="openingDate" placeholder="@SharedLocalizer["Opening_Date"]" id="openingDate" />
+                                        <label>@SharedLocalizer["Opening_Date"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-5">
+                                        <input type="date" class="form-control form-control-solid" name="closedDate" placeholder="@SharedLocalizer["Closed_Date"]" id="closedDate" />
+                                        <label>@SharedLocalizer["Closed_Date"]</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 d-flex justify-content-end">
+                                    <button type="submit" id="searchButton" class="btn btn-primary hover-elevate-up">@SharedLocalizer["Show"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
+
+                    <div class="fw-bolder me-5">
+
+                        <span class="me-2" data-kt-docs-table-select="selected_count"></span>Selected
+
+                    </div>
+
+                    <button type="button" class="btn btn-danger" data-kt-docs-table-select="delete_selected">Selection Action</button>
+
+                </div>
+            </div>
+
+            <div>
+            </div>
+            <div class="table-responsive">
+                @if (ViewBag.ShowAllData == false)
+                {
+
+                    {
+                        <table id="kt_datatable_example_1" class="table table-row-dashed fs-6 gy-5">
+
+                            <thead>
+
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+
+                                    <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.Name)</th>
+
+                                    <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.OpeningDate)</th>
+
+                                    <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.ClosedDate)</th>
+
+                                    <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.BranchName)</th>
+
+                                    <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.ClassroomExamCount) / @Html.DisplayNameFor(x => x.GetEnumerator().Current.ClassroomAppointedExamCount)</th>
+                                    <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.Status)</th>
+
+                                    <th>@ViewLocalizer["Classroom_Operations"]</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-bold ">
+
+                                @foreach (var item in Model)
+
+                                {
+
+                                    if (!string.IsNullOrEmpty(item.Name))
+
+                                    {
+
+                                        <tr>
+
+                                            <td class="categories text-start">
+
+                                                <a title="Eğitmenler: @item.TrainerNames">
+
+                                                    <span class="post_category">@item.Name</span>
+
+                                                </a>
+
+                                            </td>
+
+                                            <td class="categories text-start">
+
+                                                <a>
+
+                                                    <span class="post_category">@item.OpeningDate.ToShortDateString()</span>
+
+                                                </a>
+
+                                            </td>
+
+                                            <td class="categories text-start">
+
+                                                <a>
+
+                                                    <span class="post_category">@item.ClosedDate.ToShortDateString()</span>
+
+                                                </a>
+
+                                            </td>
+
+                                            <td class="categories text-start">
+
+                                                <a>
+
+                                                    <span class="post_category">@item.BranchName</span>
+
+                                                </a>
+
+                                            </td>
+                                            <td class="categories text-start">
+
+                                                <a>
+
+                                                    <span class="post_category">@item.ClassroomAppointedExamCount / @item.ClassroomExamCount</span>
+
+                                                </a>
+
+                                            </td>
+                                            <td class="categories text-start">
+
+                                                <a>
+
+                                                    <span class="badge @(item.Status == Status.Active ? "badge-light-success" : "badge-light-warning")">
+                                                        @if (item.Status == Status.Active)
+                                                        {
+                                                            <text>Aktif</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>Pasif</text>
+                                                        }
+                                                    </span>
+
+                                                </a>
+
+                                            <td class="text-start">
+
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-extended="false">
+                                                            @SharedLocalizer["Options"]
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-menu-end menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                                        <li class="menu-item px-3">
+                                                                @if (item.Status == Status.Active)
+                                                                {
+                                                                <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="Details" asp-route-id="@item.Id" target="_blank">@SharedLocalizer["Detail"]</a>
+
+
+                                                                <a id="kt-update-classroom" onclick="loadClassroomData('@item.Id')" data-classroom-id="@item.Id" data-bs-toggle="modal" data-bs-target="#kt_modal_update_classroom" class="menu-link px-3" data-kt-users-table-filter="edit_row">@SharedLocalizer["Edit"]</a>
+
+                                                                <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="AddStudent" asp-route-id="@item.Id">@ViewLocalizer["Add_Student"]</a>
+
+                                                                <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="AddTrainer" asp-route-id="@item.Id">@ViewLocalizer["Add_Trainer"]</a>
+
+                                                                }
+                                                                else
+                                                                {
+
+                                                                <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="Details" asp-route-id="@item.Id" target="_blank">@SharedLocalizer["Detail"]</a>
+
+                                                                }
+                                                        </li>
+                                                    </ul>
+
+                                            </td>
+
+                                        </tr>
+
+                                    }
+
+                                }
+
+                            </tbody>
+
+                        </table>
+                    }
+                }
+                else
+                {
+                    <table id="kt_datatable_example_1" class="table table-row-dashed fs-6 gy-5">
+
+                        <thead>
+
+                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+
+                                <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.Name)</th>
+
+                                <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.OpeningDate)</th>
+
+                                <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.ClosedDate)</th>
+
+                                <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.BranchName)</th>
+
+                                <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.ClassroomExamCount) / @Html.DisplayNameFor(x => x.GetEnumerator().Current.ClassroomAppointedExamCount)</th>
+                                <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.Status)</th>
+
+                                <th>@ViewLocalizer["Classroom_Operations"]</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 fw-bold ">
+
+                            @foreach (var item in Model)
+
+                            {
+
+                                if (!string.IsNullOrEmpty(item.Name))
+
+                                {
+
+                                    <tr>
+
+                                        <td class="categories text-start">
+
+                                            <a title="Eğitmenler: @item.TrainerNames">
+
+                                                <span class="post_category">@item.Name</span>
+
+                                            </a>
+
+                                        </td>
+
+                                        <td class="categories text-start">
+
+                                            <a>
+
+                                                <span class="post_category">@item.OpeningDate.ToShortDateString()</span>
+
+                                            </a>
+
+                                        </td>
+
+                                        <td class="categories text-start">
+
+                                            <a>
+
+                                                <span class="post_category">@item.ClosedDate.ToShortDateString()</span>
+
+                                            </a>
+
+                                        </td>
+
+                                        <td class="categories text-start">
+
+                                            <a>
+
+                                                <span class="post_category">@item.BranchName</span>
+
+                                            </a>
+
+                                        </td>
+                                        <td class="categories text-start">
+
+                                            <a>
+
+                                                <span class="post_category">@item.ClassroomAppointedExamCount / @item.ClassroomExamCount</span>
+
+                                            </a>
+
+                                        </td>
+                                        <td class="categories text-start">
+
+                                            <a>
+
+                                                <span class="badge @(item.Status == Status.Active ? "badge-light-success" : "badge-light-warning")">
+                                                    @if (item.Status == Status.Active)
+                                                    {
+                                                        <text>Aktif</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>Pasif</text>
+                                                    }
+                                                </span>
+
+                                            </a>
+
+                                        <td class="text-start">
+
+                                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+
+                                                    @SharedLocalizer["Options"]
+
+                                                <span class="svg-icon fs-5 m-0">
+
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+
+                                                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+
+                                                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="currentColor" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+
+                                                        </g>
+
+                                                    </svg>
+
+                                                </span>
+
+                                            </a>
+
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+
+                                                    @if (item.Status != Status.Active)
+
+                                                    {
+
+                                                    <div class="menu-item px-3">
+
+                                                        <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Detail"]</a>
+
+                                                    </div>
+
+                                                    }
+
+                                                    else
+
+                                                    {
+
+                                                    <div class="menu-item px-3">
+
+                                                        <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Detail"]</a>
+
+                                                        <a id="kt-update-classroom" onclick="loadClassroomData('@item.Id')" data-classroom-id="@item.Id" data-bs-toggle="modal" data-bs-target="#kt_modal_update_classroom" class="menu-link px-3" data-kt-users-table-filter="edit_row">@SharedLocalizer["Update"]</a>
+
+                                                        <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="AddStudent" asp-route-id="@item.Id">@ViewLocalizer["Add_Student"]</a>
+
+                                                        <a class="menu-link px-3" data-kt-docs-table-filter="edit_row" asp-action="AddTrainer" asp-route-id="@item.Id">@ViewLocalizer["Add_Trainer"]</a>
+
+                                                    </div>
+
+                                                    }
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+
+                            }
+
+                        </tbody>
+
+                    </table>
+                }
+
+            </div>
+                        <div>
+                            @if (ViewBag.ShowAllData == true)
+                            {
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)" checked>
+                                    <label class="form-check-label" for="showInactiveCheckbox">
+                                        @SharedLocalizer["Show_All_Classroom"]
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)">
+                                    <label class="form-check-label" for="showInactiveCheckbox">
+                                        @SharedLocalizer["Show_Passive_Classroom"]
+                                    </label>
+
+                                </div>
+                            }
+                        </div>
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                    <div class="dataTables_length" id="kt_datatable_example_1_length">
+                                <label>
+                            <select id="pageSizeDropdown" name="kt_datatable_example_1_length" aria-controls="kt_datatable_example_1" class="form-select form-select-sm form-select-solid">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="col-5" style="margin-left:10px">
+                                <span class="text" style="white-space:nowrap">
+                            @SharedLocalizer["Total"] @Model.TotalItemCount @SharedLocalizer["From"] @(Model.PageNumber * Model.PageSize - (Model.PageSize - 1))
+                            @SharedLocalizer["To"] @(Model.PageNumber * Model.PageSize > Model.TotalItemCount ? Model.TotalItemCount : Model.PageNumber * Model.PageSize)
+                            @SharedLocalizer["Records_Are_Being_Displayed"]
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.PageSize }), new PagedListRenderOptions
+                       {
+                           Display = PagedListDisplayMode.Always,
+                           UlElementClasses = new[] { "pagination", "justify-content-center" },
+                           LiElementClasses = new[] { "page-item" },
+                           PageClasses = new[] { "page-link" },
+                           LinkToFirstPageFormat = @localizer["First"],
+                           LinkToLastPageFormat = @localizer["Last"],
+                           ContainerDivClasses = new[] { "d-flex", "justify-content-center" }
+                       })
+                        </div>
+                    </div>
+
+        </div>
+
+        <!--end::Datatable-->
+
+    </div>
+
+    </div>
+
+</section>
+
+<partial name="~/Areas/Admin/Views/Classroom/CreatePartialView.cshtml" model="new AdminClassroomCreateVM()"></partial>
+<partial name="~/Areas/Admin/Views/Classroom/Update.cshtml" model="new AdminClassroomUpdateVM()"></partial>
+
+@section Scripts
+{
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/createclass.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/view/update-class.js"></script>
+    <script>
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+
+        // Scroll hareket ettirildiğinde option menüsünü kapatır.
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+
+
+                    //jquery for datatables
+            $(document).ready(function () {
+                var table = $('#kt_datatable_example_1').DataTable({
+                    language: {
+                        emptyTable: localizer.emptyTable,
+                        info: localizer.info,
+                        infoEmpty: localizer.infoEmpty,
+                        infoFiltered: localizer.infoFiltered,
+                        zeroRecords: localizer.zeroRecords
+                    },
+                    /*  searching: true, */   // sadece search kısmı calıssın
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    order: [[0, 'asc']],
+                    pageLength: 10, // Set default page length to 25
+                    lengthMenu: [10, 25, 50,], // Include 25 in length menu options
+                    aoColumnDefs: [
+                        {
+                            targets: 0,
+                            orderable: false
+                        },
+                        {
+                            targets: 5,
+                            orderable: false
+                        }
+                    ]
+                });
+            });
+
+        $(document).ready(function () {
+
+            var currentPageSize = '@ViewBag.PageSize' || '10';
+            var showAllData = '@ViewBag.ShowAllData' === 'True'; 
+
+            $('#pageSizeDropdown').val(currentPageSize);
+            $('#showInactiveCheckbox').prop('checked', showAllData);
+
+
+            $('#pageSizeDropdown').change(function () {
+                updateUrl();
+            });
+
+            $('#showInactiveCheckbox').change(function () {
+                updateUrl();
+            });
+
+            function updateUrl() {
+                var selectedPageSize = $('#pageSizeDropdown').val();
+                var isChecked = $('#showInactiveCheckbox').is(':checked');
+                var currentPage = '@ViewBag.CurrentPage' || 1;
+
+                var url = '@Url.Action("Index", "Classroom")' + `?page=${1}&pageSize=${selectedPageSize}&showAllData=${isChecked}`;
+                window.location.href = url;
+            }
+        });
+
+
+        $(document).ready(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip({
+                title: function () {
+                    return $(this).attr('data-bs-original-title');
+                }
+            });
+        });
+        function onSubmitForm() {
+            var searchButton = document.getElementById("searchButton");
+
+            var nameSelect = document.getElementById("name");
+            var branchSelect = document.getElementById("branchName");
+            var groupTypeSelect = document.getElementById("groupType");
+            var openingDateInput = document.getElementById("openingDate");
+            var closedDateInput = document.getElementById("closedDate");
+
+            if (!nameSelect.value && !branchSelect.value && !groupTypeSelect.value && !openingDateInput.value && !closedDateInput.value) {
+
+                window.location.href = "@Url.Action("Index", new { showAllData = true })";
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function toggleData(checked) {
+            if (checked) {
+                window.location.href = "@Url.Action("Index", new { showAllData = true })";
+            } else {
+                window.location.href = "@Url.Action("Index", new { showAllData = false })";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var divElements = document.querySelectorAll('div');
+            divElements.forEach(function (divElement) {
+                var selectElement = divElement.querySelector('select');
+                if (selectElement) {
+                    sortSelectOptionsAlphabetically(selectElement);
+                }
+            });
+
+            function sortSelectOptionsAlphabetically(selectElement) {
+                var options = Array.from(selectElement.options);
+                options.sort(function (a, b) {
+                    return a.text.localeCompare(b.text);
+                });
+                options.forEach(function (option) {
+                    selectElement.add(option);
+                });
+            }
+        });
+    </script>
+}

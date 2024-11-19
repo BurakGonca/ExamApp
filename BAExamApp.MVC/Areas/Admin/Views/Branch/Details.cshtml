@@ -1,0 +1,111 @@
+﻿@model AdminBranchDetailsVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Branch_Details"];
+}
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <!--begin::Card header-->
+    <div class="card-header cursor-pointer align-items-center">
+        <!--begin::Card title-->
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">@ViewLocalizer["Branch_Details"]</h3>
+        </div>
+        <div class="gap-5 m-0">
+            <a class="btn btn-secondary align-self-center" asp-controller="Branch" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+            <a class="btn btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#updateBranchModal" data-branch-id="@Model.Id" data-branch-name="@Model.Name">
+                @SharedLocalizer["Update"]
+            </a>
+            <a class="btn btn-danger align-self-center deleteAction" data-id="@Model.Id">@SharedLocalizer["Delete"]</a>
+        </div>
+        <!--end::Card title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body p-9">
+        <!--begin::Row-->
+        <div class="row mb-7">
+            <!--begin::Label-->
+            <label class="col-lg-4 fw-bold text-muted" asp-for="Name"></label>
+            <!--end::Label-->
+            <!--begin::Col-->
+            <div class="col-lg-8">
+                <span class="fw-bolder fs-6 text-gray-800">@Model.Name</span>
+            </div>
+            <!--end::Col-->
+        </div>
+        <!--end::Row-->
+    </div>
+    <!--end::Card body-->
+</div>
+
+<partial name="~/Areas/Admin/Views/Branch/UpdatePartialView.cshtml" model="new AdminBranchUpdateVM()" />
+
+@section Scripts
+{
+    <script src="~/js/updateCreateBranch.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script>
+        var localizedTexts = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]',
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]',
+            confirmButtonText: '@SharedLocalizer["Confirm_Button_Text"]', 
+            cancelButtonText: '@SharedLocalizer["Cancel"]', 
+            confirmPassiveButtonText: '@SharedLocalizer["Confirm_Passive_Button"]',//evet pasife al
+            confirmPassiveTitle: '@SharedLocalizer["Branch_Used_Title"]',
+            confirmPassiveText:'@SharedLocalizer["Branch_Used_Text"]'
+
+        };
+        var localize = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]'
+        };
+
+         
+        var isBranchUsed = @Html.Raw(Json.Serialize(Model.IsBranchUsedInClass != null ? Model.IsBranchUsedInClass : false));
+
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+            var title, text, confirmButton, cancelButton;
+           
+            
+            if (isBranchUsed) {
+                title = localizedTexts.confirmPassiveTitle;
+                text = localizedTexts.confirmPassiveText;
+                confirmButton = localizedTexts.confirmPassiveButtonText;
+                cancelButton = localizedTexts.cancelButtonText;
+
+            } else {
+                title = localizedTexts.confirmTitle;
+                text = localizedTexts.confirmText;
+                confirmButton = localizedTexts.confirmButtonText;
+                cancelButton = localizedTexts.cancelButtonText;
+            }
+
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: confirmButton,
+                cancelButtonText: cancelButton
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("Delete")" + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "@Url.Action("Index")", 1000);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

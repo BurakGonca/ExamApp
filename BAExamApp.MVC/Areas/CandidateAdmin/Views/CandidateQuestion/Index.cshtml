@@ -1,0 +1,703 @@
+﻿@model CandidateQuestionIndexVM
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Question"];
+}
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<style>
+    .tooltip-inner {
+        max-width: 350px !important;
+    }
+</style>
+
+<div class="card card-docs flex-row-fluid mb-2 overflow-auto">
+    <!--begin::Card Body-->
+    <div class="card-body fs-6 py-15 px-10 py-lg-8 px-lg-15 text-gray-700">
+        <!--begin::Section-->
+        <div class="p-0">
+            <!--begin::Heading-->
+            <div class="d-flex justify-content-between mb-7">
+                <h3 class="fw-bolder m-0" id="server-side">
+                    @SharedLocalizer["Candidate_Question_List"]
+                    <span class="material-symbols-outlined" style="margin-left: 5px; font-size: 130%; "
+                          data-bs-toggle="tooltip" data-bs-placement="top"
+                          title="@SharedLocalizer["Question_Filter_Warning"]">
+                        info
+                    </span>
+                </h3>
+                <a asp-action="Create" class="btn btn-primary">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                    <span class="svg-icon svg-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon--> @SharedLocalizer["Add_Question"]
+                </a>
+            </div>
+        </div>
+        <!--end::Heading-->
+        <!--begin::CRUD-->
+        <div class="py-5">
+            <!--begin::Wrapper-->
+            <div class="flex " data-kt-docs-table-toolbar="base">
+
+                <form class="form-question" asp-controller="CandidateQuestion" asp-action="Index" method="post" id="SearchForm">
+                    <div class="classroomfilter flex-row">
+                        <div class="row g-5 align-items-end d-flex flex-row">
+                            <div class="d-inline-flex align-items-end ">
+                                <div class="form-floating col-md-2 mb-3 ">
+                                    <input class="form-control form-control-solid mb-3 mb-lg-0" id="Content" name="Content" asp-for="Content" placeholder="@SharedLocalizer["Question_Content"]" />
+                                    <label>@SharedLocalizer["Question_Content"]</label>
+                                </div>
+                                <div class="form-floating col-md-2 mb-3 mx-5">
+                                    <!-- Added mx-2 for horizontal margin -->
+                                    <select class="form-select form-select-solid" data-control="select2" id="candidate-question-type" name="CandidateQuestionTypeIndex" asp-items="Model.CandidateQuestionTypeList" asp-for="CandidateQuestionTypeIndex">
+                                        <option value="">@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label>@SharedLocalizer["Candidate_QuestionType"]</label>
+                                </div>
+                                <div class="form-floating col-md-2 mb-3 mx-5">
+                                    <!-- Added mx-2 for horizontal margin -->
+                                    <select class="form-select form-select-solid" data-control="select2" id="candidate-question-subject" name="CandidateQuestionSubjectIndex" asp-items="Model.CandidateQuestionSubjectList" asp-for="CandidateQuestionSubjectIndex">
+                                        <option value="">@SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label>@SharedLocalizer["Candidate_Subject"]</label>
+                                </div>
+                                <div class="form-floating col-md-2 mb-3 mx-5">
+                                    <button type="submit" id="searchButton" style="min-width:99px;" class="btn btn-primary btn-lg col-md-4 hover-elevate-up" data-kt-user-table-filter="form">@SharedLocalizer["Show"]</button>
+                                </div>
+                                <!-- Yeni checkbox başlangıç -->
+                                <div class="form-check mb-5">
+                                    <input class="form-check-input" type="checkbox" id="showPassiveQuestionCheckbox" name="ShowPassiveQuestions" onchange="toggleData(this.checked)" asp-for="ShowPassiveQuestions" checked="@Model.ShowPassiveQuestions">
+                                    <label class="form-check-label" for="showPassiveQuestionCheckbox">
+                                        @SharedLocalizer["Show_Passive_Questions"]
+                                    </label>
+                                </div>
+                                <!-- Yeni checkbox son -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!--end::Wrapper-->
+            @if (ViewBag.ShowAllQuestions == false)
+            {
+
+            }
+            else
+            {
+                <!--begin::Datatable-->
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed min-h-90px fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Customer Name: activate to sort column ascending" style="width: 175.25px;">@Html.DisplayNameFor(model => model.QuestionList[0].Content)</th>
+                            <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Company: activate to sort column ascending" style="width: 226.25px;">@Html.DisplayNameFor(model => model.QuestionList[0].CandidateQuestionType)</th>
+                            <th class="text-start min-w-100px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 108.25px;">@SharedLocalizer["Subject"]</th>
+                            <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@Html.DisplayNameFor(model => model.QuestionList[0].CreatedDate)</th>
+                            <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@Html.DisplayNameFor(model => model.QuestionList[0].Status)</th>
+                            <th class="text-start min-w-100px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 108.25px;">@SharedLocalizer["Transactions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 fw-bold">
+                        @if (Model.QuestionList != null && Model.QuestionList.Any())
+                        {
+                            @foreach (var item in Model.QuestionList)
+                            {
+                                <tr>
+                                    <td class="categories text-start">
+                                        <a data-bs-toggle="tooltip" data-bs-placement="right" data-placement="top" title="@item.Content">
+                                            <span class="post_category" style="white-space: nowrap;">@Html.Raw(item.Content.Length > 20 ? item.Content.Substring(0, 20) + "..." : item.Content)</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-start">
+                                        <span class="post_category">  @SharedLocalizer[Enum.GetName(typeof(CandidateQuestionType), @item.CandidateQuestionType)]</span>
+                                    </td>
+
+                                    <td class="categories text-start">
+
+                                        <span class="post_category">
+                                            @(
+                                                item.CandidateQuestionSubject != null
+                                                ? item.CandidateQuestionSubject.Name
+                                                : ""
+                                                )
+                                        </span>
+                                    </td>
+
+                                    <td class="categories text-start">
+                                        <span class="post_category">@item.CreatedDate.ToString("dd.MM.yyyy")</span>
+                                    </td>
+                                    <td class="categories text-start">
+                                        <span class="badge @(item.Status == Status.Active ? "badge-light-success" : "badge-light-warning")">
+                                            @if (item.Status == Status.Active)
+                                            {
+                                                <text>Aktif</text>
+                                            }
+                                            else
+                                            {
+                                                <text>Pasif</text>
+                                            }
+                                        </span>
+                                    </td>
+                                    <td class="text-start">
+                                        <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end" id="optionsDropdown">
+                                            @SharedLocalizer["Options"]
+                                            <span class="svg-icon fs-5 m-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                        <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="currentColor" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                        </a>
+
+                                        <!--begin::Menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a class="menu-link px-3 editButton" data-id="@item.Id">@SharedLocalizer["Edit"]</a>
+                                                <a class="menu-link px-3 deleteAction" data-id="@item.Id">@SharedLocalizer["Delete"]</a>
+                                                <a class="menu-link px-3 detailsButton" data-id="@item.Id">@SharedLocalizer["Details"]</a>
+                                                @if (item.Status == Status.Passive)
+                                                {
+                                                    <a class="menu-link px-3 toggleStatusButton" data-id="@item.Id" data-status="activate">@SharedLocalizer["CandidateQuestionActivate"]</a>
+                                                }
+                                                else if (item.Status == Status.Active)
+                                                {
+                                                    <a class="menu-link px-3 toggleStatusButton" data-id="@item.Id" data-status="deactivate">@SharedLocalizer["CandidateQuestionDeactivate"]</a>
+                                                }
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                        <!--end::Menu-->
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="categories text-center" colspan="6">
+                                    @SharedLocalizer["No_Data"]
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                        <div class="dataTables_length" id="kt_datatable_example_1_length">
+                            <label>
+                                <select name="kt_datatable_example_1" aria-controls="kt_datatable_example_1" class="form-select form-select-sm form-select-solid">
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Datatable-->
+            }
+        </div>
+        <!--end::CRUD-->
+    </div>
+    <!--end::Section-->
+</div>
+<!--end::Card Body-->
+</div>
+<!-- Vertically centered scrollable modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@SharedLocalizer["Review"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" id="question-details">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<partial name="~/Areas/CandidateAdmin/Views/CandidateQuestion/_CandidateQuestionUpdatePartialView.cshtml" model="new CandidateQuestionUpdateVM()"></partial>
+<partial name="~/Areas/CandidateAdmin/Views/CandidateQuestion/_CandidateQuestionDetailsPartialView.cshtml" model="new CandidateQuestionDetailsVM()"></partial>
+
+
+@section Scripts {
+    <script src="~/js/adminQuestionList.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script src="~/newlayouts/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/question/candidateQuestionUpdateDetails.js"></script>
+
+
+
+    <script>
+        var localizedStrings = {
+            newoption: '@SharedLocalizer["New_Option"]',
+            addnewoption: '@SharedLocalizer["Add_New_Options"]',
+            answers: '@SharedLocalizer["Answers"]',
+            choose: '@SharedLocalizer["Choose"]',
+            text: '@SharedLocalizer["Text"]',
+            image: '@SharedLocalizer["Image"]',
+            options: '@SharedLocalizer["Options"]'
+
+        };
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            formNotCancelled: '@SharedLocalizer["Form_Not_Cancelled_Message"]',
+            validationError: '@SharedLocalizer["Validation_Error_Message"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+        };
+
+        var validationMessages = {
+            pleaseProvideQuestionContent: '@SharedLocalizer["Please_Provide_Question_Content"]',
+            imageFileSizeErrorTitle: '@SharedLocalizer["Image_File_Size_Error_Title"]',
+            imageFileSizeErrorText: '@SharedLocalizer["Image_File_Size_Error_Text"]',
+            missingDataErrorTitle: '@SharedLocalizer["Missing_Data_Error_Title"]',
+            addAnswerErrorText: '@SharedLocalizer["Add_Answer_Error_Text"]',
+            minAnswersErrorText: '@SharedLocalizer["Min_Answers_Error_Text"]',
+            selectCorrectAnswerErrorText: '@SharedLocalizer["Select_Correct_Answer_Error_Text"]'
+        };
+
+        $(document).ready(function () {
+            $('.editButton').on('click', function () {
+                var id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: "@Url.Action("Update")" + "?id=" + id,
+                    method: 'GET',
+                    success: function (response) {
+                        $('#kt_modal_update_question_form')
+                            .find('[name="id"]').val(response.id).end()
+                            .find('[name="Content"]').html(response.content).end();
+
+                        var imageElementUpdate = document.getElementById("previewImage");
+                        var removeImageButton = document.getElementById("removeImageButton");
+                        var imagePlaceholder = document.getElementById("imagePlaceholder");
+
+                        if (response.image != null) {
+                            imageElementUpdate.src = "data:image/jpeg;base64," + response.image;
+                            imageElementUpdate.style.display = "block"; // Resmi göster
+                            removeImageButton.style.display = "block"; // Butonu göster
+                            imagePlaceholder.style.display = "none";
+                        } else {
+                            imageElementUpdate.src = "";
+                            imageElementUpdate.style.display = "none"; // Resmi gizle
+                            removeImageButton.style.display = "none"; // Butonu gizle
+                            imagePlaceholder.style.display = "flex";
+                        }
+
+                        var questionTypeSelect = $('#CandidateQuestionType');
+                        questionTypeSelect.empty();
+                        $.each(response.candidateQuestionTypeList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.candidateQuestionType.toString()
+                            });
+                            questionTypeSelect.append(option);
+                        });
+
+                        var questionAnswersDiv = document.getElementById('questionAnswersDiv');
+                        questionAnswersDiv.innerHTML = '';
+                        if (response.candidateQuestionType.toString() == 1) {
+                            questionAnswersDiv.innerHTML = getAnswerChoicesHtmlQuestion(response.candidateQuestionType.toString(), response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        } else if (response.candidateQuestionType.toString() == 2) {
+                            questionAnswersDiv.innerHTML = getAlgorithmUpdateQuestionAnswer(response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        } else if (response.candidateQuestionType.toString() == 3) {
+                            questionAnswersDiv.innerHTML = getClassicUpdateQuestionAnswer(response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        }
+
+                        if (response.questionAnswers) {
+                            let fixedQuestionAnswers = response.questionAnswers.map(answer => {
+                                return {
+                                    Id: answer.id,
+                                    Answer: answer.answer,
+                                    IsImageAnswer: answer.isImageAnswer,
+                                    IsAnswerInUse: answer.isAnswerInUse,
+                                    IsRightAnswer: answer.isRightAnswer,
+                                    QuestionId: answer.questionId,
+                                    Status: answer.status
+                                };
+                            });
+
+                            let questionAnswersList = JSON.stringify(fixedQuestionAnswers);
+                            document.getElementById('questionAnswerChoices').value = questionAnswersList;
+                            console.log(questionAnswersList);
+                        }
+
+                        // Show the Bootstrap modal
+                        $('#kt_modal_update_question').modal('show');
+                    }
+                });
+            });
+        });
+
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]',
+            lengthMenu: '@SharedLocalizer["Length_Menu"]'
+        };
+        $(document).ready(function () {
+            var dt = $("#kt_datatable_example_1").DataTable({
+                lengthMenu: [20, 50],
+                dom:
+                    '<"row"<"col-sm-12"tr>>' +
+                    '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    info: localizer.info,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords,
+                    lengthMenu: localizer.lengthMenu
+                }
+            });
+            $('select[name="kt_datatable_example_1"]').change(function () {
+                dt.page.len($(this).val()).draw();
+            });
+
+            $('input[data-kt-docs-table-filter="search"]').on('keyup', function () {
+                dt.search($(this).val()).draw();
+            });
+            function updatePaginationArrows() {
+                $('#kt_datatable_example_1_previous a').html('<i class="fa fa-chevron-left"></i>');
+                $('#kt_datatable_example_1_next a').html('<i class="fa fa-chevron-right"></i>');
+            }
+            updatePaginationArrows();
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+
+            $(document).ready(function () {
+                $('[data-bs-toggle="tooltip"]').tooltip({
+                    title: function () {
+                        return $(this).attr('data-bs-original-title');
+                    }
+                });
+            });
+
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dropdown menu element
+            var optionsDropdown = document.getElementById('optionsDropdown');
+
+            // Toggle dropdown on click
+            optionsDropdown.addEventListener('click', function (e) {
+                e.preventDefault();
+                var optionsMenu = new KTMenu(optionsDropdown);
+                optionsMenu.toggle();
+            });
+        });
+
+    </script>
+
+    @* Delete Function *@
+    <script>
+        var localizedText = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]',
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]',
+            confirmButtonText2: '@SharedLocalizer["Confirm_Button_Text"]',
+            cancelButtonText2: '@SharedLocalizer["Cancel_Button_Text"]',
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+        };
+
+        $(document).ready(function () {
+            $(".deleteAction").click(function () {
+                const id = $(this).data("id");
+                Swal.fire({
+                    title: `${localizedText.confirmTitle}`,
+                    text: `${localizedText.confirmText}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: `${localizedText.confirmButtonText2}`,
+                    cancelButtonText: `${localizedText.cancelButtonText2}`
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "Post",
+                            url: "@Url.Action("Delete")" + "?id=" + id,
+                            success: function (result) {
+                                if (result.isSuccess) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: '@SharedLocalizer["Success_Title"]',
+                                        text: '@SharedLocalizer["Delete_Success"]'
+                                    });
+                                    setTimeout(() => location.reload(), 2000);
+                                } else {
+                                    if (result.message === "Question_Used_In_Exam") {
+                                        Swal.fire({
+                                            title: '@SharedLocalizer["Warning_Title"]',
+                                            text: '@SharedLocalizer["Question_Used_In_Exam_Text"]',
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: '@SharedLocalizer["Yes_Deactivate"]',
+                                            cancelButtonText: '@SharedLocalizer["No_Cancel"]'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                $.ajax({
+                                                    type: "Post",
+                                                    url: "@Url.Action("SetQuestionAndAnswersToInactive")" + "?id=" + id,
+                                                    success: function (result) {
+                                                        if (result.isSuccess) {
+                                                            Swal.fire({
+                                                                icon: 'success',
+                                                                title: '@SharedLocalizer["Success_Title"]',
+                                                                text: '@SharedLocalizer["Deactivate_Success_Text"]'
+                                                            });
+                                                            setTimeout(() => location.reload(), 2000);
+                                                        } else {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: '@SharedLocalizer["Error_Title"]',
+                                                                text: '@SharedLocalizer["Deactivate_Error_Text"]'
+                                                            });
+                                                        }
+                                                    },
+                                                    error: function () {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: '@SharedLocalizer["Error_Title"]',
+                                                            text: '@SharedLocalizer["Deactivate_Error_Text"]'
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: '@SharedLocalizer["Error_Title"]',
+                                            text: '@SharedLocalizer["Delete_Error"]'
+                                        });
+                                    }
+                                }
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '@SharedLocalizer["Error_Title"]',
+                                    text: '@SharedLocalizer["Delete_Error_Text"]'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    @* Details Function *@
+    <script>
+        $(document).ready(function () {
+            $('.detailsButton').on('click', function () {
+                var id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: "@Url.Action("Details")" + "?id=" + id,
+                    method: 'GET',
+                    success: function (response) {
+                        // Form alanlarını doldur
+                        $('#kt_modal_details_question_form')
+                            .find('[name="id"]').val(response.id).end();
+
+                        // Tarihi biçimlendir ve göster
+                        var createdDate = new Date(response.createdDate);
+                        var formattedDate = createdDate.getDate() + '/' + (createdDate.getMonth() + 1) + '/' + createdDate.getFullYear();
+                        $('#CreatedDateDisplay').text(formattedDate);
+
+                        $('#CandidateQuestionTypeDisplay').text((response.candidateQuestionTypeString));
+                        $('#CandidateSubjectDisplay').text((response.candidateQuestionSubjectString));
+                        console.log(response)
+
+
+                        let formattedContent = response.content.replace(/\r\n/g, '<br>');
+                        $('#ContentDisplay').html(formattedContent);
+
+                        // Görsel önizleme işlemi
+                        var imageElement = document.getElementById("defaultImage");
+                        var questionImageLabel = document.getElementById("questionImageLabel");
+                        var questionAndAnswersContainer = document.getElementById("questionAndAnswersContainer");
+                        if (response.image) {
+                            imageElement.src = "data:image/jpeg;base64," + response.image;
+                            imageElement.style.display = "block";
+                        } else {
+                            imageElement.style.display = "none";
+                            questionImageLabel.style.display = "none";
+                            questionAndAnswersContainer.classList.remove('flex-container'); // Flex container class'ını kaldır
+                        }
+
+                        // Soru cevaplarını doldur
+                        if (response.questionAnswers) {
+                         var questionAnswersDiv = document.getElementById('questionAnswersDiv');
+                         var questionAnswersLabel = document.getElementById('questionAnswersLabel');
+                         var questionAnswerLabel = document.getElementById('questionAnswerLabel');
+
+                        if (response.candidateQuestionType !== 2) {
+                               questionAnswerLabel.style.display = 'none';
+                            questionAnswersLabel.style.display = 'block';
+                        } else {
+                            questionAnswersLabel.style.display = 'none';
+                            questionAnswerLabel.style.display = 'block';
+                        }
+                            
+                        var questionAnswersDisplay = document.getElementById('questionAnswersDisplay');
+                        questionAnswersDisplay.innerHTML = '';
+
+                        response.questionAnswers.forEach(function (item, index) {
+                            var answerHtml;
+                            var optionLabel = ''; 
+                            var optionText = '@SharedLocalizer["Default_Option"]';
+                            var trueText = '@SharedLocalizer["True"]';
+                              
+                            // `response.candidateQuestionTypeString` değerini kontrol ederek uygun işlemi yapın
+                            if (response.candidateQuestionType !== 2) {
+                                optionLabel = `<strong>${index + 1}. ${optionText}</strong>`;
+                            } else {
+                                optionLabel = ''; 
+                            }
+
+
+                            if (item.isImageAnswer) {
+                                answerHtml =
+                                    `<div class="mb-3">
+                                        ${optionLabel}
+                                        <div class="d-flex align-items-center">
+                                            <img src="${item.answer}" class="img-fluid img-thumbnail answer-image" alt="Answer Image">
+                                            ${item.isRightAnswer ?
+                                        `<span class="badge badge-success ms-2 small-badge" style="font-size: 0.8em;">${trueText}</span>` : ''}
+                                        </div>
+                                    </div>`;
+                            } else {
+                                answerHtml =
+                                    `<div class="mb-3">
+                                    ${optionLabel}
+                                        <div class="d-flex align-items-center">
+                                                            <pre style="font-family: inherit; font-size: 1.2em;  white-space: pre-wrap;  word-wrap: normal; ">${item.answer}</pre>
+                                            ${item.isRightAnswer ?
+                                        `<span class="badge badge-success ms-2 small-badge" style="font-size: 0.8em;">${trueText}</span>` : ''}
+                                        </div>
+                                    </div>`;
+                            }
+                            questionAnswersDisplay.innerHTML += answerHtml;
+                        });
+                    }
+
+
+                    // Bootstrap modal'ı göster
+                    $('#kt_modal_details_question').modal('show');
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("An error occurred: " + status + " - " + error);
+                }
+            });
+        });
+    });
+
+</script>
+
+
+    <script>
+        function toggleData(checked) {
+            document.getElementById('showPassiveQuestionCheckbox').value = checked;
+            document.getElementById("SearchForm").submit();
+        }
+    </script>
+
+
+    @* Active-Passive Status Function *@
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Durum değiştir butonları için olay dinleyicisi ekle
+            document.querySelectorAll('.toggleStatusButton').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var id = this.getAttribute('data-id');
+                    var status = this.getAttribute('data-status');
+                    toggleQuestionStatus(id, status);
+                });
+            });
+        });
+
+        function toggleQuestionStatus(id, status) {
+            var url = (status === "activate")
+                ? "@Url.Action("SetQuestionAndAnswersToActive")" + "?id=" + id
+                : "@Url.Action("SetQuestionAndAnswersToInactive")" + "?id=" + id;
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '@Html.AntiForgeryToken()'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isSuccess) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: 'İşlem başarılı!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: data.message || 'İşlem başarısız!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: 'Bir hata oluştu!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                });
+        }
+    </script>
+
+}
+

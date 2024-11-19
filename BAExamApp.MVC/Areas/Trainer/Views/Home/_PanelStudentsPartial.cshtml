@@ -1,0 +1,344 @@
+﻿@using BAExamApp.MVC.Areas.Trainer.Models.DashboardVMs
+
+@model TrainerDashboardVM;
+
+@{
+    var myStudents = Model.TrainerTopratedStudents;
+    var activeStudent = Model.ActiveStudents;
+    var allStudents = Model.AllTopratedStudents;
+}
+
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+<div class="container mt-sm-1 p-0">
+    <div class="col-12 col-md-8">
+        <div id="studentCard" class="card card-xl-stretch mt-1 p-3">
+            <div class="card-header border-0 pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bolder fs-3 mb-1">@SharedLocalizer["Best_Students"]</span>
+                </h3>
+                <div class="tab">
+                    <button class="tablinks" onclick="openTab(event, 'CurrentStudents')">@SharedLocalizer["My_Students"]</button>
+                    <button class="tablinks" onclick="openTab(event, 'ActiveStudent')">@SharedLocalizer["Active_Students"]</button>
+                    <button class="tablinks" onclick="openTab(event, 'AllStudents')">@SharedLocalizer["All_Students"]</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                @* Ögrencilerim table başlangıcı *@
+                <div id="CurrentStudents" class="tabcontent">
+                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                        <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
+                            <tr class="fw-bolder text-muted text-start">
+
+                                <th class="min-w-200px text-start">@SharedLocalizer["Students"]</th>
+                                <th class="min-w-150px text-start">@SharedLocalizer["Classroom"]</th>
+                                <th class="min-w-150px text-start">@SharedLocalizer["Success_Rate"]</th>
+                                <th class="min-w-120px text-center">@SharedLocalizer["Exam_Count"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (myStudents != null)
+                            {
+                                @foreach (var student in myStudents)
+                                {
+                                    @if (student.Status == Status.Active)
+                                    {
+                                        <tr>
+
+                                            <td class="text-start">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-45px me-5">
+                                                        <img src="~/images/AdminDashboard/icon-student.png" alt="" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-start flex-column">
+                                                        <span class="text-dark fw-bolder text-hover-primary fs-6">@student.StudentFullName</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-start">
+                                                <span class="text-dark fw-bolder text-hover-primary d-block fs-6"> @student.LatestClassroom</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="d-flex flex-column w-90 me-2">
+                                                    <div class="d-flex flex-stack mb-2">
+                                                        <span class="text-muted me-2 fs-7 fw-bold">% @student.Score</span>
+                                                    </div>
+                                                    @{
+                                                        var score = student.Score ?? 0.0m;
+                                                        var scoreString = score.ToString("F2", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+                                                    }
+                                                    <div class="progress h-6px w-100">
+                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: @scoreString%" aria-valuenow="@scoreString" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div>
+                                                    <span class="text-dark fw-bolder text-hover-primary d-block fs-6 text-center">@student.StudentExamsCount</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @* Ögrencilerim table bitiş *@
+
+                @* Tüm Öğrenciler table başlangıcı *@
+                <div class="table-responsive">
+                    <div id="AllStudents" class="tabcontent">
+                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                            <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
+                                <tr class="fw-bolder text-muted text-start">
+                                    <th class="min-w-200px text-start">@SharedLocalizer["Students"]</th>
+                                    <th class="min-w-150px text-start">@SharedLocalizer["Classroom"]</th>
+                                    <th class="min-w-150px text-start">@SharedLocalizer["Success_Rate"]</th>
+                                    <th class="min-w-120px text-center">@SharedLocalizer["Exam_Count"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (allStudents != null)
+                                {
+                                    @foreach (var student in allStudents)
+                                    {
+                                        var backgroundColor = myStudents.Any(s => s.Id == student.Id) ? "rgba(29, 168, 225, 0.05)" : "";
+                                        <tr style="background-color:@backgroundColor;">
+                                            <td class="text-start">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-45px me-5">
+                                                        <img src="~/images/AdminDashboard/icon-student.png" alt="" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-start flex-column">
+                                                        <span class="text-dark fw-bolder text-hover-primary fs-6">@student.StudentFullName</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-start">
+                                                <span class="text-dark fw-bolder text-hover-primary d-block fs-6">
+                                                    @student.LatestClassroom
+                                                </span>
+                                            </td>
+                                            <td class="text-start">
+                                                <div class="d-flex flex-column w-90 me-2">
+                                                    <div class="d-flex flex-stack mb-2">
+                                                        <span class="text-muted me-2 fs-7 fw-bold">% @student.Score</span>
+                                                    </div>
+                                                    @{
+                                                        var score = student.Score ?? 0.0m;
+                                                        var scoreString = score.ToString("F2", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+                                                    }
+                                                    <div class="progress h-6px w-100">
+                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: @scoreString%" aria-valuenow="@scoreString" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div>
+                                                    <span class="text-dark fw-bolder text-hover-primary d-block fs-6 text-center">@student.StudentExamsCount</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @* Bütün Öğrenciler table bitiş *@
+
+                @* Aktif Öğrenciler table başlangıcı *@
+                <div id="ActiveStudent" class="tabcontent">
+                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                        <thead style="position: sticky; top: 0; background-color: white; z-index: 2;">
+                            <tr class="fw-bolder text-muted text-start">
+                                <th class="min-w-200px text-start">@SharedLocalizer["Students"]</th>
+                                <th class="min-w-150px text-start">@SharedLocalizer["Classroom"]</th>
+                                <th class="min-w-150px text-start">@SharedLocalizer["Success_Rate"]</th>
+                                <th class="min-w-120px text-center">@SharedLocalizer["Exam_Count"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (activeStudent != null)
+                            {
+                                @foreach (var student in activeStudent)
+                                {
+                                    var backgroundColor = myStudents.Any(s => s.Id == student.Id) ? "rgba(29, 168, 225, 0.2)" : "";
+                                    <tr style="background-color:@backgroundColor;">
+                                        <td class="text-start">
+                                            <div class="d-flex align-items-center">
+                                                <div class="symbol symbol-45px me-5">
+                                                    <img src="~/images/AdminDashboard/icon-student.png" alt="" />
+                                                </div>
+                                                <div class="d-flex justify-content-start flex-column">
+                                                    <span class="text-dark fw-bolder text-hover-primary fs-6">
+                                                        @student.StudentFullName
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-start">
+                                            <span class="text-dark fw-bolder text-hover-primary d-block fs-6">@student.LatestClassroom</span>
+                                        </td>
+                                        <td class="text-start">
+                                            <div class="d-flex flex-column w-90 me-2">
+                                                <div class="d-flex flex-stack mb-2">
+                                                    <span class="text-muted me-2 fs-7 fw-bold">% @student.Score</span>
+                                                </div>
+                                                @{
+                                                    var score = student.Score ?? 0.0m;
+                                                    var scoreString = score.ToString("F2", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+                                                }
+                                                <div class="progress h-6px w-100">
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: @scoreString%" aria-valuenow="@scoreString" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div>
+                                                <span class="text-dark fw-bolder text-hover-primary d-block fs-6 text-center">@student.StudentExamsCount</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @* aktif Öğrenciler table bitiş *@
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    thead {
+        position: sticky; /* Sabit konumda olmasını sağla */
+        top: 0; /* Üstte sabitlenmesini sağla */
+        background-color: #fff; /* Arka plan rengi (gerekirse ayarlayın) */
+        z-index: 2; /* Diğer içeriklerin üstünde görünmesi için */
+    }
+
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        width: 100%;
+        table-layout: auto;
+        min-width: 650px;
+    }
+
+        .table th, .table td {
+            white-space: nowrap;
+            text-align: center;
+            padding: 0px;
+        }
+
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+        .container > div {
+            flex: 1 1 100%;
+            margin-bottom: 15px;
+        }
+
+    .tab {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+        .tab button {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            white-space: nowrap;
+            margin-right: 10px;
+        }
+
+            .tab button:last-child {
+                margin-right: 0;
+            }
+
+            .tab button.active {
+                background-color: transparent; /* Arka planı değiştirmiyoruz */
+                color: blue; /* Aktif olan butonun rengi mavi olur */
+                border-bottom: 2px solid blue; /* Aktif butonun altını çiziyoruz */
+                font-weight: normal; /* Bold olmayacak, normal yazı tipi */
+            }
+
+</style>
+<script>
+    function setResponsiveHeights() {
+        // Divi seç
+        const studentCard = document.getElementById('studentCard');
+        let minHeight, maxHeight;
+
+
+        if (window.innerWidth >= 1600) {
+
+            minHeight = 580.65;
+            maxHeight = 580.65;
+        } else if (window.innerWidth >= 1200) {
+
+            minHeight = 485.75;
+            maxHeight = 485.75;
+        } else {
+
+            minHeight = 513.3
+            maxHeight = 513.3;
+        }
+
+
+        if (studentCard) {
+            studentCard.style.minHeight = `${minHeight}px`;
+            studentCard.style.maxHeight = `${maxHeight}px`;
+            studentCard.style.height = '';
+        }
+
+
+        syncCardHeights();
+    }
+
+    function syncCardHeights() {
+
+        const studentCards = document.querySelectorAll('.studentCard');
+        let maxHeight = 0;
+
+
+        studentCards.forEach(card => {
+            card.style.height = '';
+            const height = card.getBoundingClientRect().height;
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        });
+
+
+        studentCards.forEach(card => {
+            card.style.height = `${maxHeight}px`;
+        });
+    }
+
+
+    document.addEventListener('DOMContentLoaded', setResponsiveHeights);
+
+
+    window.addEventListener('resize', setResponsiveHeights);
+
+
+</script>

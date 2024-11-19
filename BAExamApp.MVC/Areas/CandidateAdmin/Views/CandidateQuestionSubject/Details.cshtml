@@ -1,0 +1,132 @@
+﻿@model CandidateAdminQuestionSubjectDetailVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Subject_Details"];
+}
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <div class="card-header cursor-pointer">
+        <div class="card-title m-0">
+            <h5 class="text-center">@ViewLocalizer["Subject_Details"]</h5>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-secondary align-self-center ms-2" asp-controller="CandidateQuestionSubject" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+            <a class="btn btn-primary align-self-center ms-2" data-bs-toggle="modal" data-bs-target="#updateCandidateQuestionSubjectModal" data-subject-id="@Model.Id" data-subject-name="@Model.Name">
+                @SharedLocalizer["Update"]
+            </a>
+            @if (Model.Status == Status.Active)
+            {
+                <a class="btn btn-danger align-self-center ms-2 deleteAction" data-id="@Model.Id">@SharedLocalizer["Delete"]</a>
+            }
+            else if (Model.Status == Status.Passive)
+            {
+                <a class="btn btn-success align-self-center ms-2 activateAction" data-id="@Model.Id">@SharedLocalizer["Activate"]</a>
+            }
+        </div>
+    </div>
+    <div class="card-body p-9">
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted">@SharedLocalizer["Subject_Name"]:</label>
+            <div class="col-lg-10 fv-row">
+                <span class="fw-bold text-gray-800 fs-6">@Model.Name</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<partial name="~/Areas/CandidateAdmin/Views/CandidateQuestionSubject/_UpdatePartialView.cshtml" model="new CandidateAdminQuestionSubjectUpdateVM()" />
+
+
+@section Scripts
+{
+    <script src="~/js/CandidateQuestionSubjectUpdate.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script>
+        var deleteActionLocalizedTexts = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]',
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]',
+            confirmButtonText: '@SharedLocalizer["Confirm_Button_Text"]',
+            confirmPassiveButtonText: '@SharedLocalizer["Confirm_Passive_Button_Text"]',
+            confirmActiveButtonText: '@SharedLocalizer["Confirm_Active_Button_Text"]',
+            cancelButtonText: '@SharedLocalizer["Cancel_Button_Text"]',
+            cancel: '@SharedLocalizer["Cancel"]',
+            passiveTitle: '@SharedLocalizer["In_Use_SubjectTitle"]',
+            passiveText: '@SharedLocalizer["In_Use_SubjectText"]',
+            activeTitle: '@SharedLocalizer["Confirm_Active_Title"]',
+            activeText: '@SharedLocalizer["Confirm_Active_Text"]',
+            passiveActionButton: '@SharedLocalizer["Passive_Action_Button"]',
+            threeUsedTitle: '@SharedLocalizer["Three_Used_Title"]',
+            questionUsedSubjectTitle: '@SharedLocalizer["Question_Used_Subject_Title"]',
+            deleteActionButton: '@SharedLocalizer["Confirm_Button_Text"]',
+            deleteText: '@SharedLocalizer["Confirm_Delete_Text"]'
+        };
+
+        var updateActionLocalizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+        
+        $(".deleteAction, .activateAction").click(function () {
+            const id = $(this).attr("data-id");
+            const isActivateAction = $(this).hasClass("activateAction");
+            var title, text, confirmBtnText, deleteBtnColor;
+
+            if (isActivateAction) {
+                title = deleteActionLocalizedTexts.activeTitle;
+                text = deleteActionLocalizedTexts.activeText;
+                confirmBtnText = deleteActionLocalizedTexts.confirmActiveButtonText;
+                deleteBtnColor = '#28a745';
+            } else {
+                var isQuestionUsed = @Html.Raw(Json.Serialize(Model.IsQuestionUsed != null ? Model.IsQuestionUsed : false));
+
+                if (isQuestionUsed) {
+                    title = deleteActionLocalizedTexts.questionUsedSubjectTitle;
+                    text = deleteActionLocalizedTexts.passiveText;
+                    confirmBtnText = deleteActionLocalizedTexts.passiveActionButton;
+                } 
+                else {
+                    title = deleteActionLocalizedTexts.confirmTitle;
+                    text = deleteActionLocalizedTexts.deleteText;
+                    confirmBtnText = deleteActionLocalizedTexts.deleteActionButton;
+                }
+                deleteBtnColor = (isQuestionUsed) ? '#28a745' : '#d33';
+            }
+
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: deleteBtnColor,
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: confirmBtnText,
+                cancelButtonText: deleteActionLocalizedTexts.cancel
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const url = isActivateAction ? "@Url.Action("ChangeStatus")" : "@Url.Action("Delete")";
+                    $.ajax({
+                        type: "GET",
+                        url: url + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "@Url.Action("index")", 1000);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+
+    /
+    <script>
+      
+    </script>
+}
+

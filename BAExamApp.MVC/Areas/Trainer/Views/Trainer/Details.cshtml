@@ -1,0 +1,58 @@
+﻿@model TrainerTrainerDetailVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Trainer_Details"];
+}
+
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<div class="card">
+    <h2 class="page-title">@SharedLocalizer["Profile"]</h2>
+    <div class="card-wrapper">
+        <div class="flex-container">
+            <div class="profile__img">
+                @if (Model.Image != null)
+                {
+                    <img src="data:image/jpeg;base64,@Model.Image" alt="">
+                }
+                else
+                {
+                    <img src="~/images/blank-profile-picture.png" />
+                }
+            </div>
+            <div class="profile-container">
+                <div class="card-group-element">
+                    <label><b>@Html.DisplayNameFor(model => model.FirstName) :</b></label>
+                    <span>@Model.FirstName</span>
+                </div>
+                <div class="card-group-element">
+                    <label><b>@Html.DisplayNameFor(model => model.LastName) :</b></label>
+                    <span>@Model.LastName</span>
+                </div>
+                <div class="card-group-element">
+                    <label><b>@Html.DisplayNameFor(model => model.Gender) :</b></label>
+                    <span>@(Model.Gender == true ? SharedLocalizer["Man"] : SharedLocalizer["Woman"])</span>
+                </div>
+               @*  <div class="card-group-element">
+                    <label><b>@Html.DisplayNameFor(model => model.CityName) :</b></label>
+                    <span>@Model.CityName</span>
+                </div>
+                <div class="card-group-element">
+                    <label><b>@Html.DisplayNameFor(model => model.DateOfBirth) :</b></label>
+                    <span>@Model.DateOfBirth.ToShortDateString()</span>
+                </div> *@
+                <div class="form-actions">
+                    <div class="button-space"></div>
+
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-cancel">@SharedLocalizer["Cancel"]</a>
+
+                    <a class="btn btn-save" asp-controller="Trainer" asp-action="Update">@SharedLocalizer["Update"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

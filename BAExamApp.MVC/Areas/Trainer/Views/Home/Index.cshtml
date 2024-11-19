@@ -1,0 +1,30 @@
+﻿@using BAExamApp.MVC.Areas.Trainer.Models.DashboardVMs;
+@model TrainerDashboardVM
+@{
+    ViewData["Title"] = SharedLocalizer["Index"];
+}
+
+
+<div class="row mt-5 d-flex align-items-stretch">
+    <!-- En Başarılı Öğrenciler Bölümü -->
+    <div class="col-md-7 d-flex flex-column">
+        <div class="card flex-grow-1">
+            <partial name="~/Areas/Trainer/Views/Home/_PanelStudentsPartial.cshtml" />
+        </div>
+    </div>
+    <!-- Takvim Bölümü -->
+    <div class="col-md-5 d-flex flex-column">
+        <partial name="~/Areas/Trainer/Views/Home/_PanelCalendarPartial.cshtml" />
+    </div>
+</div>
+<!--Sorular Bölümü -->
+<div class="row mt-5">
+    <partial name="~/Areas/Trainer/Views/Home/_PanelQuestionsPartial.cshtml"></partial>
+</div>
+
+<style>
+    .fc-toolbar-title {
+        font-size: 16px !important;
+        font-weight: bold !important;
+    }
+</style>

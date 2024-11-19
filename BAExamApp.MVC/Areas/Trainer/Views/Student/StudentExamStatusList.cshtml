@@ -1,0 +1,60 @@
+﻿@using BAExamApp.Entities.DbSets;
+
+@model IEnumerable<StudentExamStatusForTrainerVM>
+@{
+    ViewData["Title"] = SharedLocalizer["Exams"];
+}
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <table class="table table-row-bordered datatable">
+                    <thead>
+                        <tr>
+                            <th>Sınav</th>
+                            <th>Tarih</th>
+                            <th>Sınav Durumu</th>
+                            <th>Mazeret Açıklaması</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var StudentWithExamScore in Model)
+                        {
+                            <tr>
+                                <td>@StudentWithExamScore?.ExamName</td>
+                                <td>@StudentWithExamScore?.ExamDateTime.ToShortDateString()</td>
+                                @if(StudentWithExamScore?.IsFinished == false)
+                                {
+                                    <td style="color:red;">Sınava Girilmedi ❌ </td>
+                                }
+                                <td>
+                                    @if (StudentWithExamScore?.ExcuseDescription == null)
+                                    {
+                                        <span class="post_category text-danger"><b>@SharedLocalizer["No_Excuse"]</b></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="post_category">@StudentWithExamScore?.ExcuseDescription</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/dataTable/~/js/main.js"></script>
+<script>
+    var classroomCount = @Model.Count();
+    window.onload = function () {
+        paginationSetupDropdown(classroomCount);
+    }
+</script>

@@ -1,0 +1,55 @@
+﻿@model AdminSubjectCreateVM
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Create_Subject", SharedLocalizer["Product"]];
+}
+
+<div class="modal fade" id="createSubjectModal" tabindex="-1" aria-labelledby="ProductAdd" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@SharedLocalizer["Create_New_Subject"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-controller="Subject" asp-action="Create" class="form" id="create-subject">
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label asp-for="Name" class="col-sm-2 col-form-label col-form-label-lg"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Name" type="text" class="form-control form-control-lg form-control-solid" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label col-form-label-lg required fw-bold fs-6 mb-2">@SharedLocalizer["Products"]</label>
+                        <div class="col-sm-10">
+                            <select id="productSelect" asp-for="ProductIds" asp-items="@ViewBag.Products" data-placeholder="@SharedLocalizer["Choose"]" class="form-control form-control-lg form-control-solid" multiple="multiple">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="ProductIds" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-light align-self-center ms-2" asp-controller="Subject" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+                    <button class="btn btn-primary" type="submit">@SharedLocalizer["Save"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function () {
+        $('#productSelect').select2({
+            placeholder: '@SharedLocalizer["Choose"]',
+            allowClear: true
+        });
+    });
+</script>

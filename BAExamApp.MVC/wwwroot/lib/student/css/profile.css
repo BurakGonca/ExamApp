@@ -1,0 +1,52 @@
+﻿#photo-student {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+#photo-student-pic {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+    #photo-student-pic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+#detail, #detail-2 {
+    margin-bottom: 10px;
+}
+#detail {
+    font-weight: bold;
+    color: darkgreen;
+}
+
+#buttonbtn {
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    #buttonbtn:hover {
+        background-color: #218838;
+    }
+
+#bh-bg {
+    line-height: 2.00 !important;
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+}

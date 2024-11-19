@@ -1,0 +1,374 @@
+﻿@using BAExamApp.MVC.Areas.Trainer.Models.Revision;
+@model RevisionDetails
+
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Question_Revision_List", SharedLocalizer["Question"]];
+}
+
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<section>
+    <div class="card-body row fs-6 py-15 px-10 py-lg-15 px-lg-15">
+        <div class="col-lg-6 mb-3">
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">@Html.DisplayNameFor(model => model.QuestionDetails.CreatedDate) :</label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">@Model.QuestionDetails.CreatedDate.ToShortDateString()</span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">@Html.DisplayNameFor(model => model.QuestionDetails.SubjectName) :</label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @foreach (var subject in Model.QuestionDetails.CommonSubjectAndSubtopics.Keys)
+                        {
+                            <div>
+                                @subject
+                            </div>
+                        }
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">@Html.DisplayNameFor(model => model.QuestionDetails.SubtopicName) :</label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @foreach (var commonSubjectAndSubtopics in Model.QuestionDetails.CommonSubjectAndSubtopics)
+                        {
+                            <div>
+                                @foreach (var subtopic in commonSubjectAndSubtopics.Value)
+                                {
+                                    @subtopic
+                                    <br />
+                                }
+                            </div>
+                        }
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionDetails.QuestionType) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionDetails.QuestionType)
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionDetails.QuestionDifficultyName) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionDetails.QuestionDifficultyName)
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionDetails.TimeGiven) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionDetails.TimeGiven)
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionDetails.Target) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionDetails.Target)
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionDetails.Gains) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionDetails.Gains)
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.QuestionDetails.Content) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.QuestionDetails.Content)
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        @if (Model.QuestionDetails.Image != null)
+        {
+            <div class="row col-lg-4 mb-3">
+                <label class=" fw-bold text-muted mb-3">
+                    @Html.DisplayNameFor(model => model.QuestionDetails.Image)
+                </label>
+                <div class="image-input image-input-outline fv-row"
+                 data-kt-image-input="true">
+                    <div class="col-lg-12"
+                     style="display: flex; justify-content: flex-start">
+                        <img id="defaultImage"
+                         class="col-lg-12 img-fluid"
+                         src="data:image/jpeg;base64,@Model.QuestionDetails.Image"
+                         alt="Profile" />
+                    </div>
+                </div>
+            </div>
+        }
+        <hr />
+        <div class="row mb-7">
+            <label class="w-150px fw-bold text-muted">
+                @Html.DisplayNameFor(model => model.QuestionDetails.QuestionAnswers) :
+            </label>
+            <div class="col-xl-10 col-12">
+                @if (Model.QuestionDetails.QuestionType == QuestionType.TrueFalse)
+                {
+                    @foreach (var item in Model.QuestionDetails.QuestionAnswers)
+                    {
+                        @if (item.IsRightAnswer)
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                         class="col-lg-12 img-fluid"
+                         src="@item.Answer"
+                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                         alt="Profile" />
+                                    <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                    <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </p>
+                            }
+                        }
+                        else
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                         class="col-lg-12 img-fluid"
+                         src="@item.Answer"
+                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                         alt="Profile" />
+                                </div>
+
+                            }
+                            else
+                            {
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                </p>
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    @foreach (var item in Model.QuestionDetails.QuestionAnswers)
+                    {
+                        @if (item.IsRightAnswer)
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                         class="col-lg-12 img-fluid"
+                         src="@item.Answer"
+                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                         alt="Profile" />
+                                    <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                    <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                                </p>
+                            }
+                        }
+                        else
+                        {
+                            @if (item.IsAnswerImage)
+                            {
+                                <div class="col-lg-12">
+                                    <img id="defaultImage"
+                         class="col-lg-12 img-fluid"
+                         src="@item.Answer"
+                         style="max-height:150px;max-width:300px; margin-bottom:20px;"
+                         alt="Profile" />
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="fw-bolder fs-6 text-gray-800">
+                                    @SharedLocalizer[item.Answer]
+                                </p>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+       
+        @if (Model.QuestionDetails.State == State.Rejected)
+        {
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-text">@SharedLocalizer["Rejection_Note"] :</span>
+                    <textarea rows="1" asp-for="QuestionDetails.RejectComment" class="form-control" rows="3" disabled></textarea>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>
+
+
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+                <h5 class="card-title">@SharedLocalizer["Question_Revision_List", SharedLocalizer["Question"]]</h5>
+                <table class="table table-row-bordered datatable">
+                    <thead>
+                        
+
+                        <tr class="text-center">
+                            <th class="text-center fw-bold text-muted ">@Html.DisplayNameFor(model => model.QuestionRevisionListVMs.First().RequesterAdminName)</th>
+                            <th class="text-center fw-bold text-muted">@Html.DisplayNameFor(model => model.QuestionRevisionListVMs.FirstOrDefault().RequestedTrainerName)</th>
+                            <th class="text-center fw-bold text-muted">@SharedLocalizer["Question_CompletionDate"]</th>
+                            <th class="text-center fw-bold text-muted">@Html.DisplayNameFor(model => model.QuestionRevisionListVMs.FirstOrDefault().RequestDescription)</th>
+                            <th class="text-center fw-bold text-muted">@Html.DisplayNameFor(model => model.QuestionRevisionListVMs.FirstOrDefault().RevisionConclusion)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model is not null && Model.QuestionRevisionListVMs.Any())
+                        {
+                            @foreach (var item in Model.QuestionRevisionListVMs)
+                            {
+                                <tr>
+                                   
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RequesterAdminName</span>
+                                        </a>
+                                    </td>
+
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RequestedTrainerName</span>
+                                        </a>
+                                    </td>
+
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.ModifiedDate.ToString("dd.MM.yyyy")</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RequestDescription</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RevisionConclusion</span>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="categories text-center">
+                                    @SharedLocalizer["No_Data"]
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="pagination-controls">
+                    <select id="rowsPerPage" class="form-control form-control-sm" onchange="paginateTable()">
+                        <option value="10">10</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <span id="paginationInfo" class="pagination-info"></span>
+                    <button class="btn btn-sm btn-primary" onclick="prevPage()">&#171;</button>
+                    <button class="btn btn-sm btn-primary" onclick="nextPage()">&#187;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var currentPage = 1;
+    var rowsPerPage = 25;
+
+    function paginateTable() {
+        var table, tr, i;
+        table = document.getElementById("revisionTable");
+        tr = table.getElementsByTagName("tr");
+        rowsPerPage = document.getElementById("rowsPerPage").value;
+        for (i = 0; i < tr.length; i++) {
+            tr[i].style.display = "none";
+        }
+        for (i = (currentPage - 1) * rowsPerPage; i < currentPage * rowsPerPage && i < tr.length; i++) {
+            tr[i].style.display = "";
+        }
+        document.getElementById("paginationInfo").innerText = `Showing page ${currentPage} of ${Math.ceil(tr.length / rowsPerPage)}`;
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            paginateTable();
+        }
+    }
+
+    function nextPage() {
+        var table, tr;
+        table = document.getElementById("revisionTable");
+        tr = table.getElementsByTagName("tr");
+        if (currentPage * rowsPerPage < tr.length) {
+            currentPage++;
+            paginateTable();
+        }
+    }
+
+    window.onload = function () {
+        paginateTable();
+    }
+</script>
+
+
+

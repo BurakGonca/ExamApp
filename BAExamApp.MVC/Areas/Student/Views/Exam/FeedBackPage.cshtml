@@ -1,0 +1,75 @@
+﻿@model StudentStudentExamExcuseVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mazeretiniz İletildi</title>
+    <style>
+        body {
+            background-color: #F0F0F0;
+            color: #423F3E;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .message {
+            color: #0F0E0E;
+        }
+
+        .text-bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div style="text-align:start; display:flex; justify-content:center;">
+            <table style="text-align:left;">
+                <tr>
+                    <th class="message">Sınav Adı</th>
+                    <td class="text-bold message">: @Model.ExamName</td>
+                </tr>
+                <tr>
+                    <th class="message">Sınav Tarihi</th>
+                    <td class="text-bold message">: @Model.ExamDateTime</td>
+                </tr>
+                <tr>
+                    <th class="message">Sınav Süresi</th>
+                    <td class="text-bold message">: @($"{Model.ExamDuration.Hours:D2}:{Model.ExamDuration.Minutes:D2}")</td>
+                </tr>
+            </table>
+        </div>
+        <h2 class="message" style="max-width: 880px;">
+            Mazeret:  @{
+                if (Model.ExcuseDescription != null)
+                {
+                    <span style="color:crimson">
+                        "@Model.ExcuseDescription"
+                    </span>
+                }
+                else
+                {
+                    <span style="color:crimson">
+                        Mazeret Bildirilmedi.
+                    </span>
+                }
+            }
+            </h2>
+
+            <h1 class="message">Mazeretiniz eğitmeninize başarılı bir şekilde iletilmiştir. 👍 </h1>
+        </div>
+    </body>
+    </html>

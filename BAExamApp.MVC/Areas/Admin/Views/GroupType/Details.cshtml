@@ -1,0 +1,85 @@
+﻿@model AdminGroupTypeDetailVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Group_Type_Details"];
+}
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <!--begin::Card header-->
+    <div class="card-header cursor-pointer d-flex justify-content-between align-content-center">
+        <!--begin::Card title-->
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="gap-5">
+            <a class="btn btn-secondary align-self-center" asp-controller="GroupType" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+            <a class="btn btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#updateSubjectModal" asp-route-id="@Model.Id" data-item-id="@Model.Id" data-item-name="@Model.Name" data-item-information="@Model.Information" data-kt-users-table-filter="delete_row">@SharedLocalizer["Update"]</a>
+            <a class="btn btn-danger align-self-center deleteAction" data-id="@Model.Id">@SharedLocalizer["Delete"]</a>
+        </div>
+        <!--end::Card title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body p-9">
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted" asp-for="Name"></label>
+            <div class="col-lg-10 fv-row">
+                <span class="fw-bold text-gray-800 fs-6">@Model.Name</span>
+            </div>
+        </div>
+        <div class="row mb-7">
+            <label class="col-lg-2 fw-bold text-muted" asp-for="Information"></label>
+            <div class="col-lg-10">
+                <span class="fw-bold fs-6 text-gray-800">@Model.Information</span>
+            </div>
+        </div>
+    </div>
+    <!--end::Card body-->
+</div>
+
+<partial name="~/Areas/Admin/Views/GroupType/Update.cshtml" model="new AdminGroupTypeUpdateVM()"></partial>
+
+@section Scripts
+    {
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/createGroupType.js"></script>
+    <script>
+        var localizedTexts = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]', // "fullName adlı admini silmek istediğinize emin misiniz?"
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]', // "Bu işlem geri alınamaz!"
+            confirmButtonText2: '@SharedLocalizer["Confirm_Button_Text"]', // "Evet, sil!"
+            cancelButtonText2: '@SharedLocalizer["Cancel_Button_Text"]', // "Hayır, iptal et"
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+            Swal.fire({
+                title: `${localizedTexts.confirmTitle}`,
+                text: localizedTexts.confirmText,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: localizedTexts.confirmButtonText2,
+                cancelButtonText: localizedTexts.cancelButtonText2
+            }).then((e) => {
+                if (e.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("Delete")" + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "@Url.Action("index")", 2000)
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

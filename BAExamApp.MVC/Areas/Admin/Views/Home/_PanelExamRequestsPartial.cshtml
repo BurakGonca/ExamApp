@@ -1,0 +1,257 @@
+﻿@using BAExamApp.MVC.Areas.Admin.Models.DashboardVMs
+@model DashboardVM
+
+<link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+
+<div class="col">
+    <div class="card card-xl-stretch mb-xl-8 panel-question-requests mt-4 p-3 h-400px overflow-auto">
+        <div class="border-0 text-center d-flex justify-content-between pt-5 pb-5 card-header-sticky">
+            <div class="card-title d-flex align-items-center pt-4">
+                <h3 class="fw-bolder text-dark">@SharedLocalizer["Questions"]</h3>
+            </div>
+
+            <div class="border-0 d-flex justify-content-center align-items-center">
+                <ul class="nav nav-pills justify-content-center" id="questionTabs" role="tablist">
+
+                    <li class="nav-item" role="presentation">
+                        <a href="@Url.Action("Index", new { status = State.Awaited, tab = "awaited" })"
+                           class="nav-link @(ViewBag.ActiveTab == "awaited" ? "active" : "")"
+                           id="tab2-tab" role="tab" aria-controls="tab2" aria-selected="@(ViewBag.ActiveTab == "awaited")">
+                            @SharedLocalizer["Awaited_Questions"]
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="@Url.Action("Index", new { status = State.Reviewed, tab = "reviewed" })"
+                           class="nav-link @(ViewBag.ActiveTab == "reviewed" ? "active" : "")"
+                           id="tab3-tab" role="tab" aria-controls="tab3" aria-selected="@(ViewBag.ActiveTab == "reviewed")">
+                            @SharedLocalizer["Reviewed_Questions"]
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content table-responsiveExam" id="questionTabsContent">
+            
+            <div class="tab-pane fade @(ViewBag.ActiveTab == "awaited" ? "show active" : "")" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                @if (Model != null && Model.AwaitedQuestion != null)
+                {
+                    <table class="table table-bordered text-center custom-table">
+                        <thead class="thead-sticky">
+                            <tr class="text-muted">
+                                <th class="">@SharedLocalizer["Question_Content"]</th>
+                                <th class="" style="padding:0px;">
+                                    <select class="form-select form-select-solid text-muted" id="ProductAwaited" name="ProductNameAwaited" asp-items="ViewBag.ProductList" onchange="onLoadSubjectChange('awaited')">
+                                        <option value="">@SharedLocalizer["Product"]</option>
+                                    </select>
+                                </th>
+                                <th class="">@SharedLocalizer["Added_By_Question"]</th>
+                                <th class="text-end pe-1">@SharedLocalizer["Created_Date"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var question in Model.AwaitedQuestion)
+                            {
+                                <tr>
+                                    <td class="">
+                                        <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="Admin/Question/QuestionDetails/@question.Id">
+                                            @(question.Content != null && question.Content.Length > 30 ? question.Content.Substring(0, 30) + "..." : question.Content ?? "No Content")
+                                        </a>
+                                    </td>
+                                    <td class="">
+                                        @* Ürün detay sayfasına yönlendirme *@
+                                        <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="Admin/Product/Details/@question.ProductId">
+                                            @(question.ProductName != null && question.ProductName.Length > 30 ? question.ProductName.Substring(0, 30) + "..." : question.ProductName ?? "No Content")
+                                        </a>
+                                    </td>
+                                    <td class="">
+                                        <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="@(
+                                question.IsAdmin
+                                ? Url.Action("Details", "Admin", new { area = "Admin", id = question.AdminId })
+                                : Url.Action("Details", "Trainer", new { area = "Admin", id = question.TrainerId })
+                            )">
+                                            @question.AddedByFullName
+                                        </a>
+                                    </td>
+                                    <td style="padding-left:86px;" class="text-start">@question.CreatedDate.ToShortDateString()</td>
+                                </tr>
+                                <tr class="table-divider"></tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No questions available.</p>
+                }
+            </div>
+
+            
+            <div class="tab-pane fade @(ViewBag.ActiveTab == "reviewed" ? "show active" : "")" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                @if (Model != null && Model.RevisionQuestions != null)
+                {
+                    <table class="table table-bordered text-center custom-table">
+                        <thead class="thead-sticky">
+                            <tr class="text-muted">
+                                <th class="">@SharedLocalizer["Question_Content"]</th>
+                                <th class="" style="padding:0px;">
+                                    <select class="form-select form-select-solid text-muted" id="ProductReviewed" name="ProductNameReviewed" asp-items="ViewBag.ProductList" onchange="onLoadSubjectChange('reviewed')">
+                                        <option value="">@SharedLocalizer["Product"]</option>
+                                    </select>
+                                </th>
+                                <th class="">@SharedLocalizer["Added_By_Question"]</th>
+                                <th class="text-end pe-1">@SharedLocalizer["Created_Date"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var question in Model.RevisionQuestions)
+                            {
+                                <tr>
+                                    <td class="">
+                                        <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="Admin/Question/QuestionDetails/@question.Id">
+                                            @(question.Content != null && question.Content.Length > 30 ? question.Content.Substring(0, 30) + "..." : question.Content ?? "No Content")
+                                        </a>
+                                    </td>
+                                    <td class="">
+                                        <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="Admin/Question/QuestionDetails/@question.Id">
+                                            @(question.ProductName != null && question.ProductName.Length > 30 ? question.ProductName.Substring(0, 30) + "..." : question.ProductName ?? "No Content")
+                                        </a>
+                                    </td>
+                                    <td class="">
+                                        <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="@(
+                                question.IsAdmin
+                                ? Url.Action("Details", "Admin", new { area = "Admin", id = question.AdminId })
+                                : Url.Action("Details", "Trainer", new { area = "Admin", id = question.TrainerId })
+                            )">
+                                            @question.AddedByFullName
+                                        </a>
+                                    </td>
+                                    <td style="padding-left:86px;" class="text-start">@question.CreatedDate.ToShortDateString()</td>
+                                </tr>
+                                <tr class="table-divider"></tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No questions available.</p>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Scroll bar eski konuma getirme-->
+<script>
+    window.addEventListener("beforeunload", function () {
+        localStorage.setItem("scrollPosition", window.scrollY);
+    });
+
+    window.addEventListener("load", function () {
+        var scrollPosition = localStorage.getItem("scrollPosition");
+        if (scrollPosition) {
+            window.scroll({
+                top: parseInt(scrollPosition),
+                left: 0,
+                behavior: 'smooth'
+            });
+        }
+    });
+
+    function onLoadSubjectChange(tab) {
+        var productId;
+
+        
+        if (tab === 'awaited') {
+            productId = document.getElementById('ProductAwaited').value; 
+        } else {
+            productId = document.getElementById('ProductReviewed').value; 
+        }
+
+        var currentTab = '@ViewBag.ActiveTab'; 
+
+        
+        if (!productId) {
+            alert("Lütfen bir konu seçin."); 
+            return; 
+        }
+
+        
+        if (currentTab === 'reviewed') {
+            window.location.href = '/Admin/Home/Index?productId=' + productId + '&status=Reviewed&tab=reviewed';
+        } else {
+            window.location.href = '/Admin/Home/Index?productId=' + productId + '&status=Awaited&tab=awaited';
+        }
+    }
+
+
+
+</script>
+
+<style>
+
+    /* Anasayfadaki sorular kısmındaki başlıgını ve sekme kısmını sabitleme */
+    .card-header-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: white;
+        padding-top: 5px; 
+        padding-bottom: 5px; 
+    }
+
+    /* Anasayfadaki sorular kısmındaki tablonun başlık kısmını sabitleme */
+    .thead-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        background-color: white;
+        padding-bottom: 5px;
+    }
+
+    /* tablonun scroll kısmını düzenleme */
+    .table-responsiveExam {
+        max-height: 300px; 
+        overflow-y: auto; 
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    table.custom-table th {
+        font-weight: bold;
+        font-size: 15px;
+        width: 200px;
+        text-align: start;
+    }
+
+    table.custom-table select {
+        font-weight: bold;
+        background-color: #f8f9fa;
+        font-size: 15px;
+    }
+
+    table.custom-table tr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    table.custom-table td {
+        width: 200px;
+        text-align: start;
+    }
+
+    table.custom-table .table-divider {
+        height: 1px;
+        background-color: rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+
+    table.custom-table td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+</style>

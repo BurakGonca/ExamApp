@@ -1,0 +1,19 @@
+﻿@using BAExamApp.MVC
+@using BAExamApp.Core.Enums
+@using BAExamApp.Entities.Enums
+@using BAExamApp.MVC.Areas.Trainer.Models.QuestionVMs
+@using BAExamApp.MVC.Areas.Trainer.Models.QuestionAnswerVMs
+@using BAExamApp.MVC.Areas.Trainer.Models.ClassroomVMs
+@using BAExamApp.MVC.Areas.Trainer.Models.StudentVMs
+@using BAExamApp.MVC.Areas.Trainer.Models.TrainerVMs
+@using BAExamApp.MVC.Areas.Trainer.Models.ExamEvaluatorVMs
+@using BAExamApp.MVC.Areas.Trainer.Models.ExamVMs
+@using Microsoft.AspNetCore.Html;
+@using BAExamApp.MVC.Areas.Trainer.Models.QuestionRevisionVMs;
+@using BAExamApp.MVC.Areas.Student.Models.StudentExamVMs
+
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer ViewLocalizer
+@inject Microsoft.AspNetCore.Mvc.Localization.IHtmlLocalizer<SharedModelResource> SharedLocalizer

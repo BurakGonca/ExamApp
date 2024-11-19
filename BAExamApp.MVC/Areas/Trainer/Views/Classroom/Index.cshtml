@@ -1,0 +1,303 @@
+﻿@model IEnumerable<TrainerClassroomListVM>
+
+@{
+    ViewData["Title"] = SharedLocalizer["List", SharedLocalizer["Classroom"]];
+}
+
+<head>
+    <link href="~/css/classroom-filter.css" rel="stylesheet" />
+    <link href="~/newlayouts/dist/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/newlayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    
+</head>
+
+<section class="section dashboard">
+    <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+        <div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 text-gray-700">
+            <div class="d-flex justify-content-between">
+
+                <h5 style="display: flex; align-items: center;">
+                    @SharedLocalizer["Classroom_List"]
+                </h5>
+            </div>
+
+            <div id="kt_datatable_example_1_wrapper" class="dataTables_wrapper dt-bootstrap-4 no-footer">
+                <div class="table-responsive">
+                    @if (ViewBag.ShowAllData == false)
+                    {
+                    }
+                    else
+                    {
+                        <table id="kt_datatable_example_1" class="table table-row-dashed fs-6 gy-5">
+
+                            <thead>
+
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+
+                                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+
+                                    <th>@Html.DisplayNameFor(model => model.OpeningDate)</th>
+
+                                    <th>@Html.DisplayNameFor(model => model.ClosedDate)</th>
+
+                                    <th>@SharedLocalizer["Classroom_Operations"]</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 fw-bold ">
+
+                                @foreach (var item in Model)
+
+                                {
+
+                                    if (!string.IsNullOrEmpty(item.Name))
+
+                                    {
+
+                                        <tr>
+
+                                            <td class="categories text-start">
+
+                                                <a title="Eğitmenler: @item.Name">
+
+                                                    <span class="post_category">@item.Name</span>
+
+                                                </a>
+
+                                            </td>
+
+                                            <td class="categories text-start">
+
+                                                <a>
+
+                                                    <span class="post_category">@item.OpeningDate.ToShortDateString()</span>
+
+                                                </a>
+
+                                            </td>
+
+                                            <td class="categories text-start">
+
+                                                <a>
+
+                                                    <span class="post_category">@item.ClosedDate.ToShortDateString()</span>
+
+                                                </a>
+
+                                            </td>
+                                            <td class="text-start">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        @SharedLocalizer["Options"]
+                                                        <span class="svg-icon fs-5 m-0">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                                    <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="currentColor" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                                        <li>
+                                                            <a class="dropdown-item" asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            // Sayfa kaydırıldığında çalışacak scroll olayını dinle
+            $(window).on('scroll', function () {
+                // Bootstrap'in dropdown metodu ile açık olan tüm dropdown menülerini kapat
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+    </script>
+
+    <script>
+        var localizer = {
+			emptyTable: '@SharedLocalizer["Empty_Data"]',
+			infoEmpty: '@SharedLocalizer["Info_Empty"]',
+			infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+			zeroRecords: '@SharedLocalizer["Zero_Records"]'
+		};
+
+        $(document).ready(function () {
+
+            var dt = $("#kt_datatable_example_1").DataTable({
+
+                pageLength: 25, // Set default page length to 25
+                lengthMenu: [10, 25, 50, 100], // Include 25 in length menu options
+
+                dom:
+
+                    '<"row"<"col-sm-12"t>>' +
+
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+
+                language: {
+
+                    emptyTable: localizer.emptyTable,
+					infoEmpty: localizer.infoEmpty,
+					infoFiltered: localizer.infoFiltered,
+					zeroRecords: localizer.zeroRecords
+                },
+
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_1_length"]', function () {
+
+                dt.page.len($(this).val()).draw();
+
+                $(this).css({
+
+                    'border': '0 solid transparent',
+
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+
+                });
+
+            });
+
+            // dt.on('draw.dt', function () {
+
+            //     updateInfoText(dt.page.info());
+
+            // });
+
+            // function updateInfoText(pageInfo) {
+
+            //     var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+
+            //     $('#kt_datatable_example_1_info').html(infoText).css({
+
+            //         'margin-top': '6px',
+
+            //         'font-size': '14px',
+
+            //         'font-family': 'Poppins, Helvetica, sans- serif',
+
+            //     });
+
+            // }
+
+            // updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+
+                var prevButton = $('#kt_datatable_example_1_previous a');
+
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_example_1_next a');
+
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_example_1_paginate .page-item');
+
+                var activePage = $('#kt_datatable_example_1_paginate .page-item.active a');
+
+                activePage.css({
+
+                    'color': '#ffffff'
+
+                });
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw.dt', function () {
+
+                updatePaginationArrows();
+
+            });
+
+        });
+        $(document).ready(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip({
+                title: function () {
+                    return $(this).attr('data-bs-original-title');
+                }
+            });
+        });
+        function onSubmitForm() {
+            var searchButton = document.getElementById("searchButton");
+
+            var nameSelect = document.getElementById("name");
+            var branchSelect = document.getElementById("branchName");
+            var groupTypeSelect = document.getElementById("groupType");
+            var openingDateInput = document.getElementById("openingDate");
+            var closedDateInput = document.getElementById("closedDate");
+
+            if (!nameSelect.value && !branchSelect.value && !groupTypeSelect.value && !openingDateInput.value && !closedDateInput.value) {
+
+                window.location.href = "@Url.Action("Index", new { showAllData = true })";
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var divElements = document.querySelectorAll('div');
+
+            divElements.forEach(function (divElement) {
+
+                var selectElement = divElement.querySelector('select');
+
+                if (selectElement) {
+
+                    sortSelectOptionsAlphabetically(selectElement);
+
+                }
+
+            });
+
+            function sortSelectOptionsAlphabetically(selectElement) {
+
+                var options = Array.from(selectElement.options);
+
+                options.sort(function (a, b) {
+
+                    return a.text.localeCompare(b.text);
+
+                });
+
+                options.forEach(function (option) {
+
+                    selectElement.add(option);
+
+                });
+
+            }
+
+        });
+
+    </script>
+
+}
+

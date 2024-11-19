@@ -1,0 +1,117 @@
+﻿@using BAExamApp.MVC.Areas.Trainer.Models.DashboardVMs
+@model TrainerDashboardVM
+
+@{
+    List<DashboardQuestionVM> questions = Model.QuestionList;
+
+}
+
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<div class="col">
+    <div class="card card-xl-stretch mb-xl-8 panel-question-requests mt-4 p-3 h-400px overflow-auto">
+
+        <div class="card-header border-0 text-center">
+            <h3 class="card-title fw-bolder text-dark">Sorular</h3>
+        </div>
+        <div class="border-0 d-flex justify-content-center">
+
+            <ul class="nav nav-pills justify-content-center" id="questionTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="tab1-tab" data-bs-toggle="pill" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Onaylanan Sorular</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="tab2-tab" data-bs-toggle="pill" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">Onay Bekleyen Sorular</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="tab3-tab" data-bs-toggle="pill" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">Revize Bekleyen Sorular</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content mt-3" id="questionTabsContent">
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                @if (Model != null)
+                {
+                    foreach (var question in Model.QuestionList)
+                    {
+                        if (question.State == State.Approved)
+                        {
+                            <div class="mb-4">
+                                <i class="bi bi-body-text"></i>
+                                <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="Trainer/Question/QuestionList?state=Approved">
+                                    @(question.Content != null && question.Content.Length > 40 ? question.Content.Substring(0, 40) + "..." : question.Content ?? "No Content")
+                                </a>
+
+                                <a class="text-muted fw-bold d-block">
+                                    Oluşturulma Tarihi: @question.CreatedDate.ToShortDateString()
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No questions available.</p>
+                }
+            </div>
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                @if (Model != null)
+                {
+                    foreach (var question in Model.QuestionList)
+                    {
+                        if (question.State == State.Awaited)
+                        {
+                            <div class="mb-4">
+                                <i class="bi bi-body-text"></i>
+                                <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="Trainer/Question/QuestionList?state=Awaited">
+                                    @(question.Content != null && question.Content.Length > 40 ? question.Content.Substring(0, 40) + "..." : question.Content ?? "No Content")
+                                </a>
+
+                                <a class="text-muted fw-bold d-block">
+                                    Oluşturulma Tarihi: @question.CreatedDate.ToShortDateString()
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No questions available.</p>
+                }
+            </div>
+            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                @if (Model != null)
+                {
+                    foreach (var question in Model.QuestionList)
+                    {
+                        if (question.State == State.Reviewed)
+                        {
+                            <div class="mb-4">
+                                <i class="bi bi-body-text"></i>
+                                <a class="text-gray-800 text-hover-primary fw-bolder fs-6" href="Trainer/Question/QuestionList?state=Reviewed">
+
+                                    @(question.Content != null && question.Content.Length > 40 ? question.Content.Substring(0, 40) + "..." : question.Content ?? "No Content")
+                                </a>
+
+                                <a class="text-muted fw-bold d-block">
+                                    Oluşturulma Tarihi: @question.CreatedDate.ToShortDateString()
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No questions available.</p>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

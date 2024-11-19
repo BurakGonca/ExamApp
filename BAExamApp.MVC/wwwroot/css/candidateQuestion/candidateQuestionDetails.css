@@ -1,0 +1,71 @@
+﻿.arrange-history-table-container {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1056;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.arrange-table {
+    width: 750px;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-family: Poppins, Helvetica, sans-serif;
+}
+
+    .arrange-table > thead {
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .arrange-table > tbody {
+        text-align: left;
+        border-top: 1px solid currentcolor !important;
+    }
+
+        .arrange-table > tbody > tr > td > div {
+            overflow-x: auto;
+            max-width: 460px;
+            max-height: 40px;
+            word-wrap: break-word;
+        }
+
+.arrange-container-card {
+    box-shadow: 0px 0px 10px rgba(5, 5, 5, 2);
+    background-color: white;
+    border-radius: 10px;
+    max-height: 250px;
+    overflow-x: auto;
+    max-width: 900px;
+}
+
+.flex-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.image-container-details {
+    flex: 1;
+}
+
+#defaultImage {
+    max-width: 400px;
+    max-height: 450px;
+}
+
+.answer-image {
+    max-width: 320px;
+}
+
+.badge-success {
+    font-size: 1.15rem;
+    padding: 0.5rem 1rem;
+}

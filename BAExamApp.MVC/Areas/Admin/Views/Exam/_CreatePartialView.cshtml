@@ -1,0 +1,150 @@
+﻿@model AdminExamCreateVM
+
+@{
+    ViewData["Title"] = @ViewLocalizer["Create_Exam"];
+}
+
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_create_exam" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_create_exam_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bolder">@ViewLocalizer["Create_Exam"]</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-exam-modal-action="close">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-1 mx-xl-1 my-7">
+                <!--begin::Form-->
+                <form asp-action="Create" asp-controller="Exam" asp-area="Admin" id="kt_modal_add_exam_form" class="form" enctype="multipart/form-data" method="post">
+                    <div class="row mb-3">
+                        <div class="col-sm-6 ">
+                            <div class="fv-row form-floating mb-7">
+                                <select class="form-select form-select-sm form-select-solid" asp-for="ExamType" asp-items="@ViewBag.ExamTypes" onchange="onExamTypeChange()">
+                                    <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                </select>
+                                <label asp-for="ExamType" class="required fw-bold fs-6 mb-2 text-muted">@SharedLocalizer["Exam_Type"]</label>
+                                <span asp-validation-for="ExamType" class="text-danger"></span>
+                            </div>
+                            <div class="fv-row form-floating mb-7">
+                                <select class="form-select form-select-sm form-select-solid" asp-for="ExamRuleId" id="ExamRuleId">
+                                    <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                </select>
+                                <label asp-for="ExamRuleId" class="required fw-bold fs-6 mb-2 text-muted"></label>
+                                <span asp-validation-for="ExamRuleId" class="text-danger"> </span>
+                            </div>
+                            <div class="fv-row form-floating mb-7">
+                                <input asp-for="ExamDateTime" type="datetime" asp-format="{0:dd/MM/yyyy HH:mm}" class="form-control form-control-solid" id="ExamDateTime" />
+                                <label asp-for="ExamDateTime">@ViewLocalizer["Exam_Date_and_Time"]</label>
+                                <span asp-validation-for="ExamDateTime" class="text-danger"></span>
+                            </div>
+                            <div class="fv-row form-floating mb-7">
+                                <input class="form-control form-control-solid" id="ExamDuration" asp-for="ExamDuration" />
+
+                                <label asp-for="ExamDuration">@ViewLocalizer["Exam_Duration"]</label>
+                                <span asp-validation-for="ExamDuration" class="text-danger"></span>
+                            </div>
+                         <div>
+                        
+                           
+                            
+                        </div>
+                        <!--begin::Actions-->
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-kt-exam-modal-action="cancel">@SharedLocalizer["Back_List"]</button>
+                            <button type="submit" class="btn btn-primary" data-kt-exam-modal-action="submit">
+                                <span class="indicator-label">@SharedLocalizer["Save"]</span>
+                                <span class="indicator-progress">
+                                    @SharedLocalizer["Please_Wait"]
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                        <div class="col-sm-6">
+
+                            <div class="fv-row form-floating mb-7">
+                                <input type="number" class="form-control form-control-solid" asp-for="MaxScore">
+                                <label asp-for="MaxScore" class="required fw-bold fs-6 mb-2 text-muted">@SharedLocalizer["Max_Score"]</label>
+                                <span asp-validation-for="MaxScore" class="text-danger"></span>
+                            </div>
+                            <div class="fv-row form-floating mb-7">
+                                <input type="number" class="form-control form-control-solid" asp-for="BonusScore">
+                                <label asp-for="BonusScore" class="required fw-bold fs-6 mb-2 text-muted">@SharedLocalizer["Bonus_Score"]</label>
+                                <span asp-validation-for="BonusScore" class="text-danger"></span>
+                            </div>
+
+                            <div class="fv-row form-floating mb-7">
+                                <select class="form-select form-select-sm form-select-solid" asp-for="ExamCreationType" asp-items="@ViewBag.ExamCreationTypes">
+                                    <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                                </select>
+                                <label asp-for="ExamCreationType" class="required fw-bold fs-6 mb-2 text-muted"></label>
+                                <span asp-validation-for="ExamCreationType" class="text-danger"></span>
+                            </div>
+                            <div class="fv-row form-floating mb-7" id="studentclassroomcard">
+                                <select asp-for="ExamClassroomsIds" asp-items="ViewBag.Classrooms" class="form-select form-select-lg form-select-solid select2-dropdown" data-control="select2" data-close-on-select="false" data-placeholder="@SharedLocalizer["Choose"]" data-allow-clear="false" multiple="multiple">
+                                </select>
+                                <label asp-for="ExamClassroomsIds" class="required fw-bold fs-6 mb-2 text-muted">@SharedLocalizer["Exam_Classroom"]</label>
+                                <span asp-validation-for="ExamClassroomsIds" class="text-danger"></span>
+                            </div>
+                            <div id="studentArea">
+                                <div class="fv-row form-floating mb-7">
+                                    <select asp-for="StudentIds" class="form-select form-select-lg form-select-solid p-3" data-control="select2" data-close-on-select="false" data-allow-clear="false" multiple="multiple" data-search="false" id="studentSelect">
+                                    </select>
+                                    <label asp-for="StudentIds" class="required fw-bold fs-6 mb-2 text-muted">Öğrenciler</label>
+                                    <span asp-validation-for="StudentIds" class="text-danger"></span>
+                                </div>
+                                <div class="fv-row form-floating mb-7">
+                                    <textarea class="form-control form-control-solid" asp-for="Description" class="form-control" id="Description"></textarea>
+                                    <label asp-for="Description" class="required fw-bold fs-6 mb-2 text-muted">Açıklama</label>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="fv-row mb-5 pt-5 d-flex justify-content-center">
+                                <div class="form-check form-switch form-check-custom form-check-solid d-flex flex-row gap-3">
+                                    <label class="form-check-label" for="ogrenci" id="ogrenciLabel">
+                                        @ViewLocalizer["Create_Exam_For_Student"]
+                                    </label>
+                                    <input class="form-check-input" asp-for="forClassroom" type="checkbox" id="ogrenci">
+                                    <label class="form-check-label" for="sinif" id="sinifLabel">
+                                        @ViewLocalizer["Create_Exam_For_Class"]
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="fv-row d-flex justify-content-center" style="padding-top:34px;">
+                                    <div>
+                                        <input class="form-check-input" type="checkbox" asp-for="IsTest">
+                                        <label class="form-check-label" for="IsTest">
+                                            @SharedLocalizer["System_Test_Exam"]
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->

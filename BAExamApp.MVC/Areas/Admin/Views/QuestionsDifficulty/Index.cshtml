@@ -1,0 +1,275 @@
+﻿@model IEnumerable<AdminQuestionDifficultyListVM>
+@{
+    ViewData["Title"] = ViewLocalizer["QuesitionDifficulty_Name"];
+}
+<div class="card card-docs flex-row-fluid mb-2 overflow-auto">
+    <!--begin::Card Body-->
+    <div class="card-body fs-6 py-15 px-10 py-lg-8 px-lg-15 text-gray-700">
+        <!--begin::Section-->
+        <div class="p-0">
+            <!--begin::Heading-->
+            <h3 class="fw-bolder m-0" id="server-side">
+                @SharedLocalizer["List", SharedLocalizer["QuesitionDifficulty_Name"]]
+            </h3>
+            <!--end::Heading-->
+            <!--begin::CRUD-->
+            <div class="py-5">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-stack flex-wrap mb-5">
+                    <!--begin::Search-->
+                    <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                        <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="@SharedLocalizer["Search"]" />
+                    </div>
+                    <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+                        <!--begin::Add-->
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createQuestionDifficultyModal">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->@SharedLocalizer["Create", SharedLocalizer["QuesitionDifficulty_Name"]]
+                        </a>
+                        <!--end::Add-->
+                    </div>
+                </div>
+                <!--end::Wrapper-->
+                <!--begin::Datatable-->
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed min-h-400px fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 175.25px;">@Html.DisplayNameFor(model => model.Name)</th>
+                            <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Time Given: activate to sort column ascending" style="width: 269.25px;">@Html.DisplayNameFor(model => model.TimeGiven)</th>
+                            <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Score Coefficient: activate to sort column ascending" style="width: 226.25px;">@Html.DisplayNameFor(model => model.ScoreCoefficient)</th>
+                            <th class="text-start min-w-100px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 108.25px;">@ViewLocalizer["QuesitionDifficulty_Operations"]</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 fw-bold">
+                        @if (Model.Any())
+                        {
+                            @foreach (var questionDifficulty in Model)
+                            {
+                                <tr>
+                                    <td class="categories text-start">
+                                        <a class="post_category" asp-action="Details" asp-route-id="@questionDifficulty.Id">
+                                            <span class="post_category">@questionDifficulty.Name</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-start">
+                                        <span class="post_category">@questionDifficulty.TimeGiven</span>
+                                    </td>
+                                    <td class="categories text-start">
+                                        <span class="post_category">@questionDifficulty.ScoreCoefficient</span>
+                                    </td>
+                                    <td class="text-start">
+                                        <div class="dropdown">
+
+                                            <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-extended="false">
+                                                @SharedLocalizer["Options"]
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                                <li class="menu-item px-3">
+                                                    <a class="menu-link px-3" onclick="getQuestionDetails('@questionDifficulty.Id')">@SharedLocalizer["Update"] </a>
+                                                </li>
+                                                <li class="menu-item px-3">
+                                                    <a class="menu-link px-3 deleteAction" data-id="@questionDifficulty.Id">@SharedLocalizer["Delete"]</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="categories text-center">
+                                    @SharedLocalizer["No_Data"]
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                        <div class="dataTables_length" id="kt_datatable_example_1_length">
+                            <label>
+                                <select name="kt_datatable_example_1" aria-controls="kt_datatable_example_1" class="form-select form-select-sm form-select-solid">
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Datatable-->
+            </div>
+            <!--end::CRUD-->
+        </div>
+        <!--end::Section-->
+    </div>
+    <!--end::Card Body-->
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@SharedLocalizer["QuestionDifficulty_Update"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" id="question-details">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<partial name="~/Areas/Admin/Views/QuestionsDifficulty/CreatePartialView.cshtml" model="new AdminQuestionDifficultyCreateVM()"></partial>
+
+@section Scripts
+    {
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script>
+    $('#exampleModal').appendTo("body")
+const myModal = new bootstrap.Modal('#exampleModal')
+
+    const getQuestionDetails = (id) => {
+        let spinner = `<div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>`
+        $('#question-details').html(spinner)
+        myModal.show();
+
+            $.ajax({
+                url: "@Url.Action("Update")" + "?id=" + id,
+                method: "get",
+                success: function (response) {
+                $('#question-details').html(response)
+                },
+                error: function (response) {
+                console.log(response.responseText);
+                myModal.hide()
+                Swal.fire(
+                'Hata !',
+                'İstediğiniz soruya ait detaylar alınamadı. Lütfen sistem yöneticinize başvurun. (Error 404)',
+                'error'
+                )
+            }
+    })
+}
+    </script>
+    <script>
+        var localizedTexts = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]', // "fullName adlı admini silmek istediğinize emin misiniz?"
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]', // "Bu işlem geri alınamaz!"
+            confirmButtonText: '@SharedLocalizer["Confirm_Button_Text"]', // "Evet, sil!"
+            cancelButtonText: '@SharedLocalizer["Cancel_Button_Text"]' // "Hayır, iptal et"
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]',
+            lengthMenu: '@SharedLocalizer["Length_Menu"]'
+        };
+
+        // Scroll hareket ettirildiğinde option menüsünü kapatır.
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+
+
+        $(document).ready(function () {
+            var dt = $("#kt_datatable_example_1").DataTable({
+                pageLength: 25, // Set default page length to 25
+                lengthMenu: [10, 25, 50, 100],
+                dom:
+                    '<"row"<"col-sm-12"tr>>' +
+                    '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    info: localizer.info,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords,
+                    lengthMenu: localizer.lengthMenu
+                }
+            });
+            $('select[name="kt_datatable_example_1"]').change(function () {
+                dt.page.len($(this).val()).draw();
+            });
+
+            $('input[data-kt-docs-table-filter="search"]').on('keyup', function () {
+                dt.search($(this).val()).draw();
+            });
+            function updatePaginationArrows() {
+                $('#kt_datatable_example_1_previous a').html('<i class="fa fa-chevron-left"></i>');
+                $('#kt_datatable_example_1_next a').html('<i class="fa fa-chevron-right"></i>');
+            }
+            updatePaginationArrows();
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dropdown menu element
+            var optionsDropdown = document.getElementById('optionsDropdown');
+
+            // Toggle dropdown on click
+            optionsDropdown.addEventListener('click', function (e) {
+                e.preventDefault();
+                var optionsMenu = new KTMenu(optionsDropdown);
+                optionsMenu.toggle();
+            });
+        });
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+            Swal.fire({
+                title: `${localizedTexts.confirmTitle}`,
+                text: localizedTexts.confirmText,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: localizedTexts.confirmButtonText,
+                cancelButtonText: localizedTexts.cancelButtonText
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("Delete")" + "?id=" + id,
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                setTimeout(() => location.href = "@Url.Action("index")", 1000)
+                            }
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+
+}
+
+

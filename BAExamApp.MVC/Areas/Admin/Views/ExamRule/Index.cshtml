@@ -1,0 +1,315 @@
+﻿@using BAExamApp.MVC
+@using Microsoft.Extensions.Localization
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList
+@inject IStringLocalizer<SharedModelResource> localizer
+
+@model IPagedList<AdminExamRuleListVM>
+
+
+@{
+    ViewData["Title"] = SharedLocalizer["List", SharedLocalizer["Exam_Rule_List"]];
+    bool toggleStateRule = ViewBag.ToggleState ?? false;
+}
+
+<link rel="stylesheet" href="~/newLayouts/src/css/AdminExamRuleTable.css">
+
+<div class="card card-docs flex-row-fluid mb-2">
+    <!--begin::Card Body-->
+    <div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 text-gray-700">
+        <!--begin::Section-->
+        <div class="p-0">
+            <!--begin::Heading-->
+            <h5 class="card-title">@SharedLocalizer["List", SharedLocalizer["Exam_Rule"]]</h5>
+            <!--end::Heading-->
+            <!--begin::CRUD-->
+            <div class="py-5">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-stack flex-wrap mb-5">
+                    <!--begin::Search-->
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <form asp-controller="ExamRule" asp-action="Index" method="get" class="d-flex align-items-center">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                            <span class="svg-icon svg-icon-1 position-absolute ps-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                            <div class="form-group ">
+                        <input type="text" id="searchInput" name="typeOfExamRule" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="@SharedLocalizer["Search"]" />
+                    </div>
+                            <button type="submit" id="searchButton" class="btn btn-primary btn-lg hover-elevate-up ms-3" data-kt-user-table-filter="form">
+                                @SharedLocalizer["Show"]
+                            </button>
+                        </form>
+                    </div>
+                    <!--end::Search-->
+                    <!--begin::Toolbar-->
+                    <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createExamRuleModal">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->@SharedLocalizer["Create", SharedLocalizer["Exam_Rule"]]
+                        </button>
+                        <!--end::Add customer-->
+                    </div>
+                    <!--end::Toolbar-->
+                </div>
+                <!--end::Wrapper-->
+                <!--begin::Checkbox-->
+     @*            @if (ViewBag.ShowAllData == true)
+                {
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)" checked>
+                        <label class="form-check-label" for="showInactiveCheckbox">
+                            @SharedLocalizer["Hide_Inactive_ExamRules"]
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)">
+                        <label class="form-check-label" for="showInactiveCheckbox">
+                            @SharedLocalizer["Include_Inactive_ExamRules"]
+                        </label>
+
+                    </div>
+                } *@
+                <!--end::Checkbox-->
+                <!--begin::Datatable-->
+                <table id="kt_datatable_example_1" class="table table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.Name)</th>
+                            <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.Status)</th>
+                            <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.CreatedDate)</th>
+                            <th>@Html.DisplayNameFor(x => x.GetEnumerator().Current.CreatedByPerson)</th>
+                            <th class="min-w-100px">@SharedLocalizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 fw-bold">
+                        @foreach (var examRule in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @examRule.Name
+                                </td>
+                                <td>
+                                    <span class="badge @(examRule.Status == Status.Active ? "badge-light-success" : "badge-light-warning")">
+                                        @if (examRule.Status == Status.Active)
+                                        {
+                                            <text>@SharedLocalizer["Active"]</text>
+                                        }
+                                        else
+                                        {
+                                            <text>@SharedLocalizer["Passive"]</text>
+                                        }
+                                    </span>
+                                </td>
+                                <td>
+                                    @examRule.CreatedDate.ToShortDateString()
+                                </td>
+                                <td>
+                                    @examRule.CreatedByPerson
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+
+                                        <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-extended="false">
+                                            @SharedLocalizer["Options"]
+                                        </button>
+                                        <!--begin::Menu-->
+                                        <ul class="dropdown-menu dropdown-menu-end menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                            <li class="menu-item px-3">
+                                                <a asp-action="Details" asp-controller="ExamRule" asp-route-id="@examRule.Id" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+                                                    @SharedLocalizer["Details"]
+                                                </a>
+                                            </li>
+                                            <li class="menu-item px-3">
+                                                <a asp-action="Update" asp-controller="ExamRule" asp-route-id="@examRule.Id" class="menu-link px-3" data-kt-docs-table-filter="delete_row">
+                                                    @SharedLocalizer["Update"]
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div>
+                    @if (ViewBag.ShowAllData == true)
+                    {
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)" checked>
+                            <label class="form-check-label" for="showInactiveCheckbox">
+                                @SharedLocalizer["Hide_Inactive_ExamRules"]
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="showInactiveCheckbox" onchange="toggleData(this.checked)">
+                            <label class="form-check-label" for="showInactiveCheckbox">
+                                @SharedLocalizer["Include_Inactive_ExamRules"]
+                            </label>
+
+                        </div>
+                    }
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                        <div class="dataTables_length" id="kt_datatable_example_1_length">
+                            <label>
+                                <select id="pageSizeDropdown" name="kt_datatable_example_1_length" aria-controls="kt_datatable_example_1" class="form-select form-select-sm form-select-solid">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col-5" style="margin-left:10px">
+                            <span class="text" style="white-space:nowrap">
+                                @SharedLocalizer["Total"] @Model.TotalItemCount @SharedLocalizer["From"] @(Model.PageNumber * Model.PageSize - (Model.PageSize - 1))
+                                @SharedLocalizer["To"] @(Model.PageNumber * Model.PageSize > Model.TotalItemCount ? Model.TotalItemCount : Model.PageNumber * Model.PageSize)
+                                @SharedLocalizer["Records_Are_Being_Displayed"]
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-3">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, typeOfExamRule = ViewBag.TypeOfExamRule, pageSize = ViewBag.PageSize }), new PagedListRenderOptions
+                   {
+                       Display = PagedListDisplayMode.Always,
+                       UlElementClasses = new[] { "pagination", "justify-content-center" },
+                       LiElementClasses = new[] { "page-item" },
+                       PageClasses = new[] { "page-link" },
+                       LinkToFirstPageFormat = @localizer["First"],
+                       LinkToLastPageFormat = @localizer["Last"],
+                       ContainerDivClasses = new[] { "d-flex", "justify-content-center" }
+                   })
+                    </div>
+                </div>
+                    </div>
+                </div>
+                <!--end::Datatable-->
+            </div>
+            <!--end::CRUD-->
+        </div>
+        <!--end::Section-->
+    </div>
+    <!--end::Card Body-->
+</div>
+<!--end::Card-->
+
+<partial name="~/Areas/Admin/Views/ExamRule/CreatePartialView.cshtml" model="new AdminExamRuleCreateVM()"></partial>
+
+@section Scripts
+{
+    <script src="~/newlayouts/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/js/searchboxkeyboardevent.js"></script>
+    <script>
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+
+        // Scroll hareket ettirildiğinde option menüsünü kapatır.
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+
+
+        function changePageSize() {
+            var pageSize = document.getElementById('pageSize').value;
+            var url = new URL(window.location.href);
+
+            var typeOfExamRule = url.searchParams.get('typeOfExamRule') || '';
+
+            url.searchParams.set('pageSize', pageSize);
+            url.searchParams.set('page', 1);
+
+            if (typeOfExamRule) {
+                url.searchParams.set('typeOfExamRule', typeOfExamRule);
+            }
+
+            window.location.href = url.toString();
+        }
+
+        $(document).ready(function () {
+            $('#pageSizeDropdown').change(function () {
+                var selectedPageSize = $(this).val();
+                var url = new URL(window.location.href);
+
+
+                var typeOfExamRule = url.searchParams.get('typeOfExamRule') || '';
+
+
+                url.searchParams.set('pageSize', selectedPageSize);
+                url.searchParams.set('page', 1);
+
+                if (typeOfExamRule) {
+                    url.searchParams.set('typeOfExamRule', typeOfExamRule);
+                }
+                window.location.href = url.toString();
+            });
+        });
+
+
+        $(document).ready(function () {
+typeOfExamRule
+            var currentPageSize = '@ViewBag.PageSize' || '10';
+            var showAllData = '@ViewBag.ShowAllData' === 'True';
+            var typeOfExamRule = '@ViewBag.TypeOfExamRule';
+
+            $('#pageSizeDropdown').val(currentPageSize);
+
+            $('#showInactiveCheckbox').prop('checked', showAllData);
+
+
+            $('#pageSizeDropdown').change(function () {
+                updateUrl();
+            });
+
+            $('#showInactiveCheckbox').change(function () {
+                updateUrl();
+            });
+
+            function updateUrl() {
+                var selectedPageSize = $('#pageSizeDropdown').val();
+                var isChecked = $('#showInactiveCheckbox').is(':checked');
+                var currentPage = '@ViewBag.CurrentPage' || 1;
+                var typeOfExamRule = '@ViewBag.TypeOfExamRule';
+
+
+                var url = '@Url.Action("Index", "ExamRule")' + `?page=${1}&pageSize=${selectedPageSize}&showAllData=${isChecked}&typeOfExamRule=${typeOfExamRule}`;
+                window.location.href = url;
+            }
+        });
+
+
+    </script>
+
+}

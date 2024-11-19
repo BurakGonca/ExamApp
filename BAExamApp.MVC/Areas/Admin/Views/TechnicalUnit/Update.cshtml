@@ -1,0 +1,29 @@
+﻿@model AdminTechnicalUnitUpdateVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Technical_Unit_Update"];
+}
+
+<div class="modal fade" id="updateTechnicalUnitModal" tabindex="-1" aria-labelledby="updateTechnicalUnitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-controller="TechnicalUnit" asp-action="Update" method="post" id="updateTechnicalUnitForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateTechnicalUnitModalLabel">@ViewLocalizer["Technical_Unit_Update"]</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="fv-row form-floating mb-7">
+                        <input asp-for="Name" type="text" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="@SharedLocalizer["TechnicalUnit_Name"]" required>
+                        <label asp-for="Name" class="required fw-bold fs-6 mb-2">@SharedLocalizer["TechnicalUnit_Name"]</label>
+                        <input asp-for="Id" type="hidden" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary align-self-center ms-2" asp-controller="TechnicalUnit" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+                    <button type="submit" class="btn btn-primary">@SharedLocalizer["Update"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

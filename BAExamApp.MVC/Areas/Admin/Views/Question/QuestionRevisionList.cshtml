@@ -1,0 +1,153 @@
+﻿@* BU VIEW KULLANILMAMAKTADIR *@
+
+@using BAExamApp.MVC.Areas.Admin.Models.QuestionRevisionVMs;
+@model IEnumerable<QuestionRevisionListVM>
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Question_Revision_List", SharedLocalizer["Question"]];
+}
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+                <a class="btn btn-secondary float-end" asp-action="GetQuestionsByGivenValues" asp-controller="Question" method="get" asp-route-state="Reviewed" asp-route-adminQuestionListVM="">@SharedLocalizer["Back_List"]</a>
+                <h5 class="card-title">@SharedLocalizer["Question_Revision_List", SharedLocalizer["Question"]]</h5>
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_questions">
+                    <thead>
+                        <tr class="text-start fw-bolder text-uppercase gs-0 text-gray-400" ">
+                            <th class="categories text-start">@Html.DisplayNameFor(Model => Model.CreatedDate)</th>
+                            <th class="categories text-start">@Html.DisplayNameFor(model => model.RequesterAdminName)</th>
+                            <th class="categories text-start">@Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                            <th class="categories text-start">@Html.DisplayNameFor(model => model.RequestedTrainerName)</th>
+                            <th class="categories text-start">@Html.DisplayNameFor(model => model.RequestDescription)</th>
+                            <th class="categories text-start">@Html.DisplayNameFor(model => model.RevisionConclusion)</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model is not null && Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.CreatedDate.ToString("dd.MM.yyyy")</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RequesterAdminName</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.ModifiedDate.ToString("dd.MM.yyyy")</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RequestedTrainerName</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RequestDescription</span>
+                                        </a>
+                                    </td>
+                                    <td class="categories text-center">
+                                        <a>
+                                            <span class="post_category">@item.RevisionConclusion</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="categories text-center">
+                                    @SharedLocalizer["No_Data"]
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <!-- Pagination Controls -->
+                <div class="pagination-controls">
+                    <select id="rowsPerPage" class="form-control form-control-sm" onchange="paginateTable()">
+                        <option value="10">10</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <br>
+                    <span id="paginationInfo" class="pagination-info"></span>
+                    <button class="btn btn-sm btn-primary" onclick="prevPage()">&#171;</button>
+                    <button class="btn btn-sm btn-primary" onclick="nextPage()">&#187;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var dt = $("#kt_table_questions").DataTable({
+                lengthMenu: [10, 25, 50, 100],
+                order: [[0, 'desc']], // CreatedDate kolonuna göre sıralama, 0 indeksli kolonun default olarak desc sıralaması
+                dom: '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: "Tabloda herhangi bir veri bulunmamaktadır",
+                    infoEmpty: "Gösterilecek hiçbir kayıt yok",
+                    infoFiltered: "(toplam _MAX_ kayıt içerisinden filtrelenmiştir)",
+                    zeroRecords: "Eşleşen kayıt bulunamadı",
+                },
+            });
+
+            $('body').on('change', 'select[name="kt_table_questions_length"]', function () {
+                dt.page.len($(this).val()).draw();
+                $(this).css({
+                    'border': '0 solid transparent',
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+                });
+            });
+
+            dt.on('draw.dt', function () {
+                updateInfoText(dt.page.info());
+            });
+
+            function updateInfoText(pageInfo) {
+                var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+                $('#kt_table_questions_info').html(infoText).css({
+                    'margin-top': '6px',
+                    'font-size': '14px',
+                    'font-family': 'Poppins, Helvetica, sans-serif',
+                });
+            }
+
+            updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+                var prevButton = $('#kt_table_questions_previous a');
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+                var nextButton = $('#kt_table_questions_next a');
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+                var pageButtons = $('#kt_table_questions_paginate .page-item');
+                var activePage = $('#kt_table_questions_paginate .page-item.active a');
+                activePage.css({
+                    'color': '#ffffff'
+                });
+            }
+
+            updatePaginationArrows();
+
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+        });
+    </script>
+    
+
+}

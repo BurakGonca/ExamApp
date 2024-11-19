@@ -1,0 +1,2610 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="Adress" xml:space="preserve">
+    <value>Adres</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Aksiyonlar</value>
+  </data>
+  <data name="Back_List" xml:space="preserve">
+    <value>Listeye Dön</value>
+  </data>
+  <data name="Branch" xml:space="preserve">
+    <value>Şube</value>
+  </data>
+  <data name="Branch_Name" xml:space="preserve">
+    <value>Şube Adı</value>
+  </data>
+  <data name="Branch_Operations" xml:space="preserve">
+    <value>Şube İşlemleri</value>
+  </data>
+  <data name="Classroom" xml:space="preserve">
+    <value>Sınıf</value>
+  </data>
+  <data name="Closed_Date" xml:space="preserve">
+    <value>Kapanma Tarihi</value>
+  </data>
+  <data name="Confirm_Delete" xml:space="preserve">
+    <value>{0} silinsin mi?</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>{0} Ekle</value>
+  </data>
+  <data name="Created_By" xml:space="preserve">
+    <value>Ekleyen</value>
+  </data>
+  <data name="Created_Date" xml:space="preserve">
+    <value>Eklenme Tarihi</value>
+  </data>
+  <data name="Create_Question" xml:space="preserve">
+    <value>Soru Ekle</value>
+  </data>
+  <data name="Date_Of_Birth" xml:space="preserve">
+    <value>Doğum Tarihi</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Deleted_By" xml:space="preserve">
+    <value>Silen</value>
+  </data>
+  <data name="Deleted_Date" xml:space="preserve">
+    <value>Silinme Tarihi</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detaylar</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Düzenle</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Ürün</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Mail Adresi</value>
+  </data>
+  <data name="First_Name" xml:space="preserve">
+    <value>İsim</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Cinsiyet</value>
+  </data>
+  <data name="Identification_Number" xml:space="preserve">
+    <value>Kimlik Numarası</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Ana Sayfa</value>
+  </data>
+  <data name="Last_Name" xml:space="preserve">
+    <value>Soyisim</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>{0} Listesi</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Giriş Yap</value>
+  </data>
+  <data name="Modified_By" xml:space="preserve">
+    <value>Düzenleyen</value>
+  </data>
+  <data name="Modified_Date" xml:space="preserve">
+    <value>Düzenlenme Tarihi</value>
+  </data>
+  <data name="My_Exam_Tasks" xml:space="preserve">
+    <value>Sınav Görevlerim</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Isim</value>
+  </data>
+  <data name="Opening_Date" xml:space="preserve">
+    <value>Açılış Tarihi</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Şifre</value>
+  </data>
+  <data name="Profile_Image" xml:space="preserve">
+    <value>Profil Resmi</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Soru</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Ara</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Çıkış Yap</value>
+  </data>
+  <data name="AdminRole" xml:space="preserve">
+    <value>Yönetici Rolü</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Durum</value>
+  </data>
+  <data name="Student" xml:space="preserve">
+    <value>Öğrenci</value>
+  </data>
+  <data name="Trainer" xml:space="preserve">
+    <value>Eğitmen</value>
+  </data>
+  <data name="Transactions" xml:space="preserve">
+    <value>Işlemler</value>
+  </data>
+  <data name="TechnicalUnit_Name" xml:space="preserve">
+    <value>Teknik Birim Adı</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Düzenle</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Hoş Geldiniz</value>
+  </data>
+  <data name="Group_Type" xml:space="preserve">
+    <value>Eğitim Tipi</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Açıklama</value>
+  </data>
+  <data name="Question_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Choose_File" xml:space="preserve">
+    <value>Dosya Seç</value>
+  </data>
+  <data name="Man" xml:space="preserve">
+    <value>Erkek</value>
+  </data>
+  <data name="Woman" xml:space="preserve">
+    <value>Kadın</value>
+  </data>
+  <data name="Add_Fail" xml:space="preserve">
+    <value>Ekleme İşlemi Başarısız!</value>
+  </data>
+  <data name="Add_Success" xml:space="preserve">
+    <value>Ekleme İşlemi Başarılı</value>
+  </data>
+  <data name="Add_User_Fail" xml:space="preserve">
+    <value>Kullanıcı ekleme işlemi başarısız!</value>
+  </data>
+  <data name="Add_User_Role_Fail" xml:space="preserve">
+    <value>Kullanıcıya rol tanımlanamadı!</value>
+  </data>
+  <data name="Listed_Success" xml:space="preserve">
+    <value>Listeleme İşlemi Başarılı</value>
+  </data>
+  <data name="User_Not_Found" xml:space="preserve">
+    <value>Kullanıcı bulunamadı!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="Create_Subject" xml:space="preserve">
+    <value>Konu Ekle</value>
+  </data>
+  <data name="Create_Subtopic" xml:space="preserve">
+    <value>Altkonu Ekle</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Konu</value>
+  </data>
+  <data name="Add_Fail_Already_Exists" xml:space="preserve">
+    <value>Aynı isimde kayıt zaten var!</value>
+  </data>
+  <data name="Trainer_Has_No_Classroom" xml:space="preserve">
+    <value>Eğitmenin bir sınıfı bulunmamaktadır.</value>
+  </data>
+  <data name="Classroom_Name" xml:space="preserve">
+    <value>Sınıf Adı</value>
+  </data>
+  <data name="Classroom_Found_Success" xml:space="preserve">
+    <value>Sınıf Başarıyla Bulundu</value>
+  </data>
+  <data name="Classroom_Not_Found" xml:space="preserve">
+    <value>Sınıf Bulunamadı</value>
+  </data>
+  <data name="Classroom_List" xml:space="preserve">
+    <value>Sınıf Listesi</value>
+  </data>
+  <data name="GroupType" xml:space="preserve">
+    <value>Eğitim Tipi</value>
+  </data>
+  <data name="Update_Classroom" xml:space="preserve">
+    <value>Sınıf Güncelle</value>
+  </data>
+  <data name="Update_Fail" xml:space="preserve">
+    <value>Güncelleme başarısız</value>
+  </data>
+  <data name="Update_Success" xml:space="preserve">
+    <value>Güncelleme başarılı</value>
+  </data>
+  <data name="Branch_List" xml:space="preserve">
+    <value>Şube Listesi</value>
+  </data>
+  <data name="No_Data_To_List" xml:space="preserve">
+    <value>Listelenecek veri bulunamadı.</value>
+  </data>
+  <data name="No_Subject_To_List" xml:space="preserve">
+    <value>Listelenecek konu yok!</value>
+  </data>
+  <data name="Found_Successfully" xml:space="preserve">
+    <value>İşlem Başarılı!</value>
+  </data>
+  <data name="Choose_Product" xml:space="preserve">
+    <value>Ürün Seçiniz</value>
+  </data>
+  <data name="Choose_Group_Type" xml:space="preserve">
+    <value>Eğitim Tipi Seçiniz</value>
+  </data>
+  <data name="Delete_Fail" xml:space="preserve">
+    <value>Silme işlemi başarısız!</value>
+  </data>
+  <data name="Delete_Success" xml:space="preserve">
+    <value>Silme işlemi başarılı!</value>
+  </data>
+  <data name="Email_Duplicate" xml:space="preserve">
+    <value>Email Kullanılmaktadır. Lütfen Başka Bir Email Adresi Yazınız yada Giriş Yapınız!</value>
+  </data>
+  <data name="Exam" xml:space="preserve">
+    <value>Sınav</value>
+  </data>
+  <data name="Delete_Admin" xml:space="preserve">
+    <value>Yönetici Sil</value>
+  </data>
+  <data name="Identity_Id" xml:space="preserve">
+    <value>Kimlik Id</value>
+  </data>
+  <data name="Admin_Details" xml:space="preserve">
+    <value>Yönetici Detayları</value>
+  </data>
+  <data name="Please_Do_Not_Leave_Question_Answer_Blank" xml:space="preserve">
+    <value>Lütfen soru cevabını boş bırakmayın!</value>
+  </data>
+  <data name="Awaited_List" xml:space="preserve">
+    <value>Onay Bekleyen {0} Listesi</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>İncele</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="Approved_List" xml:space="preserve">
+    <value>Onaylanan {0} Listesi</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Yorum</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>{0} Notu</value>
+  </data>
+  <data name="No_Data" xml:space="preserve">
+    <value>Görüntülenecek veri bulunamadı.</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="Revise" xml:space="preserve">
+    <value>Revize</value>
+  </data>
+  <data name="Rejected_List" xml:space="preserve">
+    <value>Reddedilen {0} Listesi</value>
+  </data>
+  <data name="Question_Content" xml:space="preserve">
+    <value>Soru İçeriği</value>
+  </data>
+  <data name="Revised_List" xml:space="preserve">
+    <value>Revize Bekleyen {0} Listesi</value>
+  </data>
+  <data name="Test_List" xml:space="preserve">
+    <value>Test Edilecek {0} Listesi</value>
+  </data>
+  <data name="Rule" xml:space="preserve">
+    <value>Kural</value>
+  </data>
+  <data name="Create_Exam_Rule" xml:space="preserve">
+    <value>Sınav Kuralı Ekle</value>
+  </data>
+  <data name="Exam_Rule_Name" xml:space="preserve">
+    <value>Sınav Kural Adı</value>
+  </data>
+  <data name="Exam_Rule_List" xml:space="preserve">
+    <value>Sınav Kural Listesi</value>
+  </data>
+  <data name="Update_Exam_Rule" xml:space="preserve">
+    <value>Sınav Kuralı Güncelle</value>
+  </data>
+  <data name="Question_CreatedDate" xml:space="preserve">
+    <value>Eklenme Tarihi</value>
+  </data>
+  <data name="Question_CreatorFullName" xml:space="preserve">
+    <value>Ekleyen (İsim)</value>
+  </data>
+  <data name="Question_CreatorMailAdress" xml:space="preserve">
+    <value>Ekleyen (Mail)</value>
+  </data>
+  <data name="Question_IsApproved" xml:space="preserve">
+    <value>Onay Durumu</value>
+  </data>
+  <data name="Question_Difficulty" xml:space="preserve">
+    <value>Soru Zorluğu</value>
+  </data>
+  <data name="Question_ModifiedDate" xml:space="preserve">
+    <value>Değiştirilme Tarihi</value>
+  </data>
+  <data name="Question_Answers" xml:space="preserve">
+    <value>Yanıtlar</value>
+  </data>
+  <data name="Question_Type" xml:space="preserve">
+    <value>Soru Tipi</value>
+  </data>
+  <data name="Question_ReviewComment" xml:space="preserve">
+    <value>Revize Talebi</value>
+  </data>
+  <data name="Question_SubjectList" xml:space="preserve">
+    <value>Konu Listesi</value>
+  </data>
+  <data name="Question_SubjectName" xml:space="preserve">
+    <value>Konu Başlığı</value>
+  </data>
+  <data name="Go Back" xml:space="preserve">
+    <value>Geri Dön</value>
+  </data>
+  <data name="Classroom_Details" xml:space="preserve">
+    <value>Sınıf Detayları</value>
+  </data>
+  <data name="Student_List" xml:space="preserve">
+    <value>Öğrenci Listesi</value>
+  </data>
+  <data name="Trainer_List" xml:space="preserve">
+    <value>Eğitmenler</value>
+  </data>
+  <data name="End_Time" xml:space="preserve">
+    <value>Bitiş Zamanı</value>
+  </data>
+  <data name="Exam_Date" xml:space="preserve">
+    <value>Sınav Tarihi</value>
+  </data>
+  <data name="Exam_Rule" xml:space="preserve">
+    <value>Sınav Kuralı</value>
+  </data>
+  <data name="Excuse" xml:space="preserve">
+    <value>Mazeret</value>
+  </data>
+  <data name="Start_Time" xml:space="preserve">
+    <value>Başlama Zamanı</value>
+  </data>
+  <data name="TechnicalUnits" xml:space="preserve">
+    <value>Teknik Birimler</value>
+  </data>
+  <data name="Fill_Blank" xml:space="preserve">
+    <value>Boşluk Doldurma</value>
+  </data>
+  <data name="Multiple_Choice" xml:space="preserve">
+    <value>Çoktan Seçmeli</value>
+  </data>
+  <data name="Text_Answered_Question" xml:space="preserve">
+    <value>Metin Sorusu</value>
+  </data>
+  <data name="True_False" xml:space="preserve">
+    <value>Doğru-Yanlış</value>
+  </data>
+  <data name="Student_Found_Success" xml:space="preserve">
+    <value>Öğrenci Başarıyla Bulundu</value>
+  </data>
+  <data name="Student_Not_Found" xml:space="preserve">
+    <value>Öğrenci Bulunamadı</value>
+  </data>
+  <data name="Add_Option" xml:space="preserve">
+    <value>Seçenek Ekle +</value>
+  </data>
+  <data name="Choose_Question_Difficulty" xml:space="preserve">
+    <value>Soru Zorluğunu Seçiniz</value>
+  </data>
+  <data name="Choose_Question_Topic" xml:space="preserve">
+    <value>Soru Konusu Seçiniz</value>
+  </data>
+  <data name="Choose_Question_Type" xml:space="preserve">
+    <value>Soru Tipi Seçiniz</value>
+  </data>
+  <data name="Correct_Option" xml:space="preserve">
+    <value>Doğru Seçenek</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>Yanlış</value>
+  </data>
+  <data name="Question_Text" xml:space="preserve">
+    <value>Soru Metni</value>
+  </data>
+  <data name="Choose_Correct_Option" xml:space="preserve">
+    <value>Lütfen Doğru Seçeneği İşaretleyiniz</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Temizle</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="Filter_Info" xml:space="preserve">
+    <value>İstediğiniz alanları seçerek ara butonuna basın</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Zorluk</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Şehir</value>
+  </data>
+  <data name="Select_City" xml:space="preserve">
+    <value>Şehir Seçin</value>
+  </data>
+  <data name="Choose" xml:space="preserve">
+    <value>--- Seçiniz ---</value>
+  </data>
+  <data name="Student_Details" xml:space="preserve">
+    <value>Öğrenci Detayları</value>
+  </data>
+  <data name="Trainer_Found_Success" xml:space="preserve">
+    <value>Eğitmen Başarıyla Bulundu</value>
+  </data>
+  <data name="Trainer_Not_Found" xml:space="preserve">
+    <value>Eğitmen Bulunamadı</value>
+  </data>
+  <data name="Trainer_Details" xml:space="preserve">
+    <value>Eğitmen Detayları</value>
+  </data>
+  <data name="Subject_List" xml:space="preserve">
+    <value>Konu Listesi</value>
+  </data>
+  <data name="Subject_Name" xml:space="preserve">
+    <value>Konu İsmi</value>
+  </data>
+  <data name="Trainer_Name" xml:space="preserve">
+    <value>Eğitmen Adı</value>
+  </data>
+  <data name="Exam_Rule_Details" xml:space="preserve">
+    <value>Sınav Kural Detayı</value>
+  </data>
+  <data name="Easy_Question_Count" xml:space="preserve">
+    <value>Kolay Soru Sayısı</value>
+  </data>
+  <data name="Hard_Question_Count" xml:space="preserve">
+    <value>Zor Soru Sayısı</value>
+  </data>
+  <data name="Normal_Question_Count" xml:space="preserve">
+    <value>Normal Soru Sayısı</value>
+  </data>
+  <data name="Select_Product" xml:space="preserve">
+    <value>Ürün Seçiniz</value>
+  </data>
+  <data name="Test_Question" xml:space="preserve">
+    <value>Test Sorusu</value>
+  </data>
+  <data name="Option" xml:space="preserve">
+    <value>Seçeneği</value>
+  </data>
+  <data name="All_Exams_List" xml:space="preserve">
+    <value>Tüm Sınavlar Listesi</value>
+  </data>
+  <data name="Exam_Duration" xml:space="preserve">
+    <value>Sınav Süresi</value>
+  </data>
+  <data name="Choose_Correct_Options" xml:space="preserve">
+    <value>Lütfen doğru seçenek/seçenekleri işaretleyiniz</value>
+  </data>
+  <data name="Text_Question" xml:space="preserve">
+    <value>Metin Sorusu</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>Doğru</value>
+  </data>
+  <data name="True_Or_False" xml:space="preserve">
+    <value>Doğru mu yanlış mı?</value>
+  </data>
+  <data name="TechnicalUnit_Id" xml:space="preserve">
+    <value>Teknik Birimler</value>
+  </data>
+  <data name="Product_Name" xml:space="preserve">
+    <value>Ürün İsmi</value>
+  </data>
+  <data name="Subtopic_Name" xml:space="preserve">
+    <value>Alt Konu İsmi</value>
+  </data>
+  <data name="Select_Subject" xml:space="preserve">
+    <value>Konu Seçiniz</value>
+  </data>
+  <data name="TechnicalUnit_List" xml:space="preserve">
+    <value>Teknik Birim Listesi</value>
+  </data>
+  <data name="Enter_The_Name_Of_The_Training" xml:space="preserve">
+    <value>Eğitimin Adını Giriniz.</value>
+  </data>
+  <data name="Enter_Technical_Unit_Name" xml:space="preserve">
+    <value>Teknik Birim Adını Giriniz!</value>
+  </data>
+  <data name="Hard" xml:space="preserve">
+    <value>Zor</value>
+  </data>
+  <data name="Reviewed_List" xml:space="preserve">
+    <value>Revize İstenilen {0} Listesi</value>
+  </data>
+  <data name="Easy" xml:space="preserve">
+    <value>Kolay</value>
+  </data>
+  <data name="Approve_Success" xml:space="preserve">
+    <value>Soru Onaylandı</value>
+  </data>
+  <data name="Reject_Success" xml:space="preserve">
+    <value>Soru Reddedildi</value>
+  </data>
+  <data name="Review_Success" xml:space="preserve">
+    <value>Yorum Gönderildi</value>
+  </data>
+  <data name="Change_Role" xml:space="preserve">
+    <value>Rol Değiştir</value>
+  </data>
+  <data name="Update_Subject" xml:space="preserve">
+    <value>Konu Güncelle</value>
+  </data>
+  <data name="Add_New_Rule" xml:space="preserve">
+    <value>Yeni Kural Ekle</value>
+  </data>
+  <data name="Question_Count" xml:space="preserve">
+    <value>Soru Sayısı</value>
+  </data>
+  <data name="Do_Not_Enter_Same_Exam_Rule" xml:space="preserve">
+    <value>Lütfen aynı sınav kuralını iki defa girmeyiniz.</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Ürünler</value>
+  </data>
+  <data name="Question_Image" xml:space="preserve">
+    <value>Soru Görseli</value>
+  </data>
+  <data name="Image_File_Type" xml:space="preserve">
+    <value>JPEG ya da PNG</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Seçenekler</value>
+  </data>
+  <data name="Product_Created_Date" xml:space="preserve">
+    <value>Ürün Ekleme Tarihi</value>
+  </data>
+  <data name="Full_Name" xml:space="preserve">
+    <value>İsim Soyisim</value>
+  </data>
+  <data name="Updated_Date" xml:space="preserve">
+    <value>Güncellenme Tarihi</value>
+  </data>
+  <data name="OtherEmails" xml:space="preserve">
+    <value>Diger Mail Adresi</value>
+  </data>
+  <data name="Active_Products" xml:space="preserve">
+    <value>Aktif Ürünler</value>
+  </data>
+  <data name="All_Products" xml:space="preserve">
+    <value>Tüm Eğitimler</value>
+  </data>
+  <data name="Passive_Products" xml:space="preserve">
+    <value>Pasif Ürünler</value>
+  </data>
+  <data name="Search_Products" xml:space="preserve">
+    <value>Ürünleri adıyla ara:</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="Product_IsActive" xml:space="preserve">
+    <value>Ürünün Aktiflik Durumu</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Eğitim Aktif mi ?</value>
+  </data>
+  <data name="Passive" xml:space="preserve">
+    <value>Pasif</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="Talent" xml:space="preserve">
+    <value>Yetenek</value>
+  </data>
+  <data name="BranchIsNull" xml:space="preserve">
+    <value>Şube Bilgisi Girilmemiştir.</value>
+  </data>
+  <data name="IsActiveFalse" xml:space="preserve">
+    <value>Pasif</value>
+  </data>
+  <data name="IsActiveNull" xml:space="preserve">
+    <value>Aktiflik Bilgisi Girilmemiştir.</value>
+  </data>
+  <data name="IsActiveTrue" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="Student_Count" xml:space="preserve">
+    <value>Öğrenci Sayısı</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Kullanıcı</value>
+  </data>
+  <data name="Choose_Branch" xml:space="preserve">
+    <value>--- Seçiniz ---</value>
+  </data>
+  <data name="Exams" xml:space="preserve">
+    <value>Sınavlar</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Güncel</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="Exam_Time" xml:space="preserve">
+    <value>Sınav Süresi</value>
+  </data>
+  <data name="Future" xml:space="preserve">
+    <value>Gelecek</value>
+  </data>
+  <data name="Name_Of_The_Exam" xml:space="preserve">
+    <value>Sınav Adı</value>
+  </data>
+  <data name="Past" xml:space="preserve">
+    <value>Geçmiş</value>
+  </data>
+  <data name="Take_The_Exam" xml:space="preserve">
+    <value>Sınava Katıl</value>
+  </data>
+  <data name="Not_Examined" xml:space="preserve">
+    <value>İncelenmedi</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>Puan</value>
+  </data>
+  <data name="The_Exam_Time_Is_Up" xml:space="preserve">
+    <value>Sınav Saati Dolmuştur.</value>
+  </data>
+  <data name="You_Dont_Have_An_Exam_Yet" xml:space="preserve">
+    <value>Henüz Bir Sınavınız Bulunmamaktatır.</value>
+  </data>
+  <data name="Exam_Name" xml:space="preserve">
+    <value>Sınav Adı</value>
+  </data>
+  <data name="Question_Details" xml:space="preserve">
+    <value>Soru Detayları</value>
+  </data>
+  <data name="Product_Count" xml:space="preserve">
+    <value>Ürün Sayısı</value>
+  </data>
+  <data name="Exams_Evaluators_Name" xml:space="preserve">
+    <value>Sınav Değerlendirici Adı</value>
+  </data>
+  <data name="Exams_Evaluators" xml:space="preserve">
+    <value>Sınav Değerlendiricisi</value>
+  </data>
+  <data name="Evaluator_Not_Assigned" xml:space="preserve">
+    <value>Henüz değerlendirici atanmadı.</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>İleri</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Bilgilerim</value>
+  </data>
+  <data name="Question_ModifierFullName" xml:space="preserve">
+    <value>Talep Edilen Kişi</value>
+  </data>
+  <data name="Time_Given" xml:space="preserve">
+    <value>Verilen Süre</value>
+  </data>
+  <data name="Average_Answer_Time" xml:space="preserve">
+    <value>Ortalama Cevaplama Süresi</value>
+  </data>
+  <data name="Question-Not-Used" xml:space="preserve">
+    <value>Soru Kullanılmamıştır</value>
+  </data>
+  <data name="Question_ModifierMailAdress" xml:space="preserve">
+    <value>Değiştiren (Mail)</value>
+  </data>
+  <data name="IsNotModified" xml:space="preserve">
+    <value>Değiştirilmemiştir.</value>
+  </data>
+  <data name="Classic" xml:space="preserve">
+    <value>Klasik</value>
+  </data>
+  <data name="FillBlank" xml:space="preserve">
+    <value>Boşluk Doldurma</value>
+  </data>
+  <data name="MultipleAnswer" xml:space="preserve">
+    <value>Çoktan Seçmeli</value>
+  </data>
+  <data name="TrueFalse" xml:space="preserve">
+    <value>Doğru-Yanlış</value>
+  </data>
+  <data name="Choose_Picture" xml:space="preserve">
+    <value>Resim Seç</value>
+  </data>
+  <data name="Picture_Format_Error" xml:space="preserve">
+    <value>Dosya Yüklemedi!  Lütfen geçerli bir format ile deneyin. (JPG, JPEG or PNG).</value>
+  </data>
+  <data name="Remove_Profile_Picture" xml:space="preserve">
+    <value>Profil Resmini Kaldır</value>
+  </data>
+  <data name="Upload_Profile_Picture" xml:space="preserve">
+    <value>Profil Resmi Yükle</value>
+  </data>
+  <data name="Practice_Question" xml:space="preserve">
+    <value>Pratik Sorusu</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Dokümantasyon</value>
+  </data>
+  <data name="CreateForStudent" xml:space="preserve">
+    <value>Öğrenciye Sınav Ekle</value>
+  </data>
+  <data name="Cancel_Profile_Picture" xml:space="preserve">
+    <value>Eski Profil Resmine Dön</value>
+  </data>
+  <data name="Operations" xml:space="preserve">
+    <value>İşlemler</value>
+  </data>
+  <data name="Talent_Names" xml:space="preserve">
+    <value>Yetenekler</value>
+  </data>
+  <data name="Compile" xml:space="preserve">
+    <value>Derleme</value>
+  </data>
+  <data name="Trainers" xml:space="preserve">
+    <value>Eğitmenler</value>
+  </data>
+  <data name="Admins" xml:space="preserve">
+    <value>Adminler</value>
+  </data>
+  <data name="My_Unfinished_Exam_Tasks" xml:space="preserve">
+    <value>Tamamlanmamış Sınav Görevlerim</value>
+  </data>
+  <data name="Evaluate" xml:space="preserve">
+    <value>Değerlendir</value>
+  </data>
+  <data name="Evaluate_Exam" xml:space="preserve">
+    <value>Sınavı Değerlendir:</value>
+  </data>
+  <data name="Student_Name" xml:space="preserve">
+    <value>Öğrenci Adı</value>
+  </data>
+  <data name="Exam_State" xml:space="preserve">
+    <value>Sınav Durumu</value>
+  </data>
+  <data name="Student_Score" xml:space="preserve">
+    <value>Öğrenci Puanı</value>
+  </data>
+  <data name="Student_Take_To_Exam" xml:space="preserve">
+    <value>Öğrenci Sınava Girdi mi?</value>
+  </data>
+  <data name="Exam_Details" xml:space="preserve">
+    <value>Sınav Detayları</value>
+  </data>
+  <data name="Answer_True" xml:space="preserve">
+    <value>Doğru</value>
+  </data>
+  <data name="Answer_False" xml:space="preserve">
+    <value>Yanlış</value>
+  </data>
+  <data name="Evaluating_Exam" xml:space="preserve">
+    <value>Sınav Değerlendirmesi</value>
+  </data>
+  <data name="Student_Answer" xml:space="preserve">
+    <value>Cevap</value>
+  </data>
+  <data name="Answer_of_Student" xml:space="preserve">
+    <value>Cevap</value>
+  </data>
+  <data name="Student_Question_Point" xml:space="preserve">
+    <value>Öğrenci Puanı</value>
+  </data>
+  <data name="Question_SubjectLists" xml:space="preserve">
+    <value>Konular</value>
+  </data>
+  <data name="Classroom_Members" xml:space="preserve">
+    <value>Sınıf Üyeleri</value>
+  </data>
+  <data name="Questions_Pending_Approval" xml:space="preserve">
+    <value>Onay Bekleyen Sorular</value>
+  </data>
+  <data name="Approved_Questions" xml:space="preserve">
+    <value>Onaylanan Sorular</value>
+  </data>
+  <data name="Test_Questions" xml:space="preserve">
+    <value>Test Edilecek Sorular</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Ana sayfa</value>
+  </data>
+  <data name="Redirect_To_Page" xml:space="preserve">
+    <value>Sayfaya Git</value>
+  </data>
+  <data name="Rejected_Questions" xml:space="preserve">
+    <value>Reddedilen Sorular</value>
+  </data>
+  <data name="Reviewed_Questions" xml:space="preserve">
+    <value>Revize İstenilen Sorular</value>
+  </data>
+  <data name="Exam_Attendance_Status" xml:space="preserve">
+    <value>Sınava Katılım Durumu</value>
+  </data>
+  <data name="Joined" xml:space="preserve">
+    <value>Katıldı</value>
+  </data>
+  <data name="Not_Joined" xml:space="preserve">
+    <value>Katılmadı</value>
+  </data>
+  <data name="Copy_Question" xml:space="preserve">
+    <value>Soruyu Kopyala</value>
+  </data>
+  <data name="Paste_Copied_Question" xml:space="preserve">
+    <value>Kopyalanan Soruyu Yapıştır</value>
+  </data>
+  <data name="Question_IsActive" xml:space="preserve">
+    <value>Aktif/Pasif</value>
+  </data>
+  <data name="TechnicalUnit" xml:space="preserve">
+    <value>Teknik Birim</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>Şehirler</value>
+  </data>
+  <data name="Question_ReviseComment" xml:space="preserve">
+    <value>Yapılan Revizyonlar</value>
+  </data>
+  <data name="Exam_Version" xml:space="preserve">
+    <value>Versiyon</value>
+  </data>
+  <data name="Question_ModifierName" xml:space="preserve">
+    <value>Revizeyi Talep Eden Kişi</value>
+  </data>
+  <data name="Question_Revision" xml:space="preserve">
+    <value>Revize Yorumu</value>
+  </data>
+  <data name="Past_Revised_List" xml:space="preserve">
+    <value>Revize Edilmiş {0} Listesi</value>
+  </data>
+  <data name="Classrooms" xml:space="preserve">
+    <value>Sınıflar</value>
+  </data>
+  <data name="Version_Name" xml:space="preserve">
+    <value>Versiyon İsmi</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versiyon</value>
+  </data>
+  <data name="Students" xml:space="preserve">
+    <value>Öğrenciler</value>
+  </data>
+  <data name="Question_Request_Description" xml:space="preserve">
+    <value>Talep Detayı</value>
+  </data>
+  <data name="Question_Revision_Conclusion" xml:space="preserve">
+    <value>Revizyon Açıklaması</value>
+  </data>
+  <data name="Question_Revision_List" xml:space="preserve">
+    <value>Geçmiş {0} Revizyonları</value>
+  </data>
+  <data name="Group_Type_Not_Found" xml:space="preserve">
+    <value>Eğitim Tipi Bulunamadı.</value>
+  </data>
+  <data name="Subjects" xml:space="preserve">
+    <value>Konular</value>
+  </data>
+  <data name="Version_List" xml:space="preserve">
+    <value>Versiyon Listesi</value>
+  </data>
+  <data name="Current_Exams" xml:space="preserve">
+    <value>Güncel Sınavlar</value>
+  </data>
+  <data name="Future_Exams" xml:space="preserve">
+    <value>Gelecek Sınavlar</value>
+  </data>
+  <data name="Past_Exams" xml:space="preserve">
+    <value>Geçmiş Sınavlar</value>
+  </data>
+  <data name="Branch_Id" xml:space="preserve">
+    <value>Şube</value>
+  </data>
+  <data name="GroupType_Id" xml:space="preserve">
+    <value>Eğitim Tipi</value>
+  </data>
+  <data name="Product_Id" xml:space="preserve">
+    <value>Ürün</value>
+  </data>
+  <data name="Talents" xml:space="preserve">
+    <value>Yetenekler</value>
+  </data>
+  <data name="Versions" xml:space="preserve">
+    <value>Versiyonlar</value>
+  </data>
+  <data name="Update_Version_Type" xml:space="preserve">
+    <value>Versiyon Güncelle</value>
+  </data>
+  <data name="Exam_Rule_Time" xml:space="preserve">
+    <value>Sınav Süresi</value>
+  </data>
+  <data name="Create_New_Classroom" xml:space="preserve">
+    <value>Yeni Sınıf Ekle</value>
+  </data>
+  <data name="Exam_Score" xml:space="preserve">
+    <value>Sınav Puan</value>
+  </data>
+  <data name="Please_Add_Questions_Before" xml:space="preserve">
+    <value>Sınav kuralında istenen soru sayısı kadar soru bulunmamakta.</value>
+  </data>
+  <data name="VeryEasy" xml:space="preserve">
+    <value>Çok Kolay</value>
+  </data>
+  <data name="VeryHard" xml:space="preserve">
+    <value>Çok Zor</value>
+  </data>
+  <data name="Show_Exam_Score" xml:space="preserve">
+    <value>Sınav Puanlarını Göster</value>
+  </data>
+  <data name="Question_Subtopic" xml:space="preserve">
+    <value>Alt Konu</value>
+  </data>
+  <data name="Question_Gains" xml:space="preserve">
+    <value>Kazanımlar</value>
+  </data>
+  <data name="Question_Target" xml:space="preserve">
+    <value>Hedef</value>
+  </data>
+  <data name="Question_Revision_Details" xml:space="preserve">
+    <value>Revizyon Detayı</value>
+  </data>
+  <data name="Question_Revised_List" xml:space="preserve">
+    <value>Revizyon Listesi</value>
+  </data>
+  <data name="Exam_Creation_Type" xml:space="preserve">
+    <value>Sınav Oluşturma Türü</value>
+  </data>
+  <data name="Subtopic" xml:space="preserve">
+    <value>Alt Konu</value>
+  </data>
+  <data name="Create_New_Subtopic" xml:space="preserve">
+    <value>Yeni Alt Konu Ekle</value>
+  </data>
+  <data name="Subtopic_Operations" xml:space="preserve">
+    <value>Alt Konu İşlemleri</value>
+  </data>
+  <data name="Subtopics" xml:space="preserve">
+    <value>Alt Konular</value>
+  </data>
+  <data name="Subtopic_Detail" xml:space="preserve">
+    <value>Alt Konu Detayları</value>
+  </data>
+  <data name="Subtopic_Subject" xml:space="preserve">
+    <value>Ana Konu</value>
+  </data>
+  <data name="Subtopic_Update" xml:space="preserve">
+    <value>Alt Konu Güncelle</value>
+  </data>
+  <data name="Add_Exam_Rule_Subject" xml:space="preserve">
+    <value>En Az 1 Kural ekleyin.</value>
+  </data>
+  <data name="Revision_Procedures" xml:space="preserve">
+    <value>Revize İşlemleri</value>
+  </data>
+  <data name="Delete_Success_Redirect" xml:space="preserve">
+    <value>Silme İşlemi Başarılı. Ana Sayfaya Yönlendiriliyorsunuz.</value>
+  </data>
+  <data name="QuesitionDifficulty_Name" xml:space="preserve">
+    <value>Soru Zorluk Tipi</value>
+  </data>
+  <data name="QuesitionDifficulty_Time" xml:space="preserve">
+    <value>Soru Zorluk Tipi Süresi</value>
+  </data>
+  <data name="QuestionDifficulty_Detail" xml:space="preserve">
+    <value>Soru Zorluğu Detayı</value>
+  </data>
+  <data name="QuestionDifficulty_Update" xml:space="preserve">
+    <value>Soru Zorluğu Revize Etme</value>
+  </data>
+  <data name="Fill_All_Inputs" xml:space="preserve">
+    <value>Tüm alanları doldurun.</value>
+  </data>
+  <data name="Same_Rule_Exists" xml:space="preserve">
+    <value>Aynı kural kombinasyonu daha önce eklendi.</value>
+  </data>
+  <data name="Add_Instructor" xml:space="preserve">
+    <value>Eğitmen Ekle</value>
+  </data>
+  <data name="Add_At_Least_One_Answer" xml:space="preserve">
+    <value>En Az Bir Cevap Ekleyiniz</value>
+  </data>
+  <data name="Request_Description" xml:space="preserve">
+    <value>Talep Detayı</value>
+  </data>
+  <data name="Product_List" xml:space="preserve">
+    <value>Ürün Listesi</value>
+  </data>
+  <data name="Still_Active" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="Score_List_By_Exam" xml:space="preserve">
+    <value>Sınava Göre Sonuçlar Listesi</value>
+  </data>
+  <data name="Exam_Results" xml:space="preserve">
+    <value>Sınav Sonuçları</value>
+  </data>
+  <data name="Exam_Date_and_Time" xml:space="preserve">
+    <value>Sınav Tarihi ve Saati</value>
+  </data>
+  <data name="Exam_Date_Time" xml:space="preserve">
+    <value>Sınav Tarihi ve Saati</value>
+  </data>
+  <data name="Exam_Not_Found" xml:space="preserve">
+    <value>Sınav Bulunamadı</value>
+  </data>
+  <data name="Exam_Not_Started" xml:space="preserve">
+    <value>Sınav Henüz Başlamadı</value>
+  </data>
+  <data name="Next_Question" xml:space="preserve">
+    <value>Sonraki Soru</value>
+  </data>
+  <data name="Please_Do_Not_Leave_Reject_Text_Blank" xml:space="preserve">
+    <value>Lütfen Reddetme Metnini Boş Bırakmayın</value>
+  </data>
+  <data name="Reject_Comment" xml:space="preserve">
+    <value>Red Yorumu</value>
+  </data>
+  <data name="Score_Coefficient" xml:space="preserve">
+    <value>Puan Katsayısı</value>
+  </data>
+  <data name="Max_Score" xml:space="preserve">
+    <value>Alınabilecek En Yüksek Puan</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>İndir</value>
+  </data>
+  <data name="Excel" xml:space="preserve">
+    <value>Excel</value>
+  </data>
+  <data name="Question_Answer" xml:space="preserve">
+    <value>Yanıt</value>
+  </data>
+  <data name="Question_IsRightAnswer" xml:space="preserve">
+    <value>Doğru Cevap mı?</value>
+  </data>
+  <data name="Show_Data" xml:space="preserve">
+    <value>Verileri Göster</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="Bonus_Score" xml:space="preserve">
+    <value>Ek Puan</value>
+  </data>
+  <data name="Question_CompletionDate" xml:space="preserve">
+    <value>Tamamlanma Tarihi</value>
+  </data>
+  <data name="Question_RequestDate" xml:space="preserve">
+    <value>Talep Tarihi</value>
+  </data>
+  <data name="Approved_Date" xml:space="preserve">
+    <value>Onaylanma Tarihi</value>
+  </data>
+  <data name="Rejected_Date" xml:space="preserve">
+    <value>Reddedilme Tarihi</value>
+  </data>
+  <data name="Review_Request_Date" xml:space="preserve">
+    <value>Revizyon İstek Tarihi</value>
+  </data>
+  <data name="Test_Request_Date" xml:space="preserve">
+    <value>Test Talep Tarihi</value>
+  </data>
+  <data name="Remaining_Time_For_The_Exam_To_Start" xml:space="preserve">
+    <value>Sınavın Başlaması İçin Kalan Süre</value>
+  </data>
+  <data name="Exam_Operations" xml:space="preserve">
+    <value>Sınav İşlemleri</value>
+  </data>
+  <data name="Add_Evaluators" xml:space="preserve">
+    <value>Değerlendirici Ekle</value>
+  </data>
+  <data name="Ongoing_Exams" xml:space="preserve">
+    <value>Devam Eden Sınavlar</value>
+  </data>
+  <data name="Upcoming_Exams" xml:space="preserve">
+    <value>Gelecek Sınavlar</value>
+  </data>
+  <data name="Ongoing_Exams_List" xml:space="preserve">
+    <value>Devam Eden Sınavlar Listesi</value>
+  </data>
+  <data name="Past_Exams_List" xml:space="preserve">
+    <value>Geçmiş Sınavlar Listesi</value>
+  </data>
+  <data name="Upcoming_Exams_List" xml:space="preserve">
+    <value>Gelecek Sınavlar Listesi</value>
+  </data>
+  <data name="There_May_Be_More_Than_One_Answer_To_this_Question" xml:space="preserve">
+    <value>Bu sorunun birden fazla cevabı olabilir.</value>
+  </data>
+  <data name="This_Question_Is_An_Ongoing_Selected_Question" xml:space="preserve">
+    <value>Bu sorunun sadece bir cevabı vardır.</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Saat</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>Dakika </value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>Saniye</value>
+  </data>
+  <data name="The_Student_Does_Not_Have_Any_Exams" xml:space="preserve">
+    <value>Öğrencinin Herhangi Bir Sınavı Bulunmamaktadır.</value>
+  </data>
+  <data name="Did_Not_Take_The_Exam" xml:space="preserve">
+    <value>Sınava Girmedi. Mazereti : </value>
+  </data>
+  <data name="No_Excuse" xml:space="preserve">
+    <value>Mazeret Bildirilmedi.</value>
+  </data>
+  <data name="Finish_Exam" xml:space="preserve">
+    <value>Sınavı Bitir</value>
+  </data>
+  <data name="Classroom_Filter_Warning" xml:space="preserve">
+    <value>Aranacak öğeyi aşağıdaki filtreleme araçlarını kullanarak 'Göster' butonu ile filtreleyebilirsiniz. Eğer tüm sınıf listesini göstermek istiyorsanız filtreleme yapmayıp 'Göster' butonuna tıklayabilirsiniz.</value>
+  </data>
+  <data name="Get_Student" xml:space="preserve">
+    <value>Öğrenci Getir</value>
+  </data>
+  <data name="Student_Mail_Adress" xml:space="preserve">
+    <value>Öğrenci Mail Adresi</value>
+  </data>
+  <data name="Student_Surname" xml:space="preserve">
+    <value>Öğrenci Soyadı</value>
+  </data>
+  <data name="Exam_Rule_Description" xml:space="preserve">
+    <value>Sınav Kural Açıklaması</value>
+  </data>
+  <data name="Next_Rule" xml:space="preserve">
+    <value>Sıradaki Kural</value>
+  </data>
+  <data name="Exam_Filter_Warning" xml:space="preserve">
+    <value>Aranacak öğeyi aşağıdaki filtreleme araçlarını kullanarak 'Göster' butonu ile filtreleyebilirsiniz. Eğer tüm sınav listesini göstermek istiyorsanız filtreleme yapmayıp 'Göster' butonuna tıklayabilirsiniz.</value>
+  </data>
+  <data name="List_All_Students" xml:space="preserve">
+    <value>Tüm Öğrencileri Listele</value>
+  </data>
+  <data name="Student_Filter_Warning" xml:space="preserve">
+    <value>Aranacak öğeyi aşağıdaki filtreleme araçlarını kullanarak 'Göster' butonu ile filtreleyebilirsiniz. Eğer tüm öğrenci listesini göstermek istiyorsanız filtreleme yapmayıp 'Göster' butonuna tıklayabilirsiniz.</value>
+  </data>
+  <data name="Missed_Exam_Excuse_Information" xml:space="preserve">
+    <value>Girilmeyen Sınav Mazeret Bilgileri</value>
+  </data>
+  <data name="Exam_Status" xml:space="preserve">
+    <value>Sınav Durumları</value>
+  </data>
+  <data name="Exam_Type" xml:space="preserve">
+    <value>Sınav Tipi</value>
+  </data>
+  <data name="Standard_Exam" xml:space="preserve">
+    <value>Standart Sınav</value>
+  </data>
+  <data name="Zahoot_Exam" xml:space="preserve">
+    <value>Zahoot Sınavı</value>
+  </data>
+  <data name="Class_Grade_Average" xml:space="preserve">
+    <value>Sınıf Not Ortalaması</value>
+  </data>
+  <data name="Select_Classroom" xml:space="preserve">
+    <value>Sınıf Seçin</value>
+  </data>
+  <data name="Select_Student" xml:space="preserve">
+    <value>Öğrenci Seçin</value>
+  </data>
+  <data name="Student_Operation" xml:space="preserve">
+    <value>Öğrenci İşlemleri</value>
+  </data>
+  <data name="Search_Admin" xml:space="preserve">
+    <value>Admin Bul</value>
+  </data>
+  <data name="Please_Wait" xml:space="preserve">
+    <value>Lütfen Bekleyin...</value>
+  </data>
+  <data name="Products_That_Include_Subject" xml:space="preserve">
+    <value>Konuyu İçeren Ürünler</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Göster</value>
+  </data>
+  <data name="Exam_Type_Incongruence" xml:space="preserve">
+    <value>Sınav Tipi Farklı Olamaz.</value>
+  </data>
+  <data name="Assigned_Date" xml:space="preserve">
+    <value>Atama Tarihi</value>
+  </data>
+  <data name="Resigned_Date" xml:space="preserve">
+    <value>Bırakma Tarihi</value>
+  </data>
+  <data name="Automatic" xml:space="preserve">
+    <value>Otomatik</value>
+  </data>
+  <data name="Question_Operation" xml:space="preserve">
+    <value>Soru İşlemleri</value>
+  </data>
+  <data name="Question_Detail" xml:space="preserve">
+    <value>Soru Detayı</value>
+  </data>
+  <data name="Subject_Detail" xml:space="preserve">
+    <value>Konu Detayları</value>
+  </data>
+  <data name="Start_Exam" xml:space="preserve">
+    <value>Sınavı Başlat</value>
+  </data>
+  <data name="Branch_Update" xml:space="preserve">
+    <value>Şubeyi Güncelle</value>
+  </data>
+  <data name="Subject_Update" xml:space="preserve">
+    <value>Konuyu Düzenle</value>
+  </data>
+  <data name="Create_New_Subject" xml:space="preserve">
+    <value>Yeni Konu Ekle</value>
+  </data>
+  <data name="Allowed_File_Types" xml:space="preserve">
+    <value>İzin verilen dosya türleri: png, jpg, jpeg.</value>
+  </data>
+  <data name="Student_Exam_List" xml:space="preserve">
+    <value>Öğrenci Sınav Listesi</value>
+  </data>
+  <data name="Search_Group_Type" xml:space="preserve">
+    <value>Eğitim Tipi Ara</value>
+  </data>
+  <data name="Question_Filter_Warning" xml:space="preserve">
+    <value>Aramak istediğiniz sorunun içeriğini, konusunu, alt konusunu, soru zorluğunu, eklenme tarihini girip 'Göster' butonuna basınız. Tüm soruları listelemek içinse 'Göster' butonuna basınız.</value>
+  </data>
+  <data name="Update_Question_Page" xml:space="preserve">
+    <value>Soru Güncelleme Sayfası</value>
+  </data>
+  <data name="Edit_Subtopic" xml:space="preserve">
+    <value>Alt Konuyu Düzenle</value>
+  </data>
+  <data name="City_Name" xml:space="preserve">
+    <value>Şehir Adı</value>
+  </data>
+  <data name="City_Update" xml:space="preserve">
+    <value>Şehir Güncelle</value>
+  </data>
+  <data name="Search_Branch" xml:space="preserve">
+    <value>Şube Ara</value>
+  </data>
+  <data name="Classroom_Operations" xml:space="preserve">
+    <value>Sınıf İşlemleri</value>
+  </data>
+  <data name="Rejection_Note" xml:space="preserve">
+    <value>Red Notu</value>
+  </data>
+  <data name="Exam_Classroom" xml:space="preserve">
+    <value>Sınıflar</value>
+  </data>
+  <data name="Exam_Evaluator_List" xml:space="preserve">
+    <value>Değerlendirici Olduğum Sınav Listesi</value>
+  </data>
+  <data name="Different_Questions" xml:space="preserve">
+    <value>Tüm öğrenciler için farklı sorular gelicek</value>
+  </data>
+  <data name="Exam_Started_Successfully" xml:space="preserve">
+    <value>Sınav başarılı bir şekilde başlatılmıştır.</value>
+  </data>
+  <data name="Same_For_Everyone" xml:space="preserve">
+    <value>Tüm öğrenciler için aynı sorular, aynı sıra ile gelicek</value>
+  </data>
+  <data name="Same_Questions_Different_Order" xml:space="preserve">
+    <value>Tüm öğrenciler için aynı sorular, farklı sıra ile gelicek</value>
+  </data>
+  <data name="Send_Reply" xml:space="preserve">
+    <value>Cevabı Gönder</value>
+  </data>
+  <data name="Total_Exam_Time" xml:space="preserve">
+    <value>Toplam Süre</value>
+  </data>
+  <data name="Remaining_Time" xml:space="preserve">
+    <value>Kalan Süre</value>
+  </data>
+  <data name="Revise_Comment" xml:space="preserve">
+    <value>Revizyon Yorumu</value>
+  </data>
+  <data name="Appointed_Exam" xml:space="preserve">
+    <value>Atanan Sınav</value>
+  </data>
+  <data name="Conducted_Exam" xml:space="preserve">
+    <value>Yapılan Sınav</value>
+  </data>
+  <data name="Show_Classroom_Success" xml:space="preserve">
+    <value>Sınıf Başarısını Göster</value>
+  </data>
+  <data name="Question_Order" xml:space="preserve">
+    <value>Soru Sırası</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Boş</value>
+  </data>
+  <data name="Wrong" xml:space="preserve">
+    <value>Yanlış</value>
+  </data>
+  <data name="Time_Of_Marking_Issue" xml:space="preserve">
+    <value>Sorunun İşaretlenme Süresi</value>
+  </data>
+  <data name="Achievements_And_Goals" xml:space="preserve">
+    <value>Kazanımlar ve hedefler</value>
+  </data>
+  <data name="Student_Exam_Details" xml:space="preserve">
+    <value>Öğrencinin Sınav detayı</value>
+  </data>
+  <data name="Rules" xml:space="preserve">
+    <value>Kurallar</value>
+  </data>
+  <data name="Class_Name" xml:space="preserve">
+    <value>Sınıf Adı</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>İngilizce</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="Turkish" xml:space="preserve">
+    <value>Türkçe</value>
+  </data>
+  <data name="Empty_Data" xml:space="preserve">
+    <value>Tabloda veri yok</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Toplam _TOTAL_ kayıttan _START_ ile _END_ arasındaki kayıtlar gösteriliyor</value>
+  </data>
+  <data name="Info_Empty" xml:space="preserve">
+    <value>Toplam 0 kayıttan 0 ile 0 arasındaki kayıtlar gösteriliyor</value>
+  </data>
+  <data name="Info_Filtered" xml:space="preserve">
+    <value>(toplam _MAX_ kayıt içerisinden filtrelenmiştir)</value>
+  </data>
+  <data name="Zero_Records" xml:space="preserve">
+    <value>Eşleşen kayıt bulunamadı</value>
+  </data>
+  <data name="Length_Menu" xml:space="preserve">
+    <value>_MENU_ adet kayıt göster</value>
+  </data>
+  <data name="Are_You_Sure" xml:space="preserve">
+    <value>Emin misiniz ?</value>
+  </data>
+  <data name="Cannot_Be_Undone" xml:space="preserve">
+    <value>Bu işlem geri alınamaz!</value>
+  </data>
+  <data name="Yes_Delete" xml:space="preserve">
+    <value>Evet, sil!</value>
+  </data>
+  <data name="Make_Choise" xml:space="preserve">
+    <value>Seçim Yapın</value>
+  </data>
+  <data name="Sign_In_As" xml:space="preserve">
+    <value>olarak giriş yap</value>
+  </data>
+  <data name="Cancel_Button_Text" xml:space="preserve">
+    <value>Silme!</value>
+  </data>
+  <data name="Confirm_Button_Text" xml:space="preserve">
+    <value>Evet, sil!</value>
+  </data>
+  <data name="Confirm_Text" xml:space="preserve">
+    <value>Bu işlem geri alınamaz!</value>
+  </data>
+  <data name="Confirm_Title" xml:space="preserve">
+    <value>Emin misiniz?</value>
+  </data>
+  <data name="Error_Text" xml:space="preserve">
+    <value>Bu yetenek bir eğitmen tarafından kullanılıyor</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="Success_Text" xml:space="preserve">
+    <value>data.messsage</value>
+  </data>
+  <data name="Success_Title" xml:space="preserve">
+    <value>Başarılı</value>
+  </data>
+  <data name="Confirm_Delete_Text" xml:space="preserve">
+    <value>Bu işlem geri alınamaz!</value>
+  </data>
+  <data name="Confirm_Delete_Title" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="No_Stay" xml:space="preserve">
+    <value>Hayır, kalmak istiyorum</value>
+  </data>
+  <data name="Unsaved_Changes_Text" xml:space="preserve">
+    <value>Bu sayfadan çıkmak istediğinize emin misiniz?</value>
+  </data>
+  <data name="Unsaved_Changes_Title" xml:space="preserve">
+    <value>Değişiklikleri kaydetmediniz!</value>
+  </data>
+  <data name="Yes_Leave" xml:space="preserve">
+    <value>Evet, çık!</value>
+  </data>
+  <data name="Form_Submitted_Text" xml:space="preserve">
+    <value>Form başarıyla gönderildi!</value>
+  </data>
+  <data name="Ok_Button_Text" xml:space="preserve">
+    <value>Tamam</value>
+  </data>
+  <data name="c" xml:space="preserve">
+    <value>Evet, Başlat</value>
+  </data>
+  <data name="No_Cancel" xml:space="preserve">
+    <value>Hayır, İptal Et</value>
+  </data>
+  <data name="Start_Exam_Confirmation" xml:space="preserve">
+    <value>Sınavı başlatmak istediğinize emin misiniz?</value>
+  </data>
+  <data name="Cancel_Confirmation" xml:space="preserve">
+    <value>İptal etmek istediğinizden emin misiniz?</value>
+  </data>
+  <data name="Cancel_Not_Completed" xml:space="preserve">
+    <value>Formunuz iptal edilmedi!</value>
+  </data>
+  <data name="No_Back" xml:space="preserve">
+    <value>Hayır, Geri Dön</value>
+  </data>
+  <data name="Understood" xml:space="preserve">
+    <value>Anladım, Tamam!</value>
+  </data>
+  <data name="Yes_Cancel" xml:space="preserve">
+    <value>Evet, İptal Et!</value>
+  </data>
+  <data name="Longest_Answer_Time" xml:space="preserve">
+    <value>En Uzun Cevaplama Süresi</value>
+  </data>
+  <data name="Shortest_Answer_Time" xml:space="preserve">
+    <value>En Kısa Cevaplama Süresi</value>
+  </data>
+  <data name="Add_New_Options" xml:space="preserve">
+    <value>Yeni Seçenek Ekle</value>
+  </data>
+  <data name="Answers" xml:space="preserve">
+    <value>Yanıtlar</value>
+  </data>
+  <data name="New_Option" xml:space="preserve">
+    <value>Yeni Seçenek</value>
+  </data>
+  <data name="Empty_Answer" xml:space="preserve">
+    <value>Boş Cevap Sayısı</value>
+  </data>
+  <data name="Right_Answer" xml:space="preserve">
+    <value>Doğru Cevap Sayısı</value>
+  </data>
+  <data name="Wrong_Answer" xml:space="preserve">
+    <value>Yanlış Cevap Sayısı</value>
+  </data>
+  <data name="Yes_Start" xml:space="preserve">
+    <value>Evet, Başlat</value>
+  </data>
+  <data name="Exam_Started_Mail_Error" xml:space="preserve">
+    <value>Sınav başlatıldı. Bir veya daha fazla öğrenciye mail gönderirken hata oluştu.</value>
+  </data>
+  <data name="Email_Send_Error" xml:space="preserve">
+    <value>Mail gönderimi başarısız!</value>
+  </data>
+  <data name="Email_Send_Success" xml:space="preserve">
+    <value>Mail gönderimi başarılı.</value>
+  </data>
+  <data name="Algorithm" xml:space="preserve">
+    <value>Algoritma</value>
+  </data>
+  <data name="Email_Send_Not_Found" xml:space="preserve">
+    <value>Gönderilen Mail Bulunamadı.</value>
+  </data>
+  <data name="Sent_Email_Found_Success" xml:space="preserve">
+    <value>Gönderilen Mailler Listelendi</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Resim</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Metin</value>
+  </data>
+  <data name="Candidate_Admin" xml:space="preserve">
+    <value>Aday Yöneticisi</value>
+  </data>
+  <data name="List_Not_Found" xml:space="preserve">
+    <value>Liste Bulunamadı!</value>
+  </data>
+  <data name="Candidate_Question_List" xml:space="preserve">
+    <value>Aday Soru Listesi</value>
+  </data>
+  <data name="Candidate_QuestionType" xml:space="preserve">
+    <value>Soru Tipi</value>
+  </data>
+  <data name="Student_Operations" xml:space="preserve">
+    <value>Öğrenci İşlemleri</value>
+  </data>
+  <data name="Admin_Operations" xml:space="preserve">
+    <value>Admin İşlemleri</value>
+  </data>
+  <data name="Date_Of_Birth_Can_Not_Be_Empty" xml:space="preserve">
+    <value>Doğum tarihi alanı boş geçilemez.</value>
+  </data>
+  <data name="Email_Can_Not_Be_Empty" xml:space="preserve">
+    <value>Email alanı boş geçilemez.</value>
+  </data>
+  <data name="Email_Values_Cannot_Be_The_Same" xml:space="preserve">
+    <value>Eposta adresleri aynı olamaz.</value>
+  </data>
+  <data name="LastName_Can_Not_Be_Empty" xml:space="preserve">
+    <value>Soyisim alanı boş geçilemez.</value>
+  </data>
+  <data name="LastName_Can_Not_Consist_Special_Character" xml:space="preserve">
+    <value>Soyisim özel karakter içermemelidir.</value>
+  </data>
+  <data name="LastName_Must_Consist_Of_At_Least_2_Character" xml:space="preserve">
+    <value>Soyisim en az 2 karakterden oluşmalıdır.</value>
+  </data>
+  <data name="Name_Can_Not_Be_Empty" xml:space="preserve">
+    <value>İsim alanı boş geçilemez.</value>
+  </data>
+  <data name="Name_Can_Not_Consist_Special_Character" xml:space="preserve">
+    <value>İsim özel karakter içermemelidir.</value>
+  </data>
+  <data name="Name_Must_Consist_Of_At_Least_2_Character" xml:space="preserve">
+    <value>İsim en az 2 karakterden oluşmalıdır.</value>
+  </data>
+  <data name="Please_Enter_A_Valid_Email_Address" xml:space="preserve">
+    <value>Lütfen geçerli bir eposta adresi giriniz.</value>
+  </data>
+  <data name="Student_LastName_Must_Contain_Maximum_Of_256_Characters" xml:space="preserve">
+    <value>Öğrenci soyadı maksimum 256 karakter içermelidir</value>
+  </data>
+  <data name="Student_Must_Be_Over_15_Years_Old" xml:space="preserve">
+    <value>Öğrenci 15 yaşından büyük olmalıdır.</value>
+  </data>
+  <data name="Student_Name_Must_Contain_Maximum_Of_256_Characters" xml:space="preserve">
+    <value>Öğrenci adı maksimum 256 karakter içermelidir</value>
+  </data>
+  <data name="Content_Management" xml:space="preserve">
+    <value>İçerik Yönetimi</value>
+  </data>
+  <data name="Question_List" xml:space="preserve">
+    <value>Soru Listesi</value>
+  </data>
+  <data name="User_Management" xml:space="preserve">
+    <value>Kullanıcı Yönetimi</value>
+  </data>
+  <data name="Update_Branch" xml:space="preserve">
+    <value>Şube Güncelleme</value>
+  </data>
+  <data name="Branch_Name_Not_Empty" xml:space="preserve">
+    <value>Şube adı boş geçilemez.</value>
+  </data>
+  <data name="Branch_Name_Cannot_Be_Left-Empty" xml:space="preserve">
+    <value>Şube adı boş bırakılamaz.</value>
+  </data>
+  <data name="Branch_Name_Can_Not_Special_Character" xml:space="preserve">
+    <value>Şube adı özel karakter ya da sayı içeremez.</value>
+  </data>
+  <data name="Branch_Name_Minimum_3_Character" xml:space="preserve">
+    <value>Şube adı en az 3 karekter içermelidir.</value>
+  </data>
+  <data name="Update_Admin" xml:space="preserve">
+    <value>Admin Güncelle</value>
+  </data>
+  <data name="Add_Error" xml:space="preserve">
+    <value>Ekleme başarısız!</value>
+  </data>
+  <data name="Group_Name" xml:space="preserve">
+    <value>Grup Adı</value>
+  </data>
+  <data name="Candidate" xml:space="preserve">
+    <value>Aday</value>
+  </data>
+  <data name="Candidates" xml:space="preserve">
+    <value>Adaylar</value>
+  </data>
+  <data name="Candidate_Answer" xml:space="preserve">
+    <value>Cevap</value>
+  </data>
+  <data name="Candidate_Count" xml:space="preserve">
+    <value>Aday Sayısı</value>
+  </data>
+  <data name="Candidate_Details" xml:space="preserve">
+    <value>Aday Detayları</value>
+  </data>
+  <data name="Candidate_Exam_Details" xml:space="preserve">
+    <value>Adayın Sınav detayı</value>
+  </data>
+  <data name="Candidate_Exam_List" xml:space="preserve">
+    <value>Aday Sınav Listesi</value>
+  </data>
+  <data name="Candidate_Filter_Warning" xml:space="preserve">
+    <value>Aranacak öğeyi aşağıdaki filtreleme araçlarını kullanarak 'Göster' butonu ile filtreleyebilirsiniz. Eğer tüm aday listesini göstermek istiyorsanız filtreleme yapmayıp 'Göster' butonuna tıklayabilirsiniz.</value>
+  </data>
+  <data name="Candidate_Found_Success" xml:space="preserve">
+    <value>Aday Başarıyla Bulundu</value>
+  </data>
+  <data name="Candidate_LastName_Must_Contain_Maximum_Of_256_Characters1" xml:space="preserve">
+    <value>Aday soyadı maksimum 256 karakter içermelidir</value>
+  </data>
+  <data name="Candidate_List" xml:space="preserve">
+    <value>Aday Listesi</value>
+  </data>
+  <data name="Candidate_Mail_Adress" xml:space="preserve">
+    <value>Aday Mail Adresi</value>
+  </data>
+  <data name="Candidate_Must_Be_Over_15_Years_Old" xml:space="preserve">
+    <value>Aday 15 yaşından büyük olmalıdır.</value>
+  </data>
+  <data name="Candidate_Name" xml:space="preserve">
+    <value>Aday Adı</value>
+  </data>
+  <data name="Candidate_Name_Must_Contain_Maximum_Of_256_Characters1" xml:space="preserve">
+    <value>Aday adı maksimum 256 karakter içermelidir</value>
+  </data>
+  <data name="Candidate_Not_Found" xml:space="preserve">
+    <value>Aday Bulunamadı</value>
+  </data>
+  <data name="Candidate_Operation" xml:space="preserve">
+    <value>Aday İşlemleri</value>
+  </data>
+  <data name="Candidate_Operations" xml:space="preserve">
+    <value>Aday İşlemleri</value>
+  </data>
+  <data name="Candidate_Question_Point" xml:space="preserve">
+    <value>Aday Puanı</value>
+  </data>
+  <data name="Candidate_Score" xml:space="preserve">
+    <value>Aday Puanı</value>
+  </data>
+  <data name="Candidate_Surname" xml:space="preserve">
+    <value>Aday Soyadı</value>
+  </data>
+  <data name="Candidate_Take_To_Exam" xml:space="preserve">
+    <value>Aday Sınava Girdi mi?</value>
+  </data>
+  <data name="New_Answer" xml:space="preserve">
+    <value>Yeni Yanıt</value>
+  </data>
+  <data name="The_Question_Type_Of_The_Approved_Question_Cannot_Be_Changed" xml:space="preserve">
+    <value>Onaylanan sorunun soru tipi değiştirilemez.</value>
+  </data>
+  <data name="Question_Type_Cannot_Be_Changed" xml:space="preserve">
+    <value>Soru tipi değiştirilemez</value>
+  </data>
+  <data name="Edit_Picture" xml:space="preserve">
+    <value>Fotoğrafı Düzenle</value>
+  </data>
+  <data name="Add_Question" xml:space="preserve">
+    <value>Soru Ekle</value>
+  </data>
+  <data name="View_Detail" xml:space="preserve">
+    <value>Detayı Görüntüle</value>
+  </data>
+  <data name="Send_Again" xml:space="preserve">
+    <value>Tekrar Gönder</value>
+  </data>
+  <data name="Both_Used_Question_ExamRule_Title" xml:space="preserve">
+    <value>Bu alt konu hem en az bir sınav kuralında hem de en az bir soruda kullanılmaktadır.</value>
+  </data>
+  <data name="Confirm_Active_Button_Text" xml:space="preserve">
+    <value>Evet, aktif yap!</value>
+  </data>
+  <data name="Confirm_Active_Text" xml:space="preserve">
+    <value>Statüsü Aktif olarak değiştirilecektir.</value>
+  </data>
+  <data name="Confirm_Active_Title" xml:space="preserve">
+    <value>Statüsünü değiştirmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="Confirm_Passive_Button_Text" xml:space="preserve">
+    <value>Evet, pasife al!</value>
+  </data>
+  <data name="ExamRule_Used_Text" xml:space="preserve">
+    <value>Bu alt konuyu silemezsiniz, pasife almak istiyor musunuz?</value>
+  </data>
+  <data name="ExamRule_Used_Title" xml:space="preserve">
+    <value>Bu alt konu en az bir sınav kuralında kullanılmaktadır.</value>
+  </data>
+  <data name="In_Use_Rule_Text" xml:space="preserve">
+    <value>Bu kuralı silemezsiniz, pasife almak istiyor musunuz?</value>
+  </data>
+  <data name="Passive_Action_Button" xml:space="preserve">
+    <value>Pasife al</value>
+  </data>
+  <data name="Question_Used_Title" xml:space="preserve">
+    <value>Bu alt konu en az bir soruda kullanılmaktadır.</value>
+  </data>
+  <data name="Show_Passives" xml:space="preserve">
+    <value>Pasifleri Dahil Et</value>
+  </data>
+  <data name="Activate" xml:space="preserve">
+    <value>Aktif Et</value>
+  </data>
+  <data name="Change_Status_Fail" xml:space="preserve">
+    <value>Statü değiştirme işlemi başarısız!</value>
+  </data>
+  <data name="Change_Status_Success" xml:space="preserve">
+    <value>Statü başarılı bir şekilde değiştirildi.</value>
+  </data>
+  <data name="In_Use_Rule_Title" xml:space="preserve">
+    <value>Bu kural en az bir sınavda kullanılıyor!</value>
+  </data>
+  <data name="Hide_Inactive_ExamRules" xml:space="preserve">
+    <value>Pasif Kuralları Gizle</value>
+  </data>
+  <data name="Hide_Inactive_Subjects" xml:space="preserve">
+    <value>Pasif Konuları Gizle</value>
+  </data>
+  <data name="Include_Inactive_ExamRules" xml:space="preserve">
+    <value>Pasif Kuralları Dahil Et</value>
+  </data>
+  <data name="Include_Inactive_Subjects" xml:space="preserve">
+    <value>Pasif Konuları Dahil Et</value>
+  </data>
+  <data name="In_Use_SubjectText" xml:space="preserve">
+    <value>Bu konuyu silemezsiniz, pasife almak istiyor musunuz?</value>
+  </data>
+  <data name="Product_And_Question_Used_Title" xml:space="preserve">
+    <value>Bu konu, hem en az bir soruda, hem de en az bir üründe kullanılmaktadır.</value>
+  </data>
+  <data name="Product_And_Subtopic_Used_Title" xml:space="preserve">
+    <value>Bu konu, hem en az bir üründe, hem de en az bir alt konuda kullanılmaktadır.</value>
+  </data>
+  <data name="Product_Used_Title" xml:space="preserve">
+    <value>Bu konu en az bir üründe kullanılmaktadır.</value>
+  </data>
+  <data name="Question_Used_Subject_Title" xml:space="preserve">
+    <value>Bu konu en az bir soruda kullanılmaktadır.</value>
+  </data>
+  <data name="Subtopic_And_Question_Used_Title" xml:space="preserve">
+    <value>Bu konu, hem en az bir soruda, hem de en az bir alt konuda kullanılmaktadır.</value>
+  </data>
+  <data name="Subtopic_Used_Title" xml:space="preserve">
+    <value>Bu konu en az bir alt konuda kullanılmaktadır.</value>
+  </data>
+  <data name="Three_Used_Title" xml:space="preserve">
+    <value>Bu konu, hem en az bir soruda, hem en az bir üründe, hem de en az bir alt konuda kullanılmaktadır.</value>
+  </data>
+  <data name="Confirm_Passive_Button" xml:space="preserve">
+    <value>Evet, pasife al.</value>
+  </data>
+  <data name="Confirm_Passive_Text" xml:space="preserve">
+    <value>Sınıf pasife çekilecek devam etmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="Show_All" xml:space="preserve">
+    <value>Hepsini Göster</value>
+  </data>
+  <data name="Show_Passive" xml:space="preserve">
+    <value>Pasifleri de Göster</value>
+  </data>
+  <data name="Hide_Inactive_Subtopic" xml:space="preserve">
+    <value>Pasif Alt Kuralları Gizle</value>
+  </data>
+  <data name="Include_Inactive_Subtopic" xml:space="preserve">
+    <value>Pasif Alt Konuları Dahil Et</value>
+  </data>
+  <data name="Delete_Admin_Confirm" xml:space="preserve">
+    <value>Bu Admini silmek istediğinizden emin misiniz ?</value>
+  </data>
+  <data name="Candidate_Questions_Listed_Successfully" xml:space="preserve">
+    <value>Aday soruları başarıyla listelendi</value>
+  </data>
+  <data name="Candidate_Question_Added_Successfully" xml:space="preserve">
+    <value>Aday sorusu başarıyla eklendi</value>
+  </data>
+  <data name="Candidate_Question_Deleted_Successfully" xml:space="preserve">
+    <value>Aday sorusu başarıyla silindi</value>
+  </data>
+  <data name="Candidate_Question_Found_Successfully" xml:space="preserve">
+    <value>Aday sorusu başarıyla bulundu</value>
+  </data>
+  <data name="Candidate_Question_Not_Found" xml:space="preserve">
+    <value>Aday sorusu bulunamadı</value>
+  </data>
+  <data name="Candidate_Question_Updated_Successfully" xml:space="preserve">
+    <value>Aday sorusu başarıyla güncellendi</value>
+  </data>
+  <data name="Failed_To_Add_Candidate_Question" xml:space="preserve">
+    <value>Aday sorusu eklenemedi</value>
+  </data>
+  <data name="Failed_To_Delete_Candidate_Question" xml:space="preserve">
+    <value>Aday sorusu silinemedi</value>
+  </data>
+  <data name="Failed_To_List_Candidate_Questions" xml:space="preserve">
+    <value>Aday soruları listelenemedi</value>
+  </data>
+  <data name="Failed_To_Update_Candidate_Question" xml:space="preserve">
+    <value>Aday sorusu güncellenemedi</value>
+  </data>
+  <data name="CandidateQuestionAnswerAddedSuccess" xml:space="preserve">
+    <value>Adayın sorusuna verilen cevap başarıyla eklendi.</value>
+  </data>
+  <data name="CandidateQuestionAnswerAddFailed" xml:space="preserve">
+    <value>Adayın sorusuna verilen cevap eklenemedi</value>
+  </data>
+  <data name="CandidateQuestionAnswerDeletedSuccess" xml:space="preserve">
+    <value>Adayın sorusuna verilen cevap başarıyla silindi.</value>
+  </data>
+  <data name="CandidateQuestionAnswerDeleteFailed" xml:space="preserve">
+    <value>Adayın sorusuna verilen cevap silinemedi</value>
+  </data>
+  <data name="CandidateQuestionAnswerFoundSuccess" xml:space="preserve">
+    <value>Adayın sorusuna verilen cevap başarıyla bulundu</value>
+  </data>
+  <data name="CandidateQuestionAnswerNotFound" xml:space="preserve">
+    <value>Adayın sorusuna verilen cevap bulunamad</value>
+  </data>
+  <data name="Candidate_Question_List_Is_Empty" xml:space="preserve">
+    <value>Aday Soru Listesi Boş</value>
+  </data>
+  <data name="Candidate_Question_Is_Now_Active" xml:space="preserve">
+    <value>Aday sorusu artık etkin</value>
+  </data>
+  <data name="Candidate_Question_Is_Now_Inactive" xml:space="preserve">
+    <value>Aday sorusu artık etkin değil</value>
+  </data>
+  <data name="Candidate_Answer_List_Is_Empty" xml:space="preserve">
+    <value>Aday cevap listesi boş</value>
+  </data>
+  <data name="Email_Invalid" xml:space="preserve">
+    <value>Lütfen geçerli bir mail adresi giriniz</value>
+  </data>
+  <data name="Image_Invalid" xml:space="preserve">
+    <value>Lütfen maksimum 2 MB boyutunda ve uygun dosya biçiminde bir fotoğraf seçiniz (png, jpg, jpeg)</value>
+  </data>
+  <data name="Image_Can_Not_Be_Empty" xml:space="preserve">
+    <value>Resim boş geçilemez</value>
+  </data>
+  <data name="Update_Candidate" xml:space="preserve">
+    <value>Aday Güncelle</value>
+  </data>
+  <data name="Branches" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
+  <data name="General_Information" xml:space="preserve">
+    <value>Genel Bilgiler</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Gruplar</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Sorular</value>
+  </data>
+  <data name="Training_Operation" xml:space="preserve">
+    <value>Eğitim İşlemleri</value>
+  </data>
+  <data name="User_Roles" xml:space="preserve">
+    <value>Kullanıcı Rolleri</value>
+  </data>
+  <data name="Error_Blank" xml:space="preserve">
+    <value>Bu alan boş bırakılamaz.</value>
+  </data>
+  <data name="Candadiate_Question_ImageMaxSize" xml:space="preserve">
+    <value>Seçilen resim 5 MB'dan büyük olamaz</value>
+  </data>
+  <data name="Candidate_Content_Requie" xml:space="preserve">
+    <value>İçerik alanı boş bırakılamaz</value>
+  </data>
+  <data name="Search_Group" xml:space="preserve">
+    <value>Grup Ara</value>
+  </data>
+  <data name="Reschedule_Exam" xml:space="preserve">
+    <value>Yeniden Planla</value>
+  </data>
+  <data name="Branch_Used_Text" xml:space="preserve">
+    <value>Şube pasife alınacaktır, devam etmek istiyor musunuz?</value>
+  </data>
+  <data name="Branch_Used_Title" xml:space="preserve">
+    <value>Şube en az bir sınıfta kullanılmaktadır.</value>
+  </data>
+  <data name="RequestDescription_DisplayName" xml:space="preserve">
+    <value>Talep Detayı</value>
+  </data>
+  <data name="RequesterAdmin_DisplayName" xml:space="preserve">
+    <value>Revizeyi Talep Eden Kişi</value>
+  </data>
+  <data name="Classroom_And_Exam_Rule_Used_Title" xml:space="preserve">
+    <value>Bu ürün en az bir sınıf ve en az bir sınav kuralında kullanılmaktadır!</value>
+  </data>
+  <data name="Classroom_And_Trainer_Used_Title" xml:space="preserve">
+    <value>Bu ürün en az bir sınıf ve en az bir eğitmende kullanılmaktadır!</value>
+  </data>
+  <data name="Classroom_Used_Title" xml:space="preserve">
+    <value>Bu ürün en az bir sınıfta kullanılmaktadır!</value>
+  </data>
+  <data name="Display_Product" xml:space="preserve">
+    <value>Pasif Ürünleri Göster</value>
+  </data>
+  <data name="Exam_Rule_Used_Title" xml:space="preserve">
+    <value>Bu ürün en az bir sınav kuralında kullanılmaktadır!</value>
+  </data>
+  <data name="Hide_Product" xml:space="preserve">
+    <value>Pasif Ürünleri Gizle</value>
+  </data>
+  <data name="In_Use_Product_Text" xml:space="preserve">
+    <value>Bu ürünü silemezsiniz, pasife almak istiyor musunuz?</value>
+  </data>
+  <data name="In_Use_Product_Title" xml:space="preserve">
+    <value>Bu ürün en az bir sınıf veya eğitmende kullanılıyor!</value>
+  </data>
+  <data name="Three_Used_Product_Title" xml:space="preserve">
+    <value>Bu ürün en az bir sınıf, en az bir eğitmen ve en az bir sınav kuralında kullanılmaktadır!</value>
+  </data>
+  <data name="Trainer_And_Exam_Rule_Used_Title" xml:space="preserve">
+    <value>Bu ürün en az bir eğitmen ve en az bir sınav kuralında kullanılmaktadır!</value>
+  </data>
+  <data name="CandidateBranchGroup_Not_Found" xml:space="preserve">
+    <value>Silmek istediğiniz şube içerisinde aktif grup veya gruplar olduğu için silemezsiniz.</value>
+  </data>
+  <data name="Remove_Question_Picture" xml:space="preserve">
+    <value>Soru Resmini Kaldır</value>
+  </data>
+  <data name="Upload_Question_Picture" xml:space="preserve">
+    <value>Soru Resmi Yükle</value>
+  </data>
+  <data name="No_Available_Candidate" xml:space="preserve">
+    <value>Uygun Aday Bulunmamaktadır</value>
+  </data>
+  <data name="Trainer_Used_Title" xml:space="preserve">
+    <value>Bu ürün en az bir eğitmende kullanılmaktadır!</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Grup</value>
+  </data>
+  <data name="RevisionConclusion_DisplayName" xml:space="preserve">
+    <value>Revizyon Açıklaması</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="No_Available_Group" xml:space="preserve">
+    <value>Uygun Grup Bulunmamaktadır.</value>
+  </data>
+  <data name="At_Least_One_Answer_Choice_Must_Be_Indicated_As_Correct" xml:space="preserve">
+    <value>En az bir yanıt doğru şık olarak belirtilmelidir</value>
+  </data>
+  <data name="The_Question_Must_Not_Contain_Empty_Answer_Fields" xml:space="preserve">
+    <value>Soru Boş Yanıt Alanı İçermemelidir</value>
+  </data>
+  <data name="EmptyAnswer_Count" xml:space="preserve">
+    <value>Boş Bırakılan Cevap Sayısı</value>
+  </data>
+  <data name="RightAnswer_Count" xml:space="preserve">
+    <value>Doğru Cevap Sayısı</value>
+  </data>
+  <data name="WrongAnswer_Count" xml:space="preserve">
+    <value>Yanlış Cevap Sayısı</value>
+  </data>
+  <data name="Times_Question_Used" xml:space="preserve">
+    <value>Kaç sınavda kullanıldı</value>
+  </data>
+  <data name="Candidate_Email_Duplicate" xml:space="preserve">
+    <value>Bu e-posta adresi kullanılmaktadır. Lütfen başka bir e-posta adresi yazınız</value>
+  </data>
+  <data name="Management_Operations" xml:space="preserve">
+    <value>Yönetim İşlemleri</value>
+  </data>
+  <data name="CandidateQuestionActivate" xml:space="preserve">
+    <value>Aktive Et</value>
+  </data>
+  <data name="CandidateQuestionDeactivate" xml:space="preserve">
+    <value>Deaktive Et</value>
+  </data>
+  <data name="Failed_To_Set_Question_And_Answers_To_Active" xml:space="preserve">
+    <value>Soru ve cevaplar aktif hale getirilemedi</value>
+  </data>
+  <data name="Failed_To_Set_Question_And_Answers_To_Inactive" xml:space="preserve">
+    <value>Soru ve cevaplar pasif hale getirilemedi</value>
+  </data>
+  <data name="Question_And_Answers_Set_To_Active_Successfully" xml:space="preserve">
+    <value>Soru ve cevaplar başarıyla aktif hale getirildi</value>
+  </data>
+  <data name="Question_And_Answers_Set_To_Inactive_Successfully" xml:space="preserve">
+    <value>Soru ve cevaplar başarıyla pasif hale getirildi</value>
+  </data>
+  <data name="Question_Used_In_Exam" xml:space="preserve">
+    <value>Bu soru bir sınavda kullanılıyor</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Önizle</value>
+  </data>
+  <data name="Correct_Answer" xml:space="preserve">
+    <value>Doğru Cevap</value>
+  </data>
+  <data name="Question_Preview" xml:space="preserve">
+    <value>Soru Önizleme</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detay</value>
+  </data>
+  <data name="ApiUser" xml:space="preserve">
+    <value>Api Kullanıcısı</value>
+  </data>
+  <data name="Delete_ApiUser" xml:space="preserve">
+    <value>Api Kullanıcısı Sil</value>
+  </data>
+  <data name="ApiUser_Details" xml:space="preserve">
+    <value>Api Kullanıcısı Detayları</value>
+  </data>
+  <data name="ApiUsers" xml:space="preserve">
+    <value>Api Kullanıcıları</value>
+  </data>
+  <data name="Search_ApiUser" xml:space="preserve">
+    <value>Api Kullanıcısı Bul</value>
+  </data>
+  <data name="Update_ApiUser" xml:space="preserve">
+    <value>Api Kullanıcısı Güncelle</value>
+  </data>
+  <data name="ApiUserRole" xml:space="preserve">
+    <value>Api Kullanıcısı Rolü</value>
+  </data>
+  <data name="ApiUser_Operations" xml:space="preserve">
+    <value>Api Kullanıcısı İşlemleri</value>
+  </data>
+  <data name="Delete_ApiUser_Confirm" xml:space="preserve">
+    <value>Bu Kullanıcıyı silmek istediğinizden emin misiniz ?</value>
+  </data>
+  <data name="CandidateBranchGroup_Passive_Success" xml:space="preserve">
+    <value>Şube pasife alındı.</value>
+  </data>
+  <data name="CandidateBranchGroup_Passive_Delete" xml:space="preserve">
+    <value>Silmek istediğiniz şube içerisinde pasif grup veya gruplar olduğu için silemezsiniz. Pasife almak ister misiniz?</value>
+  </data>
+  <data name="Hide_Passive" xml:space="preserve">
+    <value>Pasifleri Gizle</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Açıklama</value>
+  </data>
+  <data name="Exam_Found_Success" xml:space="preserve">
+    <value>Sınav getirme başarılı.</value>
+  </data>
+  <data name="Not_Enough_Questions" xml:space="preserve">
+    <value>Yeterince soru bulunmamaktadır.</value>
+  </data>
+  <data name="Trainer_Explanation" xml:space="preserve">
+    <value>Eğitmen Notları</value>
+  </data>
+  <data name="CandidateBranch_Passive" xml:space="preserve">
+    <value>Aktif gruplar olduğu için şubeyi pasife alamazsınız.</value>
+  </data>
+  <data name="Passive_Answer" xml:space="preserve">
+    <value>Pasife almak ister misiniz?</value>
+  </data>
+  <data name="Candidate_Return_Ok" xml:space="preserve">
+    <value>Geri Dönmek için Tamama Basınız.</value>
+  </data>
+  <data name="Candidate_Branch_Passive_Ok" xml:space="preserve">
+    <value>Şubeyi Pasife Al.</value>
+  </data>
+  <data name="Update_Role_To_Trainer" xml:space="preserve">
+    <value>Eğitmen Olarak Ata</value>
+  </data>
+  <data name="Update_Role_To_Admin" xml:space="preserve">
+    <value>Admin Olarak Ata</value>
+  </data>
+  <data name="Admin_Successfully_Updated_To_Trainer." xml:space="preserve">
+    <value>Eğitmen Rolü Başaralı Olarak Atandı</value>
+  </data>
+  <data name="Trainer_Successfully_Updated_To_Admin." xml:space="preserve">
+    <value>Admin Rolü Başarılı Olarak Atandı</value>
+  </data>
+  <data name="Algorithm_Question_Count" xml:space="preserve">
+    <value>Algoritma Soru Sayısı</value>
+  </data>
+  <data name="Algorithm_Section_Percentage" xml:space="preserve">
+    <value>Algoritma Bölümü Puan Yüzdesi</value>
+  </data>
+  <data name="Classic_Question_Count" xml:space="preserve">
+    <value>Klasik Soru Sayısı</value>
+  </data>
+  <data name="Classic_Section_Percentage" xml:space="preserve">
+    <value>Klasik Bölüm Puan Yüzdesi</value>
+  </data>
+  <data name="Create_Exam" xml:space="preserve">
+    <value>Yeni Sınav</value>
+  </data>
+  <data name="Exam_Expired" xml:space="preserve">
+    <value>Süresi bitti.</value>
+  </data>
+  <data name="Exam_Started" xml:space="preserve">
+    <value>Sınav başlatıldı.</value>
+  </data>
+  <data name="Test_Question_Count" xml:space="preserve">
+    <value>Test Soru Sayısı</value>
+  </data>
+  <data name="Test_Section_Percentage" xml:space="preserve">
+    <value>Test Bölümü Puan Yüzdesi</value>
+  </data>
+  <data name="Candidate_Exam_Filter_Warning" xml:space="preserve">
+    <value>Aşağıdaki filtreleme seçeneklerini doldurarak sınavları isme, başlangıç ve bitiş tarihlerine göre filtreleyebilirsiniz. Filtreleme seçeneklerini doldurduktan sonra tablodaki veriler otomatik olarak güncellenecektir.</value>
+  </data>
+  <data name="Empty_List" xml:space="preserve">
+    <value>Aramanıza uygun sonuç bulunamadı.</value>
+  </data>
+  <data name="AI_Assessment" xml:space="preserve">
+    <value>Yapay Zeka Değerlendirmesi</value>
+  </data>
+  <data name="Error_Below_Zero" xml:space="preserve">
+    <value>Sıfırın altında olamaz.</value>
+  </data>
+  <data name="Error_Max_Score" xml:space="preserve">
+    <value>Maksimum puanın üzerinde olamaz.</value>
+  </data>
+  <data name="Given_Answer" xml:space="preserve">
+    <value>Verilen Cevap</value>
+  </data>
+  <data name="Give_Score" xml:space="preserve">
+    <value>Puan Ver</value>
+  </data>
+  <data name="Incorrent_Answer" xml:space="preserve">
+    <value>Yanlış Cevap</value>
+  </data>
+  <data name="No_Answer_Given" xml:space="preserve">
+    <value>Cevap verilmedi.</value>
+  </data>
+  <data name="No_Score_Given" xml:space="preserve">
+    <value>Puan verilmedi.</value>
+  </data>
+  <data name="Content_Required" xml:space="preserve">
+    <value>İçerik alanı zorunludur</value>
+  </data>
+  <data name="File_Size_Exceeded" xml:space="preserve">
+    <value>Dosya boyutu 1 MB geçemez</value>
+  </data>
+  <data name="Invalid_File_Type" xml:space="preserve">
+    <value>Sadece JPG, JPEG ve PNG dosyaları desteklenmektedir</value>
+  </data>
+  <data name="QuestionType_Required" xml:space="preserve">
+    <value>Soru tipi alanı zorunludur</value>
+  </data>
+  <data name="Form_Not_Cancelled_Message" xml:space="preserve">
+    <value>Formunuz iptal edilmedi!</value>
+  </data>
+  <data name="Validation_Error_Message" xml:space="preserve">
+    <value>Üzgünüm, bazı hatalar tespit edildi. Lütfen tekrar deneyin</value>
+  </data>
+  <data name="Image_Upload_Placeholder_Info" xml:space="preserve">
+    <value>Bu alana sorunuz için resim ekleyebilirsiniz</value>
+  </data>
+  <data name="Deactivate_Error_Text" xml:space="preserve">
+    <value>Soru pasif hale getirilirken bir hata oluştu!</value>
+  </data>
+  <data name="Deactivate_Success_Text" xml:space="preserve">
+    <value>Soru başarıyla pasif hale getirildi!</value>
+  </data>
+  <data name="Delete_Error_Text" xml:space="preserve">
+    <value>Silme işlemi sırasında bir hata oluştu!</value>
+  </data>
+  <data name="Question_Used_In_Exam_Text" xml:space="preserve">
+    <value>Bu soru şu anda bir sınavda kullanılmaktadır. Soruyu silmek yerine pasif hale getirmek ister misiniz?</value>
+  </data>
+  <data name="Yes_Deactivate" xml:space="preserve">
+    <value>Evet, Pasif Yap</value>
+  </data>
+  <data name="Add_Answer_Error_Text" xml:space="preserve">
+    <value>Lütfen Yanıt Ekleyiniz. Yanıt Alanı Boş Olmamalıdır veya kullanmadığınız ve boş olan yanıt seçenekleri kaldırın. Soru kaydedilirken boş yanıt alanı içermemelidir</value>
+  </data>
+  <data name="Image_File_Size_Error_Text" xml:space="preserve">
+    <value>Lütfen 1 MB boyutundan küçük bir resim seçin</value>
+  </data>
+  <data name="Image_File_Size_Error_Title" xml:space="preserve">
+    <value>Resim Dosyası Boyutu Hatası</value>
+  </data>
+  <data name="Min_Answers_Error_Text" xml:space="preserve">
+    <value>Test soruları için en az iki yanıt eklenmesi gereklidir</value>
+  </data>
+  <data name="Missing_Data_Error_Title" xml:space="preserve">
+    <value>Eksik Veri Girildi</value>
+  </data>
+  <data name="Please_Provide_Question_Content" xml:space="preserve">
+    <value>Lütfen soru içeriği sağlayın</value>
+  </data>
+  <data name="Select_Correct_Answer_Error_Text" xml:space="preserve">
+    <value>Lütfen sorunun doğru cevabını seçin.</value>
+  </data>
+  <data name="Show_Passive_Questions" xml:space="preserve">
+    <value>Pasif Soruları Göster</value>
+  </data>
+  <data name="Change_To_Status" xml:space="preserve">
+    <value>Statü Değiştir</value>
+  </data>
+  <data name="Candidate_Question_TextAnswer_Added_Success" xml:space="preserve">
+    <value>Yeni cevap doğru olarak eklendi.</value>
+  </data>
+  <data name="Candidate_Add_Correct_Answer" xml:space="preserve">
+    <value>Doğru Cevap Olarak Ekle</value>
+  </data>
+  <data name="Candidate_Branch_Set_To_Active_Successfully" xml:space="preserve">
+    <value>Şube başarıyla aktif hale getirildi.</value>
+  </data>
+  <data name="Candidate_Branch_Set_To_InActive_Successfully" xml:space="preserve">
+    <value>Şube başarıyla pasif hale getirildi.</value>
+  </data>
+  <data name="Add_Other_Email" xml:space="preserve">
+    <value>Diğer E-postayı Ekle</value>
+  </data>
+  <data name="Candidate_Admin_Details" xml:space="preserve">
+    <value>Aday Yöneticisi Detayları</value>
+  </data>
+  <data name="Candidate_Admin_Operations" xml:space="preserve">
+    <value>Aday Yöneticisi İşlemleri</value>
+  </data>
+  <data name="Search_Candidate_Admin" xml:space="preserve">
+    <value>Aday Yöneticisini Ara</value>
+  </data>
+  <data name="Update_Candidate_Admin" xml:space="preserve">
+    <value>Aday Yöneticisini Güncelle</value>
+  </data>
+  <data name="Turkish_Characters_Not_Allowed" xml:space="preserve">
+    <value>Türkçe karakter kullanamazsınız!</value>
+  </data>
+  <data name="Trainer_Filter_Warning" xml:space="preserve">
+    <value>Aranacak öğeyi aşağıdaki filtreleme araçlarını kullanarak filtreleyebilirsiniz.</value>
+  </data>
+  <data name="Student_Exam_Average" xml:space="preserve">
+    <value>Sınav Ortalaması</value>
+  </data>
+  <data name="Question_Subject" xml:space="preserve">
+    <value>Konu</value>
+  </data>
+  <data name="Default_Option" xml:space="preserve">
+    <value>Seçenek</value>
+  </data>
+  <data name="In_Use_SubjectTitle" xml:space="preserve">
+    <value>Konu başlığı zaten kullanılıyor</value>
+  </data>
+  <data name="Candidate_Subject" xml:space="preserve">
+    <value>Aday Soru Konusu</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Toplam</value>
+  </data>
+  <data name="SubjectType" xml:space="preserve">
+    <value>Konu \ Tür</value>
+  </data>
+  <data name="Question_Counts" xml:space="preserve">
+    <value>Soru Sayıları</value>
+  </data>
+  <data name="Select_Question_Type" xml:space="preserve">
+    <value>Soru Tipi Seçiniz</value>
+  </data>
+  <data name="Active_Students" xml:space="preserve">
+    <value>Aktif Öğrenciler</value>
+  </data>
+  <data name="All_Students" xml:space="preserve">
+    <value>Tüm Öğrenciler</value>
+  </data>
+  <data name="Best_Students" xml:space="preserve">
+    <value>En Başarılı 10 Öğrenci</value>
+  </data>
+  <data name="Exam_Count" xml:space="preserve">
+    <value>Sınav Sayısı</value>
+  </data>
+  <data name="My_Students" xml:space="preserve">
+    <value>Öğrencilerim</value>
+  </data>
+  <data name="Success_Rate" xml:space="preserve">
+    <value>Başarı Oranı</value>
+  </data>
+  <data name="Different_Question" xml:space="preserve">
+    <value>Farklı Sorular</value>
+  </data>
+  <data name="Link_Validity_Period" xml:space="preserve">
+    <value>Link Geçerlilik Süresi (Gün)</value>
+  </data>
+  <data name="Same_Question" xml:space="preserve">
+    <value>Aynı Sorular</value>
+  </data>
+  <data name="AddForCandidates" xml:space="preserve">
+    <value>Adaylar için sınav ekle</value>
+  </data>
+  <data name="AddPublic" xml:space="preserve">
+    <value>Herkese açık sınav ekle</value>
+  </data>
+  <data name="Allow_Candidate_To_Retake_Exam" xml:space="preserve">
+    <value>Sınava Girme İzni Oluştur</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>kayıttan</value>
+  </data>
+  <data name="Records_Are_Being_Displayed" xml:space="preserve">
+    <value>arasındaki kayıtlar gösteriliyor</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>ile</value>
+  </data>
+  <data name="Email_Content" xml:space="preserve">
+    <value>E-Mail İçeriği</value>
+  </data>
+  <data name="Show_All_Classroom" xml:space="preserve">
+    <value>Pasif Sınıfları Gizle</value>
+  </data>
+  <data name="Show_Passive_Classroom" xml:space="preserve">
+    <value>Pasif Sınıfları Dahil Et</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Takvim</value>
+  </data>
+  <data name="Added_By_Question" xml:space="preserve">
+    <value>Soruyu Ekleyen</value>
+  </data>
+  <data name="Awaited_Questions" xml:space="preserve">
+    <value>Onay Bekleyen Sorular</value>
+  </data>
+  <data name="Subject_Of_Question" xml:space="preserve">
+    <value>Sorunun Konusu</value>
+  </data>
+  <data name="Search_Subtopic" xml:space="preserve">
+    <value>Alt Konu Ara</value>
+  </data>
+  <data name="Search_Product" xml:space="preserve">
+    <value>Ürün Ara</value>
+  </data>
+  <data name="Search_Subject" xml:space="preserve">
+    <value>Konu ara</value>
+  </data>
+  <data name="Is_Canceled" xml:space="preserve">
+    <value>İptal Et</value>
+  </data>
+  <data name="Cancel_CancelButton_Text" xml:space="preserve">
+    <value>İptal etme!</value>
+  </data>
+  <data name="Confirm_CancelButton_Text" xml:space="preserve">
+    <value>Evet, iptal et!</value>
+  </data>
+  <data name="Confirm_Cancel_Text" xml:space="preserve">
+    <value>Bu işlem geri alınamaz!</value>
+  </data>
+  <data name="Confirm_Cancel_Title" xml:space="preserve">
+    <value>İptal etmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="Cancellation_Status" xml:space="preserve">
+    <value>İptal Durumu</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>İptal Edildi</value>
+  </data>
+  <data name="Not_Cancelled" xml:space="preserve">
+    <value>Geçerli</value>
+  </data>
+  <data name="Exam_Result_Info_Not_Available" xml:space="preserve">
+    <value>Sınav Sonuç Bilgisi Bulunmuyor</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Süresi Doldu</value>
+  </data>
+  <data name="Not_Started" xml:space="preserve">
+    <value>Başlatılmadı</value>
+  </data>
+  <data name="Started" xml:space="preserve">
+    <value>Başlatıldı</value>
+  </data>
+  <data name="System_Test_Exam" xml:space="preserve">
+    <value>Bu sınav sistem testi yapmak için oluşturulmuştur</value>
+  </data>
+  <data name="Deactivated_List" xml:space="preserve">
+    <value>Pasife Alınan {0} Listesi</value>
+  </data>
+  <data name="Deactived_List" xml:space="preserve">
+    <value>Pasife Alınan {0} Listesi</value>
+  </data>
+  <data name="Deactived_Question" xml:space="preserve">
+    <value>Pasife Alınan Sorular</value>
+  </data>
+  <data name="Total_Time_Spend" xml:space="preserve">
+    <value>Sınavda geçirilen süre</value>
+  </data>
+  <data name="ExcuseProvided" xml:space="preserve">
+    <value>Sınava Girmedi. Mazeret Bildirildi.</value>
+  </data>
+  <data name="NoExcuse" xml:space="preserve">
+    <value>Sınava Girmedi. Mazeret Bildirilmedi.</value>
+  </data>
+  <data name="Delete_Student" xml:space="preserve">
+    <value>Öğrenciyi Sil</value>
+  </data>
+  <data name="Choose_Classroom" xml:space="preserve">
+    <value>Sınıf Seçiniz</value>
+  </data>
+  <data name="Assess_Student" xml:space="preserve">
+    <value>Değerlendir</value>
+  </data>
+  <data name="Confirm_Excuse" xml:space="preserve">
+    <value>Mazereti Onayla</value>
+  </data>
+  <data name="Exam_Result" xml:space="preserve">
+    <value>Sınav Sonucu</value>
+  </data>
+  <data name="Excuse_Detail" xml:space="preserve">
+    <value>Mazeret Detayı</value>
+  </data>
+  <data name="Excused_Approved" xml:space="preserve">
+    <value>Mazeret Onaylandı</value>
+  </data>
+  <data name="Invalid_Calculated_Total_Time" xml:space="preserve">
+    <value>Geçersiz Hesaplanan Toplam Süre</value>
+  </data>
+  <data name="Question_Pool_Creation_Failed" xml:space="preserve">
+    <value>Soru havuzu oluşturulamadı</value>
+  </data>
+  <data name="Question_Rule_Not_Found" xml:space="preserve">
+    <value>Soru kurali bulunamadi</value>
+  </data>
+  <data name="The_Time_Given_For_This_Exam_Cannot_Be_Less_Than_The_Total_Time_Of_The_Questions" xml:space="preserve">
+    <value>Bu sınav için verilen süre soruların toplam süresinden az olamaz.</value>
+  </data>
+  <data name="Total_Time_Calculated" xml:space="preserve">
+    <value>Toplam süre hesaplandı</value>
+  </data>
+  <data name="Practice_Exam" xml:space="preserve">
+    <value>Deneme</value>
+  </data>
+  <data name="Cancel_Success" xml:space="preserve">
+    <value>Sınav başarıyla iptal edildi.</value>
+  </data>
+  <data name="The_Status" xml:space="preserve">
+    <value>Durumu</value>
+  </data>
+  <data name="Adequate_Question_Validation" xml:space="preserve">
+    <value>Girdiğiniz özelliklerde yeterli sayıda soru bulunmamaktadır.</value>
+  </data>
+  <data name="Class_Achievement" xml:space="preserve">
+    <value>Sınıf Başarısı</value>
+  </data>
+  <data name="Exam_Report_Details" xml:space="preserve">
+    <value>Sınav Rapor Detayı</value>
+  </data>
+  <data name="Exam_Result_Info_ Not_Available" xml:space="preserve">
+    <value>Sınav Sonuç Bilgisi Bulunmuyor</value>
+  </data>
+  <data name="Excuse_Details" xml:space="preserve">
+    <value>Mazeret Detayı</value>
+  </data>
+  <data name="Min_Max_Grade" xml:space="preserve">
+    <value>Minimum Not/Maximum Not</value>
+  </data>
+  <data name="Not_Exam_An_Excuse" xml:space="preserve">
+    <value>Sınava Girmedi. Mazeret Bildirildi.</value>
+  </data>
+  <data name="Not_Exam_No_Excuse" xml:space="preserve">
+    <value>Sınava Girmedi. Mazeret Bildirilmedi.</value>
+  </data>
+  <data name="Assessment_Confirm_Success" xml:space="preserve">
+    <value>Mazeret onaylandı.</value>
+  </data>
+  <data name="Number_Question_Validation" xml:space="preserve">
+    <value>Soru sayısı sıfır veya negatif olamaz</value>
+  </data>
+</root>

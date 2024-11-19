@@ -1,0 +1,60 @@
+﻿.div-student {
+    display: flex;
+}
+
+.fa-circle-exclamation {
+    color: #d80e0e;
+    margin-right: 10px;
+}
+
+.student-p {
+    font-size: 12px;
+    font-style: italic;
+}
+
+.form-student {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.student-label {
+    padding: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+.student-checkbox-label {
+    padding: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+#FirstName, #LastName, #Email {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 185px;
+}
+
+#ActiveStudents {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    margin-left: 68px;
+}
+
+.student-button {
+    background-color: seagreen;
+    border-radius: 5px;
+    width: 185px;
+    height: 40px;
+    margin-top: 25px;
+}
+
+.form-student.disabled .student-label,
+.form-student.disabled input[id^="FirstName"],
+.form-student.disabled input[id^="LastName"],
+.form-student.disabled input[id^="Email"] {
+    opacity: 0.2;
+}

@@ -1,0 +1,283 @@
+﻿@model TrainerQuestionCreateVM
+
+<style>
+    .no-resize {
+        resize: none;
+    }
+
+    .auto-expand {
+        overflow: hidden;
+        min-height: 20px;
+    }
+</style>
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+<div class="card">
+    <!--begin::Card header-->
+    <div class="ps-9 pt-6">
+        <h1 class="text-dark fw-bolder fs-1">@ViewLocalizer["Add_Question_Page"]</h1>
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body ">
+        <!--begin::Form-->
+        <form asp-controller="Question" asp-action="Create" class="form" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <input class="form-control" name="subjectIdFromReload" id="subjectIdFromReload" value="@ViewBag.SubjectId" hidden />
+                <input class="form-control" name="subtopicIdFromReload" id="subtopicIdFromReload" value="@ViewBag.SubtopicId" hidden />
+                <input class="form-control" name="questionAnswersListFromReload" id="questionAnswersListFromReload" value="@ViewBag.QuestionAnswersList" hidden />
+
+                <div class="col-sm-6 ">
+                    <div class="fv-row form-floating mb-7">
+                        <select asp-for="ProductId" asp-items="@ViewBag.ProductList" class="form-select form-select-sm form-select-solid" onchange="onProductChange()">
+                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                        </select>
+                        <label asp-for="ProductId" class="fw-bold fs-6 mb-2">
+                            @SharedLocalizer["Product"]
+                        </label>
+                        <span asp-validation-for="ProductId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <select asp-for="SubjectId" class="form-select form-select-sm form-select-solid" onchange="onSubjectChange()">
+                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                        </select>
+                        <label asp-for="SubjectId" class="fw-bold fs-6 mb-2">@SharedLocalizer["Subject"]</label>
+                        <span asp-validation-for="SubjectId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <select asp-for="SubtopicId" class="form-select form-select-lg form-select-solid p-3" data-control="select2" data-close-on-select="false" data-allow-clear="false" multiple="multiple" data-search="false">
+                        </select>
+                        <label class="fw-bold fs-6 mt-n2" asp-for="SubtopicId">@SharedLocalizer["Subtopic"]</label>
+                        <span asp-validation-for="SubtopicId" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <select asp-for="QuestionType" class="form-select form-select-sm form-select-solid" onchange="onQuestionTypeChange()" id="QuestionType">
+                            @foreach (SelectListItem questionType in ViewBag.QuestionTypes)
+                            {
+                                <!option value="@questionType.Value" title="@GetDescriptionForQuestionType(questionType.Value)" @(questionType.Value == "2" ? "selected" : null)>
+                                    @SharedLocalizer[$"{questionType.Text}"]
+                                </!option>
+                            }
+                        </select>
+                        <label asp-for="QuestionType" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Type"]</label>
+                        <span asp-validation-for="QuestionType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <select asp-for="QuestionDifficultyId" class="form-select form-select-sm form-select-solid" onchange="onQuestionDifficultyChange()">
+                            <option value="" disabled selected>@SharedLocalizer["Choose"]</option>
+                            @if (ViewBag.QuestionDifficulty != null)
+                            {
+                                @foreach (SelectListItem questionDifficulty in ViewBag.QuestionDifficulty)
+                                {
+                                    <option value="@questionDifficulty.Value">
+                                        @SharedLocalizer[$"{questionDifficulty.Text}"]
+                                    </option>
+                                }
+                            }
+
+                        </select>
+                        <label asp-for="QuestionDifficultyId" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Difficulty"]</label>
+                        <span asp-validation-for="QuestionDifficultyId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <input asp-for="TimeGiven" type="time" step="1" class="form-control form-control-sm form-control-solid" readonly />
+                        <span asp-validation-for="TimeGiven" class="text-danger"></span>
+                        <label asp-for="TimeGiven" class="fw-bold fs-6 mb-2">@SharedLocalizer["Time_Given"]</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <textarea asp-for="Target" rows="4" class="form-control form-control-sm form-control-solid auto-expand"></textarea>
+                        <span asp-validation-for="Target" class="text-danger"></span>
+                        <label asp-for="Target" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Target"]</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="fv-row form-floating mb-7">
+                        <textarea asp-for="Gains" rows="4" class="form-control form-control-sm form-control-solid auto-expand"></textarea>
+                        <span asp-validation-for="Gains" class="text-danger"></span>
+                        <label asp-for="Gains" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Gains"]</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="fv-row form-floating mb-7">
+                        <textarea asp-for="Content" rows="4" class="form-control form-control-sm form-control-solid auto-expand"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                        <label asp-for="Content" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Content"]</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="Image" class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Image"]</label>
+                    <input asp-for="Image" type="file" class="form-control form-control-lg form-control-solid" accept=".png,.jpeg" />
+                </div>
+
+
+               
+                <input class="form-control" name="questionAnswerChoices" id="questionAnswerChoices" hidden />
+                <div class="col-sm-6 gap-3 " id="questionAnswersDiv" hidden>
+                    <label asp-for="QuestionAnswers" class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Answers"]</label>
+                </div>
+            </div>
+            <div id="answerChoicesContainer"></div>
+
+         
+
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end m-3">
+                <button id="previewButton" class="btn btn-primary" type="button">Preview</button>
+                <button class="btn btn-success" type="submit" value="Add">@SharedLocalizer["Save"]</button>
+            </div>
+            <div id="previewModal" class="modal fade" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Card body-->
+</div>
+@section Scripts {
+    <script src="~/js/questionCreateUpdate.js"></script>
+    <script>
+        var localizer = {
+            choose: '@SharedLocalizer["Choose"]',
+            answers: '@SharedLocalizer["Answers"]',
+            newoption: '@SharedLocalizer["New_Option"]',
+            addnewoption: '@SharedLocalizer["Add_New_Options"]',
+            text: '@SharedLocalizer["Text"]',
+            image: '@SharedLocalizer["Image"]'
+        };
+        // Bu fonksiyon, soru tipine bağlı olarak açıklama ekler
+        function updateDescription() {
+            var selectedQuestionType = document.getElementById('QuestionType').value;
+
+
+            var description = getQuestionTypeDescription(selectedQuestionType);
+
+
+            var descriptionTextArea = document.getElementById('questionTypeDescription');
+            descriptionTextArea.value = description;
+
+
+            var container = document.getElementById('questionTypeDescriptionContainer');
+            if (description.trim() !== '') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        @functions {
+        public static string GetDescriptionForQuestionType(string questionTypeId)
+        {
+            switch (questionTypeId)
+            {
+                case "1":
+                    return "İlgili soruda birden fazla cevap işaretlenebilir.";
+                case "2":
+                    return "İlgili sorunun bir doğru cevabı işaretlenebilir.";
+                case "3":
+                    return "İlgili sorunun doğru ya da yanlış bir cevabı işaretlenebilir.";
+                case "4":
+                    return "İlgili sorunun doğru cevabı metin şeklindedir.";
+                default:
+                    return "Soru tipi hakkında bilgi bulunamadı.";
+            }
+        }
+    }
+
+        function showTooltip(element) {
+            var tooltipText = element.getAttribute('data-title');
+            if (tooltipText) {
+                // Burada tooltip göstermek için kullanacağınız mantığı uygulayabilirsiniz.
+                // Örnek olarak basit bir alert kutusu kullanılmıştır:
+                alert(tooltipText);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateDescription();
+        });
+
+        document.getElementById('QuestionType').addEventListener('change', function () {
+            updateDescription();
+        });
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        onQuestionTypeChange()
+    });
+    </script>
+
+<script>
+    $('#previewButton').click(function (e) {
+        e.preventDefault();
+
+        var form = $('form')[0];
+        var formData = new FormData(form);
+
+        // Manually append the file to the FormData object
+        var fileInput = document.querySelector('#Image');
+        if (fileInput.files.length > 0) {
+            formData.append('Image', fileInput.files[0]);
+        }
+
+        var newTab = window.open();
+        $.ajax({
+            url: '@Url.Action("Preview", "Question")',
+            type: 'POST',
+            data: formData, // Send the FormData object directly
+            processData: false, // Don't process the data
+            contentType: false, // Don't set a content type
+            success: function (result) {
+                newTab.document.open();
+                newTab.document.write(result);
+                newTab.document.close();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                newTab.close();
+                alert('An error occurred while generating the preview: ' + textStatus);
+            }
+        });
+    });
+</script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var inputs = document.querySelectorAll('textarea.auto-expand, input.auto-expand');
+
+            function autoExpand(element) {
+                element.style.height = 'auto';
+                element.style.height = (element.scrollHeight) + 'px';
+            }
+
+            inputs.forEach(function (element) {
+                element.classList.add('no-resize');
+                autoExpand(element);
+                element.addEventListener('input', function () {
+                    autoExpand(element);
+                });
+            });
+        });
+    </script>
+
+
+}
+

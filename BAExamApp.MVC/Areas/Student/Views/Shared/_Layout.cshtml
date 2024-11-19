@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="icon" type="image/x-icon" href="images/BALogoAkademi.png" />
+	<title>BAExamApp</title>
+	<link href="~/css/plugins.bundle.css" rel="stylesheet" type="text/css" />
+	<link href="~/lib/student/css/style.bundle.css" rel="stylesheet" type="text/css" />
+	<link rel='stylesheet' href='~/lib/student/css/style.css' type='text/css' media='all' />
+	<link rel='stylesheet' href='~/lib/student/css/skin.css' type='text/css' media='all' />
+	<link rel='stylesheet' href='~/lib/student/css/responsive.css' type='text/css' media='all' />
+	<link rel='stylesheet' href='~/lib/student/css/scheme-2.css' type='text/css' media='all' />
+	<link rel='stylesheet' href='~/lib/bootstrap/css/bootstrap.css' type='text/css' media='all' />
+	<link rel="stylesheet" href="~/lib/student/css/student-layout.css" />
+	@RenderSection("Styles",required:false)
+</head>
+
+<body class="page scm1 body_style_fullwide body_filled article_style_stretch top_panel_style_dark top_panel_opacity_solid top_panel_over sidebar_hide responsive_menu vc_responsive no-js">
+	<div class="body_wrap">
+		<div class="page_wrap" id="student-layout-page-wrap">
+			<header class="top_panel_wrap">
+				<div class="menu_user_wrap" id="student-menu-user-wrap">
+					<div class="logo" id="student-menu-logo">
+						<a asp-controller="Home" asp-action="Index">
+							<img src="~/media/logos/BAAcademyLogo-2.png" class="logo w-75" alt="" id="student-menu-logo-image">
+						</a>
+					</div>
+					<div class="menu_user_area menu_user_right menu_user_nav_area m_top">
+						<ul id="menu_user" class="menu_user_nav d-flex">
+							<li class="menu_user_register">
+								@*@await Component.InvokeAsync("Notifications")*@
+							</li>
+							<li class="menu_user_login">
+								<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+									<div class="cursor-pointer symbol symbol-30px symbol-md-40px"
+										 data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+										 data-kt-menu-placement="bottom-end">
+										<span style="color: white">@User.Identity.Name</span>
+										<img src="~/media/avatars/blank.png" alt="user" />
+									</div>
+									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-225px"
+										 data-kt-menu="true">
+										<div class="menu-item d-flex flex-column align-items-center">
+											<a asp-area="" asp-controller="Login" asp-action="Logout" class="menu-link btn btn-dark text-white fw-bold mb-2 d-flex align-items-center justify-content-center" style="width:50%; height:50px; border-radius:0;">
+												<span class="text-center">Log Out</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+						<div class="menu_button show_menu">Show Menu</div>
+					</div>
+				</div>
+			</header>
+			<aside class="menu_main_wrap" id="student-menu-main">
+				<nav role="navigation" class="menu_main_nav_area">
+					<div class="accordion" id="accordionBar">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingOne">
+								<button class="accordion-button collapsed bg-light text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+									<i class="bi bi-people" id="accordion-item-icon"></i><span id="accordion-item-text">@SharedLocalizer["Student"]</span>
+								</button>
+							</h2>
+							<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionBar">
+								<div class="accordion-body" id="accordion-body-subitem">
+									<a class="dropdown-item text-primary" asp-controller="Student" asp-action="Details"><span id="accordion-subitem-text">@SharedLocalizer["Details", SharedLocalizer["Student"]]</span></a>
+								</div>
+							</div>
+							<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionBar">
+								<div class="accordion-body" id="accordion-body-subitem">
+									<a class="dropdown-item text-primary" asp-controller="Product" asp-action="Index"><span id="accordion-subitem-text">@SharedLocalizer["List", SharedLocalizer["Product"]]</span></a>
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingTwo">
+								<button class="accordion-button collapsed bg-light text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									<i class="bi bi-house-door" id="accordion-item-icon"></i><span id="accordion-item-text">@SharedLocalizer["Classroom"]</span>
+								</button>
+							</h2>
+							<div id="collapseTwo" class="accordion collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionBar">
+								<div class="accordion-body" id="accordion-body-subitem">
+									<a class="dropdown-item text-primary" asp-controller="Classroom" asp-action="Index"><span id="accordion-subitem-text">@SharedLocalizer["List", SharedLocalizer["Classroom"]]</span></a>
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingThree">
+								<button class="accordion-button collapsed bg-light text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+									<i class="bi bi-pencil-fill" id="accordion-item-icon"></i><span id="accordion-item-text">@SharedLocalizer["Exam"]</span>
+								</button>
+							</h2>
+							<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionBar">
+								<div class="accordion-body" id="accordion-body-subitem">
+									<a class="dropdown-item text-primary" asp-controller="Exam" asp-action="CurrentExamList"><span id="accordion-subitem-text">@SharedLocalizer["Current"] @SharedLocalizer["Exams"]</span></a>
+								</div>
+							</div>
+							<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionBar">
+								<div class="accordion-body" id="accordion-body-subitem">
+									<a class="dropdown-item text-primary" asp-controller="Exam" asp-action="OldExamsList"><span id="accordion-subitem-text">@SharedLocalizer["Past"] @SharedLocalizer["Exams"]</span></a>
+								</div>
+							</div>
+							<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionBar">
+								<div class="accordion-body" id="accordion-body-subitem">
+									<a class="dropdown-item text-primary" asp-controller="Exam" asp-action="FutureExamsList"><span id="accordion-subitem-text">@SharedLocalizer["Future"] @SharedLocalizer["Exams"]</span></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</aside>
+			<div class="page_content_wrap">
+				@RenderBody()
+			</div>
+
+			<a href="#" class="scroll_to_top icon-angle-up-1" title="Scroll to top"></a>
+		</div>
+
+		<div class="copyright_wrap" id="student-copyright-wrap-footer">
+			<p id="student-footer-main-text">
+				&copy; @DateTime.Now.Year - BilgeAdam. All Rights Reserved.
+				<a href="#">Terms of use</a> and
+				<a href="#">Privacy Policy</a>
+			</p>
+		</div>
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/student/js/plugins.bundle.js"></script>
+	<script src="~/lib/student/js/scripts.bundle.js"></script>
+	<script type='text/javascript' src='~/lib/student/js/custom.js'></script>
+	<script type='text/javascript' src='~/lib/student/js/responsive.init.js'></script>
+	<script type='text/javascript' src='~/lib/student/js/core.utils.js'></script>
+	<script type='text/javascript' src='~/lib/student/js/core.init.js'></script>
+	<script type='text/javascript' src='~/lib/student/js/shortcodes.js'></script>
+	<script src="~/js/examTable.js"></script>
+	@RenderSection("Scripts", required: false)
+	@await Component.InvokeAsync("Notyf")
+</body>
+</html>

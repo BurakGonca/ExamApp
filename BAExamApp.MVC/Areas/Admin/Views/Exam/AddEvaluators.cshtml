@@ -1,0 +1,160 @@
+﻿@model AdminExamEvaluatorCreateVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Add_Evaluators"];
+    var trainerIdStrings = new List<string>();
+    foreach (var trainer in Model.TrainerIds)
+    {
+        trainerIdStrings.Add(trainer.ToString());
+    }
+}
+
+<form method="post" asp-controller="Exam" asp-action="AddEvaluators" asp-route-id="@Model.Id">
+    <div class="card card-flush py-4 flex-row-fluid">
+        <!--begin::Card header-->
+        <div class="card-header">
+            <div class="card-title m-0">
+                <h5 class="text-center">@ViewLocalizer["Add_Evaluators"]</h5>
+            </div>
+           @*  <div class="card-title">
+                <h3 style="font-size:20px;font-weight:bold"> @ViewLocalizer["Add_Evaluators"]</h3>
+            </div> *@
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+            <div class="table-responsive">
+                <!--begin::Table-->
+                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                    <!--begin::Table body-->
+                    <tbody class="fw-bold text-gray-600">
+                        <!--begin::Customer name-->
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Name)</th>
+                            <td>@Model.Name</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.ExamDateTime)</th>
+                            <td>@Model.ExamDateTime</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.ExamDuration)</th>
+                            <td>@Model.ExamDuration</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.ExamRuleName)</th>
+                            <td>@Model.ExamRuleName</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.ClassroomName)</th>
+                            <td>@Model.ClassroomName</td>
+                        </tr>
+                        <!--end::Date-->
+                    </tbody>
+
+                    <!--end::Table body-->
+                </table>
+            
+                <div class="fv-row form-floating mb-7">
+                    <!--begin::Label-->
+                    <label asp-for="TrainerIds" class="required fw-bold fs-6 mb-2"></label>
+                    <!--end::Label-->
+                    <!--begin::Select-->
+                    <select asp-for="TrainerIds" asp-items="@ViewBag.TrainerList" class="form-select form-select-solid" data-control="select2" data-close-on-select="false" data-placeholder="@ViewLocalizer["Değerlendiriciler"]" data-allow-clear="true" multiple="multiple">
+                    </select>
+                    <span asp-validation-for="TrainerIds" class="text-danger"></span>
+                    <!--end::Select-->
+                </div>
+            </div>
+            <div class="fv-row mb-7 fv-plugins-icon-container">
+
+                <button type="submit" class="cursor-pointer btn btn-success form-control mb-7" name="submitButton">
+                    @SharedLocalizer["Add_Evaluators"]
+                </button>
+
+
+            </div>
+            <a type="button" class="btn btn-primary align-self-center ms-2" asp-controller="Exam" asp-action="Index">
+                @SharedLocalizer["Back_List"]
+            </a>
+            <!--end::Table-->
+        </div>
+
+    </div>
+    <!--end::Card body-->
+    </div>
+    <section class="related_wrap related_wrap_empty"></section>
+
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+  
+    function loadEvaluatorsList() {
+
+        const names = document.getElementById('Name').value;
+        console.log(names);
+        $.ajax({
+            url: "@Url.Action("AddEvaluators")",
+            method: "post",
+            data: "name=" + names,
+            success: function (response) {
+                $('#talent-add-modal .close').click();
+            },
+            error: function () {
+
+                Swal.fire(
+                    'Hata !',
+                    'Değerlendirici ekleme sayfasına ulaşılamadı. Lütfen sistem yöneticinize başvurun. (Error 404)',
+                    'error'
+                )
+            }
+        })
+
+    }
+
+
+</script>
+
+
+
+@section Scripts {
+    <script>
+        var validationMessage = "@SharedLocalizer["Picture_Format_Error"]";
+    </script>
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+        var dateTimeInput
+        dateTimeInput = document.getElementById("dateTimeInput");
+        dateTimeInput.value = Date.now;
+    </script>
+    @*pllbox select2 çalışmasını sağlar*@
+    <script>
+        $(document).ready(function () {
+            $('.pillbox-select2').select2({
+                placeholder: "--- Seçiniz ---",
+                allowClear: true,
+                closeOnSelect: false,
+                templateResult: function (state) {
+                    if (!state.id) { return state.text; }
+                    return $("<div><input type='checkbox' id='checkbox-" + state.id + "' class='form-check-input' " + (state.selected ? "checked" : "") + "> <label for='checkbox-" + state.id + "'>" + state.text + "</label></div>")
+                        .click(function (e) {
+                            if ($(e.target).is("input")) {
+                                $('.pillbox-select2').trigger('change');
+                            }
+                        });
+                },
+                templateSelection: function (state) {
+                    if (!state.id) { return state.text; }
+                    return $("<div style='padding-left: 22px'>" + state.text + "</div>");
+
+                },
+            });
+        });
+    </script>
+
+}

@@ -1,0 +1,188 @@
+﻿@model AdminQuestionReviewVM
+
+@{
+   
+    
+}
+
+<div class="card w-50 m-auto mt-5 mb-5" style="border-radius: 30px; background: #e0e0e0; box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;">
+    <div class="container card-body p-4">
+        <div class="form-group">
+            <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.CreatedBy) :</label><br />
+            @Html.DisplayFor(model => model.CreatedBy)
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.CreatedDate) :</label><br />
+                <label id="CreatedDate" name="CreatedDate">@Model.CreatedDate.ToShortDateString()</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.SubtopicName) :</label><br />
+                @Html.DisplayFor(model => model.SubtopicName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.QuestionType) :</label><br />
+                @Html.DisplayFor(model => model.QuestionType)
+            </div>
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.QuestionDifficultyName) :</label><br />
+                @Html.DisplayFor(model => model.QuestionDifficultyName)
+            </div>
+        </div>
+        <hr />
+        @if (Model.Image != null)
+        {
+            <div class="form-group">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.Image) :</label><br />
+
+                <div id="item-header-cover-image" style="width:150px; height:150px;">
+                    <img src="data:image/jpeg;base64,@Model.Image"
+                         class="avatar user-1-avatar avatar-150 photo"
+                         style="object-fit:fill; width:150px; height:150px;"
+                         alt="" />
+                </div>
+
+            </div>
+        }
+        <div class="form-group">
+            <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.Content) :</label><br />
+            @Html.DisplayFor(model => model.Content)
+        </div>
+        <div class="form-group">
+            <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.QuestionAnswers) :</label><br />
+            @if (Model.QuestionType is QuestionType.TrueFalse)
+            {
+                @foreach (var item in Model.QuestionAnswers)
+                {
+                    @if (item.IsRightAnswer)
+                    {
+                        <p class="fw-bold" style="color:green">- @SharedLocalizer[item.Answer]</p>
+                    }
+                    else
+                    {
+                        <p>- @SharedLocalizer[item.Answer]</p>
+                    }
+                }
+            }
+            else
+            {
+                @foreach (var item in Model.QuestionAnswers)
+                {
+                    @if (item.IsRightAnswer)
+                    {
+                        <p class="fw-bold" style="color:green">- @item.Answer</p>
+                    }
+                    else
+                    {
+                        <p>- @item.Answer</p>
+                    }
+                }
+            }
+        </div>
+
+        <form action="/Trainer/QuestionController/QuestionList" method="post">
+            @*
+                ======================================================
+                Asagidaki kod ileri bir tarihe kadar kapali kalacak
+                ======================================================
+            *@
+            @*<button class="btn btn-info me-2" asp-action="Test" asp-route-id=@Model.Id>@ViewLocalizer["Test"]</button>*@
+            <button class="btn btn-success me-2" asp-action="Approve" asp-route-id=@Model.Id>@ViewLocalizer["Approve"]</button>
+        </form>
+
+        <hr />
+        <!-- Reddetme butonu -->
+        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#rejectModal">
+            @ViewLocalizer["Reject"]
+        </button>
+
+        <!-- Revize butonu -->
+        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#reviewModal">
+            @ViewLocalizer["Revise"]
+        </button>
+        <hr />
+
+        <div class="modal fade" id="rejectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="reject-form" asp-action="Reject" method="post">
+                        <div class="modal-header">
+                            <button id="reject-form-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input asp-for="Id" class="form-control" hidden />
+                            <div class="col-sm-12">
+                                <label asp-for="RejectComment" class="control-label">@SharedLocalizer["Reject_Comment"]</label>
+                                <textarea asp-for="RejectComment" class="form-control" rows="3" required></textarea>
+                                <span asp-validation-for="RejectComment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="reject-form-close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Close"]</button>
+                            <button class="btn btn-danger me-2" asp-action="Reject" asp-route-id=@Model.Id> @ViewLocalizer["Reject"] </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="reviewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="revise-form" asp-action="Review" method="post">
+                        <div class="modal-header">
+                            <button id="revise-form-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <input asp-for="Id" class="form-control" hidden />
+                        <div class="col-sm-12">
+                            <label asp-for="TrainerID" class="control-label"></label>
+                            <select asp-for="TrainerID" class="form-control">
+                                <option value="">---Seçiniz---</option>
+                                @foreach (var item in ViewBag.TrainerList as List<BAExamApp.Dtos.Trainers.TrainerListDto>)
+                                {
+                                    @if (Model.TrainerID == item.Id)
+                                    {
+                                        <option value="@item.Id" selected>@item.FullName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.FullName</option>
+                                    }
+                                }
+                            </select>
+
+                            <span asp-validation-for="TrainerID" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-12">
+                            <label asp-for="RequestDescription" class="control-label"></label>
+                            <textarea asp-for="RequestDescription" class="form-control" rows="3" placeholder="@ViewLocalizer["Comment"]" required></textarea>
+                            <span asp-validation-for="RequestDescription" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="d-flex justify-content-end">
+                                <input type="submit" class="btn btn-warning" asp-action="Review" asp-route-id=@Model.Id value="@ViewLocalizer["Revise"]" />
+                                <button id="reject-form-close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Close"]</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr />
+                    <div class="form-group">
+                        <a class="w3-blue w3-button w3-round fw-bold mx-2" asp-action="QuestionList" asp-route-state=@Model.State>@SharedLocalizer["Back_List"]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        document.getElementById('reject-form-close').addEventListener('click', function () {
+            document.getElementById('reject-form').reset();
+        });
+        document.getElementById('revise-form-close').addEventListener('click', function () {
+            document.getElementById('revise-form').reset();
+        });
+    </script>
+
+}

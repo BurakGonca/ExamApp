@@ -1,0 +1,499 @@
+﻿@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateExamVMs
+@model CandidateExamLinkCreateVM
+
+<div class="card py-16">
+    <!--begin::Card header-->
+    <div class="ps-9 pt-6">
+        @* <h1 class="text-dark fw-bolder fs-1">@SharedLocalizer["Create_Exam"]</h1> *@
+        <h1 class="text-dark fw-bolder fs-1">Yeni Sinav Linki</h1>
+    </div>
+    <!--end::Card header-->
+    <div class="card-body">
+
+
+        <button type="button" class="btn btn-primary mb-5" data-bs-toggle="modal" data-bs-target="#subjectList">
+            @SharedLocalizer["Question_Counts"]
+        </button>
+        <form asp-action="CreateLink" asp-controller="CandidateExam" asp-area="CandidateAdmin" class="form" enctype="multipart/form-data" method="post">
+            <div class="row mb-3">
+                <div class="col-sm-12 ">
+                    <div class="fv-row form-floating mb-7">
+                        <input asp-for="CandidateExamCreateVM.Name" type="text" class="form-control form-control-solid" id="examName" />
+                        <label asp-for="CandidateExamCreateVM.Name">@SharedLocalizer["Exam_Name"]</label>
+                        <span asp-validation-for="CandidateExamCreateVM.Name" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-6 ">
+                    <div class="fv-row form-floating mb-7">
+                        <input asp-for="CandidateExamCreateVM.LinkValidityPeriod" type="number" min="1" class="form-control form-control-solid" value="1" />
+                        <label asp-for="CandidateExamCreateVM.LinkValidityPeriod">@SharedLocalizer["Link_Validity_Period"]</label>
+                        <span asp-validation-for="CandidateExamCreateVM.LinkValidityPeriod" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 ">
+                    <div class="fv-row form-floating mb-7">
+                        <input class="form-control form-control-solid" id="ExamDuration" asp-for="CandidateExamCreateVM.ExamDuration" value="1">
+                        <label asp-for="CandidateExamCreateVM.ExamDuration">@SharedLocalizer["Exam_Duration"]</label>
+                        <span asp-validation-for="CandidateExamCreateVM.ExamDuration" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <div class="fv-row form-floating mb-7">
+                                <input type="number" class="form-control form-control-solid" asp-for="CandidateExamCreateVM.MaxScore" value="100" min="1" id="maxScore">
+                                <label asp-for="CandidateExamCreateVM.MaxScore">@SharedLocalizer["Max_Score"]</label>
+                                <span asp-validation-for="CandidateExamCreateVM.MaxScore" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="fv-row mb-7">
+                            <div>
+                                <div class="form-check form-switch form-check-custom form-check-solid">
+                                    <!-- Aynı Sorular -->
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="CandidateExamRuleCreateVM.ExamQuestionDistribution" id="sameQuestions" value="1" asp-for="CandidateExamRuleCreateVM.ExamQuestionDistribution" checked>
+                                        <label class="form-check-label fw-bold text-muted" for="sameQuestions">@SharedLocalizer["Same_Question"]</label>
+                                    </div>
+
+                                    <!-- Farklı Sorular -->
+                                    <div>
+                                        <input class="form-check-input" type="radio" name="CandidateExamRuleCreateVM.ExamQuestionDistribution" id="differentQuestions" value="2" asp-for="CandidateExamRuleCreateVM.ExamQuestionDistribution">
+                                        <label class="form-check-label fw-bold text-muted" for="differentQuestions">@SharedLocalizer["Different_Question"]</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 ">
+                            <div class="fv-row form-floating mb-7">
+                                <textarea class="form-control form-control-solid" asp-for="CandidateExamCreateVM.Description" class="form-control"></textarea>
+                                <label class="fw-bold fs-6 " asp-for="CandidateExamCreateVM.Description">@SharedLocalizer["Description"]</label>
+                                <span asp-validation-for="CandidateExamCreateVM.Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6 ">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <div class="fv-row form-floating mb-7">
+                                <input id="testPercentage" type="number" class="form-control form-control-solid" asp-for="CandidateExamCreateVM.TestQuestionsCoefficient" value="0" min="0" disabled>
+                                <label asp-for="CandidateExamCreateVM.TestQuestionsCoefficient">@SharedLocalizer["Test_Section_Percentage"]</label>
+                                <span asp-validation-for="CandidateExamCreateVM.TestQuestionsCoefficient" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 ">
+                            <div class="fv-row form-floating mb-7">
+                                <input id="classicPercentage" type="number" class="form-control form-control-solid" asp-for="CandidateExamCreateVM.ClassicQuestionsCoefficient" value="0" min="0" disabled>
+                                <label asp-for="CandidateExamCreateVM.ClassicQuestionsCoefficient">@SharedLocalizer["Classic_Section_Percentage"]</label>
+                                <span asp-validation-for="CandidateExamCreateVM.ClassicQuestionsCoefficient" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 ">
+                            <div class="fv-row form-floating mb-7">
+                                <input id="algorithmPercentage" type="number" class="form-control form-control-solid" asp-for="CandidateExamCreateVM.AlgorithmQuestionsCoefficient" value="0" min="0" disabled>
+                                <label asp-for="CandidateExamCreateVM.AlgorithmQuestionsCoefficient">@SharedLocalizer["Algorithm_Section_Percentage"]</label>
+                                <span asp-validation-for="CandidateExamCreateVM.AlgorithmQuestionsCoefficient" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="questionFieldsContainer">
+                <div class="row mb-3 question-field">
+                    <div class="col-sm-4">
+                        <div class="fv-row form-floating mb-7">
+                            <select class="form-select form-select-solid question-type-select" name="CandidateQuestionRuleCreateVM[0].CandidateQuestionType">
+                                <option value="">@SharedLocalizer["Select_Question_Type"]</option>
+                                <option value="1">@SharedLocalizer["Test"]</option>
+                                <option value="3">@SharedLocalizer["Classic"]</option>
+                                <option value="2">@SharedLocalizer["Algorithm"]</option>
+                            </select>
+                            <label>@SharedLocalizer["Question_Type"]</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="fv-row form-floating mb-7">
+                            <select class="form-select form-select-solid question-subject-select" name="CandidateQuestionRuleCreateVM[0].CandidateQuestionSubjectId">
+                                <option value="">@SharedLocalizer["Select_Subject"]</option>
+                                @foreach (var subject in ViewBag.CandidateQuestionSubjectsList)
+                                {
+                                    <option value="@subject.Value">@subject.Text</option>
+                                }
+
+                            </select>
+                            <label>@SharedLocalizer["Subject"]</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="fv-row form-floating mb-7">
+                            <input type="number" class="form-control form-control-solid question-count" name="CandidateQuestionRuleCreateVM[0].QuestionCount" min="1" disabled>
+                            <label>@SharedLocalizer["Question_Count"]</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Soru Ekle Butonu -->
+            <div class="row mb-3">
+                <div class="col-sm-12">
+                    <button type="button" id="addQuestionField" class="btn btn-primary" disabled>@SharedLocalizer["Add_Question"] </button>
+                </div>
+            </div>
+
+            <div class="form-actions text-end">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-danger" type="reset" data-kt-contacts-type="cancel">@SharedLocalizer["Cancel"]</a>
+                <button type="submit" data-kt-contacts-type="submit" class="btn btn-success">@SharedLocalizer["Save"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="subjectList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>@SharedLocalizer["Question_Counts"]</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container" id="question-details">
+                    <table id="questionList" class="table table-bordered striped text-center border border-black">
+                        <thead>
+                            <tr>
+                                @foreach (var header in ViewBag.QuestionCounts[0])
+                                {
+                                    <th>@(!string.IsNullOrEmpty(header) ? SharedLocalizer[header] : SharedLocalizer["SubjectType"]) </th>
+                                }
+                                <th>@SharedLocalizer["Total"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i < ViewBag.QuestionCounts.Count; i++)
+                            {
+                                <tr>
+                                    @if (i == ViewBag.QuestionCounts.Count - 1)
+                                    {
+                                        <td>@SharedLocalizer["Total"]</td>
+                                    }
+                                    @foreach (var cell in ViewBag.QuestionCounts[i])
+                                    {
+                                        <td>@cell</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    table.table-bordered thead tr th {
+        border: 2px solid #F2F3F4;
+    }
+
+    table.table-bordered tbody tr td {
+        border: 2px solid #F2F3F4;
+    }
+
+    .striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(248,250,251,1); /* Açık gri arka plan rengi */
+    }
+
+
+    .hl {
+        background-color: lightblue !important;
+    }
+
+</style>
+
+@section Scripts {
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const table = document.getElementById("questionList");
+
+            table.addEventListener("mouseover", function (event) {
+                const target = event.target;
+                if (target.tagName.toLowerCase() === "td") {
+                    const colIndex = target.cellIndex;
+                    const rowIndex = target.parentElement.rowIndex;
+
+                    // Eğer hücre ilk satırda veya ilk sütundaysa hiçbir işlem yapma
+                    if (colIndex !== 0 && rowIndex !== 0) {
+                        // Satırdaki ilk hücrenin rengini değiştir
+                        const firstCellInRow = target.parentElement.cells[0];
+                        firstCellInRow.classList.add("hl");
+
+                        // Sütundaki ilk hücrenin rengini değiştir   // Highlight the first cell in the column
+                        const firstCellInColumn = table.rows[0].cells[colIndex];
+                        firstCellInColumn.classList.add("hl");
+                    }
+                }
+            });
+
+            table.addEventListener("mouseout", function (event) {
+                const target = event.target;
+                if (target.tagName.toLowerCase() === "td") {
+                    const colIndex = target.cellIndex;
+                    const rowIndex = target.parentElement.rowIndex;
+
+                 
+                    if (colIndex !== 0 && rowIndex !== 0) {
+                        const firstCellInRow = target.parentElement.cells[0];
+                        firstCellInRow.classList.remove("hl");
+
+                        const firstCellInColumn = table.rows[0].cells[colIndex];
+                        firstCellInColumn.classList.remove("hl");
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="~/newLayouts/dist/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/js/select2.js"></script>
+    <script src="~/lib/trainer/js/createexamforstudent.js"></script>
+    <script>
+
+        $("#ExamDuration").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var questionIndex = 1;
+            var selectedQuestions = [];
+            var approveQuestions = [];
+
+            // Soru ekleme butonuna tıklama olayı
+            $('#addQuestionField').on('click', function () {
+                // $('.question-field').last().find('.question-type-select, .question-subject-select, .question-count').css({
+                //     'pointer-events': 'none',
+                //     'background-color': '#e9ecef'
+                // });
+                var questionFieldHtml = `
+                                         <div class="row mb-3 question-field">
+                                             <div class="col-sm-4">
+                                                 <div class="fv-row form-floating mb-7">
+                                                            <select class="form-select form-select-solid question-type-select" name="CandidateQuestionRuleCreateVM[${questionIndex}].CandidateQuestionType">
+
+                                                         <option value="">@SharedLocalizer["Select_Question_Type"]</option>
+                                                         <option value="1">@SharedLocalizer["Test"]</option>
+                                                         <option value="3">@SharedLocalizer["Classic"]</option>
+                                                         <option value="2">@SharedLocalizer["Algorithm"]</option>
+
+                                                    </select>
+                                                    <label>@SharedLocalizer["Question_Type"]</label>
+                                               </div>
+                                           </div>
+                                            <div class="col-sm-4">
+                                                <div class="fv-row form-floating mb-7">
+                                                                   <select class="form-select form-select-solid question-subject-select" name="CandidateQuestionRuleCreateVM[${questionIndex}].CandidateQuestionSubjectId">
+                                                      <option value="">@SharedLocalizer["Select_Subject"]</option>
+        @foreach (var subject in ViewBag.CandidateQuestionSubjectsList)
+        {
+                                                                       <option value="@subject.Value">@subject.Text</option>
+        }
+                                                   </select>
+                                                   <label>@SharedLocalizer["Subject"]</label>
+                                               </div>
+                                           </div>
+                                           <div class="col-sm-3">
+                                               <div class="fv-row form-floating mb-7">
+                                                        <input type="number" class="form-control form-control-solid question-count" name="CandidateQuestionRuleCreateVM[${questionIndex}].QuestionCount" min="1" disabled>
+                                                            <label>@SharedLocalizer["Question_Count"]</label>
+                                               </div>
+                                           </div>
+                                           <div class="col-sm-1 mb-7 d-flex justify-content-center align-items-center">
+                                                    <button type="button" class="btn btn-danger btn-sm remove-question-field" aria-label="Remove">&times;</button>
+                                           </div>
+                                        </div>
+                                                                                                `;
+                $('#questionFieldsContainer').append(questionFieldHtml);
+                questionIndex++;
+                checkAddButtonStatus();
+                updatePercentageFields();
+            });
+
+
+            // Soru tipi veya konu seçimi değiştiğinde alanların durumunu güncelle
+            $(document).on('change', '.question-type-select', function () {
+                var $row = $(this).closest('.question-field');
+                var questionType = $row.find('.question-type-select').val();
+                var $subjectSelect = $row.find('.question-subject-select');
+                var $questionCountInput = $row.find('.question-count');
+                var $errorMessage = $('#errorMessage');
+
+
+                // Eski seçimleri listeden çıkar
+                var previousSubject = $row.data('previousSubject');
+                var previousQuestionType = $row.data('previousQuestionType');
+
+                if (previousSubject) {
+                    selectedQuestions = selectedQuestions.filter(q => !(q.questionType === previousQuestionType && q.subject === previousSubject));
+                    approveQuestions = approveQuestions.filter(q => !(q.questionType === previousQuestionType && q.subject === previousSubject));
+                }
+
+                $questionCountInput.prop('disabled', true).val('');
+
+                if (questionType) {
+                    $subjectSelect.prop('disabled', false);
+                    updateSubjectOptions($row, questionType);
+                } else {
+                    $subjectSelect.prop('disabled', true).val('');
+                }
+                updatePercentageFields();
+            });
+
+            // Konu seçimi değiştiğinde güncellemeleri yap
+            $(document).on('change', '.question-subject-select', function () {
+                var $row = $(this).closest('.question-field');
+                var questionType = $row.find('.question-type-select').val();
+                var subject = $row.find('.question-subject-select').val();
+                var $questionCountInput = $row.find('.question-count');
+                var $errorMessage = $('#errorMessage');
+
+                // Eski seçimleri listeden çıkar
+                var previousSubject = $row.data('previousSubject');
+                var previousQuestionType = $row.data('previousQuestionType');
+
+                if (previousSubject) {
+                    selectedQuestions = selectedQuestions.filter(q => !(q.questionType === previousQuestionType && q.subject === previousSubject));
+                    approveQuestions = approveQuestions.filter(q => !(q.questionType === previousQuestionType && q.subject === previousSubject));
+                }
+                approveQuestions = approveQuestions.filter(q => !(q.questionType === questionType && q.subject === subject));
+
+                if (questionType && subject) {
+                    var isDuplicate = selectedQuestions.some(q => q.questionType === questionType && q.subject === subject);
+
+                    if (isDuplicate) {
+                        $errorMessage.text('Bu soru tipi ve konu kombinasyonu zaten seçildi.');
+                        $questionCountInput.prop('disabled', true).val('');
+                    } else {
+                        selectedQuestions.push({ questionType, subject });
+                        $errorMessage.text('');
+                        $questionCountInput.prop('disabled', false).val('');
+                        $row.data('previousSubject', subject);
+                        $row.data('previousQuestionType', questionType);
+                    }
+                } else {
+                    $questionCountInput.prop('disabled', true).val('');
+                }
+                checkAddButtonStatus();
+                updatePercentageFields();
+            });
+
+            // Soru sayısı değiştiğinde buton ve input durumunu kontrol et
+            $(document).on('input', '.question-count', function () {
+                var $row = $(this).closest('.question-field');
+                var questionType = $row.find('.question-type-select').val();
+                var subject = $row.find('.question-subject-select').val();
+                var questionCountInput = $row.find('.question-count').val();
+
+                var previousSubject = $row.data('previousSubject');
+                var previousQuestionType = $row.data('previousQuestionType');
+
+                if (previousSubject) {
+
+                    approveQuestions = approveQuestions.filter(q => !(q.questionType === previousQuestionType && q.subject === previousSubject));
+                }
+                if (questionCountInput > 0) {
+                    approveQuestions.push({ questionType, subject, questionCountInput });
+                    $row.data('previousSubject', subject);
+                    $row.data('previousQuestionType', questionType);
+                }
+
+                checkAddButtonStatus();
+                updatePercentageFields();
+            });
+
+            // Konu seçeneklerini güncelle
+            function updateSubjectOptions($row, questionType) {
+                var $subjectSelect = $row.find('.question-subject-select');
+                var $options = $subjectSelect.find('option');
+
+                // Seçilen soru tipine ait seçilmiş konuları al
+                var selectedSubjects = selectedQuestions
+                    .filter(q => q.questionType === questionType)
+                    .map(q => q.subject);
+
+                // Tüm seçenekleri görünür hale getirin
+                $options.show();
+
+                // Seçilen konuları seçeneklerden çıkar
+                $options.each(function () {
+                    var $option = $(this);
+                    if (selectedSubjects.includes($option.val())) {
+                        $option.hide();
+                    } else {
+                        $option.show();
+                    }
+                });
+
+                $subjectSelect.val('');
+            }
+
+            function updatePercentageFields() {
+                var hasTest = approveQuestions.some(q => q.questionType === '1');
+                var hasClassic = approveQuestions.some(q => q.questionType === '3');
+                var hasAlgorithm = approveQuestions.some(q => q.questionType === '2');
+
+                $('#testPercentage').prop('disabled', !hasTest).val(hasTest ? $('#testPercentage').val() : '');
+                $('#classicPercentage').prop('disabled', !hasClassic).val(hasClassic ? $('#classicPercentage').val() : '');
+                $('#algorithmPercentage').prop('disabled', !hasAlgorithm).val(hasAlgorithm ? $('#algorithmPercentage').val() : '');
+            }
+
+            // Soru alanını kaldırma butonuna tıklama olayı
+            $(document).on('click', '.remove-question-field', function () {
+                var $row = $(this).closest('.question-field');
+                var questionType = $row.find('.question-type-select').val();
+                var subject = $row.find('.question-subject-select').val();
+
+                selectedQuestions = selectedQuestions.filter(q => !(q.questionType === questionType && q.subject === subject));
+                $row.remove();
+                approveQuestions = approveQuestions.filter(q => !(q.questionType === questionType && q.subject === subject));
+                $row.remove();
+
+                checkAddButtonStatus();
+                updatePercentageFields();
+            });
+
+            // Buton durumunu kontrol et
+            function checkAddButtonStatus() {
+                var isValid = true;
+
+                $('.question-field').each(function () {
+                    var $row = $(this);
+                    var questionType = $row.find('.question-type-select').val();
+                    var subject = $row.find('.question-subject-select').val();
+                    var questionCount = $row.find('.question-count').val();
+
+                    if (!questionType || !subject || !questionCount) {
+                        isValid = false;
+                    }
+                });
+
+                $('#addQuestionField').prop('disabled', !isValid);
+            }
+
+            checkAddButtonStatus();
+        });
+    </script>
+}

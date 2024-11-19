@@ -1,0 +1,54 @@
+﻿@using BAExamApp.Entities.DbSets;
+
+@model IEnumerable<StudentExamsForTrainerVM>
+@{ 
+    ViewData["Title"] = SharedLocalizer["Exams"];
+    var latestClassroom = Model.Select(x => x.LatestClassroom).FirstOrDefault();
+    var latestTrainers = Model.Select(x => x.LatestClassroomsTrainers).FirstOrDefault();
+}
+
+<head>
+    <link href="~/newLayouts/dist/assets/css/style.bundle.css" rel="stylesheet" />
+</head>
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+                <h5 class="card-title">@Model.First().StudentFullName @SharedLocalizer["List", SharedLocalizer["Exam_Score"]]</h5>
+                <h5>  <b>@SharedLocalizer["Classroom"]:</b> @latestClassroom</h5>
+                <h5>  <b>@SharedLocalizer["Trainers"]:</b> @latestTrainers</h5>
+                <h5 class="card-title"></h5>
+                <table class="table table-row-bordered datatable">
+                    <thead>
+                        <tr>
+                            <th>Sınav</th>
+                            <th>Tarih</th>
+                            <th>Puan</th>
+                            <th>@SharedLocalizer["Max_Score"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var StudentWithExamScore in Model)
+                        {
+                            <tr>
+                                <td>@StudentWithExamScore?.ExamName</td>
+                                <td>@StudentWithExamScore?.ExamDateTime.ToShortDateString()</td>
+                                <td>@StudentWithExamScore?.Score</td>
+                                <td>@StudentWithExamScore?.MaxScore</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/dataTable/~/js/main.js"></script>
+<script>
+    var classroomCount = @Model.Count();
+    window.onload = function () {
+        paginationSetupDropdown(classroomCount);
+    }
+</script>

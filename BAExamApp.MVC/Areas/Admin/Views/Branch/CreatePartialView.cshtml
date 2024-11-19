@@ -1,0 +1,29 @@
+﻿@model AdminBranchCreateVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Create_New"];
+}
+
+<div class="modal fade" id="createBranchModal" tabindex="-1" aria-labelledby="ProductAdd" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewLocalizer["Create_New"]</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-controller="Branch" asp-action="Create" class="form" id="create-branch">
+                <div class="modal-body">                   
+                    <div class="fv-row form-floating mb-7">
+                        <input asp-for="Name" type="text" class="form-control form-control-solid mb-3 mb-lg-0" id="nameInput" placeholder=" " />
+                        <label for="nameInput">@SharedLocalizer["Branch_Name"]*</label>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-light me-3" asp-controller="Branch" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+                    <button class="btn btn-primary" type="submit">@SharedLocalizer["Save"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

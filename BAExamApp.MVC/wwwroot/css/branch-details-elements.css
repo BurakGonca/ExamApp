@@ -1,0 +1,36 @@
+﻿#productSearch {
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 75%; /* Full-width */
+    font-size: 12px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 2px solid #ddd; /* Add a grey border */
+}
+
+#btnAll {
+    background-color: #2A2F43;
+    margin:5px;
+    border-radius:8px;
+}
+#btnActive {
+    background-color: #2A2F43;
+    margin: 5px;
+    border-radius: 8px;
+}
+#btnPassive {
+    background-color: #2A2F43;
+    margin: 5px;
+    border-radius: 8px;
+}
+#btnIndex {
+    background-color: #2A2F43;
+    color:white;
+}
+#btnUpdate {
+    background-color: #2A2F43;
+    color: white;
+}
+#btnDelete {
+    background-color: #2A2F43;
+    color: white;
+}

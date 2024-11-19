@@ -1,0 +1,881 @@
+﻿@* @model IEnumerable<AdminQuestionListVM> *@
+@model IPagedList<AdminQuestionListVM>
+@using BAExamApp.MVC
+@using Microsoft.Extensions.Localization
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Mvc.Core.Common
+@inject IStringLocalizer<SharedModelResource> localizer
+@{
+    var questionState = (State)ViewData["Question_State"];
+    ViewData["Title"] = @SharedLocalizer["Question"];
+    var currentPageSize = ViewBag.PageSize ?? 10;
+
+}
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <meta charset="UTF-8">
+</head>
+
+<style>
+    .tooltip-inner {
+        max-width: 350px !important;
+    }
+</style>
+
+<div class="card card-docs flex-row-fluid mb-2 overflow-auto">
+    <!--begin::Card Body-->
+    <div class="card-body fs-6 py-15 px-10 py-lg-8 px-lg-15 text-gray-700">
+        <!--begin::Section-->
+        <div class="p-0">
+            <!--begin::Heading-->
+            <h3 class="fw-bolder m-0" id="server-side">
+                @SharedLocalizer[questionState.ToString() + "_List", SharedLocalizer["Question"]]
+                <span class="material-symbols-outlined" style="margin-left: 5px; font-size: 130%; "
+                      data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="@SharedLocalizer["Question_Filter_Warning"]">
+
+                    info
+
+                </span>
+            </h3>
+            <!--end::Heading-->
+            <!--begin::CRUD-->
+            <div class="py-5">
+                <!--begin::Wrapper-->
+                <div class="flex" data-kt-docs-table-toolbar="base">
+                    <form class="form-question" asp-controller="Question" asp-action="GetQuestionsByGivenValues" asp-route-state="@questionState" method="post" onsubmit="return onSubmitForm()">
+                        <input value="@questionState" id="stateInput" hidden />
+                        <div class="classroomfilter flex-row">
+                            <div class="row g-5 align-items-end">
+                                <div class="form-floating col-md-2 mb-3">
+                                    <input class="form-control form-control-solid mb-3 mb-lg-0" id="Content" name="Content" placeholder="@SharedLocalizer["Question_Content"]" value="@ViewBag.Content" />
+                                    <label>@SharedLocalizer["Question_Content"]</label>
+                                </div>
+
+                                <div class="form-floating col-md-2 mb-3">
+                                    <select class="form-select form-select-solid" data-control="select2" id="Subject" name="SubjectName" asp-items="ViewBag.SubjectList" onchange="onLoadSubjectChange()">
+                                        <option value=""> @SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label>@SharedLocalizer["Subject_Name"]</label>
+                                </div>
+
+
+
+                                <div class="form-floating col-md-2 mb-3">
+                                    <select class="form-select form-select-solid" data-control="select2" id="Subtopic" name="SubtopicName" asp-items="ViewBag.SubtopicList">
+                                        <option value=""> @SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label>@SharedLocalizer["Subtopic"]</label>
+                                </div>
+
+                                <div class="form-floating col-md-2 mb-3">
+                                    <select class="form-select form-select-solid" data-control="select2" id="QuestionDifficulty" name="QuestionDifficultyName" asp-items="ViewBag.QuestionDifficultyList ">
+                                        <option value=""> @SharedLocalizer["Choose"]</option>
+                                    </select>
+                                    <label>@SharedLocalizer["Question_Difficulty"]</label>
+                                </div>
+
+
+
+                                <div class="form-floating col-md-2 mb-3">
+                                    <input type="date" class="form-control form-control-solid" id="CreatedDate" name="CreatedDate" placeholder="@SharedLocalizer["Question_CreatedDate"]" />
+                                    <label>@SharedLocalizer["Question_CreatedDate"]</label>
+                                </div>
+                                <div class="form-floating col-md-2 mb-3">
+                                    <button type="submit" id="searchButton" style="min-width:99px;" class="btn btn-primary btn-lg col-md-4 hover-elevate-up" data-kt-user-table-filter="form">@SharedLocalizer["Show"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--end::Wrapper-->
+                @if (ViewBag.ShowAllQuestions == false)
+                {
+
+                }
+                else
+                {
+
+                    <!--begin::Datatable-->
+                    <table id="kt_datatable_example_1" class="table align-middle table-row-dashed min-h-90px fs-6 gy-5">
+                        <thead>
+                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                               
+                                <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Question_Content"]</th>
+                                <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Subject"]</th>
+                                <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Subtopic"]</th>
+                                <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Question_Type"]</th>
+                                <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Question_Difficulty"]</th>
+                                <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Time_Given"]</th>
+
+                                @if (questionState == State.Approved)
+                                {
+                                    <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Approved_Date"]</th>
+                                }
+                                else if (questionState == State.Rejected)
+                                {
+                                    <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Rejected_Date"]</th>
+                                }
+                                else if (questionState == State.Reviewed)
+                                {
+                                    <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Review_Request_Date"]</th>
+                                    @*  <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@Html.DisplayNameFor(model => model.CreatedDate)</th> *@
+                                    <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Created_Date"]</th>
+
+                                }
+                                else if (questionState == State.Test)
+                                {
+                                    <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Test_Request_Date"]</th>
+                                }
+                                else
+                                {
+                                    @* <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@Html.DisplayNameFor(model => model.CreatedDate)</th> *@
+                                    <th class="sorting" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 131.25px;">@SharedLocalizer["Created_Date"]</th>
+                                }
+                                <th class="text-start min-w-100px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 108.25px;">@SharedLocalizer["Transactions"]</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 fw-bold">
+                            @if (Model.Any())
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="categories text-start">
+                                            <a data-bs-toggle="tooltip" data-bs-placement="right" data-placement="top" title="@item.Content">
+                                                <span class="post_category" style="white-space: nowrap;">@Html.Raw(item.Content.Length > 20 ? item.Content.Substring(0, 20) + "..." : item.Content)</span>
+                                            </a>
+                                        </td>
+                                        <td class="categories text-start">
+                                            @if (item.SubjectName != null)
+                                            {
+                                                <a data-bs-toggle="tooltip" data-bs-placement="right" data-placement="top" title="@item.SubjectName">
+                                                    <span class="post_category" style="white-space: nowrap;">@Html.Raw(item.SubjectName.Length > 20 ? item.SubjectName.Substring(0, 20) + "..." : item.SubjectName)</span>
+                                                </a>
+                                            }
+                                        </td>
+                                        <td class="categories text-start">
+                                            <a data-bs-toggle="tooltip" data-bs-placement="right" data-placement="top" title="@string.Join(", ", item.SubtopicName)">
+                                                <span class="post_category" style="white-space: nowrap;">@Html.Raw(string.Join(", ", item.SubtopicName).Length > 20 ? string.Join(", ", string.Join(", ", item.SubtopicName)).Substring(0, 20) + "..." : string.Join(", ", item.SubtopicName))</span>
+                                            </a>
+                                        </td>
+                                        <td class="categories text-start">
+                                            <span class="post_category">@SharedLocalizer[@item.QuestionType.ToString()]</span>
+                                        </td>
+                                        <td class="categories text-start">
+                                            <span class="post_category">@item.QuestionDifficultyName</span>
+                                        </td>
+                                        <td class="categories text-start">
+                                            <span class="post_category">@item.TimeGiven.Value</span>
+                                        </td>
+                                        <td class="categories text-start">
+                                            @if (questionState != State.Awaited)
+                                            {
+                                                <span class="post_category">@item.ModifiedDate.ToString("dd.MM.yyyy")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="post_category">@item.CreatedDate.ToString("dd.MM.yyyy")</span>
+                                            }
+                                        </td>
+                                        @if (questionState == State.Reviewed)
+                                        {
+                                            <td class="categories text-start">
+                                                <span class="post_category">@item.CreatedDate.ToString("dd.MM.yyyy")</span>
+                                            </td>
+                                        }
+                                        <td class="text-start">
+                                            <div class="dropdown">
+
+                                                <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-extended="false">
+                                                    @SharedLocalizer["Options"]
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                                    @if (questionState == State.Awaited)
+                                                    {
+                                                        <li class="menu-item px-3">
+                                                            <a class="menu-link px-3" target="_blank" asp-action="QuestionDetails" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a>
+                                                            <a class="menu-link px-3 editButton" data-id="@item.Id">@SharedLocalizer["Update"]</a>
+                                                        </li>
+                                                    }
+                                                    else if (questionState == State.Approved)
+                                                    {
+                                                        <li class="menu-item px-3">
+                                                            <a class="menu-link px-3" target="_blank" asp-action="QuestionDetails" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a>
+                                                            <a class="menu-link px-3 editButton" data-id="@item.Id">@SharedLocalizer["Update"]</a>
+                                                            <a class="menu-link px-3 revision-button" data-question-id="@item.Id">@SharedLocalizer["Revision_Procedures"]</a>
+                                                            <a class="menu-link px-3 deactivate-button" data-question-id="@item.Id">@SharedLocalizer["Passive_Action_Button"]</a>
+                                                        </li>
+                                                    }
+                                                    else if (questionState == State.Deactivated)
+                                                    {
+                                                        <li class="menu-item px-3">
+                                                            <a class="menu-link px-3" target="_blank" asp-action="QuestionDetails" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a>
+                                                            <a class="menu-link px-3 activate-button" data-question-id="@item.Id">@SharedLocalizer["Activate"]</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="menu-item px-3">
+                                                            <a class="menu-link px-3" target="_blank" asp-action="QuestionDetails" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a>
+                                                            <a class="menu-link px-3 editButton" data-id="@item.Id">@SharedLocalizer["Update"]</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td class="categories text-center" colspan="6">
+                                        @SharedLocalizer["No_Data"]
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                            <div class="dataTables_length" id="kt_datatable_example_1_length">
+                                <label>
+                                    <select id="pageSizeDropdown" name="kt_table_users_length" aria-controls="kt_table_users" class="form-select form-select-sm form-select-solid">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="1000">1000</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="col-5" style="margin-left:10px">
+                                <span class="text" style="white-space: nowrap;">
+                @SharedLocalizer["Total"] @Model.TotalItemCount @SharedLocalizer["From"] @(Model.PageNumber * Model.PageSize - (Model.PageSize - 1))
+                @SharedLocalizer["To"] @(Model.PageNumber * Model.PageSize > Model.TotalItemCount ? Model.TotalItemCount : Model.PageNumber * Model.PageSize)
+                @SharedLocalizer["Records_Are_Being_Displayed"]
+            </span>
+                            </div> 
+                        </div>
+                        <div class="d-flex justify-content-end mt-3">
+    @Html.PagedListPager(Model,
+        page => Url.Action("GetQuestionsByGivenValues", new
+        {
+            page,
+            pageSize = ViewBag.PageSize,
+            showAllQuestions = ViewBag.ShowAllQuestions,
+            state = ViewData["Question_State"],
+            // Additional filter parameters
+            content = ViewBag.Content,                   // Example filter parameter
+            subjectName = ViewBag.SubjectName,           // Make sure these match your action method's parameter names
+            subtopicName = ViewBag.SubtopicName,
+            questionDifficultyName = ViewBag.QuestionDifficultyName,
+            createdDate = ViewBag.CreatedDate
+        }),
+        new PagedListRenderOptions
+        {
+            Display = PagedListDisplayMode.Always,
+            UlElementClasses = new[] { "pagination", "justify-content-center" },
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+            LinkToFirstPageFormat = @localizer["First"],
+            LinkToLastPageFormat = @localizer["Last"],
+            ContainerDivClasses = new[] { "d-flex", "justify-content-center" }
+        })
+</div>
+                    </div>
+                    <!--end::Datatable-->
+                }
+            </div>
+            <!--end::CRUD-->
+        </div>
+        <!--end::Section-->
+    </div>
+    <!--end::Card Body-->
+</div>
+
+
+<!-- Vertically centered scrollable modal -->
+
+<partial name="~/Areas/Admin/Views/Question/_QuestionUpdate.cshtml" model="new AdminQuestionUpdateVM()"></partial>
+@* <partial name="~/Areas/Trainer/Views/Question/_QuestionUpdatePartial.cshtml" model="new TrainerQuestionUpdateVM()"></partial> *@
+
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/adminQuestionList.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/question/questionUpdate.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/question/questionSelect.js"></script>
+
+    <script>
+        var localizedStrings = {
+            newoption: '@SharedLocalizer["New_Option"]',
+            addnewoption: '@SharedLocalizer["Add_New_Options"]',
+            answers: '@SharedLocalizer["Answers"]',
+            choose: '@SharedLocalizer["Choose"]',
+            text: '@SharedLocalizer["Text"]',
+            image: '@SharedLocalizer["Image"]',
+            true: '@SharedLocalizer["True"]',
+            false: '@SharedLocalizer["False"]'
+
+        };
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+
+        // Scroll hareket ettirildiğinde option menüsünü kapatır.
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+
+       // Razor tarafından gönderilen `pageSize` ve `questionState` değişkenlerini JavaScript değişkenlerine atayın
+    var currentPageSize = "@ViewBag.PageSize" || "10";  // Varsayılan değer olarak 10
+    var questionState = "@ViewData["Question_State"]"; 
+    var showAllQuestions = "@ViewBag.ShowAllQuestions" === "True";
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Başlangıç değeri olarak dropdown'a currentPageSize değerini ayarlayın
+        $('#pageSizeDropdown').val(currentPageSize);
+    });
+
+    $(document).ready(function () {
+        $('#pageSizeDropdown').change(function () {
+            var selectedPageSize = $(this).val();
+
+            // API endpoint oluştur
+            var url = '@Url.Action("QuestionList", "Question")';
+           
+            url += `?pageSize=${selectedPageSize}&showAllQuestions=${showAllQuestions}&state=${encodeURIComponent(questionState)}&page=1`;
+             
+
+            window.location.href = url;  // Yeni URL'e yönlendir
+        });
+    });
+    
+
+    $(document).ready(function () {
+        $('#pageSizeDropdown').change(function () {
+            var selectedPageSize = $(this).val();
+
+            // API endpoint oluştur
+            var url = '@Url.Action("GetQuestionsByGivenValues", "Question")';
+           
+            url += `?pageSize=${selectedPageSize}&showAllQuestions=${showAllQuestions}&state=${encodeURIComponent(questionState)}&page=1`;
+             
+
+            window.location.href = url;  // Yeni URL'e yönlendir
+        });
+    });
+
+
+
+        
+
+
+        //<a class="menu-link px-3 editButton" data - id="item.Id" > SharedLocalizer["Update"]</a>
+
+        $(document).ready(function () {
+            $('.editButton').on('click', function () {
+                // Get the record's ID via attribute
+                var id = $(this).attr('data-id');
+                getQuestionArrangesByQuestionId(id)
+
+                $.ajax({
+                    url: "@Url.Action("Update")" + "?id=" + id,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log(response);
+                        // Populate the form fields with the data returned from the server
+                        $('#kt_modal_update_question_form')
+                            .find('[name="id"]').val(response.id).end()
+                            .find('[name="Content"]').val(response.content).end()
+                            .find('[name="Gains"]').val(response.gains).end()
+                            .find('[name="TimeGiven"]').val(response.timeGiven).end()
+                            .find('[name="Target"]').val(response.target).end()
+                            .find('[name="State"]').val(response.state).end();
+                        var imageElement = document.getElementById("previewImage");
+                        if (response.image != null) {
+                            imageElement.src = "data:image/jpeg;base64," + response.image;
+                            imageElement.style.display = "block"
+                        }
+                        else {
+                            imageElement.src = "data:image/jpeg;base64," + "";
+                            imageElement.style.display = "none"
+                        }
+                        document.getElementById("fileInput").addEventListener("change", function () {
+                            var file = this.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    // Yeni seçilen resmi göster
+                                    imageElement.style.display = "block";
+                                    imageElement.src = e.target.result;
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+
+
+                        var questionTypeSelect = $('#QuestionType'); // Assuming this is your select element for QuestionType
+                        questionTypeSelect.empty();
+                        $.each(response.questionTypeList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.questionType.toString()
+                            });
+                            questionTypeSelect.append(option);
+                        });
+
+                        var productSelect = $('#ProductId'); // Assuming this is your select element for SubtopicId
+                        productSelect.empty();
+                        $.each(response.productList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.productId.toString()
+                            });
+                            productSelect.append(option);
+                        });
+                        var SubjectSelect = $('#SubjectId'); // Assuming this is your select element for SubtopicId
+                        SubjectSelect.empty();
+                        $.each(response.subjectList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.subjectId.toString()
+                            });
+                            SubjectSelect.append(option);
+                        });
+                        var SubtopicSelect = $('#SubtopicId');
+                        SubtopicSelect.empty();
+
+                        $.each(response.subtopicList, function (index, item) {
+                            var option = new Option(item.text, item.value, false, false);
+                            if (Array.isArray(response.subtopicId) && response.subtopicId.includes(item.value.toString())) {
+                                $(option).prop('selected', true);
+                            } else if (item.value == response.subtopicId.toString()) {
+                                $(option).prop('selected', true);
+                            }
+
+                            SubtopicSelect.append(option);
+                        });
+                        var QuestionDifficultySelect = $('#QuestionDifficultyId');
+                        QuestionDifficultySelect.empty();
+                        $.each(response.questionDifficultyList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.questionDifficultyId.toString()
+                            });
+                            QuestionDifficultySelect.append(option);
+                        });
+
+                        var questionAnswersDiv = document.getElementById('questionAnswersDiv');
+                        questionAnswersDiv.innerHTML = '';
+                        if (response.questionType.toString() == 1 || response.questionType.toString() == 2) {
+                            questionAnswersDiv.innerHTML = getAnswerChoicesHtmlQuestion(response.questionType.toString(), response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        }
+                        else if (response.questionType.toString() == 3) {
+                            questionAnswersDiv.innerHTML = getCheckbox(response.questionAnswersList, response.questionType.toString());
+                            questionAnswersDiv.removeAttribute("hidden");
+                        }
+                        else {
+                            questionAnswersDiv.innerHTML = getClassicUpdateQuestionAnswer(response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        }
+                        $('#kt_modal_update_question').on('shown.bs.modal', function () {
+                            autoResizeTextareas();
+                        }); function autoResizeTextareas() {
+                            // Tüm textarea'ları seç
+                            var textareas = document.querySelectorAll('#kt_modal_update_question textarea');
+
+                            // Her textarea için içeriği alarak boyutları ayarla
+                            textareas.forEach(function (textarea) {
+                                textarea.style.height = 'auto'; // Yüksekliği ayarlamak için sıfırla
+                                textarea.style.height = (textarea.scrollHeight + 10) + 'px'; // İçeriğe göre yüksekliği ayarla (+10 )
+                            });
+                        }
+                        // Show the Bootstrap modal
+                        $('#kt_modal_update_question').modal('show');
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('.reviewedQuestionUpdateButton').on('click', function () {
+                var id = $(this).attr('data-id');
+                $.ajax({
+                    url: "@Url.Action("UpdateReviewed")" + "?id=" + id,
+                    method: 'GET',
+                    success: function (response) {
+                        // Populate the form fields with the data returned from the server
+                        $('#kt_modal_update_question_reviewed_form')
+                            .find('[name="id"]').val(response.id).end()
+                            .find('[name="Content"]').val(response.content).end()
+                            .find('[name="Gains"]').val(response.gains).end()
+                            .find('[name="TimeGiven"]').val(response.timeGiven).end()
+                            .find('[name="Target"]').val(response.target).end()
+                            .find('[name="ReviewComment"]').val(response.reviewComment).end();
+                        var imageElement = document.getElementById("previewImage");
+                        if (response.image != null) {
+                            imageElement.src = "data:image/jpeg;base64," + response.image;
+                            imageElement.style.display = "block"
+                        }
+                        else {
+                            imageElement.src = "data:image/jpeg;base64," + "";
+                            imageElement.style.display = "none"
+                        }
+
+
+                        // var questionTypeSelect = $('#questionTypeReviewed'); // Assuming this is your select element for QuestionType
+                        // questionTypeSelect.empty();
+                        // $.each(response.questionTypeList, function (index, item) {
+                        //     var option = $('<option>', {
+                        //         value: item.value,
+                        //         text: item.text,
+                        //         selected: item.value == response.questionType.toString()
+                        //     });
+                        //     questionTypeSelect.append(option);
+                        // });
+
+                        var productSelect = $('#productIdReviewed'); // Assuming this is your select element for SubtopicId
+                        productSelect.empty();
+                        $.each(response.productList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.productId.toString()
+                            });
+                            productSelect.append(option);
+                        });
+                        var SubjectSelect = $('#subjectIdReviewed'); // Assuming this is your select element for SubtopicId
+                        SubjectSelect.empty();
+                        $.each(response.subjectList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.subjectId.toString()
+                            });
+                            SubjectSelect.append(option);
+                        });
+                        var SubtopicSelect = $('#subtopicIdReviewed');
+                        SubtopicSelect.empty();
+
+                        $.each(response.subtopicList, function (index, item) {
+                            var option = new Option(item.text, item.value, false, false);
+                            if (Array.isArray(response.subtopicId) && response.subtopicId.includes(item.value.toString())) {
+                                $(option).prop('selected', true);
+                            } else if (item.value == response.subtopicId.toString()) {
+                                $(option).prop('selected', true);
+                            }
+
+                            SubtopicSelect.append(option);
+                        });
+                        var QuestionDifficultySelect = $('#questionDifficultyIdReviewed') // Assuming this is your select element for SubtopicId
+                        QuestionDifficultySelect.empty();
+                        $.each(response.questionDifficultyList, function (index, item) {
+                            var option = $('<option>', {
+                                value: item.value,
+                                text: item.text,
+                                selected: item.value == response.questionDifficultyId.toString()
+                            });
+                            QuestionDifficultySelect.append(option);
+                        });
+
+                        var questionAnswersDiv = document.getElementById('questionAnswersDivReviewed');
+                        questionAnswersDiv.innerHTML = '';
+                        if (response.questionType.toString() == 1 || response.questionType.toString() == 2) {
+                            questionAnswersDiv.innerHTML = getAnswerChoicesHtmlQuestionReviewed(response.questionType.toString(), response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        }
+                        else if (response.questionType.toString() == 3) {
+                            questionAnswersDiv.innerHTML = getCheckboxReviewed(response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        }
+                        else {
+                            questionAnswersDiv.innerHTML = getClassicUpdateQuestionAnswerReviewed(response.questionAnswersList);
+                            questionAnswersDiv.removeAttribute("hidden");
+                        }
+                        // Show the Bootstrap modal
+                        $('#kt_modal_update_question_reviewed').modal('show');
+                    }
+                });
+            });
+        });
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]',
+            lengthMenu: '@SharedLocalizer["Length_Menu"]'
+        };
+        $(document).ready(function () {
+            var dt = $("#kt_datatable_example_1").DataTable({
+                pageLength: 25, // Set default page length to 25
+                lengthMenu: [10, 25, 50, 100],
+                dom:
+                    '<"row"<"col-sm-12"tr>>' +
+                    '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    info: localizer.info,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords,
+                    lengthMenu: localizer.lengthMenu
+                }
+            });
+            $('select[name="kt_datatable_example_1"]').change(function () {
+                dt.page.len($(this).val()).draw();
+            });
+
+            $('input[data-kt-docs-table-filter="search"]').on('keyup', function () {
+                dt.search($(this).val()).draw();
+            });
+            function updatePaginationArrows() {
+                $('#kt_datatable_example_1_previous a').html('<i class="fa fa-chevron-left"></i>');
+                $('#kt_datatable_example_1_next a').html('<i class="fa fa-chevron-right"></i>');
+            }
+            updatePaginationArrows();
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+
+            $(document).ready(function () {
+                $('[data-bs-toggle="tooltip"]').tooltip({
+                    title: function () {
+                        return $(this).attr('data-bs-original-title');
+                    }
+                });
+            });
+
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dropdown menu element
+            var optionsDropdown = document.getElementById('optionsDropdown');
+
+            // Toggle dropdown on click
+            optionsDropdown.addEventListener('click', function (e) {
+                e.preventDefault();
+                var optionsMenu = new KTMenu(optionsDropdown);
+                optionsMenu.toggle();
+            });
+        });
+        $('#exampleModal').appendTo("body")
+        const myModal = new bootstrap.Modal('#exampleModal')
+
+        const getQuestionDetails = (id) => {
+            let spinner = `<div class="spinner-border text-primary" role="status">
+                                                                                                    <span class="visually-hidden">Loading...</span>
+                                                                                                </div>`
+            $('#question-details').html(spinner)
+            myModal.show();
+
+            $.ajax({
+                url: "@Url.Action("Review")" + "?id=" + id,
+                method: "get",
+                success: function (response) {
+                    $('#question-details').html(response)
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                    myModal.hide()
+                    Swal.fire(
+                        'Hata !',
+                        'İstediğiniz soruya ait detaylar alınamadı. Lütfen sistem yöneticinize başvurun. (Error 404)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
+    <script>
+        function clearFormInputs() {
+            document.getElementById("FirstName").value = "";
+            document.getElementById("LastName").value = "";
+            document.getElementById("Email").value = "";
+        }
+
+        $(document).ready(function () {
+            clearFormInputs();
+        });
+
+
+        function onSubmitForm() {
+            var content = document.getElementById("Content").value;
+            var subject = document.getElementById("Subject").value;
+            var subtopic = document.getElementById("Subtopic").value;
+            var questionDifficulty = document.getElementById("QuestionDifficulty").value;
+            var createdDate = document.getElementById("CreatedDate").value;
+
+            if (!content && !subject && !subtopic && !questionDifficulty && !createdDate) {
+                var questionState = "@questionState"; // State değeri
+                var showAllQuestions = true;
+
+                var baseUrl = '@Url.Action("QuestionList")';
+                var queryString = `?state=${encodeURIComponent(questionState)}&showAllQuestions=${showAllQuestions}`;
+
+                window.location.href = baseUrl + queryString;
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        $(document).on('click', '.deactivate-button[data-question-id]', function (e) {
+            e.preventDefault();
+
+            var questionId = $(this).data('question-id');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Deactivate", "Question", new { area = "Admin" })',
+                data: { id: questionId },
+                success: function (response) {
+                    if (response.success) {
+
+                        var notyf = new Notyf();
+                        notyf.success('Soru başarıyla pasif hale getirildi.');
+
+                        location.reload();
+                    } else {
+
+                        var notyf = new Notyf();
+                        notyf.success(response.message || 'Soru başarıyla pasif hale getirildi.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Hata: " + error);
+
+                    var notyf = new Notyf();
+                    notyf.error('Bir hata oluştu: ' + xhr.responseText);
+                }
+            });
+        });
+
+        $(document).on('click', '.activate-button[data-question-id]', function (e) {
+            e.preventDefault();
+
+            var questionId = $(this).data('question-id');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Activate", "Question", new { area = "Admin" })',
+                data: { id: questionId },
+                success: function (response) {
+                    if (response.success) {
+                        var notyf = new Notyf();
+                        notyf.success('Soru başarıyla aktifleştirildi.');
+
+                        location.reload();
+                    } else {
+                        var notyf = new Notyf();
+                        notyf.success('Soru başarıyla aktifleştirildi.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Hata: " + error);
+                    var notyf = new Notyf();
+                    notyf.error('Bir hata oluştu: ' + xhr.responseText);
+                }
+            });
+        });
+
+
+
+
+    </script>
+
+
+    <script>
+        $(document).on("click", ".revision-button", function () {
+            var questionId = $(this).data("question-id");
+            redirectToQuestionRevisionList(questionId);
+        });
+
+        function redirectToQuestionRevisionList(questionId) {
+            var url = "@Url.Action("QuestionRevisionList")" + "?id=" + questionId;
+
+            $.get(url)
+                .done(function (data) {
+                    if (data === "Revize işlemi yoktur") {
+                        // Eğer revize işlemi yoksa, SweetAlert2 ile bir bildirim göster
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Bilgi',
+                            text: data
+                        });
+                    } else {
+                        // Revize işlemi varsa, sayfayı yönlendir
+                        window.location.href = url;
+                    }
+                })
+                .fail(function () {
+                    // Hata durumunda bir hata mesajı göster
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: 'Bir hata oluştu.'
+                    });
+                });
+        }
+    </script>
+
+    <script>
+
+        //SelectLists
+        let subjectList = [];
+        let subtopicList = [];
+
+        //Ajax functions for getting selectList
+        async function getsubtopicListForSubject(selectedSubjectId) {
+            return $.ajax({
+                url: '/Admin/Question/GetSubtopicsBySubjectId',
+                data: { subjectId: selectedSubjectId },
+            });
+        }
+
+        //Subject type change event.
+        async function onLoadSubjectChange() {
+            subtopicList = subtopicList ? await getsubtopicListForSubject($("#Subject").val()) : subtopicList;
+            setSelectOptions("Subtopic", subtopicList);
+        };
+
+        async function setSelectOptions(selectListId, data) {
+            let selectListOptions = data.map((item, index) => `<option value="${item.value}">${item.text}</option>`);
+            let selectList = `<option value="" disabled selected>--- Seçiniz ---</option>`.concat(selectListOptions);
+            document.getElementById(selectListId).innerHTML = selectList;
+        }
+
+    </script>
+
+}
+
+
+
+
+
+
+
+
+
+

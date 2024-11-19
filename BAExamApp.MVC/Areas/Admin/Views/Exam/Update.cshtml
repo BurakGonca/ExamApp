@@ -1,0 +1,100 @@
+﻿@model BAExamApp.MVC.Areas.Admin.Models.ExamVMs.AdminExamUpdateVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Update"];
+}
+<head>
+    <!-- Diğer başlık etiketleri -->
+    <style>
+        .labelDateTime {
+            display: block;
+            margin-bottom: 100px; /* İstenilen boşluk miktarını ayarlayabilirsiniz */
+        }
+
+        .dateTimePicker {
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<div class="h-lg-100" id="kt_contacts_main">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yeniden Planla</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="window.history.back();"></button>
+            </div>
+            <form asp-controller="Exam" asp-action="Update" class="form" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <input asp-for="Id" class="form-control" hidden />
+                        <input asp-for="ExamRuleId" class="form-control" hidden />
+                        <input asp-for="ExamDuration" class="form-control" hidden />
+                        <input asp-for="ExamRuleName" class="form-control" hidden />
+                        <input asp-for="CreatedDate" class="form-control" hidden />
+
+                        <div class="col-md-6">
+                            <div class="form-floating mb-6">
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Exam Name" readonly />
+                                <label asp-for="Name" class="col-sm-4 col-form-label col-form-label-lg" for="floatingInput" style="text-decoration: underline;"></label>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-6">
+                                <input asp-for="ExamType" type="text" class="form-control" placeholder="Exam Type" readonly />
+                                <label asp-for="ExamType" class="col-sm-4 col-form-label col-form-label-lg" for="floatingInput" style="text-decoration: underline;"></label>
+                                <span asp-validation-for="ExamType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-6">
+                                <input asp-for="ExamDateTime" type="datetime-local" class="form-control dateTimePicker" id="dateTimePicker" placeholder="Exam Date Time" />
+                                <label asp-for="ExamDateTime" class="col-sm-5 col-form-label col-form-label-lg labelDateTime" for="dateTimePicker" style="text-decoration: underline;">@SharedLocalizer["Exam_Date_Time"]</label>
+                                <span asp-validation-for="ExamDateTime" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="text-center pt-15">
+                        <a class="btn btn-secondary align-self-center ms-2" asp-action="GetExamsByStatus">@SharedLocalizer["Back_List"]</a>
+                        <button type="submit" value="Update" class="btn btn-primary">@SharedLocalizer["Update"]</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Şu anki tarihi ve saati al
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+            var hours = String(today.getHours()).padStart(2, '0');
+            var minutes = String(today.getMinutes()).padStart(2, '0');
+            today = yyyy + '-' + mm + '-' + dd + 'T' + hours + ':' + minutes;
+
+            // Tarih ve saat alanına şu anki tarih ve saati ata ve min özelliğini bugünün tarihi ve saati yap
+            $('#dateTimePicker').val(today);
+            $('#dateTimePicker').attr('min', today);
+
+            // DateTimePicker seçildiğinde uyarı mesajını göster
+            $('#dateTimePicker').change(function () {
+                var selectedDate = new Date($('#dateTimePicker').val());
+                var currentDate = new Date();
+
+                if (selectedDate < currentDate) {
+                    $('#dateTimeWarning').show();
+                } else {
+                    $('#dateTimeWarning').hide();
+                }
+            });
+        });
+    </script>
+}

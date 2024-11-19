@@ -1,0 +1,257 @@
+﻿@model AdminStudentUpdateVM
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Update"];
+}
+<style>
+    .select2-search__field {
+        height: 37px !important;
+    }
+</style>
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_update_student" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_update_user_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bolder">@SharedLocalizer["Update"]</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="closes">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <!--begin::Form-->
+                <form asp-area="Admin" asp-controller="Student" asp-action="Update" id="kt_modal_update_student_form" class="form" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="RemoveImage" id="RemoveImage" />
+                    <!--begin::Scroll-->
+                    <div class="row mb-7 scroll-y me-n7 pe-7" id="kt_modal_update_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_user_header" data-kt-scroll-wrappers="#kt_modal_update_user_scroll" data-kt-scroll-offset="300px">
+                        <div class="row g-5">
+                            <div class="d-flex flex-row justify-content-between mb-5">
+                                <div class="me-3">
+                                    <div class="fv-row">
+                                        <!--begin::Label-->
+                                        <label class="d-block fw-bold fs-6 mb-5">
+                                            @ViewLocalizer["Edit_Picture"]
+                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="@SharedLocalizer["Allowed_File_Types"]"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Image input wrapper-->
+                                        <div class="mt-1">
+                                            <!--begin::Image input-->
+                                            <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('/images/blank-profile-picture.png')">
+                                                <!--begin::Preview existing avatar-->
+                                                <div id="profilePhoto" class="image-input-wrapper w-125px h-125px"></div>
+                                                <!--end::Preview existing avatar-->
+                                                <!--begin::Edit-->
+                                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="@SharedLocalizer["Upload_Profile_Picture"]">
+                                                    <i class="bi bi-pencil-fill fs-7"></i>
+                                                    <!--begin::Inputs-->
+                                                    <input type="file" asp-for="NewImage" accept=".png, .jpg, .jpeg" />
+                                                    <input asp-for="Image" type="hidden" />
+                                                    <!--end::Inputs-->
+                                                </label>
+                                                <!--end::Edit-->
+                                                <!--begin::Cancel-->
+                                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="@SharedLocalizer["Cancel_Profile_Picture"]">
+                                                    <i class="bi bi-x fs-2"></i>
+                                                </span>
+                                                <!--end::Cancel-->
+                                                <!--begin::Remove-->
+                                                <span id="removeImageBtn" class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="@SharedLocalizer["Remove_Profile_Picture"]">
+                                                    <i class="bi bi-x fs-2"></i>
+                                                </span>
+                                                <!--end::Remove-->
+                                            </div>
+                                            <!--end::Image input-->
+                                        </div>
+                                        <!--end::Image input wrapper-->
+                                    </div>
+                                </div>
+                                <div>
+
+                                    <div class="fv-row ms-12">
+                                        <!--begin::Label-->
+                                        <label asp-for="Gender" class="required fw-bold fs-6 mb-5">@SharedLocalizer["Gender"]</label>
+                                        <!--end::Label-->
+                                        <!--begin::Radio-->
+                                        <div class="form-check form-check-custom form-check-solid mb-3">
+                                            <!--begin::Input-->
+                                            <input asp-for="Gender" class="form-check-input me-3" type="radio" value="true" id="kt_modal_update_role_option_0" checked='checked' />
+                                            <!--end::Input-->
+                                            <!--begin::Label-->
+                                            <label class="form-check-label" for="kt_modal_update_role_option_0">
+                                                <div class="fw-bolder text-gray-800">@SharedLocalizer["Man"]</div>
+                                            </label>
+                                            <!--end::Label-->
+                                        </div>
+                                        <!--end::Radio-->
+                                        <!--begin::Radio-->
+                                        <div class="form-check form-check-custom form-check-solid mb-3">
+                                            <!--begin::Input-->
+                                            <input asp-for="Gender" class="form-check-input me-3" type="radio" value="false" id="kt_modal_update_role_option_1" />
+                                            <!--end::Input-->
+                                            <!--begin::Label-->
+                                            <label class="form-check-label" for="kt_modal_update_role_option_1">
+                                                <div class="fw-bolder text-gray-800">@SharedLocalizer["Woman"]</div>
+                                            </label>
+                                            <!--end::Label-->
+                                        </div>
+                                        <!--end::Radio-->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="fv-row form-floating mb-7">
+                                        <!--begin::Input-->
+                                        <input asp-for="FirstName" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="@SharedLocalizer["First_Name"]" />
+                                        <!--end::Input-->
+                                        <!--begin::Label-->
+                                        <label asp-for="FirstName" class="required fw-bold fs-6 mb-2"></label>
+                                        <!--end::Label-->
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="fv-row form-floating mb-7">
+                                        <!--begin::Input-->
+                                        <input asp-for="LastName" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="@SharedLocalizer["Last_Name"]" />
+                                        <!--end::Input-->
+                                        <!--begin::Label-->
+                                        <label asp-for="LastName" class="required fw-bold fs-6 mb-2"></label>
+                                        <!--end::Label-->
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="fv-row form-floating mb-7">
+                                        <!--begin::Input-->
+                                        <input asp-for="Email" type="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="ad.soyad@bilgeadam.com" />
+                                        <!--end::Input-->
+                                        <!--begin::Label-->
+                                        <label asp-for="Email" class="required fw-bold fs-6 mb-2"></label>
+                                        <!--end::Label-->
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="fv-row form-floating mb-7 ">
+                                        <div>
+
+                                            <select id="classSelectUpdate" class="form-select form-select-sm form-select-solid mb-3 mb-lg-0 select2-dropdown" asp-for="ClassroomIds" asp-items="@ViewBag.Classrooms" data-control="select2" data-close-on-select="false" data-allow-clear="true" data-placeholder="@SharedLocalizer["Choose_Classroom"]" multiple="multiple">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="ClassroomIds" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Uncomment and adjust the code for OtherEmails section -->
+                            @*
+                            @if (Model.OtherEmails != null)
+                            {
+                            @foreach (var items in Model.OtherEmails)
+                            {
+                            <div class="fv-row mb-7">
+                            <div class="d-flex align-items-center">
+                            <label asp-for="OtherEmails" class="form-label mt-3" style="font-size: 20px; font-weight: bold;"></label>
+                            <span class="required"></span>
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Eğitmenin diğer mail adresini giriniz." aria-label="Eğitmenin diğer mail adresini giriniz."></i>
+                            </div>
+                            <div class="d-flex">
+                            <input type="text" class="form-control form-control-solid" value="@items" name="anotherEmails">
+                            <span asp-validation-for="OtherEmails" class="text-danger"></span>
+                            <div class="align-self-end d-flex flex-row-reverse justify-content-end ms-2">
+                            <a class="btn btn-danger btn-sm" onclick="removeMail(this)"><span class="h5 text-light">X</span></a>
+                            </div>
+                            </div>
+                            </div>
+                            }
+                            }
+
+                            <div id="anotherEmails"></div>
+
+                            <div>
+                            <a class="cursor-pointer btn btn-success form-control mb-7" onclick="addAnotherEmail()">@ViewLocalizer["Add_Other_Email"]</a>
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div> *@
+
+                        </div>
+                    </div>
+                    <!--end::Scroll-->
+                    <!--begin::Actions-->
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancels">@SharedLocalizer["Back_List"]</button>
+                        <button type="submit" class="btn btn-success" data-kt-users-modal-action="submits">
+                            <span class="indicator-label">@SharedLocalizer["Save"]</span>
+                            <span class="indicator-progress">
+                                @SharedLocalizer["Please_Wait"]
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+
+
+<script>
+    var validationMessage = "@SharedLocalizer["Picture_Format_Error"]";
+</script>
+
+<script>
+    // function addAnotherEmail() {
+    //     let template = ` <div class="fv-row mb-7 fv-plugins-icon-container w-85">
+    //                                                                           <div class="d-flex">
+    //                                                                                  <div class="fv-plugins-message-container invalid-feedback d-flex me-2">
+    //                                                                                                  <input asp-for="OtherEmails" type="email" name="anotherEmails" class="form-control form-control-solid mb-3 mb-lg-0" placeHolder="Diğer Mail Adresi" />
+    //                                                                                              <label asp-for="OtherEmails" class="fw-bold fs-6 mb-2"></label>
+    //                                                                                  </div>
+    //                                                                                  <div class="align-self-end d-flex flex-row-reverse justify-content-end">
+    //                                                                                      <a class="btn btn-danger btn-sm" onclick="removeMail(this)"><span class="h5 text-light">X</span></a>
+    //                                                                                  </div>
+    //                                                                           </div>
+    //                                                              </div>`;
+    //     $("#anotherEmails").append(template);
+    // }
+
+    // function removeMail(prop) {
+    //     $(prop).parent().parent().parent().remove();
+    // }
+
+    document.getElementById('removeImageBtn').addEventListener('click', function () {
+        document.getElementById('RemoveImage').value = 'true';
+    });
+</script>

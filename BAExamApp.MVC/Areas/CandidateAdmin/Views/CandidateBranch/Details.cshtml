@@ -1,0 +1,404 @@
+﻿@using BAExamApp.Business.Constants
+@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateBranchVMs
+@model CandidateBranchDetailsVM
+@{
+    ViewData["Title"] = ViewLocalizer["Branch_Details"];
+}
+<div class="card mb-5 mb-xl-10">
+    <div class="card-header card-header-stretch">
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">@Model.Name @ViewLocalizer["Branch_Details"]</h3>
+        </div>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                <style>
+                    .nav-item {
+                        margin-right: 10px; /* Boşluk miktarını ihtiyacınıza göre ayarlayabilirsiniz */
+                    }
+                </style>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" id="kt_tab_pane_7_tab" href="#kt_tab_pane_7">
+                        @ViewLocalizer["Branch_Details"]
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="kt_tab_pane_8_tab" data-bs-toggle="tab" href="#kt_tab_pane_8" role="tab" aria-controls="kt_tab_pane_8" aria-selected="false">@SharedLocalizer["Groups"]
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show" id="kt_tab_pane_7" role="tabpanel">
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <tbody class="fw-bold">
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                            <td class="categories text-start col-lg-2">
+                                <span class="col-lg-4 fw-bold text-muted">@SharedLocalizer["Branch_Name"]:</span>
+                            </td>
+                            <td class="categories text-start text-gray-600 col-lg-10">
+                                <span class="fw-bolder fs-6 text-gray-800"> @Model.Name </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <div class="gap-5">
+                        <a class="btn btn-secondary align-self-center" asp-controller="CandidateBranch" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+
+                        <a class="btn btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#updateCandidateBranchModal" data-branch-id="@Model.Id" data-branch-name="@Model.Name">
+                            @SharedLocalizer["Update"]
+                        </a>
+                        <a class="btn btn-danger align-self-center deleteAction" data-id="@Model.Id">@SharedLocalizer["Delete"]</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+                <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+                    <div class="card-body fs-6 py-2 px-10 py-lg-4 px-lg-15 text-gray-700">
+                        <div class="py-5">
+                            <div class="d-flex flex-stack flex-wrap mb-5">
+                                <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <input type="text" id="searchInput" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="@SharedLocalizer["Group"] @SharedLocalizer["Search"]" />
+                                </div>
+                                <div>
+                                    @if (ViewBag.ShowAllData == true)
+                                    {
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="showPassiveGroupsCheckbox" onchange="toggleData(this.checked)" checked>
+                                            <label class="form-check-label" for="showPassiveGroupsCheckbox">
+                                                @SharedLocalizer["Hide_Passive"]
+                                            </label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="showPassiveGroupsCheckbox" onchange="toggleData(this.checked)">
+                                            <label class="form-check-label" for="showPassiveGroupsCheckbox">
+                                                @SharedLocalizer["Show_Passive"]
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <table id="kt_datatable_example_2" class="table table-row-dashed fs-6 gy-5">
+                                <thead>
+                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Email: activate to sort column descending" style="width: 252.25px;" aria-sort="ascending"> @SharedLocalizer["Group_Name"]</th>
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="kt_datatable_example_1" rowspan="1" colspan="1" aria-label="Email: activate to sort column descending" style="width: 252.25px;" aria-sort="ascending">@Html.DisplayNameFor(model => model.Status)</th>
+                                        <th class="text-end min-w-100px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100.25px;">@ViewLocalizer["Group_Operations"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-600 fw-bold">
+                                    @foreach (var group in Model.CandidateGroups)
+                                    {
+                                        <tr class="group-row @group.Status">
+                                            <td>@group.Name</td>
+                                            <td class="categories text-start">
+                                                <span class="badge @(group.Status == Status.Active ? "badge-light-success" : "badge-light-warning")">
+                                                    @if (group.Status == Status.Active)
+                                                    {
+                                                        <text>@SharedLocalizer["Active"]</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>@SharedLocalizer["Passive"]</text>
+                                                    }
+                                                </span>
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                                                    @SharedLocalizer["Options"]
+                                                    <span class="svg-icon fs-5 m-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                                <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="currentColor" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                                    <div class="menu-item px-3">
+                                                        <a asp-controller="CandidateGroup" asp-action="Details" asp-route-id="@group.Id" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+                                                            @SharedLocalizer["Details"]
+                                                        </a>
+                                                    </div>
+                                                    <div class="menu-item px-3">
+                                                        <a href="@Url.Action("Details", "CandidateGroup", new { id = group.Id, activeTab = "kt_tab_pane_8" })" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+                                                            @SharedLocalizer["Candidates"]
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="~/Areas/CandidateAdmin/Views/CandidateBranch/UpdatePartialView.cshtml" model="new CandidateBranchUpdateVM()" />
+
+@section Scripts
+{
+    
+    <script src="~/newlayouts/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/js/updateCandidateBranch.js"></script>
+
+    <script>
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+        var localizedText = {
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]', // "fullName adlı admini silmek istediğinize emin misiniz?"
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]', // "Bu işlem geri alınamaz!"
+            confirmButtonText: '@SharedLocalizer["Confirm_Button_Text"]', // "Evet, sil!"
+            cancelButtonText: '@SharedLocalizer["Cancel_Button_Text"]', // "Hayır, iptal et"
+            branchgroupText: '@SharedLocalizer["CandidateBranchGroup_Not_Found"]',
+            branchgroupPassiveText: '@SharedLocalizer["CandidateBranchGroup_Passive_Delete"]',
+            passiveButtonText: '@SharedLocalizer["Confirm_Passive_Button_Text"]',
+            branchgroupPassiveButtonText: '@SharedLocalizer["Confirm_Passive_Button_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+            returnOkText: '@SharedLocalizer["Candidate_Return_Ok"]',
+            passiveOkText: '@SharedLocalizer["Candidate_Branch_Passive_Ok"]'
+        };
+        var localize = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+        $(document).ready(function () {
+            var dt = $("#kt_datatable_example_2").DataTable({
+                lengthMenu: [10, 25, 50, 100],
+                dom:
+                    '<"row"<"col-sm-12"t>>' +
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+                language: {
+                    emptyTable: localizer.emptyTable,
+                    info: localizer.info,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords
+                }
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_2_length"]', function () {
+                dt.page.len($(this).val()).draw();
+                $(this).css({
+                    'border': '0 solid transparent',
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+                });
+            });
+
+            $('body').on('keyup', 'input[data-kt-docs-table-filter="search"]', function () {
+                dt.search($(this).val()).draw();
+            });
+
+            function updatePaginationArrows() {
+                var prevButton = $('#kt_datatable_example_2_previous a');
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_example_2_next a');
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_example_2_paginate .page-item');
+
+                var activePage = $('#kt_datatable_example_2_paginate .page-item.active a');
+                activePage.css({
+                    'color': '#ffffff'
+                });
+
+                pageButtons.not('.active').hover(
+                    function () {
+                        $(this).find('a').css({
+                            'color': '#your_desired_color'
+                        });
+                    },
+                    function () {
+                        $(this).find('a').css({
+                            'color': ''
+                        });
+                    }
+                );
+            }
+            updatePaginationArrows();
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+        });
+        $(".deleteAction").click(function () {
+    const id = $(this).attr("data-id");
+
+    // Send AJAX request to check for active groups
+    $.ajax({
+        type: "GET",
+        url: "@Url.Action("CheckActiveGroups")" + "?id=" + id,
+        success: function (result) {
+            if (result.isSuccess) {
+                        if (result.message === "@Messages.PassiveSuccess") {
+                            // If only passive groups found, show the appropriate message with a button to mark the branch as passive
+                            Swal.fire({
+                                icon: 'warning',
+                                title: localizedText.branchgroupPassiveText,
+                                text: localizedText.passiveOkText,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                showCancelButton: true,
+                                showConfirmButton: true,
+                                confirmButtonText: localizedText.branchgroupPassiveButtonText,
+                                cancelButtonText: localizedTexts.cancelButtonText
+                            }).then((confirmationResult) => {
+                                if (confirmationResult.isConfirmed) {
+                                    // Send AJAX request to mark the branch as passive
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "@Url.Action("MarkBranchAsPassive")" + "?id=" + id,
+                                        success: function (updateResult) {
+                                            if (updateResult.isSuccess) {
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    text: updateResult.message,
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                }).then(() => {
+                                                    location.reload();
+                                                });
+                                            } else {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    text: updateResult.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        } else if (result.message === "@Messages.PassiveError") {
+                            // If only passive groups found, show the appropriate message with a button to mark the branch as passive
+                            Swal.fire({
+                                icon: 'warning',
+                                text: localizedText.branchgroupPassiveText,
+                                showCancelButton: true,
+                                showConfirmButton: false,
+                                cancelButtonText: localizedText.okButtonText
+                            });
+                        } else {
+                    // If no groups are found, show the confirmation modal
+                    Swal.fire({
+                        title: localizedText.confirmTitle,
+                        text: localizedText.confirmText,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: localizedText.confirmButtonText,
+                        cancelButtonText: localizedText.cancelButtonText
+                    }).then((confirmationResult) => {
+                        if (confirmationResult.isConfirmed) {
+                            // Send AJAX request to delete the item
+                            $.ajax({
+                                type: "GET",
+                                url: "@Url.Action("Delete")" + "?id=" + id,
+                                success: function (deleteResult) {
+                                    if (deleteResult.isSuccess) {
+                                                setTimeout(() => location.href = "@Url.Action("index")", 2000)
+                                        
+                                    
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            } else if (result.message === "@Messages.CandidateBranchGroupNotFound") {
+                // If active groups found, show the error modal
+                Swal.fire({
+                    icon: 'warning',
+                    title: localizedText.branchgroupText,
+                    text: localizedText.returnOkText,
+                    showCancelButton: true,
+                    cancelButtonColor: '#3085d6',
+                    showConfirmButton: false,
+                    cancelButtonText: localizedText.okButtonText
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    text: result.message
+                });
+            }
+        }
+    });
+});
+
+
+    </script>
+
+    <script>
+        function toggleData(checked) {
+            var url = '@Url.Action("Details", new { id = Model.Id })';
+            if (checked) {
+                url += '?showAllData=true&showPassiveGroups=true';
+            } else {
+                url += '?showAllData=false&showPassiveGroups=false';
+            }
+
+            // Aktif tabı URL parametresine ekle
+            url += '&activeTab=kt_tab_pane_8';
+
+            // Sayfayı yenile
+            window.location.href = url;
+        }
+
+        // Sayfa yüklendiğinde URL'deki activeTab parametresine göre aktif sekmeyi ayarla
+        document.addEventListener('DOMContentLoaded', function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var activeTab = urlParams.get('activeTab');
+            if (activeTab === 'kt_tab_pane_8') {
+                document.getElementById("kt_tab_pane_8_tab").classList.add("active");
+                document.getElementById("kt_tab_pane_8").classList.add("show", "active");
+                document.getElementById("kt_tab_pane_7_tab").classList.remove("active");
+                document.getElementById("kt_tab_pane_7").classList.remove("show", "active");
+            } else {
+                document.getElementById("kt_tab_pane_7_tab").classList.add("active");
+                document.getElementById("kt_tab_pane_7").classList.add("show", "active");
+                document.getElementById("kt_tab_pane_8_tab").classList.remove("active");
+                document.getElementById("kt_tab_pane_8").classList.remove("show", "active");
+            }
+        });
+    </script>
+
+
+
+
+
+    
+}

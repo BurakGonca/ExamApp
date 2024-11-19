@@ -1,0 +1,92 @@
+﻿@model CandidateQuestionDetailsVM
+
+<div class="card py-16 ">
+    <div class="d-flex justify-content-between ps-9 pt-6">
+        <!--begin::Card title-->
+        <div>
+            <h3 class="fw-bolder m-0">@SharedLocalizer["Question_Detail"]</h3>
+        </div>
+        <!--end::Card title-->
+        <!--begin::Action-->
+        <div class="d-flex align-items-center">
+            <a asp-controller="CandidateQuestion" asp-action="CopyQuestion" asp-route-id="@Model.Id" class="btn px-2 mx-2 btn-success">@SharedLocalizer["Copy_Question"]</a>
+        </div>
+        <!--end::Action-->
+    </div>
+    <div class="card-body row fs-6 py-15 px-10 py-lg-15 px-lg-15">
+        <div class="col-lg-6 mb-3">
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">@Html.DisplayNameFor(model => model.CreatedDate) :</label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">@Model.CreatedDate.ToShortDateString()</span>
+                </div>
+            </div>
+
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.CandidateQuestionType) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @SharedLocalizer[Enum.GetName(typeof(CandidateQuestionType), Model.CandidateQuestionType)]
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-7">
+                <label class="w-150px fw-bold text-muted">
+                    @Html.DisplayNameFor(model => model.Content) :
+                </label>
+                <div class="col-xl-8 col-12">
+                    <span class="fw-bolder fs-6 text-gray-800">
+                        @Html.DisplayFor(model => model.Content)
+                    </span>
+                </div>
+            </div>
+        </div>
+        @if (Model.Image != null)
+        {
+            <div class="row col-lg-4 mb-3">
+                <label class=" fw-bold text-muted mb-3">
+                    @Html.DisplayNameFor(model => model.Image)
+                </label>
+                <div class="image-input image-input-outline fv-row"
+                     data-kt-image-input="true">
+                    <div class="col-lg-12"
+                         style="display: flex; justify-content: flex-start">
+                        <img id="defaultImage"
+                             class="col-lg-12 img-fluid"
+                             src="data:image/jpeg;base64,@Model.Image"
+                             alt="Profile" />
+                    </div>
+                </div>
+            </div>
+        }
+        <hr />
+        <div class="row mb-7">
+            <label class="w-150px fw-bold text-muted">
+                @Html.DisplayNameFor(model => model.QuestionAnswers) :
+            </label>
+            <div class="col-xl-10 col-12">
+                @foreach (var item in Model.QuestionAnswers)
+                {
+                    @if (item.IsRightAnswer)
+                    {
+                        <p class="fw-bolder fs-6 text-gray-800">
+                            @SharedLocalizer[item.Answer]
+                            <span class="badge badge-success">@SharedLocalizer["True"]</span>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="fw-bolder fs-6 text-gray-800">
+                            @SharedLocalizer[item.Answer]
+                        </p>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

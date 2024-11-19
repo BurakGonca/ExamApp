@@ -1,0 +1,325 @@
+﻿@model StudentStudentQuestionDetailsVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Exam"];
+    Layout = "";
+    var answerOrder = 1;
+    bool qImage = false;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ba quiz</title>
+    <link href="~/css/reset.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/custom-props.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/animation.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script>
+        hljs.highlightAll();
+    </script>
+
+
+</head>
+<body>
+    <partial name="~/Areas/Admin/Views/Animation/_LoaderAnimationPartialView.cshtml" />
+    <div id="root">
+        <header>
+            <div class="container-quiz-title">
+                <h1>@ViewBag.ExamName</h1>
+            </div>
+
+
+
+            <div class="chip timer timer-remaining-quiz">
+                <p id="transitionCounterMain">
+                    <div class="row" style="width:97%">
+                        <div class="d-flex justify-content-end mt-3 me-3" style="font-weight: bold; color: #414b59; font-size: 1.6em;" id="remainingTime"></div>
+                    </div>
+                </p>
+
+            </div>
+        </header>
+        <div class="row timer-container">
+            <div class="col col-md-6 col-sm-3">
+                <div class="col col-md-6 col-sm-3">
+                    <div id="questionCounterMain" class="col-3 p-2" style="font-weight: bold; margin:10px; color: #414b59; font-size: 1.2em;">
+                        <span id="questionCounterText"></span>
+                        <span id="questionCounter"></span>
+
+                    </div>
+
+                    <div id="transitionCounter" style="font-weight: bold; margin:10px; color: #414b59; font-size: 0.8em;">
+                        <span id="transitionCounterText"></span>
+                        <span id="transitionCounterNumber"></span>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class=" col col-md-4 col-sm-3">
+                <div id="transitionCounter" style="font-weight: bold; margin:10px; color: #414b59; font-size: 0.8em;">
+                    <span id="transitionCounterText"></span>
+                    <span id="transitionCounterNumber"></span>
+                </div>
+            </div>
+
+            <div class="col col-md-4 col-sm-3">
+                <div id="questionCounterMain" class="col-3 p-2" style="font-weight: bold; margin:10px; color: #414b59; font-size: 1.2em;">
+                    <span id="remainingTimeValueText">Sınav Bitimine Kalan Süre:</span>
+                    <span id="remainingTimeValue"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-indicator">
+            <section class="step-indicator">
+
+                @for (int i = 1; i <= Model.QuestionCount; i++)
+                {
+                    if (i <= 3 || i > Model.QuestionCount - 3 || (i >= Model.QuestionOrder - 2 && i <= Model.QuestionOrder + 2))
+                    {
+                        <div class="step step@(i)">
+                            <div class="step-icon @(i== Model.QuestionOrder? "current-step" : (ViewBag.answerList[i - 1] ? "active-step": "" ))">@i</div>
+                        </div>
+                    }
+                    else if (i == Model.QuestionOrder - 3 || i == Model.QuestionOrder + 3)
+                    {
+                        <div class="indicator-line"></div>
+                    }
+                }
+            </section>
+        </div>
+
+        <main>
+
+            <section class="quiz">
+                @*  <form method="post" class="frm-quiz"> *@
+                <form id="frmQuestion" asp-area="Student" asp-controller="Exam" asp-action="GetNextQuestion" method="post" class="frm-quiz">
+                    <input asp-for="QuestionAnswers" hidden />
+                    <input asp-for="QuestionCount" hidden />
+                    <input asp-for="StudentQuestionId" hidden />
+                    <input asp-for="TimeGiven" hidden />
+                    <input asp-for="TimeStarted" hidden />
+                    <input asp-for="StudentExamId" hidden />
+                    <input id="examType" name="examType" value="@ViewBag.ExamTypeJSON" hidden />
+
+                    <div class="container position-absolute top-0 start-50">
+                        <div class="row">
+                            <div class="col-3 p-2">
+                                <span class="text-success fs-2">@SharedLocalizer["Question"] @Model.QuestionOrder</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container position-absolute top-50 start-50 translate-middle">
+                        <div class="row">
+                            <div class="question-media scrollable-indicator">
+
+                                <img class="question-image" id="questionImage" hiden />
+                                @if (Model.Image != null)
+                                {
+                                    <figure>
+                                        <img class="question-image" id="questionImage" src="data:image/png;base64,@(Model.Image)" />
+                                    </figure>
+                                }
+
+                                @*  <figure>
+                                <img src="~/images/sample-q.png" alt="soru1" />
+                                </figure> *@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 p-2">
+                                @if (Model.QuestionType == QuestionType.MultipleAnswer)
+                                {
+                                    <span class="text-primary"><b>[@SharedLocalizer["There_May_Be_More_Than_One_Answer_To_this_Question"]]</b></span>
+                                }
+                                else if (Model.QuestionType == QuestionType.Test)
+                                {
+                                    <span class="text-primary"><b>[@SharedLocalizer["This_Question_Is_An_Ongoing_Selected_Question"]]</b></span>
+                                }
+                                <br />
+                                <br />
+                                <div class="question">
+                                    <p>@Model.Content</p>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="form-control" name="studentAnswers" id="studentAnswers" hidden />
+                        <div class="form-check form-check-inline mt-5 frm-quiz-answers">
+                            @foreach (var answer in Model.QuestionAnswers)
+                            {
+                                <label class="form-check-label frm-quiz-label" for="answer-@answerOrder">
+                                    @if (Model.QuestionType == QuestionType.MultipleAnswer)
+                                    {
+                                        <input class="form-check-input choices" type="checkbox" name="quiz-answer" id="answer-@answerOrder" value="@answer.Id" onchange="updateStudentAnswers()">
+                                    }
+                                    else if (Model.QuestionType == QuestionType.Test)
+                                    {
+                                        <input class="form-check-input choices" type="radio" name="quiz-answer" id="answer-@answerOrder" value="@answer.Id" onchange="updateStudentAnswers()">
+                                    }
+                                    else if (Model.QuestionType == QuestionType.TrueFalse)
+                                    {
+                                        <input class="form-check-input choices" type="radio" name="quiz-answer" id="answer-@answerOrder" value="@answer.Id" onchange="updateStudentAnswers()">
+                                    }
+
+                                    @if (answer.IsAnswerImage)
+                                    {
+                                        <div class="col-lg-12">
+                                            <img id="defaultImage"
+                                                 class="col-lg-12 img-fluid"
+                                                 src="@answer.Answer"
+                                                 style="max-height:150px;max-width:300px;"
+                                                 alt="Profile" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @answer.Answer
+                                    }
+                                </label>
+                                answerOrder++;
+                            }
+                        </div>
+                    </div>
+
+
+                    @if (Model.QuestionCount == Model.QuestionOrder)
+                    {
+                        <button type="submit" id="next-question-button">@SharedLocalizer["Finish_Exam"]</button>
+                    }
+                    else
+                    {
+                        <button type="submit" id="next-question-button">@SharedLocalizer["Send_Reply"]</button>
+                    }
+
+
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <a href="#" class="logo-ba">
+                <img src="~/images/BATeknoloji_Logo_RGB.png"
+                     alt="Bilgeadam Teknoloji" />
+            </a>
+        </footer>
+    </div>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/student-question.js"></script>
+    <script src="~/js/animation-start.js"></script>
+
+
+
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+        });
+
+        window.addEventListener("load", function (event) {
+        });
+    </script>
+
+    <script>
+
+        var examDateTime = new Date('@Model.ExamDateTime.ToString("yyyy-MM-ddTHH:mm:ss")');
+        var examDurationMilliseconds = @Model.ExamDuration.TotalMilliseconds;
+        var examDurationTime = new Date(examDateTime.getTime() + examDurationMilliseconds);
+        let examType = JSON.parse(document.getElementById("examType").value);
+
+        var questionDiv = document.querySelector('.question');
+        var questionImage = document.getElementById('questionImage');
+
+        questionDiv.style.userSelect = 'none';
+
+        questionDiv.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
+
+        questionImage.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
+
+
+        let rootEl = document.querySelector("#root");
+
+        let throttle = (func, waitDuration = 50) => {
+            let timeout;
+            return () => {
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(func, waitDuration);
+            };
+        };
+
+        window.addEventListener(
+            "scroll",
+            throttle(() => {
+                let sY = window.scrollY;
+                if (rootEl) {
+                    if (sY > 24) {
+                        if (!rootEl.classList.contains("compact")) {
+                            rootEl.classList.add("compact");
+                        } else {
+                            rootEl.classList.remove("compact");
+                        }
+                    }
+                }, 20)
+        );
+
+
+    </script>
+    <script>
+        var questionCount = @Model.QuestionCount;
+        var currentQuestionOrder = @Model.QuestionOrder;
+    </script>
+
+    <script>
+        //Update exam remaining time
+        const updateRemainingTime = () => {
+            var currentTime = new Date();
+            var examEndTime = new Date('@Model.ExamDateTime.ToString("yyyy-MM-ddTHH:mm:ss")');
+            examEndTime.setSeconds(examEndTime.getSeconds() + @Model.ExamDuration.TotalSeconds);
+
+            var timeDifference = examEndTime - currentTime;
+
+            if (timeDifference <= 0) {
+                document.getElementById("remainingTimeValue").textContent = "Süre doldu";
+
+
+                var form = document.querySelector('.frm-quiz');
+                form.querySelectorAll('input, textarea, button').forEach(element => {
+                    element.disabled = true;
+                });
+
+                return;
+            }
+            var hours = Math.floor(timeDifference / (1000 * 60 * 60));
+            var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+
+            var remainingTimeString = hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+            document.getElementById("remainingTimeValue").textContent = remainingTimeString;
+
+        }
+
+        setInterval(updateRemainingTime, 1000);
+        updateRemainingTime();
+    </script>
+
+</body>
+</html>

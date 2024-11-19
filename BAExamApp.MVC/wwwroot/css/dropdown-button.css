@@ -1,0 +1,60 @@
+﻿.dropdown {
+    display: inline-block;
+    position: relative;
+    background-color: #04AA6D;
+    font-size: 12px;
+    
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 100%;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+    z-index: 1;
+    
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    color:black;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    background-color: lightgrey;
+}
+
+    .dropdown-content a:hover {
+        color: #FFFFFF;
+        background-color: rgb(134, 138, 155);
+    }
+#optionsButton1 {
+    box-shadow: none;
+}
+
+#questionDetails {
+    background-color: #3C4258;
+    box-shadow: none;
+}
+
+#questionDetails a {
+    color:white;
+    text-decoration:none;
+    background-color: #3C4258;
+    box-shadow: none;
+}
+
+#testQuestionDetails {
+    background-color: #3C4258;
+    box-shadow:none;
+}
+
+#testQuestionDetails a {
+    background-color: #3C4258;
+    color: white;
+    text-decoration:none;
+}

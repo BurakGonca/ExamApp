@@ -1,0 +1,114 @@
+﻿.arrange-history-table-container {
+    margin: 0 auto; 
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    z-index: 1056; 
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.arrange-table {
+    width: 750px;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-family: Poppins, Helvetica, sans-serif;
+}
+
+    .arrange-table > thead {
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .arrange-table > tbody {
+        text-align: left;
+        border-top: 1px solid currentcolor !important;
+    }
+
+        .arrange-table > tbody > tr > td > div {
+            overflow-x: auto;
+            max-width: 460px;
+            max-height: 40px;
+            word-wrap: break-word;
+        }
+
+.arrange-container-card {
+    box-shadow: 0px 0px 10px rgba(5, 5, 5, 2); 
+    background-color: white;
+    border-radius: 10px;
+    max-height: 250px;
+    overflow-x: auto;
+    max-width: 900px;
+}
+
+
+.image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+    border: 1px dashed #d3d3d3;
+    background-color: #f5f8fa;
+}
+
+#imagePlaceholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+    #imagePlaceholder > span > i {
+        font-size: 36px;
+        color: #a1a5b7;
+    }
+
+    #imagePlaceholder > p {
+        color: #a1a5b7;
+        margin-top: 30px;
+    }
+
+#removeImageButton {
+    position: absolute;
+    background-color: #dc3545 !important;
+    bottom: -10px;
+    right: -10px;
+    display: none;
+}
+
+#uploadImageButton {
+    position: absolute;
+    background-color: #007bff !important;
+    top: -10px;
+    right: -10px;
+    z-index: 1;
+}
+
+    #removeImageButton > i,
+    #uploadImageButton > i {
+        font-size: 12px;
+        color: white !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+#previewImage {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+

@@ -1,0 +1,32 @@
+﻿/* Tablo başlığındaki sütunlar için */
+th {
+    text-align: left;
+    padding: 10px;
+}
+
+/* Tablo içeriğindeki sütunlar için */
+td {
+    text-align: left;
+    padding: 10px;
+}
+
+/* Sütunlar arasında eşit boşluğu sağlamak için table-layout: fixed; */
+table {
+    width:100%;
+    table-layout: fixed;
+    display:contents;
+    justify-content: space-evenly;
+
+}
+
+/* Name sütunu için genişlik belirleme */
+th:first-child,
+td:first-child {
+    width: 40%;
+}
+
+/* Diğer sütunlar için eşit genişlik belirleme */
+th:not(:first-child),
+td:not(:first-child) {
+    width: 20%;
+}

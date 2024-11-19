@@ -1,0 +1,63 @@
+﻿@using BAExamApp.MVC.Areas.CandidateAdmin.Models.CandidateExamInitiationVMs
+@model CandidateExamStartVM
+
+@{
+    ViewData["Title"] = SharedLocalizer["Exam"];
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>@ViewData["Title"]</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+
+    <style>
+        textarea {
+            width: 100%;
+            margin-top: 50px;
+            margin-bottom: 5px;
+            border: 2px solid #414b59;
+        }
+
+    </style>
+
+</head>
+<body>
+    <main>
+            <div class="container position-absolute top-50 start-50 translate-middle">
+                <div class="row">
+                    <div class="col-12 text-center" style="display:flex; flex-direction:column; align-items:center; font-weight: bold; font-size:18px; color: #414b59;">
+                        <table style="text-align:left;">
+                            <tr>
+                                <th>Sınav Adı</th>
+                                <td>: @Model.ExamName</td>
+                            </tr>
+                            <tr>
+                                <th>Sınav Tarihi</th>
+                                <td>: @Model.ExamDateTime</td>
+                            </tr>
+                            <tr>
+                                <th>Sınav Süresi</th>
+                                <td>:  @($"{Model.ExamDuration.Hours:D2}:{Model.ExamDuration.Minutes:D2}")</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-12 text-center" style="font-weight: bold; font-size:36px; color: #414b59;">
+                        <span>@Model.FullName, sınava giriş için ayrılan süre dolmuştur 😢 </span>
+                    </div>
+                </div>
+            </div>
+
+
+    </main>
+</body>
+</html>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+

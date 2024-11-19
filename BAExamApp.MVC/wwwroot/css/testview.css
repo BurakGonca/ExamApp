@@ -1,0 +1,14 @@
+﻿.containerTest {
+    width: 1000px;
+    margin: 20px auto;
+}
+
+.textareaTest {
+    min-height: 200px;
+    width: 100%;
+}
+
+.btnTest {
+    width: 100%;
+    margin-top: 10px;
+}

@@ -1,0 +1,72 @@
+﻿.datePicker {
+    box-sizing: border-box;
+    background-color: white;
+    border: solid 1px #ccc;
+    padding: 1px;
+    font-family: monospace;
+    font-size: 14px;
+    /*    border: none;*/
+    /*    outline: none;*/
+    color: black;
+    border-radius: 4px;
+}
+
+::-webkit-calendar-picker-indicator {
+    background-color: white;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
+
+.dropdown-text {
+    width: 220px;
+    padding-bottom: 18px;
+    height: 34px;
+}
+
+.filter {
+    background-color: #26de81;
+    width: 60px;
+    border-radius: 4px;
+    height: 30px;
+    margin-top: 18px;
+    line-height: normal;
+    padding-top: 8px;
+}
+
+.card-filtered {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+    .card-filtered label {
+        display: block;
+    }
+#ActiveExams {
+    /* Checkbox'u büyütme */
+    width:20px;
+    height:20px;
+    border-radius:4px;
+    margin-left:48px;
+    margin-top:4px;
+    
+    
+}
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+.fa-circle-exclamation {
+    color: #d80e0e;
+    margin-right: 10px;
+}
+
+.message {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-style: italic;
+}

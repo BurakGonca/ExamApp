@@ -1,0 +1,52 @@
+﻿.panel-overview {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    width: 100%;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+    
+}
+
+.card-body {
+    border-radius: 10px;
+}
+/* .card:hover{
+        box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+        transition: 0.3s;
+        transform: scale(1.05);
+        cursor:pointer;
+
+
+    } */
+
+.card-students {
+    background-color: #fcefc0;
+}
+
+.card-trainers {
+    background-color: #c7e9fc;
+}
+
+.card-exams {
+    background-color: #fadae4;
+}
+
+.card-success {
+    background-color: #d2fee7;
+}
+
+
+.card .card-body {
+    padding: 5px;
+}
+
+
+

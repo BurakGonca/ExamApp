@@ -1,0 +1,260 @@
+﻿@model X.PagedList.IPagedList<AdminGroupTypeListVM>
+@using Microsoft.Extensions.Localization
+@using X.PagedList
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@inject IStringLocalizer<SharedModelResource> localizer
+
+
+
+@{
+    ViewData["Title"] = "Index";
+    var currentPageSize = ViewBag.PageSize ?? 10;
+}
+<div class="card">
+    <!--begin::Card header-->
+    <div class="ps-9 pt-10">
+        <h5 class="text-dark fw-bolder fs-5">@SharedLocalizer["List", ViewLocalizer["Group_Type"]]</h5>
+    </div>
+    <div class="card-header border-0 pt-6">
+        <!--begin::Card title-->
+        <div class="card-title">
+            <!--begin::Search-->
+            <div class="d-flex align-items-center position-relative my-1">
+                <form asp-controller="GroupType" asp-action="Index" method="get" class="d-flex align-items-center">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                    <span class="svg-icon svg-icon-1 position-absolute ps-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <div class="form-group ">
+                        <input type="text" name="typeOfEducation" id="searchInput" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="@SharedLocalizer["Search_Group_Type"]" />
+                    </div>
+                    <button type="submit" id="searchButton" class="btn btn-primary btn-lg hover-elevate-up ms-3" data-kt-user-table-filter="form">
+                        @SharedLocalizer["Show"]
+                    </button>
+                </form>
+            </div>
+    
+            <!--end::Search-->
+        </div>
+        <!--begin::Card title-->
+        <!--begin::Card toolbar-->
+        <div class="card-toolbar">
+            <!--begin::Toolbar-->
+            <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                <!--begin::Add user-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSubjectModal">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                    <span class="svg-icon svg-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->@SharedLocalizer["Create", ViewLocalizer["Group_Type"]]
+                </button>
+                <!--end::Add user-->
+            </div>
+            <!--end::Toolbar-->
+        </div>
+        <!--end::Card toolbar-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body py-4">
+        <!--begin::Table-->
+        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+            <!--begin::Table head-->
+            <thead>
+                <!--begin::Table row-->
+                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                    <th class="min-w-125px">@Html.DisplayNameFor(model => model[0].Name)</th>
+                    <th class="min-w-125px">@Html.DisplayNameFor(model => model[0].Information)</th>
+                    <th class="text-end min-w-100px">@ViewLocalizer["Group_Type_Operations"]</th>
+                </tr>
+                <!--end::Table row-->
+            </thead>
+            <!--end::Table head-->
+            <!--begin::Table body-->
+            <tbody class="text-gray-600 fw-bold">
+                <!--begin::Table row-->
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <span>@item.Name</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <span data-bs-toggle="tooltip" title="@item.Information">@(item.Information.Length > 70 ? item.Information.Substring(0, 70) + "..." : item.Information)</span>
+                            </div>
+                        </td>
+
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-active-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @SharedLocalizer["Options"]
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" aria-labelledby="dropdownMenuButton">
+                                    <li class="menu-item px-3">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="menu-link px-3">@SharedLocalizer["Details"]</a>
+                                    </li>
+                                    <li class="menu-item px-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#updateSubjectModal" asp-route-id="@item.Id" data-item-id="@item.Id" data-item-name="@item.Name" data-item-information="@item.Information" class="menu-link px-3" data-kt-users-table-filter="delete_row">@SharedLocalizer["Update"]</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <!--end::Table body-->
+        </table>
+        <!--end::Table-->
+        <!--begin::Pagination-->
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="dataTables_length" id="kt_table_users_length">
+                    <label>
+                        <select id="pageSizeDropdown" name="kt_table_users_length" aria-controls="kt_table_users" class="form-select form-select-sm form-select-solid">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="col-5" style="margin-left:10px">
+                    <span class="text" style="white-space: nowrap;">
+                        @SharedLocalizer["Total"] @Model.TotalItemCount @SharedLocalizer["From"] @(Model.PageNumber * Model.PageSize - (Model.PageSize - 1))
+                        @SharedLocalizer["To"] @(Model.PageNumber * Model.PageSize > Model.TotalItemCount ? Model.TotalItemCount : Model.PageNumber * Model.PageSize)
+                        @SharedLocalizer["Records_Are_Being_Displayed"]
+                    </span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, typeOfEducation = ViewBag.TypeOfEducation, pageSize = ViewBag.PageSize }), new PagedListRenderOptions
+           {
+               Display = PagedListDisplayMode.Always,
+               UlElementClasses = new[] { "pagination", "justify-content-center" },
+               LiElementClasses = new[] { "page-item" },
+               PageClasses = new[] { "page-link" },
+               LinkToFirstPageFormat = @localizer["First"],
+               LinkToLastPageFormat = @localizer["Last"],
+               ContainerDivClasses = new[] { "d-flex", "justify-content-center" }
+           })
+            </div>
+        </div>
+        <!--end::Pagination-->
+    </div>
+    <!--end::Card body-->
+</div>
+<partial name="~/Areas/Admin/Views/GroupType/CreatePartialView.cshtml" model="new AdminGroupTypeCreateVM()"></partial>
+<partial name="~/Areas/Admin/Views/GroupType/Update.cshtml" model="new AdminGroupTypeUpdateVM()"></partial>
+
+<!-- Modal for Create -->
+<!-- Modal content here -->
+<!-- Modal for Update -->
+<!-- Modal content here -->
+@section Scripts
+{
+    <script src="~/newlayouts/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/newlayouts/src/js/custom/apps/user-management/users/list/createGroupType.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/searchboxkeyboardevent.js"></script>
+    <script>
+
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]'
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentPageSize = @currentPageSize;
+            document.getElementById('pageSize').value = currentPageSize;
+        });
+
+        // Scroll hareket ettirildiğinde option menüsünü kapatır.
+        $(document).ready(function () {
+            $(window).on('scroll', function () {
+                $('.dropdown-menu.show').removeClass('show');
+                $('.dropdown-toggle[aria-expanded="true"]').attr('aria-expanded', 'false');
+                console.log("Scroll hareketi çalıştı.")
+            });
+
+        });
+
+        function changePageSize() {
+            var pageSize = document.getElementById('pageSize').value;
+            var url = new URL(window.location.href);
+
+            var typeOfEducation = url.searchParams.get('typeOfEducation') || '';
+
+            url.searchParams.set('pageSize', pageSize);
+            url.searchParams.set('page', 1);
+
+            if (typeOfEducation) {
+                url.searchParams.set('typeOfEducation', typeOfEducation);
+            }
+
+            window.location.href = url.toString();
+        }
+
+        $(document).ready(function () {
+            $('#pageSizeDropdown').change(function () {
+                var selectedPageSize = $(this).val();
+                var url = new URL(window.location.href);
+
+
+                var typeOfEducation = url.searchParams.get('typeOfEducation') || '';
+
+
+                url.searchParams.set('pageSize', selectedPageSize);
+                url.searchParams.set('page', 1);
+
+                if (typeOfEducation) {
+                    url.searchParams.set('typeOfEducation', typeOfEducation);
+                }
+                window.location.href = url.toString();
+            });
+        });
+
+
+        $(document).ready(function () {
+            var currentPageSize = '@ViewBag.PageSize' || '10';
+
+            $('#pageSizeDropdown').val(currentPageSize);
+
+            $('#pageSizeDropdown').change(function () {
+
+                var selectedPageSize = $(this).val();
+
+                var currentPage = '@ViewBag.CurrentPage';
+            });
+        });
+    </script>
+
+}

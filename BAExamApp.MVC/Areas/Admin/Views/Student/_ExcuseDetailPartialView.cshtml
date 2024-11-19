@@ -1,0 +1,45 @@
+﻿
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_excuse_detail" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-1000px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_excuse_detail_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bolder">MAZERET DETAYI</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-1 mx-xl-1 my-7">
+                <!--begin::Form-->
+                    <div class="row mb-3">
+                        <div class="col-sm-12 ">
+                                <label id="excuse-detail"></label>
+                        </div>
+                        <!--begin::Actions-->
+                    </div>
+                    <!--end::Actions-->
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+
+    $('.btn-primary[data-bs-toggle="modal"]').on('click', function () {
+        var excusedescription = $(this).data('excuse-description');
+        $('#excuse-detail').text(excusedescription);
+    });
+</script>

@@ -1,0 +1,247 @@
+﻿@using BAExamApp.Dtos.Candidate.CandidateQuestionSubject
+@{
+    ViewData["Title"] = "Create";
+}
+@model CandidateQuestionCreateVM
+
+
+<head>
+    <link rel="stylesheet" href="~/css/candidateQuestion/candidateQuestionCreate.css" />
+</head>
+
+<div class="card">
+    <!--begin::Card header-->
+    <div class="ps-9 pt-6">
+        <h1 class="text-dark fw-bolder fs-1">@ViewLocalizer["Add_Candidate_Question_Page"]</h1>
+    </div>
+    <!--end::Card header-->
+    <!--begin::Card body-->
+    <div class="card-body ">
+        <!--begin::Form-->
+        <form id="candidateQuestionForm" asp-controller="CandidateQuestion" asp-action="Create" class="form" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <input class="form-control" name="questionAnswersListFromReload" id="questionAnswersListFromReload" value="@ViewBag.QuestionAnswersList" hidden />
+                <div class="col-sm-12">
+                    <div class="fv-row form-floating mb-7">
+                        <select asp-for="CandidateQuestionType" class="form-select form-select-sm form-select-solid" onchange="onQuestionTypeChange()" id="QuestionType">
+                            @foreach (SelectListItem questionType in ViewBag.CandidateQuestionType)
+                            {
+                                <!option value="@questionType.Value" title="@GetDescriptionForQuestionType(questionType.Value)" @(questionType.Value == "1" ? "selected" : null)>
+                                    @SharedLocalizer[$"{questionType.Text}"]
+                                </!option>
+                            }
+                        </select>
+                        <label asp-for="CandidateQuestionType" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Type"]</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="fv-row form-floating mb-7">
+                        <select asp-for="CandidateQuestionSubjectId" class="form-select form-select-sm form-select-solid" id="QuestionType">
+                            @foreach (var subject in ViewBag.CandidateQuestionSubjects)
+                            {
+                                <!option value="@subject.Id">
+                                    @subject.Name
+                                </!option>
+                            }
+                        </select>
+                        <label asp-for="CandidateQuestionType" class="fw-bold fs-6 mb-2">@SharedLocalizer["Subject"]</label>
+                    </div>
+                </div>
+
+                <input class="form-control" name="questionAnswerChoices" id="questionAnswerChoices" hidden />
+                <div class="col-sm-12">
+                    <div class="fv-row form-floating mb-7">
+                        <textarea asp-for="Content" rows="4" class="form-control form-control-sm form-control-solid" 
+                        oninput="auto_grow(this)"
+                        style="resize: none; overflow: hidden; font-size: 1em;"></textarea>
+                        <label asp-for="Content" class="fw-bold fs-6 mb-2">@SharedLocalizer["Question_Content"]</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                        <label asp-for="NewImage" class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Image"] </label>
+                        <input asp-for="NewImage" type="file" class="form-control form-control-lg form-control-solid" id="fileInput" accept=".png,.jpeg,.jpg" hidden />
+                    <div class="fv-row form-floating mb-7 w-100 h-100">
+                        <div class="image-input image-input-outline fv-row w-100 h-100"
+                             data-kt-image-input="true"
+                             style="position: relative;">
+                            <div class="image-container w-100 h-100">
+                                <span type="button" id="uploadImageButton" class="btn btn-icon btn-circle btn-active-color-primary w-12px h-12px bg-body"
+                                      data-bs-toggle="tooltip" title="@SharedLocalizer["Upload_Question_Picture"]">
+                                    <i class="bi bi-pencil-fill fs-7"></i>
+                                </span>
+                                <img id="previewImage"
+                                     alt="Preview" />
+                                <div id="imagePlaceholder">
+                                    <span>
+                                        <i class="bi bi-image"></i>
+                                    </span>
+                                    <p>@SharedLocalizer["Image_Upload_Placeholder_Info"]</p>
+                                </div>
+                                <span type="button" id="removeImageButton" class="btn btn-icon btn-circle btn-active-color-primary w-12px h-12px bg-body"
+                                      data-bs-toggle="tooltip" title="@SharedLocalizer["Remove_Question_Picture"]">
+                                    <i class="bi bi-x fs-2"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="removeImageHidden" name="removeImageHidden" value="false" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6 gap-3 " id="questionAnswersDiv" hidden>
+                    <label asp-for="QuestionAnswers" class="col-sm-12 col-form-label col-form-label-lg">@SharedLocalizer["Question_Answers"]</label>
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex mt-8  justify-content-md-end m-3">
+
+                <a asp-action="Index" asp-route-showAllQuestions="true" class="btn p-5 mx-2 btn-primary">@SharedLocalizer["Back_List"]</a>
+                <button class="btn btn-success" type="button" onclick="validateAndSubmitForm()">@SharedLocalizer["Save"]</button>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+
+
+
+    <!--end::Card body-->
+</div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/js/candidateQuestionCreate.js"></script>
+    <script>
+        var localizer = {
+            choose: '@SharedLocalizer["Choose"]',
+            answers: '@SharedLocalizer["Answers"]',
+            newoption: '@SharedLocalizer["New_Option"]',
+            addnewoption: '@SharedLocalizer["Add_New_Options"]',
+            text: '@SharedLocalizer["Text"]',
+            image: '@SharedLocalizer["Image"]',
+            newAnswer: '@SharedLocalizer["New_Answer"]'
+        };
+
+        var validationMessages = {
+            pleaseProvideQuestionContent: '@SharedLocalizer["Please_Provide_Question_Content"]',
+            imageFileSizeErrorTitle: '@SharedLocalizer["Image_File_Size_Error_Title"]',
+            imageFileSizeErrorText: '@SharedLocalizer["Image_File_Size_Error_Text"]',
+            missingDataErrorTitle: '@SharedLocalizer["Missing_Data_Error_Title"]',
+            addAnswerErrorText: '@SharedLocalizer["Add_Answer_Error_Text"]',
+            minAnswersErrorText: '@SharedLocalizer["Min_Answers_Error_Text"]',
+            selectCorrectAnswerErrorText: '@SharedLocalizer["Select_Correct_Answer_Error_Text"]'
+        };
+
+        // Bu fonksiyon, soru tipine bağlı olarak açıklama ekler
+        function updateDescription() {
+            var selectedQuestionType = document.getElementById('QuestionType').value;
+
+
+            var description = getQuestionTypeDescription(selectedQuestionType);
+
+
+            var descriptionTextArea = document.getElementById('questionTypeDescription');
+            descriptionTextArea.value = description;
+
+
+            var container = document.getElementById('questionTypeDescriptionContainer');
+            if (description.trim() !== '') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        @functions {
+        public static string GetDescriptionForQuestionType(string questionTypeId)
+        {
+            switch (questionTypeId)
+            {
+                case "1":
+                    return "İlgili sorunun bir doğru cevabı işaretlenebilir.";
+                case "2":
+                    return "İlgili sorunun bir doğru cevabı metin şeklinde kod içerir.";
+                case "3":
+                    return "İlgili sorunun doğru cevabı metin şeklindedir.";
+                default:
+                    return "Soru tipi hakkında bilgi bulunamadı.";
+
+            }
+        }
+    }
+
+        function showTooltip(element) {
+            var tooltipText = element.getAttribute('data-title');
+            if (tooltipText) {
+                alert(tooltipText);
+            }
+        }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateDescription();
+    });
+
+    document.getElementById('QuestionType').addEventListener('change', function () {
+        updateDescription();
+    });
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        onQuestionTypeChange()
+    });
+
+    function auto_grow(element) {
+        element.style.height = "auto";
+        element.style.height = (element.scrollHeight) + "px";
+        element.style.overflow = "hidden";
+    }
+</script>
+<script>
+    document.getElementById("removeImageButton").addEventListener("click", function () {
+       https://localhost:44326/images/bilgeadam-logo.jpg var removeImageHidden = document.getElementById("removeImageHidden");
+        var previewImage = document.getElementById("previewImage");
+        var removeImageButton = document.getElementById("removeImageButton");
+        var imagePlaceholder = document.getElementById("imagePlaceholder");
+
+            previewImage.src = "";
+            previewImage.style.display = "none"; 
+            removeImageButton.style.display = "none"
+            imagePlaceholder.style.display = "flex"
+            removeImageHidden.value = "true";
+    });
+
+    // Resim ekleme inputunu dinleyen bir işlev
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        var imageType = /image.*/;
+
+        if (file.type.match(imageType)) {
+            var reader = new FileReader();
+
+            // Dosya okunduğunda ön izlemeyi güncelle
+            reader.onload = function (e) {
+                var previewImage = document.getElementById("previewImage");
+                var removeImageButton = document.getElementById("removeImageButton");
+                var imagePlaceholder = document.getElementById("imagePlaceholder");
+
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block"; 
+                removeImageButton.style.display = "block";
+                imagePlaceholder.style.display = "none";
+                document.getElementById("removeImageHidden").value = "false";
+            }
+
+            // Dosyayı oku
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById("uploadImageButton").addEventListener("click", function () {
+        document.getElementById("fileInput").click();
+
+    });
+</script>
+}
+
+

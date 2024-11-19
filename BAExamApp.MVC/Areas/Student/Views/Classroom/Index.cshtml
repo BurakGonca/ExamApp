@@ -1,0 +1,93 @@
+﻿@model IEnumerable<StudentStudentClassroomListVM>
+
+@{
+	ViewData["Title"] = SharedLocalizer["List", SharedLocalizer["Classroom"]];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>DataTable</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+
+	<link rel="stylesheet" href="~/lib/student/css/simple-datatables-style.css" />
+	<link rel="stylesheet" href="~/lib/student/css/list-style.css" />
+</head>
+
+<body>
+
+	<main id="main" class="main">
+		<section class="section dashboard" id="section-dashboard">
+			<div class="card classroomlist-table overflow-auto">
+
+				<div class="card-body">
+					<h5 class="card-title">@SharedLocalizer["List", SharedLocalizer["Classroom"]] </h5>
+
+					@{
+						var modelList = Model.OrderBy(x => x.ClassroomName).ToList();
+						int rowCount = modelList.Count;
+					}
+
+					<table class="table table-borderless datatable">
+						<thead>
+							<tr>
+								<th scope="col" id="th-container-column"><span id="th-text-container">@Html.DisplayNameFor(x => x.ClassroomName)</span></th>
+								<th scope="col" id="th-container-column"><span id="th-text-container">@Html.DisplayNameFor(model => model.OpeningDate)</span></th>
+								<th scope="col" id="th-container-column"><span id="th-text-container">@Html.DisplayNameFor(model => model.ClosedDate)</span></th>
+								<th scope="col" id="th-container-column"><span id="th-text-container">@Html.DisplayNameFor(model =>model.BranchName)</span></th>
+								<th scope="col" data-sortable="false" id="transaction-column"><span id="th-text-container">@SharedLocalizer["Transactions"]</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							@for (int i = 0; i < rowCount; i++)
+							{
+								var classroom = modelList[i];
+								var rowColor = i % 2 == 0 ? "table-light" : "";
+
+								<tr class="@rowColor">
+									<td>@classroom.ClassroomName</td>
+									<td><a href="#" class="text-dark">@classroom.OpeningDate.ToShortDateString()</a></td>
+									<td><a href="#" class="text-dark">@classroom.ClosedDate.ToShortDateString()</a></td>
+									<td><a href="#" class="text-dark" id="branches-section">@classroom.BranchName</a></td>
+									<td>
+										<div class="btn-group dropend" id="transaction-column-btn">
+											<button type="button" class="btn btn-secondary dropdown-toggle m1-auto" data-bs-toggle="dropdown" aria-expanded="false" id="classroom-options-button">@SharedLocalizer["Options"]</button>
+											<div class="dropdown-menu" id="classroom-table-transaction-options">
+												<a class="dropdown-item" asp-action="Details" asp-route-id="@classroom.ClassroomId">@SharedLocalizer["Details"]</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+
+
+
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+	<script src="~/lib/student/js/simple-datatables.js"></script>
+	<script src="~/lib/student/js/tinymce.js"></script>
+	<script type='text/javascript' src='~/lib/student/js/list-main.js'></script>
+	<script>
+		var classroomCount = @Model.Count();
+		window.onload = function () {
+			paginationSetupDropdown(classroomCount);
+		}
+	</script>
+
+</body>
+</html>
+
+
+

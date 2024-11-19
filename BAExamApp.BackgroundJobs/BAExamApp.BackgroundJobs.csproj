@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Managers\ContinuationJobs\" />
+    <Folder Include="Managers\DelayedJobs\" />
+    <Folder Include="Managers\RecurringJobs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.8.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BAExamApp.Business\BAExamApp.Business.csproj" />
+  </ItemGroup>
+
+</Project>

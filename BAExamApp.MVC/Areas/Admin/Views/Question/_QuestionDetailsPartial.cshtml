@@ -1,0 +1,107 @@
+﻿@model AdminQuestionDetailsVM
+
+<div class="m-auto">
+    <div class="container">
+        <input asp-for="Id" class="form-control" hidden />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.CreatedBy) :</label><br />
+            <label>@Model.CreatedBy</label>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.CreatedDate) :</label><br />
+                <label id="CreatedDate" name="CreatedDate">@Model.CreatedDate.ToShortDateString()</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.SubtopicName) :</label><br />
+                @Html.DisplayFor(model => model.SubtopicName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.QuestionType) :</label><br />
+                @Html.DisplayFor(model => model.QuestionType)
+            </div>
+            <div class="form-group col-md-6">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.QuestionDifficultyName) :</label><br />
+                @Html.DisplayFor(model => model.QuestionDifficultyName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                @if ((Model.ModifiedDate.Date == Model.CreatedDate.Date) && (Model.ModifiedDate.Hour == Model.CreatedDate.Hour)
+                        && (Model.ModifiedDate.Minute == Model.CreatedDate.Minute))
+                {
+                    <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.ModifiedDate) :</label>
+                    <br />
+                    <label id="ModifiedDate" name="ModifiedDate">@SharedLocalizer["IsNotModified"]</label>
+                }
+                else
+                {
+                    <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.ModifiedDate) :</label>
+                    <br />
+                    <label id="ModifiedDate" name="ModifiedDate">@Model.ModifiedDate.ToShortDateString() (@Model.ModifiedDate.ToString("HH:mm"))</label>
+                }
+            </div>
+        </div>
+        <hr />
+        @if (Model.Image != null)
+        {
+            <div class="form-group">
+                <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.Image) :</label><br />
+                <div id="item-header-cover-image" style="width:150px; height:150px;">
+                    <img src="data:image/jpeg;base64,@Model.Image"
+                     class="avatar user-1-avatar avatar-150 photo"
+                     style="object-fit:fill; width:150px; height:150px;"
+                     alt="" />
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.Content) :</label><br />
+            @Html.DisplayFor(model => model.Content)
+        </div>
+        <div class="form-group">
+            <label class="fs-6 fw-bold form-label mt-3">@Html.DisplayNameFor(model => model.QuestionAnswers) :</label><br />
+            @if (Model.QuestionType is QuestionType.TrueFalse)
+            {
+                @foreach (var item in Model.QuestionAnswers)
+                {
+                    @if (item.IsRightAnswer)
+                    {
+                        <p class="fw-bold" style="color:green">- @SharedLocalizer[item.Answer]</p>
+                    }
+                    else
+                    {
+                        <p>- @SharedLocalizer[item.Answer]</p>
+                    }
+                }
+            }
+            else
+            {
+                @foreach (var item in Model.QuestionAnswers)
+                {
+                    @if (item.IsRightAnswer)
+                    {
+                        <p class="fw-bold" style="color:green">- @item.Answer</p>
+                    }
+                    else
+                    {
+                        <p>- @item.Answer</p>
+                    }
+                }
+            }
+        </div>
+        <hr />
+        @if (Model.State == State.Reviewed || Model.State == State.Rejected)
+        {
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-text">@SharedLocalizer["Note", ViewLocalizer["Revise"]] :</span>
+                    <textarea asp-for="ReviewComment" class="form-control" rows="3" readonly></textarea>
+                </div>
+            </div>
+        }
+    </div>
+</div>

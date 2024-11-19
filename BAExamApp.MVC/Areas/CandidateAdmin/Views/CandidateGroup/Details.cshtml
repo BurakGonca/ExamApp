@@ -1,0 +1,447 @@
+﻿@model CandidateGroupDetailVM
+
+@{
+    ViewData["Title"] = ViewLocalizer["Group_Details"];
+}
+
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+    <!--begin::Card header-->
+    <div class="card-header cursor-pointer align-items-center">
+        <!--begin::Card title-->
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">@Model.Name @ViewLocalizer["Group_Details"]</h3>
+        </div>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                <style>
+                    .nav-item {
+                        margin-right: 10px; /* Boşluk miktarını ihtiyacınıza göre ayarlayabilirsiniz */
+                    }
+                </style>
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" id="kt_tab_pane_7_tab" href="#kt_tab_pane_7">
+                        @ViewLocalizer["Group_Details"]
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="kt_tab_pane_8_tab" data-bs-toggle="tab" href="#kt_tab_pane_8" role="tab" aria-controls="kt_tab_pane_8" aria-selected="false">
+                        @SharedLocalizer["Candidates"]
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--end::Card title-->
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_7" role="tabpanel">
+                <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
+                    <tbody class="fw-bold">
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                            <td class="categories text-start col-lg-2">
+                                <span class="col-lg-4 fw-bold text-muted">@SharedLocalizer["Name"]:</span>
+                            </td>
+                            <td class="categories text-start text-gray-600 col-lg-10">
+                                <span class="fw-bolder fs-6 text-gray-800">@Model.Name</span>
+                            </td>
+                        </tr>
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                            <td class="categories text-start col-lg-2">
+                                <span class="col-lg-4 fw-bold text-muted">@SharedLocalizer["Branch_Name"]:</span>
+                            </td>
+                            <td class="categories text-start text-gray-600 col-lg-10">
+                                <span class="fw-bolder fs-6 text-gray-800">@Model.BranchName</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <div class="gap-5">
+                        <a class="btn btn-secondary align-self-center" asp-controller="CandidateGroup" asp-action="Index">@SharedLocalizer["Back_List"]</a>
+                        <a onclick="loadProductData('@Model.Id')" class="btn btn-primary align-self-center ms-2" data-kt-docs-table-filter="edit_row" data-bs-toggle="modal" data-bs-target="#updateCandidateGroupModal">
+                            @SharedLocalizer["Edit"]
+                        </a>
+                        <a class="btn btn-danger align-self-center deleteAction" data-id="@Model.Id">@SharedLocalizer["Delete"]</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+                <div class="card card-docs flex-row-fluid mb-2" id="kt_docs_content_card">
+                    <div class="card-body fs-6 py-2 px-10 py-lg-4 px-lg-15 text-gray-700">
+                        <div class="py-5">
+                            <div class="d-flex flex-stack flex-wrap mb-5">
+                                <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <input type="text" id="searchInput" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="@SharedLocalizer["Candidate"] @SharedLocalizer["Search"]" />
+                                </div>
+                            </div>
+                            <table id="kt_datatable_example_2" class="table table-row-dashed fs-6 gy-5">
+                                <!--begin::Table head-->
+                                <thead>
+                                    <!--begin::Table row-->
+                                    <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                        <th class="min-w-125px">@SharedLocalizer["Profile_Image"]</th>
+                                        <th class="min-w-125px">@SharedLocalizer["First_Name"]</th>
+                                        <th class="min-w-125px">@SharedLocalizer["Last_Name"]</th>
+                                        <th class="min-w-125px">@SharedLocalizer["Email"]</th>
+                                        <th class="text-end min-w-100px">@SharedLocalizer["Candidate_Operations"]</th>
+                                    </tr>
+                                    <!--end::Table row-->
+                                </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                                <tbody class="text-gray-600 fw-bold">
+                                    <!--begin::Table row-->
+                                    @foreach (var candidate in Model.Candidates)
+                                    {
+                                        <tr>
+                                            @if (candidate.Image != null)
+                                            {
+                                                <td class="d-flex align-items-center">
+                                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                        <div class="symbol-label">
+                                                            <img src="@($"data:image/png;base64,{Convert.ToBase64String(candidate.Image)}")" class="w-100" alt="Profile Image" />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="d-flex align-items-center">
+                                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                        <div class="symbol-label">
+                                                            <img src="~/images/blank-profile-picture.png" alt="Profil Fotoğrafı Bulunamadı!" class="w-100" />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            }
+                                            <td>
+                                                <div class="d-flex flex-column">
+
+                                                    <span>@candidate.FirstName</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column">
+                                                    <span>@candidate.LastName</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column">
+                                                    <span>@candidate.Email</span>
+                                                </div>
+                                            </td>
+                                            <!--begin::Action=-->
+                                            <td class="text-end">
+                                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                    @SharedLocalizer["Options"]
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                                    <span class="svg-icon svg-icon-5 m-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
+                                                </a>
+                                                <!--begin::Menu-->
+                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                                    <!--begin::Menu item-->
+                                                    
+                                                    <!--end::Menu item-->
+                                                </div>
+                                                <!--end::Menu-->
+                                            </td>
+                                            <!--end::Action=-->
+                                        </tr>
+                                        <!--end::Table row-->
+                                    }
+                                </tbody>
+                                <!--end::Table body-->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<partial name="~/Areas/CandidateAdmin/Views/CandidateGroup/UpdatePartialView.cshtml" model="new CandidateGroupEditVM()"></partial>
+
+@section Scripts
+            {
+    <script src="~/newlayouts/dist/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/js/candidateGroupUpdate.js"></script>
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.all.js"></script>
+    <script>
+        var localizedTexts = {
+            unsavedChangesTitle: '@SharedLocalizer["Unsaved_Changes_Title"]',
+            unsavedChangesText: '@SharedLocalizer["Unsaved_Changes_Text"]',
+            confirmTitle: '@SharedLocalizer["Confirm_Delete_Title"]', // "fullName adlı admini silmek istediğinize emin misiniz?"
+            confirmText: '@SharedLocalizer["Confirm_Delete_Text"]', // "Bu işlem geri alınamaz!"
+            confirmButtonText: '@SharedLocalizer["Yes_Leave"]',
+            cancelButtonText: '@SharedLocalizer["No_Stay"]',
+            confirmDeleteButtonText: '@SharedLocalizer["Confirm_Button_Text"]', // "Evet, sil!"
+            cancelDeleteButtonText: '@SharedLocalizer["Cancel_Button_Text"]', // "Hayır, iptal et"
+            formSubmittedText: '@SharedLocalizer["Form_Submitted_Text"]',
+            okButtonText: '@SharedLocalizer["Ok_Button_Text"]',
+
+            confirmPassiveButtonText: '@ViewLocalizer["Confirm_Passive_Button"]',//evet pasife al
+            confirmPassiveTitle: '@ViewLocalizer["Passive_Candidate_Title"]',
+            confirmPassiveText: '@ViewLocalizer["Passive_Candidate_Text"]',
+
+            confirmActiveTitle: '@ViewLocalizer["Active_Candidate_Title"]',
+            confirmActiveText: '@ViewLocalizer["Active_Candidate_Text"]',
+
+            confirmPassiveGroupTitle: '@ViewLocalizer["Passive_Group_Title"]',
+            confirmPassiveGroupText: '@ViewLocalizer["Passive_Group_Text"]',
+
+            confirmActiveButtonText: '@ViewLocalizer["Confirm_Active_Button"]',//evet active al
+            confirmActiveStatusTitle: '@ViewLocalizer["Status_Active_Candidate_Title"]',
+            confirmActiveStatusText: '@ViewLocalizer["Status_Active_Candidate_Text"]',
+
+            alreadyPassiveTitle: '@ViewLocalizer["Already_Passive_Title"]',
+        };
+        var localizer = {
+            emptyTable: '@SharedLocalizer["Empty_Data"]',
+            info: '@SharedLocalizer["Info"]',
+            infoEmpty: '@SharedLocalizer["Info_Empty"]',
+            infoFiltered: '@SharedLocalizer["Info_Filtered"]',
+            zeroRecords: '@SharedLocalizer["Zero_Records"]'
+        };
+        var status = @Html.Raw(Json.Serialize(Model.Status));
+        const groupStatus = @Html.Raw(Json.Serialize(ViewBag.Status));
+        console.log(groupStatus);
+
+        $(document).ready(function () {
+
+            var dt = $("#kt_datatable_example_2").DataTable({
+
+                lengthMenu: [10, 25, 50, 100],
+
+                dom:
+
+                    '<"row"<"col-sm-12"t>>' +
+
+                    '<"row"<"col-sm-12 col-md-1"l><"col-sm-12 col-md-5"i><"col-sm-12 col-md-6"p>>',
+
+                language: {
+
+                    emptyTable: localizer.emptyTable,
+                    info: localizer.info,
+                    infoEmpty: localizer.infoEmpty,
+                    infoFiltered: localizer.infoFiltered,
+                    zeroRecords: localizer.zeroRecords
+
+                },
+
+            });
+
+            $('body').on('change', 'select[name="kt_datatable_example_2_length"]', function () {
+
+                dt.page.len($(this).val()).draw();
+
+                $(this).css({
+
+                    'border': '0 solid transparent',
+
+                    'transition': 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+
+                });
+
+            });
+
+            $('body').on('keyup', 'input[data-kt-docs-table-filter="search"]', function () {
+                dt.search($(this).val()).draw();
+            });
+
+            function updateInfoText(pageInfo) {
+
+                var infoText = pageInfo.recordsTotal + " kayıttan " + (pageInfo.start + 1) + " ile " + pageInfo.end + " arasındaki kayıtlar gösteriliyor";
+
+                $('#kt_datatable_example_2_info').html(infoText).css({
+
+                    'margin-top': '6px',
+
+                    'font-size': '14px',
+
+                    'font-family': 'Poppins, Helvetica, sans- serif',
+
+                });
+
+            }
+
+            updateInfoText(dt.page.info());
+
+            function updatePaginationArrows() {
+                var prevButton = $('#kt_datatable_example_2_previous a');
+                prevButton.html('<i class="fa fa-chevron-left"></i>');
+
+                var nextButton = $('#kt_datatable_example_2_next a');
+                nextButton.html('<i class="fa fa-chevron-right"></i>');
+
+                var pageButtons = $('#kt_datatable_example_2_paginate .page-item');
+
+                var activePage = $('#kt_datatable_example_2_paginate .page-item.active a');
+                activePage.css({
+                    'color': '#ffffff'
+                });
+
+                pageButtons.not('.active').hover(
+                    function () {
+                        $(this).find('a').css({
+                            'color': '#your_desired_color'
+                        });
+                    },
+                    function () {
+                        $(this).find('a').css({
+                            'color': ''
+                        });
+                    }
+                );
+            }
+            updatePaginationArrows();
+            dt.on('draw.dt', function () {
+                updatePaginationArrows();
+            });
+
+        });
+        $(".deleteAction").click(function () {
+            const id = $(this).attr("data-id");
+            if (status == 4) {//deleted
+
+                Swal.fire({
+                    title: `${localizedTexts.confirmTitle}`,
+                    text: localizedTexts.confirmText,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: localizedTexts.confirmDeleteButtonText,
+                    cancelButtonText: localizedTexts.cancelDeleteButtonText
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "GET",
+                            url: "@Url.Action("Delete")" + "?id=" + id,
+                            success: function (result) {
+                                if (result.isSuccess) {
+                                    setTimeout(() => location.href = "@Url.Action("index")", 2000)
+                                }
+                            }
+                        });
+                    }
+                })
+
+            }
+            if (status == 3) { // active
+                Swal.fire({
+                    title: `${localizedTexts.confirmActiveTitle}`,
+                    text: localizedTexts.confirmActiveText,
+                    icon: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: localizedTexts.okButtonText
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "GET",
+                            url: "@Url.Action("Index")",
+                            success: function (result) {
+                                if (result.isSuccess) {
+                                    setTimeout(() => {
+                                        location.href = "@Url.Action("Index")";
+                                    }, 2000);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                // Handle error case here if needed
+                                console.error("AJAX request failed:", status, error);
+                            }
+                        });
+                    }
+                });
+            }
+
+            if (status == 5) {//passive
+
+                if (groupStatus == 5) {
+                    Swal.fire({
+                        title: `${localizedTexts.alreadyPassiveTitle}`,
+                        text: localizedTexts.confirmActiveText,
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: localizedTexts.okButtonText
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "GET",
+                                url: "@Url.Action("Index")",
+                                success: function (result) {
+                                    if (result.isSuccess) {
+                                        setTimeout(() => {
+                                            location.href = "@Url.Action("Index")";
+                                        }, 2000);
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    // Handle error case here if needed
+                                    console.error("AJAX request failed:", status, error);
+                                }
+                            });
+                        }
+                    });
+                }
+                else {
+                    Swal.fire({
+                        title: `${localizedTexts.confirmPassiveTitle}`,
+                        text: localizedTexts.confirmPassiveText,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: localizedTexts.confirmPassiveButtonText,
+                        cancelButtonText: localizedTexts.cancelButtonText
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "GET",
+                                url: "@Url.Action("Delete")" + "?id=" + id,
+                                success: function (result) {
+                                    if (result.isSuccess) {
+                                        setTimeout(() => location.href = "@Url.Action("index")", 2000)
+                                    }
+                                }
+                            });
+                        }
+                    })
+                }
+
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var activeTab = urlParams.get('activeTab');
+            if (activeTab) {
+                document.querySelectorAll('.tab-pane').forEach(function (tabPane) {
+                    tabPane.classList.remove('show', 'active');
+                });
+                document.querySelectorAll('.nav-link').forEach(function (navLink) {
+                    navLink.classList.remove('active');
+                });
+                document.getElementById(activeTab).classList.add('show', 'active');
+                document.querySelector(`[href="#${activeTab}"]`).classList.add('active');
+            }
+        });
+    </script>
+}

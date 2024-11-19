@@ -1,0 +1,12 @@
+﻿#kt_datatable_example_1 {
+    min-height: 0 !important;
+}
+
+    #kt_datatable_example_1 tbody tr {
+        min-height: 0 !important;
+    }
+
+        #kt_datatable_example_1 tbody tr.compact-row td.sorting_1 {
+            padding: 2px 5px !important;
+            height: 10px !important;
+        }
